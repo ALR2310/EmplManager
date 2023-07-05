@@ -26,6 +26,12 @@ namespace BUS
             return new Select().From(Message.Schema.TableName).ExecuteTypedList<Message>();
         }
 
+        public static List<Message> GetListMessageById(int id)
+        {
+            return new Select().From(Message.Schema.TableName).Where(Message.Columns.Status).IsEqualTo(id)
+                .ExecuteTypedList<Message>();
+        }
+
 
     }
 }

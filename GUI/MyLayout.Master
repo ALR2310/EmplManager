@@ -1,0 +1,104 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MyLayout.master.cs" Inherits="GUI.MyLayout" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Thông Báo Ra Vào Cty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/Style/main.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header>
+            <nav class="nav">
+                <div class="nav__menu">
+                    <div class="nav-menu__left">
+                        <button type="button" class="btn-menuleft">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <div class="search-box">
+                            <asp:TextBox runat="server" ID="txtSearch" class="search-box__input" placeholder="Tìm Kiếm" type="text"></asp:TextBox>
+                            <button type="button" class="search-box__btn" onclick="handleSearchClick(event)">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <asp:Button ID="btnSearch" runat="server" Style="display: none" />
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nav-menu__right">
+                        <div class="dropdown">
+                            <div class="dropdownuser">
+                                <div class="dropimg">
+                                    <asp:Image ID="ImgAvatar" runat="server" />
+                                </div>
+                                <button type="button" runat="server" class="dropbtn">
+                                    <asp:Label ID="lblUserName" runat="server" Text="Tên Người Dùng"></asp:Label>
+                                </button>
+                            </div>
+                            <div class="dropdown-content">
+                                <a id="linkLogout" runat="server">Đăng Xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                <div class="sidebar sidebar-close">
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <a class="sidebar-item__link" href="#">
+                                <i class="fa-solid fa-house"></i>
+                                <span class="sider-bar__span hide">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item__link" href="Message.aspx">
+                                <i class="fa-sharp fa-solid fa-comments"></i>
+                                <span class="sider-bar__span hide">Chat</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item__link" href="UserInfor.aspx">
+                                <i class="fa-solid fa-user"></i>
+                                <span class="sider-bar__span hide">Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item__link" href="#">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="sider-bar__span hide">Notifications</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <a class="sidebar-item__link" href="#">
+                                <i class="fa-solid fa-gear"></i>
+                                <span class="sider-bar__span hide">Setting</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a id="A1" href="#" class="sidebar-item__link" runat="server">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span class="sider-bar__span hide">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    <%-- Content --%>
+                </asp:ContentPlaceHolder>
+            </div>
+        </main>
+    </form>
+
+    <script src="JS/layout.js"></script>
+</body>
+</html>
