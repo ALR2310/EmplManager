@@ -15,6 +15,7 @@ namespace GUI
         {
             Message item = new Message();
             // item.Content n
+
             //MessageManager.InsertMessage(item);
 
 

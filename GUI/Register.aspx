@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="login--field">
-                                <asp:Button ID="btnRegister" runat="server" Text="Đăng Ký" class="btn" />
+                                <asp:Button ID="btnRegister" runat="server" Text="Đăng Ký" class="btn" OnClick="btnRegister_Click" />
                             </div>
 
                             <div class="login-form__field sub-field">
