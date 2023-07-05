@@ -70,16 +70,78 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EditUserInfor.aspx" />
     <Content Include="Global.asax" />
+
     <Content Include="Styles\chat.css" />
+
+    <Content Include="Images\avatar-1.jpg" />
+    <Content Include="Images\Avatar\defaultAvatar.jpg" />
+    <Content Include="Images\google-logo.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\sweetsoft-logo.png" />
+    <Content Include="Images\team.png" />
+    <Content Include="JS\edituser.js" />
+    <Content Include="JS\layout.js" />
+    <Content Include="JS\message.js" />
+    <Content Include="JS\toast.js" />
+    <Content Include="Login.aspx" />
+    <Content Include="Message.aspx" />
+    <Content Include="Register.aspx" />
+    <Content Include="Style\main.css" />
+    <Content Include="Style\toast.css" />
+    <Content Include="UserInfor.aspx" />
+
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditUserInfor.aspx.cs">
+      <DependentUpon>EditUserInfor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditUserInfor.aspx.designer.cs">
+      <DependentUpon>EditUserInfor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Message.aspx.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Message.aspx.designer.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyLayout.Master.cs">
+      <DependentUpon>MyLayout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyLayout.Master.designer.cs">
+      <DependentUpon>MyLayout.Master</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfor.aspx.cs">
+      <DependentUpon>UserInfor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserInfor.aspx.designer.cs">
+      <DependentUpon>UserInfor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -89,6 +151,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MyLayout.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

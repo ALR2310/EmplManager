@@ -91,23 +91,13 @@ namespace DAL
         /// Updates a record, can be used with the Object Data Source
         /// </summary>
         [DataObjectMethod(DataObjectMethodType.Update, true)]
-        public void Update(int Id, int? UserId, string Content, DateTime? AtCreate, int? Status)
+        public Message Update(Message item)
         {
-            Message item = new Message();
             item.MarkOld();
             item.IsLoaded = true;
-
-            item.Id = Id;
-
-            item.UserId = UserId;
-
-            item.Content = Content;
-
-            item.AtCreate = AtCreate;
-
-            item.Status = Status;
-
             item.Save(UserName);
+
+            return item;
         }
     }
 }
