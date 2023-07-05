@@ -3,6 +3,7 @@ using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,6 +15,11 @@ namespace GUI
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        void Toast(string scriptMessage)
+        {
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", scriptMessage, true);
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
@@ -34,31 +40,36 @@ namespace GUI
                     user.Status = 1;
 
                     int emailExists = UserManager.CheckEmailUser(user.Email);
-                    if (emailExists > 0)
+                    int usernameExists = UserManager.CheckUserName(user.UserName);
+
+                    if (emailExists == 0 && usernameExists == 0)
                     {
                         UserManager.InsertUser(user);
                         lblError.Text = string.Empty;
-                        string script = "showSuccessToast('Đăng ký tài khoản thành công, hãy đăng nhập ngay!')";
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", script, true);
+                        Toast("showSuccessToast('Đăng ký tài khoản thành công, đăng nhập ngay!')");
                     }
-                    else
+
+                    if (emailExists != 0)
                     {
-                        string script = "showErrorToast('Email đã tồn tại, vui lòng thử lại')";
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", script, true);
+                        Toast("showWarningToast('Email đã tồn tại, vui lòng thử lại!')");
                         lblError.Text = "Email đã tồn tại";
+                    }
+
+                    if (usernameExists != 0)
+                    {
+                        Toast("showWarningToast('Tên đăng nhập đã tồn tại, vui lòng thử lại!')");
+                        lblError.Text = "Tên đăng nhập đã tồn tại";
                     }
                 }
                 else
                 {
-                    string script = "showWarningToast('Mật khẩu nhập lại không giống nhau, vui lòng kiểm tra lại')";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", script, true);
+                    Toast("showWarningToast('Mật khẩu không trùng nhau, vui lòng thử lại')");
                     lblError.Text = "Mật khẩu không trùng nhau";
                 }
             }
             else
             {
-                string script = "showWarningToast('Các trường không được để trống!')";
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", script, true);
+                Toast("showWarningToast('Các trường không được để trống! vui lòng điền đầy đủ')");
                 lblError.Text = "Các trường không được trống";
             }
         }

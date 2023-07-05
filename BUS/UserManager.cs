@@ -35,9 +35,16 @@ namespace BUS
             return new Select().From(User.Schema.TableName).Where(User.Columns.Id).IsEqualTo(id).ExecuteSingle<User>();
         }
 
+        //check email is exists
         public static int CheckEmailUser(string email)
         {
             return new Select().From(User.Schema.TableName).Where(User.Columns.Email).IsEqualTo(email).ExecuteScalar<int>();
+        }
+
+        //check username is exists
+        public static int CheckUserName(string userName)
+        {
+            return new Select().From(User.Schema.TableName).Where(User.Columns.UserName).IsEqualTo(userName).ExecuteScalar<int>();
         }
     }
 }
