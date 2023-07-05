@@ -91,7 +91,6 @@
             </asp:UpdatePanel>
 
 
-            <asp:GridView ID="GridView1" runat="server"></asp:GridView>
         </div>
     </div>
 

@@ -12,12 +12,7 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadMessage();
-        }
 
-        void LoadMessage()
-        {
-            GridView1.DataSource = MessageManager.GetListMessage();
         }
     }
 }
