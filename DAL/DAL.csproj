@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SubSonic">
-      <HintPath>C:\Users\ALRIP\Desktop\SubSonic2.2\SubSonic.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Zalo Received Files\SubSonic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

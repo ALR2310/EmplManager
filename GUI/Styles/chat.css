@@ -1,0 +1,58 @@
+#chat {
+    width: 65%;
+    height: 90vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    max-width: 600px;   
+    min-width: 250px;
+}
+
+.message-container {
+    width: 100%;
+    display: flex;
+   
+    position: relative;
+    height: 50px;
+    overflow: auto;
+}
+
+    .message-container > .avatar {
+        height: 100%;
+    }
+
+.titles > span {
+    height: 100%;
+    display: inline-block;
+}
+
+.titles > .date {
+    font-size: 12px;
+}
+
+
+.content > .titles {
+    height: 35%;
+}
+.content> .message {
+
+    height: 65%;
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    align-items: center;
+}
+
+#chat > .message {
+    padding: calc(18px*0.25) 0;
+    padding-left: 55px !important;
+    width: 100%;
+}
+
+.user-container{
+    flex-direction: row-reverse;
+}
+
+.content {
+   padding:0px 5px;
+}
