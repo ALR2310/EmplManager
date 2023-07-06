@@ -49,7 +49,7 @@ namespace GUI
 
 
                         Response.Cookies.Add(authCookie);
-                        ToastManager.SuccessToast("Đăng ký tài khoản thành công, chuẩn bị chuyển hướng trong vài giây..");
+                        ToastManager.SuccessToast("Đăng ký tài khoản thành công! Chuẩn bị chuyển hướng trong vài giây..");
 
                         string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
 

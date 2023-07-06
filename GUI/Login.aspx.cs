@@ -45,6 +45,15 @@ namespace GUI
             HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
 
             Response.Cookies.Add(authCookie);
+
+            if (authToken != "_failed_")
+            {
+                ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây..");
+
+                string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+            }
         }
     }
 }
