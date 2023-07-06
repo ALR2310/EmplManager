@@ -13,17 +13,8 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-            
-=======
+
             Message item = new Message();
-            // item.Content n
-
-            //MessageManager.InsertMessage(item);
-
-
-            //List<Message> lstMessage = MessageManager.GetListMessage();
->>>>>>> bc32c42abe4628870bcca962f2fe45b56d22248d
 
 
         }
