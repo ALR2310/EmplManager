@@ -38,7 +38,7 @@
                                 </button>
                             </div>
                             <div class="dropdown-content">
-                                <a id="linkLogout" runat="server">Đăng Xuất</a>
+                                <a id="linkLogout" onserverclick="linkLogout_ServerClick" runat="server">Đăng Xuất</a>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a id="A1" href="#" class="sidebar-item__link" runat="server">
+                            <a id="A1" href="#" class="sidebar-item__link" onserverclick="A1_ServerClick" runat="server">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span class="sider-bar__span hide">Logout</span>
                             </a>
