@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DAL;
+using DAL.Model;
 
 namespace GUI
 {
@@ -13,12 +14,7 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
- 
-
-            bool validcookie = UserManager.checkValidCookie(Request);
-
-            if (!validcookie) { Response.Redirect("login.aspx", true); return; }
+           
 
             if (!IsPostBack)
             {
@@ -29,9 +25,20 @@ namespace GUI
                 return;
             }
 
-     
+            if (!IsPostBack) { return; }
+
+            bool validcookie = UserManager.checkValidCookie(Request);
+
+            if (validcookie) { Response.Redirect("login.aspx"); }
 
 
+        void LoadMessage()
+        {
+            List<MessageJoinUser> messages = MessageManager.GetListMessageByStatus();
+
+            Repeater1.DataSource = messages;
+            Repeater1.DataBind();
+            return;
         }
     }
 }
