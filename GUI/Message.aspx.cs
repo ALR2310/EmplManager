@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DAL;
+using DAL.Model;
 
 namespace GUI
 {
@@ -13,11 +14,11 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
 
             if (!IsPostBack)
             {
-                List<DAL.Message> messages = MessageManager.GetListMessageByStatus(1);
+                List<MessageJoinUser> messages = MessageManager.GetListMessageByStatus();
 
                 Repeater1.DataSource = messages;
                 Repeater1.DataBind();

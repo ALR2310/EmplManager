@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SubSonic">
-      <HintPath>..\..\..\..\Documents\Zalo Received Files\SubSonic.dll</HintPath>
+      <HintPath>C:\Users\ALRIP\Desktop\SubSonic2.2\SubSonic.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -72,9 +72,7 @@
   <ItemGroup>
     <Content Include="EditUserInfor.aspx" />
     <Content Include="Global.asax" />
-
     <Content Include="Styles\chat.css" />
-
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />
     <Content Include="Images\google-logo.png" />
@@ -91,7 +89,6 @@
     <Content Include="Style\main.css" />
     <Content Include="Style\toast.css" />
     <Content Include="UserInfor.aspx" />
-
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>

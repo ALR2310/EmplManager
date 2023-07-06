@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SubSonic">
-      <HintPath>..\..\..\..\Documents\Zalo Received Files\SubSonic.dll</HintPath>
+      <HintPath>C:\Users\ALRIP\Desktop\SubSonic2.2\SubSonic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -52,6 +52,7 @@
     <Compile Include="LikeController.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageController.cs" />
+    <Compile Include="Model\MessageJoinUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoredProcedures.cs" />
     <Compile Include="User.cs" />

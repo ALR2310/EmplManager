@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SubSonic;
+using DAL.Model;
 
 namespace BUS
 {
@@ -21,29 +22,13 @@ namespace BUS
                 ExecuteSingle<Message>();
         }
 
-        public static List<Message> GetListMessageByStatus(int id)
+        public static List<MessageJoinUser> GetListMessageByStatus()
         {
-
             var query = new InlineQuery();
-            var sqlquery = $"select * from messages inner join users on users.id = messages.userid where status = {id}";
-            List<Message> list = query.ExecuteTypedList<Message>(sqlquery);
+            var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
+                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1";
+            List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
-
-            //return new Select().From(Message.Schema).InnerJoin<User>().Where(Message.Columns.Status).IsEqualTo(id);
-
-
-            //InlineQuery qry = new InlineQuery();
-            //List<Message> MessageList = qry.ExecuteTypedList<Message>($"Select * From Messages inner join users on users.id = messages.userid where messages.status = '{id}'");
-
-            //return MessageList;
         }
-
-        //public static List<Message> GetListMessageById(int id)
-        //{
-        //    return new Select().From(Message.Schema.TableName).Where(Message.Columns.Status).IsEqualTo(id)
-        //        .ExecuteTypedList<Message>();
-        //}
-
-
     }
 }
