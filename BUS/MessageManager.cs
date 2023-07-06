@@ -23,10 +23,19 @@ namespace BUS
 
         public static List<Message> GetListMessageByStatus(int id)
         {
-            InlineQuery qry = new InlineQuery();
-            List<Message> MessageList = qry.ExecuteTypedList<Message>($"Select * From Messages inner join users on users.id = messages.userid where messages.status = '{id}'");
 
-            return MessageList;
+            var query = new InlineQuery();
+            var sqlquery = $"select * from messages inner join users on usrers.id = messages.userid where status = {id}";
+            List<Message> list = query.ExecuteTypedList<Message>(sqlquery);
+            return list;
+
+            //return new Select().From(Message.Schema).InnerJoin<User>().Where(Message.Columns.Status).IsEqualTo(id);
+
+
+            //InlineQuery qry = new InlineQuery();
+            //List<Message> MessageList = qry.ExecuteTypedList<Message>($"Select * From Messages inner join users on users.id = messages.userid where messages.status = '{id}'");
+
+            //return MessageList;
         }
 
         //public static List<Message> GetListMessageById(int id)
