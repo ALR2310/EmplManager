@@ -15,7 +15,7 @@ namespace GUI
         protected void Page_Load(object sender, EventArgs e)
         {
 
-          
+
             bool validcookie = UserManager.checkValidCookie(Request);
 
             if (!validcookie) { Response.Redirect("login.aspx"); return; }
@@ -29,7 +29,8 @@ namespace GUI
                 return;
             }
 
-        
+        }
+
 
 
         void LoadMessage()
