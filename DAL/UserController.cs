@@ -63,6 +63,14 @@ namespace DAL
             coll.LoadAndCloseReader(qry.ExecuteReader());
             return coll;
         }
+
+        public List<User> Login(string username, string password)
+        {
+            InlineQuery qry = new InlineQuery();
+            List<User> ListUser = qry.ExecuteTypedList<User>($"Select * From Users Where (UserName = '{username}' or Email = '{username}') and Password = '{password}'");
+
+            return ListUser;
+        }
         [DataObjectMethod(DataObjectMethodType.Delete, true)]
         public bool Delete(object Id)
         {

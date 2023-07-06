@@ -26,16 +26,13 @@ namespace GUI
 
 
 
-            Query qry = new Query("Users");
-            string wherecondict = $"UserName = {userName}";
-            qry.WHERE(wherecondict);
-            UserCollection UserCollect = UC.FetchByQuery(qry);
+            List<User> ListUser = UC.Login(userName, password);
 
-            Debug.WriteLine(UserCollect.ToList().Count);
-            string script = $"alert(\"{UserCollect.Count} {wherecondict}\")";
+            Debug.WriteLine(ListUser.Count);
+            string script = $"alert(\"{ListUser.Count} \")";
 
             ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-
+            
         }
     }
 }
