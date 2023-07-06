@@ -16,7 +16,16 @@ namespace GUI
         UserController UC = new UserController();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                string authToken = Request.Cookies["AuthToken"].Value;
+                if (UC.getTokenUser(authToken))
+                {
+                    string script = $"alert(\" Valid Cookie!! \")";
 
+                    ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+                }
+            }          
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -31,6 +40,7 @@ namespace GUI
      
             string script = $"alert(\"{authToken} \")";
 
+            ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
             HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
 
             Response.Cookies.Add(authCookie);
