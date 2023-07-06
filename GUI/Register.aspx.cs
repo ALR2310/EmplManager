@@ -17,11 +17,6 @@ namespace GUI
 
         }
 
-        void Toast(string scriptMessage)
-        {
-            ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", scriptMessage, true);
-        }
-
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtDisplayName.Text) &&
@@ -46,30 +41,30 @@ namespace GUI
                     {
                         UserManager.InsertUser(user);
                         lblError.Text = string.Empty;
-                        Toast("showSuccessToast('Đăng ký tài khoản thành công, đăng nhập ngay!')");
+                        ToastManager.SuccessToast("Đăng ký tài khoản thành công, đăng nhập ngay!");
                     }
 
                     if (emailExists != 0)
                     {
-                        Toast("showWarningToast('Email đã tồn tại, vui lòng thử lại!')");
+                        ToastManager.WaringToast("Email đã tồn tại, vui lòng thử lại!");
                         lblError.Text = "Email đã tồn tại";
                     }
 
                     if (usernameExists != 0)
                     {
-                        Toast("showWarningToast('Tên đăng nhập đã tồn tại, vui lòng thử lại!')");
+                        ToastManager.WaringToast("Tên đăng nhập đã tồn tại, vui lòng thử lại!");
                         lblError.Text = "Tên đăng nhập đã tồn tại";
                     }
                 }
                 else
                 {
-                    Toast("showWarningToast('Mật khẩu không trùng nhau, vui lòng thử lại')");
+                    ToastManager.WaringToast("Mật khẩu không trùng nhau, vui lòng thử lại");
                     lblError.Text = "Mật khẩu không trùng nhau";
                 }
             }
             else
             {
-                Toast("showWarningToast('Các trường không được để trống! vui lòng điền đầy đủ')");
+                ToastManager.WaringToast("Các trường không được để trống! vui lòng điền đầy đủ");
                 lblError.Text = "Các trường không được trống";
             }
         }

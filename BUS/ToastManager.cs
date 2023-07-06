@@ -12,7 +12,27 @@ namespace BUS
     {
         public static void SuccessToast(string message)
         {
-            //ScriptManager.RegisterClientScriptBlock(this, GetType(), "myToast", "showSuccessToast(' " + message + " ')", true);
+            var currentPage = HttpContext.Current.Handler as Page;
+            ScriptManager.RegisterClientScriptBlock(currentPage, typeof(ToastManager), "myToast", "showSuccessToast(' " + message + " ')", true);
+        }
+
+        public static void InfoToast(string message)
+        {
+            var currentPage = HttpContext.Current.Handler as Page;
+            ScriptManager.RegisterClientScriptBlock(currentPage, typeof(ToastManager), "myToast", "showInfoToast('" + message + "')", true);
+        }
+
+        public static void WaringToast(string message)
+        {
+            var currentPage = HttpContext.Current.Handler as Page;
+            ScriptManager.RegisterClientScriptBlock(currentPage, typeof(ToastManager), "myToast", "showWarningToast('" + message + "')", true);
+        }
+
+        public static void ErrorToast(string message)
+        {
+            var currentPage = HttpContext.Current.Handler as Page;
+            ScriptManager.RegisterClientScriptBlock(currentPage, typeof(ToastManager), "myToast", "showErrorToast('" + message + "')", true);
         }
     }
+
 }
