@@ -37,7 +37,7 @@
                             <asp:Repeater ID="Repeater1" runat="server">
                                 <ItemTemplate>
 
-                                    <li class="chat-main__item">
+                                    <li class="chat-main__item <%# IsOwnerMessage() %>">
                                         <div class="chat-main__content">
                                             <div class="chat-main__avatar">
                                                 <asp:Image ID="ImgAvatar" runat="server" />
