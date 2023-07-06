@@ -52,7 +52,7 @@
                                                     <button class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
-                                                    <div class="chat-ellips__dropdown">
+<div class="chat-ellips__dropdown">
                                                         <button type="button" class="chat-ellips__dropdown__toggle" onclick="toggleDropdown(event)">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </button>
@@ -95,5 +95,11 @@
     </div>
 
     <script src="JS/message.js"></script>
+
+    <script>
+        function handlebtnSend() {
+            __doPostBack('<%= btnSend.UniqueID %>', ''); //gọi sự kiện của btnSend_click
+        }
+    </script>
 
 </asp:Content>

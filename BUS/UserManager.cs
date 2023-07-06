@@ -19,7 +19,7 @@ namespace BUS
             if (Request.Cookies["AuthToken"] == null) { return false; }
 
             string authToken = Request.Cookies["AuthToken"].Value;
-            bool isValid = getTokenUser(authToken);
+            bool isValid = getTokenUser(authToken) != -1;
 
             /*
                 string comment = isValid  ? "Valid " : "InValid ";
@@ -32,12 +32,13 @@ namespace BUS
 
 
         }
-        public static bool getTokenUser(string token)
+        public static int getTokenUser(string token)
         {
             InlineQuery qry = new InlineQuery();
             string query = $"Select Id From authTokens Where authToken = '{token}'";
             List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
-            return LoggedTokens.Count == 1;
+            if (LoggedTokens.Count == 0) { return -1; }
+            return LoggedTokens[0].Id;
         }
         public static string generateAndSetToken(int id, string username, string password)
         {
