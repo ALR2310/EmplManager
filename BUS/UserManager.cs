@@ -3,13 +3,88 @@ using SubSonic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BUS
 {
     public class UserManager
     {
+
+        public static void checkValidCookie(HttpRequest Request, HttpResponse Response)
+        {
+            if (Request.Cookies["AuthToken"] == null) { return; }
+
+            string authToken = Request.Cookies["AuthToken"].Value;
+            bool isValid = getTokenUser(authToken);
+
+            /*
+                string comment = isValid  ? "Valid " : "InValid ";
+                string script = $"alert(\" {comment}Cookie!! \")";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+            */
+
+            if (!isValid) { Response.Redirect("Login.aspx"); return; }
+
+
+        }
+        public static bool getTokenUser(string token)
+        {
+            InlineQuery qry = new InlineQuery();
+            string query = $"Select Id From authTokens Where authToken = '{token}'";
+            List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
+            return LoggedTokens.Count == 1;
+        }
+        public static string generateAndSetToken(int id, string username, string password)
+        {
+            InlineQuery qry = new InlineQuery();
+            string query = $"Select authToken From authTokens Where Id = {id}";
+
+
+            List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
+
+
+            if (LoggedTokens.Count == 1) { return LoggedTokens[0].authToken; }
+            string currentTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string tokenData = username + password + currentTime;
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenData));
+
+                // Convert the hashed bytes to a hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2"));
+                }
+                qry.Execute($"Insert Into authTokens Values ({id},'{sb.ToString()}')");
+                return sb.ToString();
+            }
+        }
+        public static string Login(string username, string password)
+        {
+            InlineQuery qry = new InlineQuery();
+
+
+
+            // Concatenate the username, password, and current time
+
+
+            // Compute the hash of the token data using SHA256
+
+            List<User> LoggedUsers = qry.ExecuteTypedList<User>($"Select * From Users Where (UserName = '{username}' or Email = '{username}') and Password = '{password}'");
+
+
+            if (LoggedUsers.Count == 0)
+            {
+                return "_failed_";
+            }
+
+            return generateAndSetToken(LoggedUsers[0].Id, username, password);
+        }
         public static User InsertUser(User user)
         {
             return new UserController().Insert(user);

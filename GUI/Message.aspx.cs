@@ -13,6 +13,8 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            UserManager.checkValidCookie(Request, Response);
+
             if (!IsPostBack)
             {
                 List<DAL.Message> messages = MessageManager.GetListMessageByStatus(1);

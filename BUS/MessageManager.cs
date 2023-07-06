@@ -25,7 +25,7 @@ namespace BUS
         {
 
             var query = new InlineQuery();
-            var sqlquery = $"select * from messages inner join users on usrers.id = messages.userid where status = {id}";
+            var sqlquery = $"select * from messages inner join users on users.id = messages.userid where status = {id}";
             List<Message> list = query.ExecuteTypedList<Message>(sqlquery);
             return list;
 
