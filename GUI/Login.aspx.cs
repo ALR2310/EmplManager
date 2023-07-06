@@ -16,11 +16,15 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) { return; }
-            
+            if (IsPostBack) { return; }
             bool validcookie = UserManager.checkValidCookie(Request);
+            Debug.WriteLine(validcookie);
+            if (validcookie)
+            {
+                string script = "this.location = \"./message.aspx\";";
 
-            if (validcookie) { Response.Redirect("login.aspx"); }
+                ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
+            }
             
           
         }
