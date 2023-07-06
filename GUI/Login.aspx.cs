@@ -19,12 +19,16 @@ namespace GUI
             if (Request.Cookies["AuthToken"] == null) { return; }
             
                 string authToken = Request.Cookies["AuthToken"].Value;
-              
-                string comment = UC.getTokenUser(authToken) ? "Valid " : "InValid ";
-                string script = $"alert(\" {comment}Cookie!! \")";
+                bool isValid = UC.getTokenUser(authToken);
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-           
+                /*
+                    string comment = isValid  ? "Valid " : "InValid ";
+                    string script = $"alert(\" {comment}Cookie!! \")";
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+                */
+
+                if (isValid) { Response.Redirect("Message.aspx");  }
 
                       
         }
