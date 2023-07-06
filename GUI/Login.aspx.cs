@@ -16,16 +16,17 @@ namespace GUI
         UserController UC = new UserController();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["AuthToken"] != null)
-            {
+            if (Request.Cookies["AuthToken"] == null) { return; }
+            
                 string authToken = Request.Cookies["AuthToken"].Value;
-                if (UC.getTokenUser(authToken))
-                {
-                    string script = $"alert(\" Valid Cookie!! \")";
+              
+                string comment = UC.getTokenUser(authToken) ? "Valid " : "InValid ";
+                string script = $"alert(\" {comment}Cookie!! \")";
 
-                    ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-                }
-            }          
+                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+           
+
+                      
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

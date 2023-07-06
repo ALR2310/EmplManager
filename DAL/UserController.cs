@@ -66,13 +66,19 @@ namespace DAL
             coll.LoadAndCloseReader(qry.ExecuteReader());
             return coll;
         }
-
+        public bool getTokenUser(string token)
+        {
+            InlineQuery qry = new InlineQuery();
+            string query = $"Select Id From authTokens Where authToken = '{token}'";
+            List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
+            return LoggedTokens.Count == 1;
+        }
         public string generateAndSetToken(int id,string username, string password)
         {
             InlineQuery qry = new InlineQuery();
             string query = $"Select authToken From authTokens Where Id = {id}";
 
-            Debug.WriteLine(query);
+
             List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
 
 
@@ -89,7 +95,7 @@ namespace DAL
                 {
                     sb.Append(hashBytes[i].ToString("x2"));
                 }
-
+                qry.Execute($"Insert Into authTokens Values ({id},'{sb.ToString()}')");
                 return sb.ToString();
             }
         }
