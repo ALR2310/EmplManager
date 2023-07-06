@@ -32,7 +32,7 @@ namespace GUI
             string script = $"alert(\"{ListUser.Count} \")";
 
             ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-            
+            Session["AuthToken"] = "";
         }
     }
 }
