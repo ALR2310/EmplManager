@@ -2,6 +2,7 @@
 using SubSonic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,9 +14,9 @@ namespace BUS
     public class UserManager
     {
 
-        public static void checkValidCookie(HttpRequest Request, HttpResponse Response)
+        public static bool checkValidCookie(HttpRequest Request)
         {
-            if (Request.Cookies["AuthToken"] == null) { return; }
+            if (Request.Cookies["AuthToken"] == null) { return false; }
 
             string authToken = Request.Cookies["AuthToken"].Value;
             bool isValid = getTokenUser(authToken);
@@ -27,7 +28,7 @@ namespace BUS
                 ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
             */
 
-            if (!isValid) { Response.Redirect("Login.aspx"); return; }
+            return isValid;
 
 
         }

@@ -16,11 +16,19 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            UserManager.checkValidCookie(Request, Response);
+            if (!IsPostBack) { return; }
+            
+            bool validcookie = UserManager.checkValidCookie(Request);
+
+            if (validcookie) { Response.Redirect("login.aspx"); }
+            
+          
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            if (!IsPostBack) { return; }
+
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
 

@@ -13,7 +13,7 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            UserManager.checkValidCookie(Request, Response);
+           
 
             if (!IsPostBack)
             {
@@ -21,7 +21,15 @@ namespace GUI
 
                 Repeater1.DataSource = messages;
                 Repeater1.DataBind();
+                return;
             }
+
+            if (!IsPostBack) { return; }
+
+            bool validcookie = UserManager.checkValidCookie(Request);
+
+            if (validcookie) { Response.Redirect("login.aspx"); }
+
 
 
         }
