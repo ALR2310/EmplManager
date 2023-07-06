@@ -82,7 +82,7 @@
                             <button class="btn btn-chat-footer" onclick="handlebtnSend()">
                                 Send
                                 <i class="fa-solid fa-paper-plane"></i>
-                                <asp:Button ID="btnSend" runat="server" Text="" Style="display: none" />
+                                <asp:Button ID="btnSend" runat="server" OnClick="btnSend_Click" Style="display: none" />
                             </button>
                         </div>
                     </div>
