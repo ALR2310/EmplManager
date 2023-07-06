@@ -96,4 +96,10 @@
 
     <script src="JS/message.js"></script>
 
+    <script>
+        function handlebtnSend() {
+            __doPostBack('<%= btnSend.UniqueID %>', ''); //gọi sự kiện của btnSend_click
+        }
+    </script>
+
 </asp:Content>

@@ -35,13 +35,15 @@ namespace GUI
 
         protected void btnSend_Click(object sender, EventArgs e)
         {
-            DAL.Message message = new DAL.Message();
-            message.UserId = 1;
-            message.Content = txt_Message.Text;
-            message.AtCreate = DateTime.Now;
-            message.Status = 1;
+            //DAL.Message message = new DAL.Message();
+            //message.UserId = 1;
+            //message.Content = txt_Message.Text;
+            //message.AtCreate = DateTime.Now;
+            //message.Status = 1;
 
-            MessageManager.InsertMessage(message);
+            //MessageManager.InsertMessage(message);
+
+            txt_Message.Text = "hello";
         }
     }
 }
