@@ -23,7 +23,7 @@ namespace BUS
 
         public static List<Message> GetListMessage()
         {
-            return new Select().From(Message.Schema.TableName).ExecuteTypedList<Message>();
+            return new Select().From(Message.Schema.TableName).InnerJoin<User>().ExecuteTypedList<Message>();
         }
 
         public static List<Message> GetListMessageById(int id)
