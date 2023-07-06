@@ -10,9 +10,11 @@ namespace GUI
 {
     public partial class UserInfor : System.Web.UI.Page
     {
+        private int UserId;
         protected void Page_Load(object sender, EventArgs e)
         {
             User user = new User();
+
         }
     }
 }
