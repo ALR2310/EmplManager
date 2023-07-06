@@ -15,7 +15,7 @@ namespace GUI
         {
             if (!IsPostBack)
             {
-                List<DAL.Message> messages = MessageManager.GetListMessage();
+                List<DAL.Message> messages = MessageManager.GetListMessageByStatus(1);
 
                 Repeater1.DataSource = messages;
                 Repeater1.DataBind();
