@@ -14,25 +14,26 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             if (!IsPostBack)
             {
-                List<MessageJoinUser> messages = MessageManager.GetListMessageByStatus();
+                bool validcookie = UserManager.checkValidCookie(Request);
 
-                Repeater1.DataSource = messages;
-                Repeater1.DataBind();
+                if (validcookie) { Response.Redirect("login.aspx"); }
+
+                LoadMessage();
+            }
+            {
                 return;
             }
+        }
 
-            if (!IsPostBack) { return; }
+        void LoadMessage()
+        {
+            List<MessageJoinUser> messages = MessageManager.GetListMessageByStatus();
 
-            bool validcookie = UserManager.checkValidCookie(Request);
-
-            if (validcookie) { Response.Redirect("login.aspx"); }
-
-
-
+            Repeater1.DataSource = messages;
+            Repeater1.DataBind();
+            return;
         }
     }
 }
