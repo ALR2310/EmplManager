@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllStructs.cs" />
+    <Compile Include="AuthTokens.cs" />
     <Compile Include="Like.cs" />
     <Compile Include="LikeController.cs" />
     <Compile Include="Message.cs" />

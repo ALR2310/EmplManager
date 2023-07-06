@@ -26,13 +26,14 @@ namespace GUI
 
 
 
-            List<User> ListUser = UC.Login(userName, password);
+            String authToken = UC.Login(userName, password);
 
-            Debug.WriteLine(ListUser.Count);
-            string script = $"alert(\"{ListUser.Count} \")";
+     
+            string script = $"alert(\"{authToken} \")";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-            Session["AuthToken"] = "";
+            HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+
+            Response.Cookies.Add(authCookie);
         }
     }
 }
