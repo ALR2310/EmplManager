@@ -14,7 +14,11 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
+          
+            bool validcookie = UserManager.checkValidCookie(Request);
+
+            if (!validcookie) { Response.Redirect("login.aspx"); return; }
 
             if (!IsPostBack)
             {
@@ -25,11 +29,7 @@ namespace GUI
                 return;
             }
 
-            if (!IsPostBack) { return; }
-
-            bool validcookie = UserManager.checkValidCookie(Request);
-
-            if (validcookie) { Response.Redirect("login.aspx"); }
+        
 
 
         void LoadMessage()
