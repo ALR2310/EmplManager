@@ -39,6 +39,7 @@ namespace GUI
 
         protected void btnSend_Click(object sender, EventArgs e)
         {
+
             Debug.WriteLine(UserIdFromCookie);
             DAL.Message message = new DAL.Message();
             message.UserId = UserIdFromCookie;
@@ -48,6 +49,7 @@ namespace GUI
 
   
             MessageManager.InsertMessage(message);
+
         }
     }
 }

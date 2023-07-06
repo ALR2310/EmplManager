@@ -13,5 +13,26 @@ namespace GUI
         {
 
         }
+
+        protected void linkLogout_ServerClick(object sender, EventArgs e)
+        {
+            Logout();
+        }
+
+        protected void A1_ServerClick(object sender, EventArgs e)
+        {
+            Logout();
+        }
+
+        public void Logout()
+        {
+            HttpCookie cookie = Request.Cookies["AuthToken"];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+            Response.Redirect("Login.aspx");
+        }
     }
 }
