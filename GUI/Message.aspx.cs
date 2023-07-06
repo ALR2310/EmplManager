@@ -14,23 +14,15 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-          
-            bool validcookie = UserManager.checkValidCookie(Request);
-
-            if (!validcookie) { Response.Redirect("login.aspx"); return; }
-
             if (!IsPostBack)
             {
-                List<DAL.Message> messages = MessageManager.GetListMessageByStatus(1);
+                bool validcookie = UserManager.checkValidCookie(Request);
 
-                Repeater1.DataSource = messages;
-                Repeater1.DataBind();
-                return;
+                if (!validcookie) { Response.Redirect("login.aspx"); return; }
+
+                LoadMessage();
             }
-
-        
-
+        }
 
         void LoadMessage()
         {
