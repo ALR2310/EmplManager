@@ -72,7 +72,6 @@
   <ItemGroup>
     <Content Include="EditUserInfor.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Styles\chat.css" />
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />
     <Content Include="Images\google-logo.png" />
