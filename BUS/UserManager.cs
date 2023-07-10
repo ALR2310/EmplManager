@@ -123,5 +123,7 @@ namespace BUS
         {
             return new Select().From(User.Schema.TableName).Where(User.Columns.UserName).IsEqualTo(userName).ExecuteScalar<int>();
         }
+
+        //count 
     }
 }
