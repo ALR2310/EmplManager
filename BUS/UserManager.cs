@@ -2,6 +2,8 @@
 using SubSonic;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
@@ -124,6 +126,12 @@ namespace BUS
             return new Select().From(User.Schema.TableName).Where(User.Columns.UserName).IsEqualTo(userName).ExecuteScalar<int>();
         }
 
-        //count 
+        //count day user online
+        public static int CountDayUserOnline(int id)
+        {
+            var sql = new InlineQuery();
+            var sqlquery = "";
+
+        }
     }
 }

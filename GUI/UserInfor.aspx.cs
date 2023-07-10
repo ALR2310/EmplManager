@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -25,48 +26,44 @@ namespace GUI
 
         void LoadUser()
         {
+            User user = UserManager.GetUsersById(UserIdFromCookie);
 
-            Debug.WriteLine(UserIdFromCookie);
-            User user = new User();
-            user.Id = UserIdFromCookie;
-
-            UserManager.GetUsersById(user.Id);
-
-            ImageAvatar.ImageUrl = user.Avatar;
-            lblAtCreate.Text = user.UserName;
-            lblDisplayName.Text = user.UserName;
-            lblDisplayName1.Text = user.UserName;
-            lblDisplayName2.Text = user.UserName;
-            lblGooogleId.Text = user.UserName;
-            lblEmail.Text = user.UserName;
-            lblAtCreate.Text = user.AtCreate.ToString();
-            lblAtCreate1.Text = user.AtCreate.ToString();
-
-            switch (user.UserType)
+            if (user != null)
             {
-                case 0:
-                    lblUserType.Text = "Admin";
-                    break;
-                case 1:
-                    lblUserType.Text = "User";
-                    break;
+                DateTime DateJoin = (DateTime)user.AtCreate;
+
+                ImageAvatar.ImageUrl = user.Avatar;
+                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
+                lblDisplayName.Text = user.DisplayName;
+                lblDisplayName1.Text = user.DisplayName;
+                lblDisplayName2.Text = user.DisplayName;
+                lblGooogleId.Text = user.GoogleId.ToString();
+                lblEmail.Text = user.Email;
+                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
+                lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
+
+                switch (user.UserType)
+                {
+                    case 0:
+                        lblUserType.Text = "Admin";
+                        break;
+                    case 1:
+                        lblUserType.Text = "User";
+                        break;
+                }
+
+                switch (user.Status)
+                {
+                    case 0:
+                        lblStatus.Text = "Tệ";
+                        lblStatus.Style.Add("Color", "red");
+                        break;
+                    case 1:
+                        lblStatus.Text = "Tốt";
+                        lblStatus.Style.Add("Color", "green");
+                        break;
+                }
             }
-
-            switch (user.Status)
-            {
-                case 0:
-                    lblStatus.Text = "Tệ";
-                    lblStatus.Style.Add("Color", "red");
-                    break;
-                case 1:
-                    lblStatus.Text = "Tốt";
-                    lblStatus.Style.Add("Color", "green");
-                    break;
-            }
-
-
-
-
         }
     }
 }
