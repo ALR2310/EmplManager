@@ -74,6 +74,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />
+    <Content Include="Images\addAvatar.svg" />
     <Content Include="Images\google-logo.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\sweetsoft-logo.png" />
