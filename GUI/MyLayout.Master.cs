@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +12,12 @@ namespace GUI
     public partial class MyLayout : System.Web.UI.MasterPage
     {
         public static User UserFromCookie;
-        protected void Page_Load(object sender, EventArgs e)
+
+        private void AssignInfos()
+        {
+            lblUserName.Text = UserFromCookie.DisplayName;
+        }
+        protected void Page_Init(object sender, EventArgs e)
         {
 
             bool validcookie = UserManager.checkValidCookie(Request);
@@ -20,8 +26,11 @@ namespace GUI
 
             UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
 
-            lblUserName.Text = UserFromCookie.DisplayName;
 
+
+           
+                lblUserName.Text = UserFromCookie.DisplayName;
+            
         }
 
         protected void linkLogout_ServerClick(object sender, EventArgs e)
