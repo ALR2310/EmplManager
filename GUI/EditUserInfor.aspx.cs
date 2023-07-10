@@ -12,7 +12,7 @@ namespace GUI
 {
     public partial class EditUserInfor : System.Web.UI.Page
     {
-        private User UserFromCookie;
+        private static User UserFromCookie;
 
         private void AssignInfo()
         {
@@ -26,17 +26,29 @@ namespace GUI
             {
                 UserFromCookie = MyLayout.UserFromCookie;
                 AssignInfo();
-
+                Debug.WriteLine("Assigned User");
             }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (UserFromCookie.Id == UserManager.getTokenUser(Request.Cookies["AuthToken"].Value).Id)
+            if (IsPostBack)
             {
-                ToastManager.SuccessToast("Lưu thay đổi thành công!");
+                User CheckingValidUser = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+
+
+                Debug.WriteLine(UserFromCookie.Id);
+                Debug.WriteLine(CheckingValidUser.Id);
+                if (UserFromCookie.Id == CheckingValidUser.Id)
+                {
+                    UserFromCookie.Email = tblEmail.Text;
+                    UserFromCookie.DisplayName = tblDisplayName.Text;
+                    UserFromCookie.UserName = tblUserName.Text;
+                    Debug.WriteLine("Lưu thàng công");
+                    
+                }
+                
             }
-            return;
         }
     }
 }

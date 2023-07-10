@@ -28,9 +28,10 @@ namespace GUI
 
 
 
-           
-                lblUserName.Text = UserFromCookie.DisplayName;
-            
+            Debug.WriteLine("Loaded User");
+            AssignInfos();
+
+
         }
 
         protected void linkLogout_ServerClick(object sender, EventArgs e)
