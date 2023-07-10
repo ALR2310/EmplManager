@@ -16,7 +16,8 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) {
+            if (!IsPostBack)
+            {
                 bool validcookie = UserManager.checkValidCookie(Request);
                 Debug.WriteLine(validcookie);
                 if (validcookie)
@@ -37,14 +38,10 @@ namespace GUI
                 string userName = txtUserName.Text;
                 string password = txtPassword.Text;
 
-
-
                 String authToken = UserManager.Login(userName, password);
 
-
-
                 HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
-
+                authCookie.Expires = DateTime.Now.AddDays(7);
                 Response.Cookies.Add(authCookie);
 
                 if (authToken != "_failed_")

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 
@@ -11,6 +12,7 @@ namespace GUI
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            RouteTable.Routes.MapPageRoute("", "", "~/Message.aspx");
         }
     }
 }
