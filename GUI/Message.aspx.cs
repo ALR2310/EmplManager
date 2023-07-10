@@ -22,9 +22,11 @@ namespace GUI
         {
             if (!IsPostBack)
             {
+                bool validcookie = UserManager.checkValidCookie(Request);
 
+                if (!validcookie) { Response.Redirect("login.aspx"); return; }
 
-                UserFromCookie = MyLayout.UserFromCookie;
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
 
               
 

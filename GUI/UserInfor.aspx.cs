@@ -21,13 +21,17 @@ namespace GUI
                 bool validcookie = UserManager.checkValidCookie(Request);
 
                 if (!validcookie) { Response.Redirect("login.aspx"); return; }
+
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+
+
             }
         }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                UserFromCookie = MyLayout.UserFromCookie;
+             
            
                 LoadUser();
             }
