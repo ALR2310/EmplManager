@@ -14,29 +14,15 @@ namespace GUI
     public partial class UserInfor : System.Web.UI.Page
     {
         private User UserFromCookie;
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                bool validcookie = UserManager.checkValidCookie(Request);
-
-                if (!validcookie) { Response.Redirect("login.aspx"); return; }
-
-                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-
-
-            }
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-             
-           
+                UserFromCookie = MyLayout.UserFromCookie;
                 LoadUser();
             }
         }
-
+     
         void LoadUser()
         {
             User user = UserManager.GetUsersById(UserFromCookie.Id);

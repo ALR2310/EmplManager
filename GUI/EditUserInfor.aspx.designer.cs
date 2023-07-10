@@ -24,15 +24,6 @@ namespace GUI
         protected global::System.Web.UI.WebControls.Image ImageAvatar;
 
         /// <summary>
-        /// uploadAvatar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload uploadAvatar;
-
-        /// <summary>
         /// tblEmail control.
         /// </summary>
         /// <remarks>

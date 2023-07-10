@@ -18,8 +18,8 @@
                         <label for="file-upload" class="custom-file-upload">
                             <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
                         </label>
-                        <%--<input id="file-upload" type="file" />--%>
-                        <asp:FileUpload ID="uploadAvatar" runat="server" />
+                        <input id="file-upload" type="file" />
+                        <%--<asp:FileUpload ID="uploadAvatar" runat="server" />--%>
                     </div>
                 </div>
                 <div class="userInfo-header__desc">

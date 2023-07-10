@@ -18,26 +18,12 @@ namespace GUI
         public static User UserFromCookie;
         private int index = 0;
         private List<MessageJoinUser> messages;
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                bool validcookie = UserManager.checkValidCookie(Request);
-
-                if (!validcookie) { Response.Redirect("login.aspx"); return; }
-
-                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-
-              
-
-
-            }
-        }
-
+     
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
             }
         }
