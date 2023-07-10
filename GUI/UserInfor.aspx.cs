@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -12,61 +13,71 @@ namespace GUI
 {
     public partial class UserInfor : System.Web.UI.Page
     {
-        private static int UserIdFromCookie;
+        public static User UserFromCookie;
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                bool validcookie = UserManager.checkValidCookie(Request);
+
+                if (!validcookie) { Response.Redirect("login.aspx"); return; }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                UserIdFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value).Id;
-                Debug.WriteLine(UserIdFromCookie);
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
                 LoadUser();
             }
         }
 
         void LoadUser()
         {
+            User user = UserManager.GetUsersById(UserFromCookie.Id);
 
-            Debug.WriteLine(UserIdFromCookie);
-            User user = new User();
-            user.Id = UserIdFromCookie;
-
-            UserManager.GetUsersById(user.Id);
-
-            ImageAvatar.ImageUrl = user.Avatar;
-            lblAtCreate.Text = user.UserName;
-            lblDisplayName.Text = user.UserName;
-            lblDisplayName1.Text = user.UserName;
-            lblDisplayName2.Text = user.UserName;
-            lblGooogleId.Text = user.UserName;
-            lblEmail.Text = user.UserName;
-            lblAtCreate.Text = user.AtCreate.ToString();
-            lblAtCreate1.Text = user.AtCreate.ToString();
-
-            switch (user.UserType)
+            if (user != null)
             {
-                case 0:
-                    lblUserType.Text = "Admin";
-                    break;
-                case 1:
-                    lblUserType.Text = "User";
-                    break;
+                DateTime DateJoin = (DateTime)user.AtCreate;
+
+                ImageAvatar.ImageUrl = user.Avatar;
+                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
+                lblDisplayName.Text = user.DisplayName;
+                lblDisplayName1.Text = user.DisplayName;
+                lblDisplayName2.Text = user.DisplayName;
+                lblGooogleId.Text = user.GoogleId.ToString();
+                lblEmail.Text = user.Email;
+                lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
+
+                //Đếm số ngày hoạt động của user này
+                DateTime Today = DateTime.Now;
+                lblDayOnline.Text = Today.Subtract(DateJoin).Days.ToString();
+
+                //Đếm số lượng tin nhắn
+                lblChatCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString();
+
+                switch (user.UserType)
+                {
+                    case 0:
+                        lblUserType.Text = "Admin";
+                        break;
+                    case 1:
+                        lblUserType.Text = "User";
+                        break;
+                }
+
+                switch (user.Status)
+                {
+                    case 0:
+                        lblStatus.Text = "Tệ";
+                        lblStatus.Style.Add("Color", "red");
+                        break;
+                    case 1:
+                        lblStatus.Text = "Tốt";
+                        lblStatus.Style.Add("Color", "green");
+                        break;
+                }
             }
-
-            switch (user.Status)
-            {
-                case 0:
-                    lblStatus.Text = "Tệ";
-                    lblStatus.Style.Add("Color", "red");
-                    break;
-                case 1:
-                    lblStatus.Text = "Tốt";
-                    lblStatus.Style.Add("Color", "green");
-                    break;
-            }
-
-
-
-
         }
     }
 }

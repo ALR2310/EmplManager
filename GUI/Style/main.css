@@ -179,12 +179,20 @@ html {
     padding: 15px 0;
 }
 
-.sidebar-list + .sidebar-list {
-    border-top: 1px solid #ddd;
+.sidebar-item__link {
+    display: flex;
 }
 
-.sidebar-item i {
-    margin-right: 10px;
+    .sidebar-item__link i {
+        flex: 1;
+    }
+
+    .sidebar-item__link span {
+        flex: 5;
+    }
+
+.sidebar-list + .sidebar-list {
+    border-top: 1px solid #ddd;
 }
 
 .sidebar-item a {
