@@ -88,6 +88,7 @@
     <Content Include="Register.aspx" />
     <Content Include="Style\main.css" />
     <Content Include="Style\toast.css" />
+    <Content Include="Style\userinfo.css" />
     <Content Include="UserInfor.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
