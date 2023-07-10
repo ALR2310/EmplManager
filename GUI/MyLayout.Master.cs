@@ -11,7 +11,10 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblUserName.Text = Message.UserFromCookie.DisplayName;
+            if (Message.UserFromCookie != null)
+            {
+                lblUserName.Text = Message.UserFromCookie.DisplayName;
+            }
         }
 
         protected void linkLogout_ServerClick(object sender, EventArgs e)
