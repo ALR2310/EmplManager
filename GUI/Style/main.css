@@ -762,7 +762,7 @@ html {
     display: flex;
     height: 35px;
     margin-top: 10px;
-    width: 50%;
+    width: 70%;
     border-radius: 5px;
     border: 1px solid var(--border-color);
     align-items: center;
@@ -789,7 +789,7 @@ html {
 
 .userInfo-header__submit {
     height: 35px;
-    width: 50%;
+    width: 70%;
     border-radius: 5px;
     margin-top: 30px;
     display: flex;
