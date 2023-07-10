@@ -41,6 +41,7 @@ namespace BUS
             List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
             if (LoggedTokens.Count == 0) { return null; }
             return GetUsersById(LoggedTokens[0].Id);
+
         }
         public static string generateAndSetToken(int id, string username, string password)
         {
@@ -65,6 +66,7 @@ namespace BUS
                     sb.Append(hashBytes[i].ToString("x2"));
                 }
                 qry.Execute($"Insert Into authTokens Values ({id},'{sb.ToString()}')");
+
                 return sb.ToString();
             }
         }

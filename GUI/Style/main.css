@@ -730,8 +730,17 @@ html {
         padding: 10px 0;
     }
 
-/* css trang EditUser */
+        .userInfo-header__desc p a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
 
+            .userInfo-header__desc p a:hover {
+                opacity: 0.8;
+                text-decoration: underline;
+            }
+
+/* css trang EditUser */
 .userInfo-header__info input[type="file"] {
     display: none;
 }
