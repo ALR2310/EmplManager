@@ -44,9 +44,9 @@ namespace GUI
                     UserFromCookie.Email = tblEmail.Text;
                     UserFromCookie.DisplayName = tblDisplayName.Text;
                     UserFromCookie.UserName = tblUserName.Text;
-                    UserFromCookie.Save(); 
-                    Debug.WriteLine("Lưu thàng công");
-                    
+                    UserFromCookie.Save();
+                    ToastManager.SuccessToast("Cập Nhật Thành Công..");
+
                 }
                 
             }
