@@ -18,7 +18,8 @@
                         <label for="file-upload" class="custom-file-upload">
                             <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
                         </label>
-                        <input id="file-upload" type="file" />
+                        <%--<input id="file-upload" type="file" />--%>
+                        <asp:FileUpload ID="uploadAvatar" runat="server" />
                     </div>
                 </div>
                 <div class="userInfo-header__desc">
@@ -35,11 +36,22 @@
                         <i class="fa-solid fa-user"></i>
                         <asp:TextBox ID="tblUserName" runat="server" type="text" placeholder="Tên Đăng Nhập"></asp:TextBox>
                     </div>
+                    <div class="userInfo-header__submit">
+                        <button type="button" onclick="handleSaveEdit()">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Lưu Lại
+                            <asp:Button ID="btnSave" OnClick="btnSave_Click" runat="server" Style="display: none" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <script>
+        function handleSaveEdit() {
+            __doPostBack('<%= btnSave.UniqueID %>', '');
+        }
+    </script>
     <script src="JS/edituser.js"></script>
 
 </asp:Content>

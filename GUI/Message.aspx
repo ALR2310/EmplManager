@@ -52,7 +52,7 @@
                                                     <button class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
-<div class="chat-ellips__dropdown">
+                                                    <div class="chat-ellips__dropdown">
                                                         <button type="button" class="chat-ellips__dropdown__toggle" onclick="toggleDropdown(event)">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </button>
@@ -79,7 +79,7 @@
                     <div class="chat-footer">
                         <div class="chat-footer__form">
                             <asp:TextBox ID="txt_Message" TextMode="MultiLine" runat="server" spellcheck="false" placeholder="Enter Message..." onkeypress="handleKeyPress(event)"></asp:TextBox>
-                            <button class="btn btn-chat-footer" onclick="handlebtnSend()">
+                            <button class="btn btn-chat-footer" onclick="handleSendMessage()">
                                 Send
                                 <i class="fa-solid fa-paper-plane"></i>
                                 <asp:Button ID="btnSend" runat="server" OnClick="btnSend_Click" Style="display: none" />
@@ -97,7 +97,7 @@
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      
+
         function scrollBottom() {
             console.log("A");
             const scroll = $(".chat-main__list")[0];
@@ -107,36 +107,24 @@
         function clearText() {
             $("#ContentPlaceHolder1_txt_Message").val("");
         }
-        scrollBottom();        
-        
+        scrollBottom();
+
     </script>
 
     <script>
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
-                event.preventDefault(); 
+                event.preventDefault();
 
-             
                 handleSendMessage();
             }
         }
 
         function handleSendMessage() {
-        
+
             __doPostBack('<%= btnSend.UniqueID %>', '');
         }
     </script>
-
-    <script>
-        function handlebtnSend() {
-            __doPostBack('<%= btnSend.UniqueID %>', ''); //gọi sự kiện của btnSend_click
-        }
-
-     
-    </script>
-   
-
-
 
 </asp:Content>
 
