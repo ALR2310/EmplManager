@@ -129,9 +129,11 @@ namespace BUS
         //count day user online
         public static int CountDayUserOnline(int id)
         {
-            var sql = new InlineQuery();
-            var sqlquery = "";
+            var query = new InlineQuery();
+            var sqlquery = $"SELECT COUNT(Content) AS 'total' FROM dbo.Messages WHERE UserId = {id}";
 
+            int count = query.ExecuteScalar<int>(sqlquery);
+            return count;
         }
     }
 }

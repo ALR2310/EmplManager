@@ -13,20 +13,28 @@ namespace GUI
 {
     public partial class UserInfor : System.Web.UI.Page
     {
-        private static int UserIdFromCookie;
+        public static User UserFromCookie;
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                bool validcookie = UserManager.checkValidCookie(Request);
+
+                if (!validcookie) { Response.Redirect("login.aspx"); return; }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                UserIdFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-                Debug.WriteLine(UserIdFromCookie);
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
                 LoadUser();
             }
         }
 
         void LoadUser()
         {
-            User user = UserManager.GetUsersById(UserIdFromCookie);
+            User user = UserManager.GetUsersById(UserFromCookie.Id);
 
             if (user != null)
             {
@@ -39,8 +47,14 @@ namespace GUI
                 lblDisplayName2.Text = user.DisplayName;
                 lblGooogleId.Text = user.GoogleId.ToString();
                 lblEmail.Text = user.Email;
-                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
                 lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
+
+                //Đếm số ngày hoạt động của user này
+                DateTime Today = DateTime.Now;
+                lblDayOnline.Text = Today.Subtract(DateJoin).Days.ToString();
+
+                //Đếm số lượng tin nhắn
+                lblChatCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString();
 
                 switch (user.UserType)
                 {
