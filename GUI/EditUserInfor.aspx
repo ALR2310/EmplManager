@@ -35,6 +35,13 @@
                         <i class="fa-solid fa-user"></i>
                         <asp:TextBox ID="tblUserName" runat="server" type="text" placeholder="Tên Đăng Nhập"></asp:TextBox>
                     </div>
+                    <div class="userInfo-header__submit">
+                        <button>
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Lưu Lại
+                            <asp:Button ID="btnSave" OnClick="btnSave_Click" runat="server" Text="Button" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

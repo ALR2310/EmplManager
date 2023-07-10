@@ -741,7 +741,12 @@ html {
     padding: 6px 12px;
     cursor: pointer;
     border-radius: 15px;
+    transition: all 0.5s ease;
 }
+
+    .custom-file-upload:hover {
+        border-color: var(--primary-color);
+    }
 
 .userInfo-header__input {
     display: flex;
@@ -751,6 +756,7 @@ html {
     border-radius: 5px;
     border: 1px solid var(--border-color);
     align-items: center;
+    transition: all 0.5s ease;
 }
 
     .userInfo-header__input i {
@@ -766,3 +772,33 @@ html {
         padding-left: 10px;
         background-color: transparent;
     }
+
+    .userInfo-header__input:hover {
+        border-color: var(--primary-color);
+    }
+
+.userInfo-header__submit {
+    height: 35px;
+    width: 50%;
+    border-radius: 5px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+    .userInfo-header__submit button {
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 10px;
+        outline: none;
+        width: 50%;
+        height: 100%;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.5s ease;
+    }
+
+        .userInfo-header__submit button:hover {
+            opacity: 0.8;
+        }
