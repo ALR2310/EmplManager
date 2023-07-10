@@ -95,11 +95,44 @@
     </div>
 
     <script src="JS/message.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      
+        function scrollBottom() {
+            console.log("A");
+            const scroll = $(".chat-main__list")[0];
+            scroll.scrollTo(0, scroll.scrollHeight);
+        }
+
+        function clearText() {
+            $("#ContentPlaceHolder1_txt_Message").val("");
+        }
+        scrollBottom();        
+        
+    </script>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.keyCode === 13 && !event.shiftKey) {
+                event.preventDefault(); 
+
+             
+                handleSendMessage();
+            }
+        }
+
+        function handleSendMessage() {
+        
+            __doPostBack('<%= btnSend.UniqueID %>', '');
+        }
+    </script>
 
     <script>
         function handlebtnSend() {
             __doPostBack('<%= btnSend.UniqueID %>', ''); //gọi sự kiện của btnSend_click
         }
+
+     
     </script>
    
 

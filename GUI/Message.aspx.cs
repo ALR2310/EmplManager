@@ -36,8 +36,10 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            LoadMessage();
+            if (!IsPostBack)
+            {
+                LoadMessage();
+            }
         }
       
         void LoadMessage()
@@ -46,6 +48,9 @@ namespace GUI
             index = 0;
             Repeater1.DataSource = messages;
             Repeater1.DataBind();
+
+          
+
             return;
         }
         protected string IsOwnerMessage()
@@ -69,7 +74,10 @@ namespace GUI
 
   
             MessageManager.InsertMessage(message);
+            LoadMessage();
 
+            ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
+            return;
         }
     }
 }

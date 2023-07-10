@@ -16,43 +16,48 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack) { return; }
-            bool validcookie = UserManager.checkValidCookie(Request);
-            Debug.WriteLine(validcookie);
-            if (validcookie)
-            {
-                string script = "this.location = \"./message.aspx\";";
+            if (!IsPostBack) {
+                bool validcookie = UserManager.checkValidCookie(Request);
+                Debug.WriteLine(validcookie);
+                if (validcookie)
+                {
+                    string script = "this.location = \"./message.aspx\";";
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
+                }
             }
-            
-          
+
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            if (!IsPostBack) { return; }
-
-            string userName = txtUserName.Text;
-            string password = txtPassword.Text;
-
-
-
-            String authToken = UserManager.Login(userName, password);
-
-     
-           
-            HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
-
-            Response.Cookies.Add(authCookie);
-
-            if (authToken != "_failed_")
+            if (IsPostBack)
             {
-                ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây..");
 
-                string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
+                string userName = txtUserName.Text;
+                string password = txtPassword.Text;
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+
+
+                String authToken = UserManager.Login(userName, password);
+
+
+
+                HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+
+                Response.Cookies.Add(authCookie);
+
+                if (authToken != "_failed_")
+                {
+                    ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây..");
+
+                    string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+                    return;
+                }
+                ToastManager.ErrorToast("Đăng nhập không thành công.. Sai Mật Khẩu hoặc Tên Đăng Nhập / Email");
+
             }
         }
     }

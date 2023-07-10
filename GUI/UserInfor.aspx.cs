@@ -17,7 +17,7 @@ namespace GUI
         {
             if (!IsPostBack)
             {
-                UserIdFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+                UserIdFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value).Id;
                 Debug.WriteLine(UserIdFromCookie);
                 LoadUser();
             }
