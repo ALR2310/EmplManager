@@ -34,7 +34,7 @@
                                     <asp:Image ID="ImgAvatar" runat="server" />
                                 </div>
                                 <button type="button" runat="server" class="dropbtn">
-                                    <asp:Label ID="lblUserName" runat="server" Text="Tên Người Dùng"></asp:Label>
+                                    <asp:Label ID="lblUserName" runat="server" Text="Tên người dùng"></asp:Label>
                                 </button>
                             </div>
                             <div class="dropdown-content">
@@ -100,5 +100,6 @@
     </form>
 
     <script src="JS/layout.js"></script>
+ 
 </body>
 </html>

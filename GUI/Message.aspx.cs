@@ -15,10 +15,10 @@ namespace GUI
 {
     public partial class Message : System.Web.UI.Page
     {
-        private static int UserIdFromCookie;
+        public static User UserFromCookie;
         private int index = 0;
         private List<MessageJoinUser> messages;
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_PreInit(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
@@ -26,12 +26,20 @@ namespace GUI
 
                 if (!validcookie) { Response.Redirect("login.aspx"); return; }
 
-                UserIdFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-                Debug.WriteLine(UserIdFromCookie);
-                LoadMessage();
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+
+              
+
+
             }
         }
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            
+            LoadMessage();
+        }
+      
         void LoadMessage()
         {
             messages = MessageManager.GetListMessageByStatus();
@@ -40,9 +48,9 @@ namespace GUI
             Repeater1.DataBind();
             return;
         }
-        public string IsOwnerMessage()
+        protected string IsOwnerMessage()
         {
-            string returned_str = UserIdFromCookie == messages[index].UserId ? "chat-main__item--right" : "";
+            string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
 
             index = index + 1;
 
@@ -52,9 +60,9 @@ namespace GUI
         protected void btnSend_Click(object sender, EventArgs e)
         {
 
-            Debug.WriteLine(UserIdFromCookie);
+        
             DAL.Message message = new DAL.Message();
-            message.UserId = UserIdFromCookie;
+            message.UserId = UserFromCookie.Id;
             message.Content = txt_Message.Text;
             message.AtCreate = DateTime.Now;
             message.Status = 1;

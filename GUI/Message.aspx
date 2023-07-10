@@ -101,6 +101,8 @@
             __doPostBack('<%= btnSend.UniqueID %>', ''); //gọi sự kiện của btnSend_click
         }
     </script>
+   
+
 
 
 </asp:Content>
