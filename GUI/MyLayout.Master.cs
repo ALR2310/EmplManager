@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BUS;
+using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +11,23 @@ namespace GUI
 {
     public partial class MyLayout : System.Web.UI.MasterPage
     {
+        public static User UserFromCookie;
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                bool validcookie = UserManager.checkValidCookie(Request);
+
+                if (!validcookie) { Response.Redirect("login.aspx"); return; }
+
+                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Message.UserFromCookie != null)
             {
                 lblUserName.Text = Message.UserFromCookie.DisplayName;

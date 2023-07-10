@@ -13,7 +13,7 @@ namespace GUI
 {
     public partial class UserInfor : System.Web.UI.Page
     {
-        public static User UserFromCookie;
+        private User UserFromCookie;
         protected void Page_PreInit(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,8 +27,8 @@ namespace GUI
         {
             if (!IsPostBack)
             {
-                UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-                Debug.WriteLine(UserFromCookie);
+                UserFromCookie = MyLayout.UserFromCookie;
+           
                 LoadUser();
             }
         }
