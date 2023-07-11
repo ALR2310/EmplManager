@@ -16,8 +16,7 @@ namespace GUI
     public partial class Message : System.Web.UI.Page
     {
         public static User UserFromCookie;
-        private int index = 0;
-        private int j = 0;
+   
         private List<MessageJoinUser> messages;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,8 +30,8 @@ namespace GUI
 
         void LoadMessage()
         {
-            messages = MessageManager.GetListMessageByStatus();
-            index = 0;
+            messages = MessageManager.GetListMessageByAtCreate();
+ 
             Repeater1.DataSource = messages;
             Repeater1.DataBind();
 
@@ -40,7 +39,7 @@ namespace GUI
 
             return;
         }
-        protected string IsOwnerMessage()
+        protected string IsOwnerMessage(int index)
         {
             string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
 
@@ -50,11 +49,11 @@ namespace GUI
 
         }
 
-        protected string IsHideDropdown()
+        protected string IsHideDropdown(int index)
         {
-            string returned_str = UserFromCookie.Id == messages[j].UserId ? "" : "hide";
+            string returned_str = UserFromCookie.Id == messages[index].UserId ? "" : "hide";
 
-            j = j + 1;
+     
 
             return returned_str;
         }

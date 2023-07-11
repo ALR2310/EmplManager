@@ -37,7 +37,7 @@
                             <asp:Repeater ID="Repeater1" runat="server">
                                 <ItemTemplate>
 
-                                    <li class="chat-main__item <%# IsOwnerMessage() %>">
+                                    <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
                                         <div class="chat-main__content">
                                             <div class="chat-main__avatar">
                                                 <asp:Image ID="ImgAvatar" runat="server" />
@@ -52,18 +52,19 @@
                                                     <button class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
-                                                    <div class="chat-ellips__dropdown <%# IsHideDropdown() %>">
-                                                        <button type="button" class="chat-ellips__dropdown__toggle" onclick="toggleDropdown(event)">
+                                                    <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
+                                                        <button type="button" class="chat-ellips__dropdown__toggle"  onmouseleave="toggleDropdown(event,'none')" onmouseenter="toggleDropdown(event,'block')">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                            <ul class="chat-ellips__dropdown__menu" >
+                                                                <li>
+                                                                    <asp:Button ID="Button1" runat="server" Text="Xoá, gỡ" />
+                                                                </li>
+                                                                <li>
+                                                                    <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
+                                                                </li>
+                                                            </ul>
                                                         </button>
-                                                        <ul class="chat-ellips__dropdown__menu">
-                                                            <li>
-                                                                <asp:Button ID="Button1" runat="server" Text="Xoá, gỡ" />
-                                                            </li>
-                                                            <li>
-                                                                <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
-                                                            </li>
-                                                        </ul>
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,7 +100,7 @@
     <script>
 
         function scrollBottom() {
-            console.log("A");
+       
             const scroll = $(".chat-main__list")[0];
             scroll.scrollTo(0, scroll.scrollHeight);
         }

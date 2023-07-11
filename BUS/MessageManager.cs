@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SubSonic;
 using DAL.Model;
+using System.Diagnostics;
 
 namespace BUS
 {
@@ -27,6 +28,16 @@ namespace BUS
             var query = new InlineQuery();
             var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
                 "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1";
+            List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
+            return list;
+        }
+
+        public static List<MessageJoinUser> GetListMessageByAtCreate()
+        {
+            var query = new InlineQuery();
+            var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
+                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1  order by Messages.AtCreate";
+            Debug.WriteLine(sqlquery);
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
         }

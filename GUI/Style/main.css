@@ -286,13 +286,18 @@ html {
     color: #cccccc;
     text-decoration: none;
 }
-
+.chat-main__ellips{
+    z-index: 2;
+}
+.chat-main__item:nth-last-child(-n+3) > div > .chat-item__box > .chat-main__ellips > .chat-ellips__dropdown > button > ul {
+    top: -340%;
+}
 .chat-main__item--right {
     justify-content: flex-end;
 }
 
     .chat-main__item--right .chat-main__content {
-        flex-direction: row-reverse;
+        flex-direction: row-reverse;    
         margin-right: 15px;
     }
 
@@ -311,9 +316,11 @@ html {
     .chat-main__item--right .chat-main__ellips {
         flex-direction: row-reverse;
         left: auto;
-        right: 102%;
+        right: 100%;
+        padding-right: 10px;
         top: 50%;
         transform: translateY(-50%);
+        z-index: 2;
     }
 
     .chat-main__item--right .chat-ellips__dropdown__menu {
