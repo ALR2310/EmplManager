@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true"  Inherits="GUI.Message" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -52,7 +52,7 @@
                                                     <button class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
-                                                    <div class="chat-ellips__dropdown">
+                                                    <div class="chat-ellips__dropdown <%# IsHideDropdown() %>">
                                                         <button type="button" class="chat-ellips__dropdown__toggle" onclick="toggleDropdown(event)">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </button>
