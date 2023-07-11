@@ -47,13 +47,13 @@ namespace GUI
                         String authToken = UserManager.Login(txtUserName.Text, txtPassword.Text);
                         HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
 
-
                         Response.Cookies.Add(authCookie);
-                        ToastManager.SuccessToast("Đăng ký tài khoản thành công! Chuẩn bị chuyển hướng trong vài giây..");
 
-                        string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
+                        string script = "toggleModal()";
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "mymodal", script, true);
 
-                        ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+                        //script = "setTimeout(function(){this.location = \"./message.aspx\"},5000)";
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
                     }
 
                     if (emailExists != 0)

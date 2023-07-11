@@ -7,10 +7,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="Style/main.css" />
     <link rel="stylesheet" href="Style/toast.css" />
+    <link rel="stylesheet" href="Style/modal.css" />
     <title>Đăng Nhập</title>
 </head>
 <body>
     <div id="toast"></div>
+    <div class="modal hide">
+        <span class="overlay"></span>
+        <div class="modal-box">
+
+            <div class="content-modal">
+                <i class="fa-regular fa-circle-check"></i>
+                <h2>Đăng Nhập Thành Công</h2>
+                <h3>Bạn đã đăng nhập tài khoản thành công, Chuẩn bị chuyển trang sau vài giây!</h3>
+            </div>
+
+            <div class="buttonsmodal">
+                <button class="btn-modal close-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
     <form id="form1" runat="server">
         <div class="container login-page">
             <div class="login">
@@ -57,6 +73,7 @@
             </div>
         </div>
     </form>
+    <script src="JS/modal.js"></script>
     <script src="JS/toast.js"></script>
 </body>
 </html>

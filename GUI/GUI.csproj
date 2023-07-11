@@ -70,6 +70,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Animation\Check\js.js" />
+    <Content Include="Animation\Check\style.css" />
     <Content Include="EditUserInfor.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\avatar-1.jpg" />
@@ -82,11 +84,13 @@
     <Content Include="JS\edituser.js" />
     <Content Include="JS\layout.js" />
     <Content Include="JS\message.js" />
+    <Content Include="JS\modal.js" />
     <Content Include="JS\toast.js" />
     <Content Include="Login.aspx" />
     <Content Include="Message.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Style\main.css" />
+    <Content Include="Style\modal.css" />
     <Content Include="Style\toast.css" />
     <Content Include="Style\userinfo.css" />
     <Content Include="UserInfor.aspx" />
@@ -153,7 +157,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Avatar\Uploads\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUS\BUS.csproj">
