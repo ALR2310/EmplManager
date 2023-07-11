@@ -42,11 +42,14 @@ namespace GUI
                 Debug.WriteLine(CheckingValidUser.Id);
                 if (UserFromCookie.Id == CheckingValidUser.Id)
                 {
+
+                    Debug.WriteLine(uploadAvatar.FileName);
+                    Debug.WriteLine("Saving...");
                     if (uploadAvatar.HasFile)
                     {
                         // Get the file name and extension
                         string fileName = $"U_{CheckingValidUser.Id}";
-                        string extension = Path.GetExtension(fileName);
+                        string extension = Path.GetExtension(uploadAvatar.FileName);
 
                         // Specify the directory to save the file
                         string uploadDirectory = Server.MapPath("~/Images/Avatar/Uploads");
@@ -56,7 +59,9 @@ namespace GUI
 
                         // Save the file to the server
                         uploadAvatar.SaveAs(Path.Combine(uploadDirectory, uniqueFileName));
-                        UserFromCookie.Avatar = Path.Combine(uploadDirectory, uniqueFileName);
+                        Debug.WriteLine(Path.Combine(uploadDirectory, uniqueFileName));
+                        Debug.WriteLine(Path.Combine("/Images/Avatar/Uploads", uniqueFileName));
+                        UserFromCookie.Avatar = Path.Combine("/Images/Avatar/Uploads", uniqueFileName);
                         // Display a success message or perform further processing
                         // ...
                     }
@@ -70,7 +75,7 @@ namespace GUI
 
 
                 }
-                
+              
             }
         }
     }

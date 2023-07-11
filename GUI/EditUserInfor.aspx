@@ -16,7 +16,7 @@
 
     <div class="content">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+
             <ContentTemplate>
                 <div class="userInfo">
                     <div class="userInfo__header">
@@ -25,11 +25,11 @@
                                 <asp:Image ID="ImageAvatar" ImageUrl="images/avatar/defaultAvatar.jpg" runat="server" />
                             </div>
                             <div class="userInfo-header__info">
-                                <label for="file-upload" class="custom-file-upload">
-                                    <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
-                                </label>
-                                <input id="file-upload" type="file" />
-                                <%--<asp:FileUpload ID="uploadAvatar" runat="server" />--%>
+                               <asp:Label ID="lblUpload" runat="server" AssociatedControlID="uploadAvatar" CssClass="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
+                            </asp:Label>
+                            
+                                <asp:FileUpload onchange="handleFileChange(this)" ID="uploadAvatar" runat="server" />
                             </div>
                         </div>
                         <div class="userInfo-header__desc">
@@ -57,13 +57,28 @@
                     </div>
                 </div>
             </ContentTemplate>
-        </asp:UpdatePanel>
+        
 
     </div>
     <script>
         function handleSaveEdit() {
             __doPostBack('<%= btnSave.UniqueID %>', '');
         }
+           function handleFileChange(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('<%= ImageAvatar.ClientID %>').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+            function handleLabelClick() {
+        document.getElementById('uploadAvatar').click();
+    }
+
     </script>
     <script src="JS/edituser.js"></script>
 
