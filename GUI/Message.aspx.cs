@@ -42,7 +42,7 @@ namespace GUI
         }
         protected string IsOwnerMessage()
         {
-            string returned_str = messages.Count <= index && UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
+            string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
 
             index = index + 1;
 
@@ -52,7 +52,7 @@ namespace GUI
 
         protected string IsHideDropdown()
         {
-            string returned_str = messages.Count <= j && UserFromCookie.Id == messages[j].UserId ? "hide" : "";
+            string returned_str = UserFromCookie.Id == messages[j].UserId ? "" : "hide";
 
             j = j + 1;
 
