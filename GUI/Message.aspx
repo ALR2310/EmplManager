@@ -57,7 +57,8 @@
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                             <ul class="chat-ellips__dropdown__menu" >
                                                                 <li>
-                                                                    <asp:Button ID="Button1" runat="server" Text="Xoá, gỡ" />
+                                              
+                                                                    <asp:Button  ID="Button1" OnClientClick="return preSubmit();" runat="server" Text="Xoá, gỡ" CommandArgument="<%# Container.ItemIndex %>" />
                                                                 </li>
                                                                 <li>
                                                                     <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
@@ -74,7 +75,9 @@
 
                                 </ItemTemplate>
                             </asp:Repeater>
+
                         </ul>
+                        
                     </div>
 
                     <div class="chat-footer">
@@ -94,27 +97,33 @@
 
         </div>
     </div>
-
+    <script>
+        function preSubmit() {
+           __doPostBack('<%= btnSend.UniqueID %>', '');;
+                    // Add your logic here before the form submission
+                    return false; // Return true to allow form submission, or false to prevent it
+                }
+    </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         function scrollBottom() {
-       
-            const scroll = $(".chat-main__list")[0];
-            scroll.scrollTo(0, scroll.scrollHeight);
-        }
 
-        function clearText() {
+                    const scroll = $(".chat-main__list")[0];
+                    scroll.scrollTo(0, scroll.scrollHeight);
+                }
+
+                function clearText() {
             $("#ContentPlaceHolder1_txt_Message").val("");
-        }
-        scrollBottom();
+                }
+                scrollBottom();
 
     </script>
 
     <script>
         function handleKeyPress(event) {
-            if (event.keyCode === 13 && !event.shiftKey) {
+                    if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
 
                 handleSendMessage();

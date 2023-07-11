@@ -21,6 +21,7 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Debug.WriteLine("Refreshing page...");
             if (!IsPostBack)
             {
                 UserFromCookie = MyLayout.UserFromCookie;
@@ -31,7 +32,7 @@ namespace GUI
         void LoadMessage()
         {
             messages = MessageManager.GetListMessageByAtCreate();
- 
+            Debug.WriteLine(messages.Count);
             Repeater1.DataSource = messages;
             Repeater1.DataBind();
 
@@ -58,6 +59,24 @@ namespace GUI
             return returned_str;
         }
 
+        protected bool Button1_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Delete Mess");
+            if (IsPostBack)
+            {
+                Debug.WriteLine("Deleting ");
+                Button btn = (Button)sender;
+          
+                int index = int.Parse(btn.CommandArgument.ToString());
+             
+                if (messages[index] == null) { return false; }
+                if (!(UserFromCookie.UserType == 0 || messages[index].UserId == UserFromCookie.Id)) { return false; }
+                MessageManager.SetMessStatusToDeleted(messages[index].Id);
+                
+            }
+            return true;
+          
+        }
         protected void btnSend_Click(object sender, EventArgs e)
         {
 

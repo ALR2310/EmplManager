@@ -22,7 +22,19 @@ namespace BUS
             return new Select().From(Message.Schema.TableName).Where(Message.Columns.Id).IsEqualTo(id).
                 ExecuteSingle<Message>();
         }
+        public static void SetMessStatusToDeleted(int messageid)
+        {
+            Message mess = GetMessageById(messageid);
+            mess.Status = 0;
+            mess.Save();
 
+        }
+        public static void DeleteMessageById(int id)
+        {
+            new MessageController().Delete(id);
+
+
+        }
         public static List<MessageJoinUser> GetListMessageByStatus()
         {
             var query = new InlineQuery();
@@ -35,8 +47,8 @@ namespace BUS
         public static List<MessageJoinUser> GetListMessageByAtCreate()
         {
             var query = new InlineQuery();
-            var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
-                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1  order by Messages.AtCreate";
+            var sqlquery = "SELECT TOP 25 dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
+                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1  order by Messages.AtCreate DESC";
             Debug.WriteLine(sqlquery);
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
