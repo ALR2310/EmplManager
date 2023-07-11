@@ -330,7 +330,7 @@ html {
 
 .chat-item__box {
     color: white;
-    padding: 10px;
+    padding: 15px;
     max-width: 35%;
     position: relative;
     border-radius: 10px;
@@ -362,6 +362,40 @@ html {
         .chat-main__ellips button:hover {
             background-color: #f6f6f9;
         }
+
+.btnLike {
+    color: black;
+}
+
+.chat-main__like {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    right: 7%;
+    bottom: 7%;
+}
+
+    .chat-main__like i {
+        color: #569ff3;
+    }
+
+    .chat-main__like span {
+        font-size: 12px;
+        position: absolute;
+        bottom: -30%;
+        color: #EEEEEE;
+    }
+
+.chat-main__item--right .chat-main__like {
+    right: auto;
+    left: 7%;
+}
+
+    .chat-main__item--right .chat-main__like i {
+        color: var(--primary-color);
+    }
 
 .chat-item__box-name {
     display: flex;

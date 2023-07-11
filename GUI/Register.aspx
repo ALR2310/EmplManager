@@ -7,10 +7,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="Style/main.css" />
     <link rel="stylesheet" href="Style/toast.css" />
+    <link rel="stylesheet" href="Style/modal.css" />
     <title>Đăng Ký</title>
 </head>
 <body>
     <div id="toast"></div>
+    <div class="modal hide">
+        <span class="overlay"></span>
+        <div class="modal-box">
+
+            <div class="content-modal">
+                <i class="fa-regular fa-circle-check"></i>
+                <h2>Đăng Ký Thành Công</h2>
+                <h3>Bạn đã đăng ký tài khoản thành công, bây giờ bạn có thể đăng nhập ngay!</h3>
+            </div>
+
+            <div class="buttonsmodal">
+                <div class="btn-modal">
+                    <a href="Login.aspx">Đăng Nhập Ngay!</a>
+                </div>
+                <button class="btn-modal close-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -66,6 +85,8 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
+    <script src="Animation/Check/js.js"></script>
+    <script src="JS/modal.js"></script>
     <script src="JS/toast.js"></script>
 </body>
 </html>

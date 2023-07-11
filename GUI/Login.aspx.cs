@@ -46,10 +46,10 @@ namespace GUI
 
                 if (authToken != "_failed_")
                 {
-                    ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây..");
+                    string script = "toggleModal()";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "my", script, true);
 
-                    string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
-
+                    script = "setTimeout(function(){this.location = \"./message.aspx\"},3000)";
                     ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
                     return;
                 }

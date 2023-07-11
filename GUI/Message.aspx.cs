@@ -75,5 +75,10 @@ namespace GUI
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
             return;
         }
+
+        protected void btnLike_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" Inherits="GUI.Message" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -44,12 +44,14 @@
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
                                             <div class="chat-item__box">
-                                                <div class="chat-item__box-name">
-                                                    <a href="#"><%# Eval("DisplayName") %></a>
-                                                </div>
+                                                <a href="#"><%# Eval("DisplayName") %></a>
                                                 <p title="<%# Eval("AtCreate") %>"><%# Eval("Content") %> </p>
+                                                <button type="button" class="chat-main__like hide">
+                                                    <i class="fa-solid fa-thumbs-up"></i>
+                                                    <span>3</span>
+                                                </button>
                                                 <div class="chat-main__ellips">
-                                                    <button class="ellips-like">
+                                                    <button type="button" class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
                                                     <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
