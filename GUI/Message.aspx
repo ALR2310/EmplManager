@@ -43,10 +43,12 @@
                                                 <asp:Image ID="ImgAvatar" runat="server" />
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
-                                            <div class="chat-item__box">
+                                            <div class="chat-wrapper">
+                                                          <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                  <div class="chat-item__box">
                                                 <div class="titles">
-                                                       <a href="#"><%#  Eval("DisplayName")%></a>
-                                                    <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                         <a href="#"><%#  Eval("DisplayName")%></a>
+                                          
                                                 </div>
                                              
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
@@ -56,12 +58,12 @@
                                                     <i class="fa-solid fa-thumbs-up"></i>
                                                     <span>3</span>
                                                 </button>
-                                                <div class="chat-main__ellips">
+                                                <div <%# (int)Eval("Status") != 1 ? "style='display: none'" : "" %> class="chat-main__ellips" >
                                                     <button type="button" class="ellips-like">
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
                                                     <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
-                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
+                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                             <ul class="chat-ellips__dropdown__menu">
                                                                 <li>
@@ -78,6 +80,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
+                                          
 
                                         </div>
                                     </li>

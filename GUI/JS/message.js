@@ -46,7 +46,7 @@ function toggleDropdown(event, str) {
 
     var dropdownMenu = event.target.parentNode.querySelector(
         '.chat-ellips__dropdown__menu');
-
+    console.log("Toggle");
     if (!dropdownMenu) { return; }
     dropdownMenu.style.display = str;
 
