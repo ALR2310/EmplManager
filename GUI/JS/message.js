@@ -52,19 +52,15 @@ function toggleDropdown(event, str) {
 
 }
 
-//function toggleDropdown(event) {
-//    var dropdownMenu = event.target.closest('.chat-ellips__dropdown').querySelector(
-//        '.chat-ellips__dropdown__menu');
-//    if (dropdownMenu.style.display === 'block') {
-//        dropdownMenu.style.display = 'none';
-//        document.removeEventListener('click', outsideClickHandler);
-//    } else {
-//        dropdownMenu.style.display = 'block';
-//        document.addEventListener('click', outsideClickHandler);
-//    }
-//}
+function toggleEmoji(event, str) {
 
+    var emojiShowMenu = event.target.parentNode.querySelector(
+        '.chat-ellips__show_emoji');
 
+    if (!emojiShowMenu) { return; }
+    emojiShowMenu.style.display = str;
+
+}
 
 
 function outsideClickHandler(event) {

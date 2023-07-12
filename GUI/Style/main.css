@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,900;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,900;1,500&display=swap');
 
 * {
     margin: 0;
@@ -11,7 +11,6 @@
     --text-color: #333;
     --border-color: #ddd;
 }
-
 
 html {
     font-family: 'Roboto', sans-serif;
@@ -292,10 +291,6 @@ html {
     z-index: 2;
 }
 
-.chat-main__item:nth-last-child(-n+2) > div > .chat-wrapper > .chat-item__box > .chat-main__ellips > .chat-ellips__dropdown > button > ul {
-    top: -340%;
-}
-
 .chat-main__item--right {
     justify-content: flex-end;
 }
@@ -335,11 +330,10 @@ html {
 .chat-item__box {
     color: white;
     padding: 15px;
-
+    max-width: 35%;
     position: relative;
     border-radius: 10px;
     background-color: var(--primary-color);
-    display: inline-table;  
 }
 
 .chat-main__content:hover .chat-main__ellips {
@@ -418,10 +412,41 @@ html {
     position: relative;
 }
 
+.chat-ellips__emoji__toggle,
 .chat-ellips__dropdown__toggle {
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+.chat-ellips__show_emoji {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #ffffff;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 7px 10px;
+    bottom: 150%;
+    left: -300%;
+}
+
+.chat-ellips__item {
+    text-decoration: none;
+}
+
+    .chat-ellips__item a {
+        transition: all 0.3s ease;
+    }
+
+        .chat-ellips__item a:hover {
+            transform: scale(2,2);
+        }
+
+.chat-main__item--right .chat-ellips__show_emoji {
+    bottom: 150%;
+    left: auto;
+    right: -270%
 }
 
 .chat-ellips__dropdown__menu {
@@ -976,7 +1001,7 @@ html {
 
 .crossbar {
     width: 100%;
-    margin: 10px 20px;
+    margin: 10px 0;
     border-bottom: 1px solid var(--border-color);
 }
 

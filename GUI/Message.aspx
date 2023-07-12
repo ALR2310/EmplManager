@@ -1,11 +1,54 @@
 ﻿<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="Style/modal.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div id="toast"></div>
+
+    <div class="modal hide">
+        <span class="overlay"></span>
+        <div class="modal-box">
+
+            <div class="content-modal">
+                <h2>Cảm Xúc Về Tin Nhắn</h2>
+                <div class="crossbar"></div>
+                <ul class="list-emoji">
+
+                    <asp:Repeater ID="ListEmoji_Repeater" runat="server">
+                        <ItemTemplate>
+
+                            <li class="item-emoji">
+                                <a runat="server" id="RemoveEmoji" onserverclick="RemoveEmoji_ServerClick">
+                                    <div class="item-emoji__avatar">
+                                        <img src="<%# Eval("Avatar") %>" alt="">
+                                    </div>
+                                    <div class="item-emoji__content">
+                                        <div class="item-emoji-infor">
+                                            <h3><%# Eval("DisplayName")  %></h3>
+                                            <p>Nhấn Để Gỡ</p>
+                                        </div>
+                                        <div class="emoji">
+                                            <i class="fa-solid fa-thumbs-up"></i>
+                                            <span>3</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                </ul>
+            </div>
+
+            <div class="buttonsmodal">
+                <button class="btn-modal close-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
 
     <div class="content">
         <div class="chat">
@@ -43,27 +86,58 @@
                                                 <asp:Image ID="ImgAvatar" runat="server" />
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
-                                            <div class="chat-wrapper">
-                                                          <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
-                                                  <div class="chat-item__box">
+                                            <div class="chat-item__box">
                                                 <div class="titles">
-                                                         <a href="#"><%#  Eval("DisplayName")%></a>
-                                          
+                                                    <a href="#"><%#  Eval("DisplayName")%></a>
+                                                    <span><%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
                                                 </div>
-                                             
+
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                 </p>
-                                                <button type="button" class="chat-main__like hide">
+                                                <button type="button" onclick="toggleModal()" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
                                                     <span>3</span>
                                                 </button>
-                                                <div <%# (int)Eval("Status") != 1 ? "style='display: none'" : "" %> class="chat-main__ellips" >
-                                                    <button type="button" class="ellips-like">
-                                                        <i class="fa-solid fa-thumbs-up"></i>
-                                                    </button>
+
+                                                <div class="chat-main__ellips">
+                                                    <div class="chat-ellips__dropdown">
+                                                        <button type="button" class="chat-ellips__emoji__toggle"
+                                                            onclick="toggleEmoji(event, 'flex')" onmouseleave="toggleEmoji(event, 'none')">
+                                                            <i class="fa-regular fa-face-smile"></i>
+                                                            <ul class="chat-ellips__show_emoji">
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_1" runat="server" style="color: red;">&#10084</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_2" runat="server">&#128077</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_3" runat="server">&#128513</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_4" runat="server">&#128514</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_5" runat="server">&#128516</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_6" runat="server">&#128517</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_7" runat="server">&#128518</a>
+                                                                </li>
+                                                                <li class="chat-ellips__item">
+                                                                    <a id="Emoji_8" runat="server">&#128525</a>
+                                                                </li>
+                                                                <box class="boxhidentop"></box>
+                                                                <box class="boxhidenbottom"></box>
+                                                            </ul>
+                                                        </button>
+
+                                                    </div>
                                                     <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
-                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
+                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                             <ul class="chat-ellips__dropdown__menu">
                                                                 <li>
@@ -80,8 +154,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            </div>
-                                          
 
                                         </div>
                                     </li>
@@ -112,9 +184,10 @@
     </div>
     <script>
 
-</script>
+    </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="JS/modal.js"></script>
     <script>
 
         function scrollBottom() {
