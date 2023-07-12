@@ -2,3 +2,24 @@
     font-style:italic;
     opacity:.7;
 }
+
+.titles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-main__item--right > div > .chat-item__box > .titles {
+    flex-direction: row-reverse;
+    justify-content: end;   
+}
+.chat-main__item--right > div > .chat-item__box > .titles > span {
+    flex-direction: row-reverse;
+    padding: 0 15px 0 0;
+}
+
+
+.titles > span {
+    padding: 0 0 0 15px;
+    font-size: .825em;
+}

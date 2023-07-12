@@ -55,9 +55,15 @@ namespace GUI
                     string uploadDirectory = Server.MapPath("~/Images/Avatar/Uploads");
 
                     // Generate a unique file name
-                    string uniqueFileName = fileName + extension;
 
+                    string uniqueFileName = fileName + ((DateTimeOffset)DateTime.UtcNow).Millisecond + extension;
+
+                    Debug.WriteLine(uniqueFileName);
                     // Save the file to the server
+                    if (UserFromCookie.Avatar != null)
+                    {
+                        File.Delete(Server.MapPath("~/") + UserFromCookie.Avatar);
+                    }
                     uploadAvatar.SaveAs(Path.Combine(uploadDirectory, uniqueFileName));
                     Debug.WriteLine(Path.Combine(uploadDirectory, uniqueFileName));
                     Debug.WriteLine(Path.Combine("/Images/Avatar/Uploads", uniqueFileName));

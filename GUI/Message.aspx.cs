@@ -10,6 +10,7 @@ using DAL.Model;
 using System.Diagnostics;
 using System.Reflection;
 using System.Web.Services.Description;
+using SubSonic.Sugar;
 
 namespace GUI
 {
@@ -44,6 +45,8 @@ namespace GUI
             Repeater1.DataSource = messages;
             Repeater1.DataBind();
 
+            ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
+
 
 
             return;
@@ -67,6 +70,16 @@ namespace GUI
             return returned_str;
         }
 
+        protected string FormatDate(DateTime date)
+        {
+            TimeSpan time = date.TimeOfDay;
+   
+     
+            TimeSpan roundedTime = time.Subtract(TimeSpan.FromMilliseconds(time.Milliseconds));
+       
+            return roundedTime.ToString();
+        }
+
         protected void btnDelete_Click(object sender, EventArgs e)
         {
 
@@ -85,13 +98,12 @@ namespace GUI
             Debug.WriteLine("Deleted");
             LoadMessage();
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
-            return;
+             return;
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
-
-            Debug.WriteLine("HUH");
+            if (txt_Message.Text == "") { LoadMessage(); return; }
+    
             DAL.Message message = new DAL.Message();
             message.UserId = UserFromCookie.Id;
             message.Content = txt_Message.Text;

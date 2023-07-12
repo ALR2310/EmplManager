@@ -45,7 +45,11 @@
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
                                             <div class="chat-item__box">
-                                                <a href="#"><%#  Eval("DisplayName")%></a>
+                                                <div class="titles">
+                                                       <a href="#"><%#  Eval("DisplayName")%></a>
+                                                    <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                </div>
+                                             
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %> </p>
                                                 <button type="button" class="chat-main__like hide">
@@ -127,12 +131,13 @@
                     if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
 
-                handleSendMessage();
+                handleSendMessage(event);
             }
         }
      
-        function handleSendMessage() {
-
+        function handleSendMessage(event) {
+    
+            
             __doPostBack('<%= btnSend.UniqueID %>', '');
         }
     </script>
