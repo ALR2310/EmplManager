@@ -79,7 +79,9 @@
                         <ul class="chat-main__list">
                             <asp:Repeater ID="ListMessage_Repeater" runat="server">
                                 <ItemTemplate>
-                                    <div class="time-gap" <%#GetTimeGap(Container.ItemIndex) == true ? "" : "style='display:none'" %> "><div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr(Container.ItemIndex)  %></div></div>
+                                    <div class="time-gap" <%#GetTimeGap(Container.ItemIndex) == true ? "" : "style='display:none'" %> ">
+                                        <div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr(Container.ItemIndex)  %></div>
+                                    </div>
                                     <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
                                         <div class="chat-main__content">
                                             <div class="chat-main__avatar">
@@ -90,8 +92,6 @@
                                             <div class="chat-wrapper">
                                                           <span> <%# GetTime((DateTime)Eval("AtCreate")) %> </span>
                                                   <div class="chat-item__box">
-
-                                          
 
                                                 <div class="titles">
                                                     <a href="#"><%#  Eval("DisplayName")%></a>
