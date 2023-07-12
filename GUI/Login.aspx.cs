@@ -49,7 +49,7 @@ namespace GUI
                     string script = "toggleModal()";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "my", script, true);
 
-                    script = "setTimeout(function(){this.location = \"./message.aspx\"},3000)";
+                    script = "setTimeout(function(){this.location = \"./message.aspx\"},1500)";
                     ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
                     return;
                 }
