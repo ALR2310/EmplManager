@@ -14,6 +14,8 @@
     font-size: 18px;
     font-weight: 400;
     color: #fff;
+    height: 30px;
+    min-width: 100px;
     padding: 14px 22px;
     border: none;
     background: #4070f4;
@@ -34,7 +36,7 @@
 .modal-box {
     position: fixed;
     left: 50%;
-    top: 50%;
+    top: 35%;
     transform: translate(-50%, -50%);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
