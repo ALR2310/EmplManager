@@ -80,12 +80,10 @@ namespace GUI
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
 
-
-
             return;
         }
 
-     
+
         protected string IsOwnerMessage(int index)
         {
             string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
@@ -152,9 +150,15 @@ namespace GUI
             return;
         }
 
-        protected void btnLike_Click(object sender, EventArgs e)
+        public void InsertEmoji(int index)
         {
+            Like like = new Like();
+            like.UserId = UserFromCookie.Id;
+            like.MessageId = messages[index].Id;
 
+            MessageManager.InsertLike(like);
+
+            LoadMessage();
         }
 
         protected void RemoveEmoji_ServerClick(object sender, EventArgs e)
