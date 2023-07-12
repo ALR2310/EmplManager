@@ -43,14 +43,26 @@ btnSearch.addEventListener('click', function () {
 //js cho nút dropdown trong ellips chat
 
 function toggleDropdown(event, str) {
-  
+
     var dropdownMenu = event.target.parentNode.querySelector(
         '.chat-ellips__dropdown__menu');
-   
+
     if (!dropdownMenu) { return; }
     dropdownMenu.style.display = str;
 
 }
+
+//function toggleDropdown(event) {
+//    var dropdownMenu = event.target.closest('.chat-ellips__dropdown').querySelector(
+//        '.chat-ellips__dropdown__menu');
+//    if (dropdownMenu.style.display === 'block') {
+//        dropdownMenu.style.display = 'none';
+//        document.removeEventListener('click', outsideClickHandler);
+//    } else {
+//        dropdownMenu.style.display = 'block';
+//        document.addEventListener('click', outsideClickHandler);
+//    }
+//}
 
 
 

@@ -1,5 +1,4 @@
-﻿
-<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
+﻿<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -45,13 +44,10 @@
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
                                             <div class="chat-item__box">
-                                                <div class="titles">
-                                                       <a href="#"><%#  Eval("DisplayName")%></a>
-                                                    <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
-                                                </div>
-                                             
+                                                <a href="#"><%#  Eval("DisplayName")%></a>
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
-                                                    <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %> </p>
+                                                    <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
+                                                </p>
                                                 <button type="button" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
                                                     <span>3</span>
@@ -61,19 +57,20 @@
                                                         <i class="fa-solid fa-thumbs-up"></i>
                                                     </button>
                                                     <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
-                                                        <button type="button" class="chat-ellips__dropdown__toggle"  onmouseleave="toggleDropdown(event,'none')" onmouseenter="toggleDropdown(event,'block')">
+                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                            <ul class="chat-ellips__dropdown__menu" >
+                                                            <ul class="chat-ellips__dropdown__menu">
                                                                 <li>
-                                              
-                                                                   <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClick="btnDelete_Click" CommandArgument='<%# Eval("Id") %>' />
-                                                                 </li>
+                                                                    <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClick="btnDelete_Click" CommandArgument='<%# Eval("Id") %>' />
+                                                                </li>
                                                                 <li>
                                                                     <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
                                                                 </li>
+                                                                <box class="boxhidentop"></box>
+                                                                <box class="boxhidenbottom"></box>
                                                             </ul>
                                                         </button>
-                                                     
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +82,7 @@
                             </asp:Repeater>
 
                         </ul>
-                        
+
                     </div>
 
                     <div class="chat-footer">
@@ -106,38 +103,37 @@
         </div>
     </div>
     <script>
-       
-    </script>
+
+</script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         function scrollBottom() {
 
-                    const scroll = $(".chat-main__list")[0];
-                    scroll.scrollTo(0, scroll.scrollHeight);
-                }
+            const scroll = $(".chat-main__list")[0];
+            scroll.scrollTo(0, scroll.scrollHeight);
+        }
 
-                function clearText() {
+        function clearText() {
             $("#ContentPlaceHolder1_txt_Message").val("");
-                }
-                scrollBottom();
+        }
+        scrollBottom();
 
     </script>
 
     <script>
-    
+
         function handleKeyPress(event) {
-                    if (event.keyCode === 13 && !event.shiftKey) {
+            if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
 
-                handleSendMessage(event);
+                handleSendMessage();
             }
         }
-     
-        function handleSendMessage(event) {
-    
-            
+
+        function handleSendMessage() {
+
             __doPostBack('<%= btnSend.UniqueID %>', '');
         }
     </script>
