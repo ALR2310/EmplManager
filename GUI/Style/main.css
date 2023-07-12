@@ -12,6 +12,7 @@
     --border-color: #ddd;
 }
 
+
 html {
     font-family: 'Roboto', sans-serif;
 }
@@ -291,6 +292,10 @@ html {
     z-index: 2;
 }
 
+.chat-main__item:nth-last-child(-n+3) > div > .chat-item__box > .chat-main__ellips > .chat-ellips__dropdown > button > ul {
+    top: -340%;
+}
+
 .chat-main__item--right {
     justify-content: flex-end;
 }
@@ -330,10 +335,11 @@ html {
 .chat-item__box {
     color: white;
     padding: 15px;
-    max-width: 35%;
+
     position: relative;
     border-radius: 10px;
     background-color: var(--primary-color);
+    display: inline-table;  
 }
 
 .chat-main__content:hover .chat-main__ellips {
