@@ -50,7 +50,7 @@
                                                 </p>
                                                 <button type="button" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
-                                                    <span>3</span>
+                                                    <asp:Label ID="lblLikeCount" runat="server" Text="1"></asp:Label>
                                                 </button>
                                                 <div class="chat-main__ellips">
                                                     <button type="button" class="ellips-like">
@@ -104,7 +104,7 @@
     </div>
     <script>
 
-</script>
+    </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
