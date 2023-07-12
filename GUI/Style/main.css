@@ -909,3 +909,82 @@ html {
     .inputGroup :is(input:focus, input:valid) {
         border-color: rgb(150, 150, 200);
     }
+
+/* css modal emoji */
+
+.list-emoji {
+    list-style: none;
+    overflow-y: scroll;
+    height: 300px;
+    width: 500px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.item-emoji {
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+    .item-emoji:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    .item-emoji a {
+        display: flex;
+        text-decoration: none;
+    }
+
+.item-emoji__avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+    .item-emoji__avatar img {
+        width: 100%;
+        flex-shrink: 1;
+        border-radius: 50% !important;
+    }
+
+.item-emoji__content {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .item-emoji__content .item-emoji-infor h3 {
+        font-weight: 600;
+    }
+
+.item-emoji-infor p {
+    color: var(--primary-color);
+}
+
+.item-emoji__content .emoji i {
+    font-size: 30px;
+}
+
+.crossbar {
+    width: 100%;
+    margin: 10px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.emoji {
+    position: relative;
+    margin-right: 5px;
+}
+
+    .emoji span {
+        position: absolute;
+        right: -30%;
+        bottom: -30%;
+    }

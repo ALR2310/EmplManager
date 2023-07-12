@@ -17,8 +17,8 @@ namespace GUI
     public partial class Message : System.Web.UI.Page
     {
         public static User UserFromCookie;
-   
-    
+
+
         private List<MessageJoinUser> messages
         {
             get { return ViewState["messages"] as List<MessageJoinUser>; }
@@ -26,7 +26,7 @@ namespace GUI
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-          
+
             Debug.WriteLine("Refreshing page...");
             if (!IsPostBack)
             {
@@ -42,8 +42,8 @@ namespace GUI
         {
             messages = MessageManager.GetListMessageByAtCreate(1);
             Debug.WriteLine(messages.Count);
-            Repeater1.DataSource = messages;
-            Repeater1.DataBind();
+            ListMessage_Repeater.DataSource = messages;
+            ListMessage_Repeater.DataBind();
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
 
@@ -65,7 +65,7 @@ namespace GUI
         {
             string returned_str = UserFromCookie.Id == messages[index].UserId ? "" : "hide";
 
-     
+
 
             return returned_str;
         }
@@ -73,10 +73,10 @@ namespace GUI
         protected string FormatDate(DateTime date)
         {
             TimeSpan time = date.TimeOfDay;
-   
-     
+
+
             TimeSpan roundedTime = time.Subtract(TimeSpan.FromMilliseconds(time.Milliseconds));
-       
+
             return roundedTime.ToString();
         }
 
@@ -84,26 +84,26 @@ namespace GUI
         {
 
             Debug.WriteLine("Deleting");
-                Button btn = (Button)sender;
-          
-                int Id = int.Parse(btn.CommandArgument.ToString());
+            Button btn = (Button)sender;
 
-                DAL.Message DeletingMessage = MessageManager.GetMessageById(Id);
+            int Id = int.Parse(btn.CommandArgument.ToString());
+
+            DAL.Message DeletingMessage = MessageManager.GetMessageById(Id);
 
             Debug.WriteLine(Id);
-            if (DeletingMessage == null) { return;  }
-                if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
-            MessageManager.SetMessStatusToDeleted(DeletingMessage.Id, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1) ;
+            if (DeletingMessage == null) { return; }
+            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
+            MessageManager.SetMessStatusToDeleted(DeletingMessage.Id, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
 
             Debug.WriteLine("Deleted");
             LoadMessage();
 
-             return;
+            return;
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
             if (txt_Message.Text == "") { LoadMessage(); return; }
-    
+
             DAL.Message message = new DAL.Message();
             message.UserId = UserFromCookie.Id;
             message.Content = txt_Message.Text;
@@ -118,6 +118,11 @@ namespace GUI
         }
 
         protected void btnLike_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void RemoveEmoji_ServerClick(object sender, EventArgs e)
         {
 
         }

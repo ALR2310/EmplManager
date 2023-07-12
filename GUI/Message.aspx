@@ -7,6 +7,48 @@
 
     <div id="toast"></div>
 
+    <div class="modal hide">
+        <span class="overlay"></span>
+        <div class="modal-box">
+
+            <div class="content-modal">
+                <h2>Cảm Xúc Về Tin Nhắn</h2>
+                <div class="crossbar"></div>
+                <ul class="list-emoji">
+
+                    <asp:Repeater ID="ListEmoji_Repeater" runat="server">
+                        <ItemTemplate>
+
+                            <li class="item-emoji">
+                                <a runat="server" id="RemoveEmoji" onserverclick="RemoveEmoji_ServerClick">
+                                    <div class="item-emoji__avatar">
+                                        <img src="<%# Eval("Avatar") %>" alt="">
+                                    </div>
+                                    <div class="item-emoji__content">
+                                        <div class="item-emoji-infor">
+                                            <h3><%# Eval("DisplayName")  %></h3>
+                                            <p>Nhấn Để Gỡ</p>
+                                        </div>
+                                        <div class="emoji">
+                                            <i class="fa-solid fa-thumbs-up"></i>
+                                            <span>3</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                </ul>
+            </div>
+
+            <div class="buttonsmodal">
+                <button class="btn-modal close-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
+
     <div class="content">
         <div class="chat">
             <div class="chat__header">
@@ -34,7 +76,7 @@
 
                     <div class="chat-main">
                         <ul class="chat-main__list">
-                            <asp:Repeater ID="Repeater1" runat="server">
+                            <asp:Repeater ID="ListMessage_Repeater" runat="server">
                                 <ItemTemplate>
 
                                     <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
@@ -45,14 +87,14 @@
                                             </div>
                                             <div class="chat-item__box">
                                                 <div class="titles">
-                                                       <a href="#"><%#  Eval("DisplayName")%></a>
-                                                    <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                    <a href="#"><%#  Eval("DisplayName")%></a>
+                                                    <span><%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
                                                 </div>
-                                             
+
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                 </p>
-                                                <button type="button" class="chat-main__like hide">
+                                                <button type="button" onclick="toggleModal()" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
                                                     <span>3</span>
                                                 </button>
@@ -108,7 +150,7 @@
     </div>
     <script>
 
-</script>
+    </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
