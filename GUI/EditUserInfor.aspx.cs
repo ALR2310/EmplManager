@@ -14,13 +14,6 @@ namespace GUI
     {
         private static User UserFromCookie;
 
-        private void AssignInfo()
-        {
-            tblEmail.Text = UserFromCookie.Email;
-            tblDisplayName.Text = UserFromCookie.DisplayName;
-            tblUserName.Text = UserFromCookie.UserName;
-            ImageAvatar.ImageUrl = UserFromCookie.Avatar;
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,52 +24,56 @@ namespace GUI
             }
         }
 
+        private void AssignInfo()
+        {
+            tblEmail.Text = UserFromCookie.Email;
+            tblDisplayName.Text = UserFromCookie.DisplayName;
+            ImageAvatar.ImageUrl = UserFromCookie.Avatar;
+        }
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            User CheckingValidUser = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+            if (CheckingValidUser == null) { return; }
+
+            Debug.WriteLine(UserFromCookie.Id);
+            Debug.WriteLine(CheckingValidUser.Id);
+            if (UserFromCookie.Id == CheckingValidUser.Id)
             {
-                User CheckingValidUser = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
-                if (CheckingValidUser == null) { return; }
-
-                Debug.WriteLine(UserFromCookie.Id);
-                Debug.WriteLine(CheckingValidUser.Id);
-                if (UserFromCookie.Id == CheckingValidUser.Id)
+                Debug.WriteLine(uploadAvatar.FileName);
+                Debug.WriteLine("Saving...");
+                if (uploadAvatar.HasFile)
                 {
+                    // Get the file name and extension
+                    string fileName = $"U_{CheckingValidUser.Id}";
+                    string extension = Path.GetExtension(uploadAvatar.FileName);
 
-                    Debug.WriteLine(uploadAvatar.FileName);
-                    Debug.WriteLine("Saving...");
-                    if (uploadAvatar.HasFile)
-                    {
-                        // Get the file name and extension
-                        string fileName = $"U_{CheckingValidUser.Id}";
-                        string extension = Path.GetExtension(uploadAvatar.FileName);
+                    // Specify the directory to save the file
+                    string uploadDirectory = Server.MapPath("~/Images/Avatar/Uploads");
 
-                        // Specify the directory to save the file
-                        string uploadDirectory = Server.MapPath("~/Images/Avatar/Uploads");
+                    // Generate a unique file name
+                    string uniqueFileName = fileName + extension;
 
-                        // Generate a unique file name
-                        string uniqueFileName = fileName + extension;
-
-                        // Save the file to the server
-                        uploadAvatar.SaveAs(Path.Combine(uploadDirectory, uniqueFileName));
-                        Debug.WriteLine(Path.Combine(uploadDirectory, uniqueFileName));
-                        Debug.WriteLine(Path.Combine("/Images/Avatar/Uploads", uniqueFileName));
-                        UserFromCookie.Avatar = Path.Combine("/Images/Avatar/Uploads", uniqueFileName);
-                        // Display a success message or perform further processing
-                        // ...
-                    }
-
-                    UserFromCookie.Email = tblEmail.Text;
-                    UserFromCookie.DisplayName = tblDisplayName.Text;
-                    UserFromCookie.UserName = tblUserName.Text;
-
-                    UserFromCookie.Save();
-                    ToastManager.SuccessToast("Cập Nhật Thành Công..");
-
-
+                    // Save the file to the server
+                    uploadAvatar.SaveAs(Path.Combine(uploadDirectory, uniqueFileName));
+                    Debug.WriteLine(Path.Combine(uploadDirectory, uniqueFileName));
+                    Debug.WriteLine(Path.Combine("/Images/Avatar/Uploads", uniqueFileName));
+                    UserFromCookie.Avatar = Path.Combine("/Images/Avatar/Uploads", uniqueFileName);
+                    // Display a success message or perform further processing
+                    // ...
                 }
-              
+
+                UserFromCookie.Email = tblEmail.Text;
+                UserFromCookie.DisplayName = tblDisplayName.Text;
+
+                UserFromCookie.Save();
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "my", "toggleModal()", true);
             }
+        }
+
+        protected void btnChanges_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

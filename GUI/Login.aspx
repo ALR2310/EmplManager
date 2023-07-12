@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="toast"></div>
+
     <div class="modal hide">
         <span class="overlay"></span>
         <div class="modal-box">
@@ -27,6 +28,7 @@
             </div>
         </div>
     </div>
+
     <form id="form1" runat="server">
         <div class="container login-page">
             <div class="login">
