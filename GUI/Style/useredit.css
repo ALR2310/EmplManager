@@ -1,0 +1,16 @@
+#image_upl_error {
+    padding: 0 5%;
+    color: red;
+    stroke: black;
+    text-align: center;
+    height: 38px;
+}
+.userInfo-header__content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    min-width: 25%;
+    justify-content: space-between;
+
+}

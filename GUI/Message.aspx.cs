@@ -51,6 +51,8 @@ namespace GUI
 
             return;
         }
+
+     
         protected string IsOwnerMessage(int index)
         {
             string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";

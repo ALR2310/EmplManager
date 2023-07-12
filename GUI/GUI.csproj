@@ -93,6 +93,7 @@
     <Content Include="Style\message.css" />
     <Content Include="Style\modal.css" />
     <Content Include="Style\toast.css" />
+    <Content Include="Style\useredit.css" />
     <Content Include="Style\userinfo.css" />
     <Content Include="UserInfor.aspx" />
     <Content Include="Web.config" />
