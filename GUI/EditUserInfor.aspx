@@ -30,67 +30,69 @@
 
     <div class="content">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-      
-            <ContentTemplate>
-                <div class="userInfo">
-                    <div class="userInfo__header">
-                        <div class="userInfo-header__content">
-                            <div class="userInfo-header__img">
-                                <asp:Image ID="ImageAvatar" ImageUrl="images/avatar/defaultAvatar.jpg" runat="server" />
-                            </div>
-                            <div class="userInfo-header__info">
-                                <asp:Label ID="lblUpload" runat="server" AssociatedControlID="uploadAvatar" CssClass="custom-file-upload">
-                                <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
-                                </asp:Label>
 
-                                <asp:FileUpload onchange="handleFileChange(this)" ID="uploadAvatar" runat="server" />
-                            </div>
-                        </div>
-                        <div class="userInfo-header__desc">
-                            <h2>Cập Nhật Thông Tin</h2>
-                            <div class="inputGroup">
-                                <asp:TextBox ID="tblEmail" TextMode="Email" autocomplete="off" runat="server"></asp:TextBox>
-                                <label>Email</label>
-                            </div>
-                            <div class="inputGroup">
-                                <asp:TextBox ID="tblDisplayName" autocomplete="off" runat="server"></asp:TextBox>
-                                <label>Họ Và Tên</label>
-                            </div>
-                            <div class="userInfo-header__submit">
-                                <button type="button" onclick="handleSaveEdit(event)">
-                                    <i class="fa-solid fa-floppy-disk"></i>
-                                    Lưu Lại
-                                <asp:Button ID="btnSave" onclick="btnSave_Click" runat="server" Style="display: none;" />
-                                </button>
-                            </div>
-                        </div>
-                        <div class="userInfo-header__desc">
-                            <h2>Thay Đổi Mật Khẩu</h2>
-                            <div class="inputGroup">
-                                <asp:TextBox ID="tblOldPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
-                                <label>Mật Khẩu Cũ</label>
-                            </div>
-                            <div class="inputGroup">
-                                <asp:TextBox ID="tblNewPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
-                                <label>Mật Khẩu Mới</label>
-                            </div>
-                            <div class="userInfo-header__submit">
-                                <button type="button" onclick="handleSavePassword()">
-                                    <i class="fa-solid fa-floppy-disk"></i>
-                                    Thay Đổi
-                                <asp:Button ID="btnChanges" runat="server" OnClick="btnChanges_Click" Style="display: none;" />
-                                </button>
-                            </div>
-                        </div>
+
+        <div class="userInfo">
+            <div class="userInfo__header">
+                <div class="userInfo-header__content">
+                    <div class="userInfo-header__img">
+                        <asp:Image ID="ImageAvatar" ImageUrl="images/avatar/defaultAvatar.jpg" runat="server" />
+                    </div>
+                    <div class="userInfo-header__info">
+                        <asp:Label ID="lblUpload" runat="server" AssociatedControlID="uploadAvatar" CssClass="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
+                        </asp:Label>
+
+                        <asp:FileUpload onchange="handleFileChange(this)" ID="uploadAvatar" runat="server" />
                     </div>
                 </div>
-            </ContentTemplate>
-        
+
+
+                <div class="userInfo-header__desc">
+                    <h2>Cập Nhật Thông Tin</h2>
+                    <div class="inputGroup">
+                        <asp:TextBox ID="tblEmail" TextMode="Email" autocomplete="off" runat="server"></asp:TextBox>
+                        <label>Email</label>
+                    </div>
+                    <div class="inputGroup">
+                        <asp:TextBox ID="tblDisplayName" autocomplete="off" runat="server"></asp:TextBox>
+                        <label>Họ Và Tên</label>
+                    </div>
+                    <div class="userInfo-header__submit">
+                        <button type="button" onclick="handleSaveEdit(event)">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Lưu Lại
+                                <asp:Button ID="btnSave" OnClick="btnSave_Click" runat="server" Style="display: none;" />
+                        </button>
+                    </div>
+                </div>
+                <div class="userInfo-header__desc">
+                    <h2>Thay Đổi Mật Khẩu</h2>
+                    <div class="inputGroup">
+                        <asp:TextBox ID="tblOldPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
+                        <label>Mật Khẩu Cũ</label>
+                    </div>
+                    <div class="inputGroup">
+                        <asp:TextBox ID="tblNewPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
+                        <label>Mật Khẩu Mới</label>
+                    </div>
+                    <div class="userInfo-header__submit">
+                        <button type="button" onclick="handleSavePassword()">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Thay Đổi
+                                <asp:Button ID="btnChanges" runat="server" OnClick="btnChanges_Click" Style="display: none;" />
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
 
     </div>
     <script>
         function handleSaveEdit(e) {
-     
+
             __doPostBack('<%= btnSave.UniqueID %>', '');
         }
         function handleSavePassword() {
