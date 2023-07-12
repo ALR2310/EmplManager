@@ -62,7 +62,7 @@ namespace GUI
        
         protected string GetDateStr(int itemIndex)
         {
-            messages[itemIndex].Id;
+
             DateTime atCreate = messages[itemIndex].AtCreate;
             TimeSpan TimeDiff = DateTime.Now - atCreate;
             int DayDiff = (int)TimeDiff.TotalDays;

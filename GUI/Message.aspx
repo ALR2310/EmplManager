@@ -91,7 +91,7 @@
                
                                                 <div class="titles">
                                                     <a href="#"><%#  Eval("DisplayName")%></a>
-                                                    <span><%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                    <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>
                                                 </div>
 
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
