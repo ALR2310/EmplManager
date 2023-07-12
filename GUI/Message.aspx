@@ -88,7 +88,11 @@
                                             </div>
 
                                             <div class="chat-wrapper">
-               
+                                                          <span> <%# GetTime((DateTime)Eval("AtCreate")) %> </span>
+                                                  <div class="chat-item__box">
+
+                                          
+
                                                 <div class="titles">
                                                     <a href="#"><%#  Eval("DisplayName")%></a>
                                                     <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>

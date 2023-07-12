@@ -73,7 +73,7 @@ namespace GUI
         }
         void LoadMessage()
         {
-            messages = MessageManager.GetListMessageByAtCreateUnlimited(1);
+            messages = MessageManager.GetListMessageByAtCreate(1);
             Debug.WriteLine(messages.Count);
             ListMessage_Repeater.DataSource = messages;
             ListMessage_Repeater.DataBind();
