@@ -78,7 +78,18 @@ namespace GUI
 
         protected void btnChanges_Click(object sender, EventArgs e)
         {
-
+            User user = new User();
+            user.Id = UserFromCookie.Id;
+            user.Password = tblNewPassword.Text;
+            if (UserFromCookie.Password == tblOldPassword.Text)
+            {
+                UserManager.UpdateUser(user);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "my", "toggleModal()", true);
+            }
+            else
+            {
+                ToastManager.WaringToast("Mật Khẩu cũ không đúng, vui lòng kiểm tra lại");
+            }
         }
     }
 }

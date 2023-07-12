@@ -137,5 +137,7 @@ namespace BUS
             int count = query.ExecuteScalar<int>(sqlquery);
             return count;
         }
+
+
     }
 }

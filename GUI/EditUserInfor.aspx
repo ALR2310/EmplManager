@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/toast.css" />
-    <script src="JS/toast.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 
@@ -115,5 +114,6 @@
     </script>
     <script src="JS/edituser.js"></script>
     <script src="JS/modal.js"></script>
+    <script src="JS/toast.js"></script>
 
 </asp:Content>
