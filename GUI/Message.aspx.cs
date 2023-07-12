@@ -38,6 +38,7 @@ namespace GUI
                 Debug.WriteLine("Refreshing messages...");
                 UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
+                LoadEmoji();
                 return;
             }
             Debug.WriteLine(messages.Count);
@@ -163,7 +164,9 @@ namespace GUI
 
         public void LoadEmoji()
         {
-
+            List<LikeJoinUser> emojiInfor = LikeManager.GetAllUserAndEmoji();
+            ListEmoji_Repeater.DataSource = emojiInfor;
+            ListEmoji_Repeater.DataBind();
         }
 
         protected void RemoveEmoji_ServerClick(object sender, EventArgs e)
