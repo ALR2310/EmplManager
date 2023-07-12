@@ -24,7 +24,7 @@ namespace GUI
             get { return ViewState["messages"] as List<MessageJoinUser>; }
             set { ViewState["messages"] = value; }
         }
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DayToStringDict.Add(0, "Hôm nay");
@@ -48,18 +48,18 @@ namespace GUI
         {
             TimeSpan TimeDiff = lastIndexedTime - messages[itemIndex].AtCreate;
             lastIndexedTime = messages[itemIndex].AtCreate;
-            if (Math.Abs(TimeDiff.TotalMinutes) < 30) {   return false ; }
+            if (Math.Abs(TimeDiff.TotalMinutes) < 30) { return false; }
 
 
 
-   
-            
 
-         
+
+
+
 
             return true;
         }
-       
+
         protected string GetDateStr(int itemIndex)
         {
 
@@ -156,9 +156,14 @@ namespace GUI
             like.UserId = UserFromCookie.Id;
             like.MessageId = messages[index].Id;
 
-            MessageManager.InsertLike(like);
+            LikeManager.InsertLike(like);
 
             LoadMessage();
+        }
+
+        public void LoadEmoji()
+        {
+
         }
 
         protected void RemoveEmoji_ServerClick(object sender, EventArgs e)

@@ -79,7 +79,9 @@
                         <ul class="chat-main__list">
                             <asp:Repeater ID="ListMessage_Repeater" runat="server">
                                 <ItemTemplate>
-                                    <div class="time-gap" <%#GetTimeGap(Container.ItemIndex) == true ? "" : "style='display:none'" %> "><div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr(Container.ItemIndex)  %></div></div>
+                                    <div class="time-gap" <%#GetTimeGap(Container.ItemIndex) == true ? "" : "style='display:none'" %> ">
+                                        <div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr(Container.ItemIndex)  %></div>
+                                    </div>
                                     <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
                                         <div class="chat-main__content">
                                             <div class="chat-main__avatar">
@@ -91,14 +93,12 @@
                                                           <span> <%# GetTime((DateTime)Eval("AtCreate")) %> </span>
                                                   <div class="chat-item__box">
 
-                                          
-
                                                 <div class="titles">
                                                     <a href="#"><%#  Eval("DisplayName")%></a>
                              
                                                 </div>
 
-                                                <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
+                                                <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# GetTime((DateTime)Eval("AtCreate")) %>">
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                 </p>
                                                 <button type="button" onclick="toggleModal()" class="chat-main__like hide">
