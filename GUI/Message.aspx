@@ -95,7 +95,7 @@
 
                                                 <div class="titles">
                                                     <a href="#"><%#  Eval("DisplayName")%></a>
-                                        
+                             
                                                 </div>
 
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
@@ -108,6 +108,7 @@
                                                 <div class="chat-main__ellips">
                                                     <div class="chat-ellips__dropdown">
                                                         <button type="button" class="chat-ellips__emoji__toggle"
+                                                            onmouseenter="toggleEmoji(event, 'flex')"
                                                             onclick="toggleEmoji(event, 'flex')" onmouseleave="toggleEmoji(event, 'none')">
                                                             <i class="fa-regular fa-face-smile"></i>
                                                             <ul class="chat-ellips__show_emoji">
@@ -142,7 +143,7 @@
 
                                                     </div>
                                                     <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
-                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
+                                                        <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                             <ul class="chat-ellips__dropdown__menu">
                                                                 <li>

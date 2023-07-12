@@ -326,7 +326,7 @@ html {
     .chat-main__item--right .chat-ellips__dropdown__menu {
         left: auto;
         right: 20%;
-        top: -360%;
+        top: -340%;
     }
 
 .chat-item__box {
@@ -479,19 +479,21 @@ html {
 
 .boxhidentop {
     width: 100%;
-    height: 30px;
+    height: 10px;
     position: absolute;
     top: -20px;
     left: 0;
 }
 
 .boxhidenbottom {
+    
     width: 100%;
-    height: 40px;
+    height: 20px;
     position: absolute;
-    bottom: -35px;
+    bottom: -15px;
     left: 0;
     z-index: 10;
+  
 }
 
 .like {
