@@ -44,13 +44,17 @@
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
                                             <div class="chat-item__box">
-                                                <a href="#"><%#  Eval("DisplayName")%></a>
+                                                <div class="titles">
+                                                       <a href="#"><%#  Eval("DisplayName")%></a>
+                                                    <span> <%# FormatDate((DateTime)Eval("AtCreate")) %> </span>
+                                                </div>
+                                             
                                                 <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                 </p>
                                                 <button type="button" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
-                                                    <asp:Label ID="lblLikeCount" runat="server" Text="1"></asp:Label>
+                                                    <span>3</span>
                                                 </button>
                                                 <div class="chat-main__ellips">
                                                     <button type="button" class="ellips-like">
@@ -104,7 +108,7 @@
     </div>
     <script>
 
-    </script>
+</script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -128,10 +132,10 @@
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
 
-                handleSendMessage();
+                handleSendMessage(event);
             }
         }
-
+     
         function handleSendMessage() {
 
             __doPostBack('<%= btnSend.UniqueID %>', '');
