@@ -17,15 +17,20 @@ namespace GUI
     public partial class Message : System.Web.UI.Page
     {
         public static User UserFromCookie;
-
+        private Dictionary<int, string> DayToStringDict = new Dictionary<int, string>();
 
         private List<MessageJoinUser> messages
         {
             get { return ViewState["messages"] as List<MessageJoinUser>; }
             set { ViewState["messages"] = value; }
         }
+       
         protected void Page_Load(object sender, EventArgs e)
         {
+            DayToStringDict.Add(0, "Hôm nay");
+            DayToStringDict.Add(1, "Hôm qua");
+            DayToStringDict.Add(2, "Hôm kia");
+
 
             Debug.WriteLine("Refreshing page...");
             if (!IsPostBack)
@@ -37,10 +42,38 @@ namespace GUI
             }
             Debug.WriteLine(messages.Count);
         }
+        private DateTime lastIndexedTime = DateTime.Now;
 
+        protected bool GetTimeGap(int itemIndex)
+        {
+            TimeSpan TimeDiff = lastIndexedTime - messages[itemIndex].AtCreate;
+            lastIndexedTime = messages[itemIndex].AtCreate;
+            if (Math.Abs(TimeDiff.TotalMinutes) < 30) {   return false ; }
+
+
+
+   
+            
+
+         
+
+            return true;
+        }
+       
+        protected string GetDateStr(int itemIndex)
+        {
+            messages[itemIndex].Id;
+            DateTime atCreate = messages[itemIndex].AtCreate;
+            TimeSpan TimeDiff = DateTime.Now - atCreate;
+            int DayDiff = (int)TimeDiff.TotalDays;
+            string DateStr = DayToStringDict.ContainsKey(DayDiff) ? DayToStringDict[DayDiff] : atCreate.ToString("dd/M/yyyy");
+
+
+            return DateStr;
+        }
         void LoadMessage()
         {
-            messages = MessageManager.GetListMessageByAtCreate(1);
+            messages = MessageManager.GetListMessageByAtCreateUnlimited(1);
             Debug.WriteLine(messages.Count);
             ListMessage_Repeater.DataSource = messages;
             ListMessage_Repeater.DataBind();
@@ -72,7 +105,7 @@ namespace GUI
             return returned_str;
         }
 
-        protected string FormatDate(DateTime date)
+        protected string GetTime(DateTime date)
         {
             TimeSpan time = date.TimeOfDay;
 

@@ -56,5 +56,16 @@ namespace BUS
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
         }
+
+        public static List<MessageJoinUser> GetListMessageByAtCreateUnlimited(int Page)
+        {
+            var query = new InlineQuery();
+            var sqlquery = "SELECT [QuanLyRaVaoCty].[dbo].[Messages].*, Avatar, Email, DisplayName " +
+                "FROM [QuanLyRaVaoCty].[dbo].[Messages] INNER JOIN dbo.Users ON Users.Id = Messages.UserId " +
+                $"ORDER BY Messages.AtCreate ASC";
+            Debug.WriteLine(sqlquery);
+            List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
+            return list;
+        }
     }
 }
