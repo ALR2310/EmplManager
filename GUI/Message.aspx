@@ -34,7 +34,7 @@
 
                     <div class="chat-main">
                         <ul class="chat-main__list">
-                            <asp:Repeater ID="Repeater1" runat="server">
+                            <asp:Repeater ID="ListMessage_Repeater" runat="server">
                                 <ItemTemplate>
 
                                     <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
