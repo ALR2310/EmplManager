@@ -59,7 +59,7 @@ namespace GUI
             return returned_str;
         }
 
-        protected bool Button1_Click(object sender, EventArgs e)
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Delete Mess");
             if (IsPostBack)
@@ -68,19 +68,20 @@ namespace GUI
                 Button btn = (Button)sender;
           
                 int index = int.Parse(btn.CommandArgument.ToString());
-             
-                if (messages[index] == null) { return false; }
-                if (!(UserFromCookie.UserType == 0 || messages[index].UserId == UserFromCookie.Id)) { return false; }
+
+                Debug.WriteLine(index);
+                if (messages[index] == null) { return;  }
+                if (!(UserFromCookie.UserType == 0 || messages[index].UserId == UserFromCookie.Id)) { return; }
                 MessageManager.SetMessStatusToDeleted(messages[index].Id);
                 
             }
-            return true;
+            return  ;
           
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
 
-
+            Debug.WriteLine("HUH");
             DAL.Message message = new DAL.Message();
             message.UserId = UserFromCookie.Id;
             message.Content = txt_Message.Text;

@@ -60,7 +60,7 @@
                                                             <ul class="chat-ellips__dropdown__menu" >
                                                                 <li>
                                               
-                                                                    <asp:Button  ID="Button1" OnClientClick="return preSubmit();" runat="server" Text="Xoá, gỡ" CommandArgument="<%# Container.ItemIndex %>" />
+                                                                    <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="DeleteMessage" CommandArgument="<%# Container.ItemIndex %>" />
                                                                 </li>
                                                                 <li>
                                                                     <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
@@ -100,11 +100,7 @@
         </div>
     </div>
     <script>
-        function preSubmit() {
-           __doPostBack('<%= btnSend.UniqueID %>', '');;
-                    // Add your logic here before the form submission
-                    return false; // Return true to allow form submission, or false to prevent it
-                }
+       
     </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -124,6 +120,7 @@
     </script>
 
     <script>
+    
         function handleKeyPress(event) {
                     if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -131,7 +128,7 @@
                 handleSendMessage();
             }
         }
-
+     
         function handleSendMessage() {
 
             __doPostBack('<%= btnSend.UniqueID %>', '');

@@ -47,8 +47,8 @@ namespace BUS
         public static List<MessageJoinUser> GetListMessageByAtCreate()
         {
             var query = new InlineQuery();
-            var sqlquery = "SELECT TOP 25 dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
-                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1  order by Messages.AtCreate DESC";
+            var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
+                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1  order by Messages.AtCreate ASC";
             Debug.WriteLine(sqlquery);
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
