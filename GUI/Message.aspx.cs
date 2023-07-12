@@ -17,21 +17,29 @@ namespace GUI
     {
         public static User UserFromCookie;
    
-        private List<MessageJoinUser> messages;
-
+    
+        private List<MessageJoinUser> messages
+        {
+            get { return ViewState["messages"] as List<MessageJoinUser>; }
+            set { ViewState["messages"] = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+          
             Debug.WriteLine("Refreshing page...");
             if (!IsPostBack)
             {
+                Debug.WriteLine("Refreshing messages...");
                 UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
+                return;
             }
+            Debug.WriteLine(messages.Count);
         }
 
         void LoadMessage()
         {
-            messages = MessageManager.GetListMessageByAtCreate();
+            messages = MessageManager.GetListMessageByAtCreate(1);
             Debug.WriteLine(messages.Count);
             Repeater1.DataSource = messages;
             Repeater1.DataBind();
@@ -61,22 +69,24 @@ namespace GUI
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("Delete Mess");
-            if (IsPostBack)
-            {
-                Debug.WriteLine("Deleting ");
+
+            Debug.WriteLine("Deleting");
                 Button btn = (Button)sender;
           
-                int index = int.Parse(btn.CommandArgument.ToString());
+                int Id = int.Parse(btn.CommandArgument.ToString());
 
-                Debug.WriteLine(index);
-                if (messages[index] == null) { return;  }
-                if (!(UserFromCookie.UserType == 0 || messages[index].UserId == UserFromCookie.Id)) { return; }
-                MessageManager.SetMessStatusToDeleted(messages[index].Id);
-                
-            }
-            return  ;
-          
+                DAL.Message DeletingMessage = MessageManager.GetMessageById(Id);
+
+            Debug.WriteLine(Id);
+            if (DeletingMessage == null) { return;  }
+                if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
+            MessageManager.SetMessStatusToDeleted(DeletingMessage.Id, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1) ;
+
+            Debug.WriteLine("Deleted");
+            LoadMessage();
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
+            return;
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
@@ -87,7 +97,6 @@ namespace GUI
             message.Content = txt_Message.Text;
             message.AtCreate = DateTime.Now;
             message.Status = 1;
-
 
             MessageManager.InsertMessage(message);
             LoadMessage();

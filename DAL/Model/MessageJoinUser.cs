@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
+    [Serializable]
     public class MessageJoinUser
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime AtCreate { get; set; }
-        public int status { get; set; }
+        public int Status { get; set; }
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string DisplayName { get; set; }

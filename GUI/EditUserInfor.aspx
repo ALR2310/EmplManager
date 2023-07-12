@@ -31,7 +31,7 @@
 
     <div class="content">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:UpdatePanel runat="server">
+      
             <ContentTemplate>
                 <div class="userInfo">
                     <div class="userInfo__header">
@@ -58,10 +58,10 @@
                                 <label>Họ Và Tên</label>
                             </div>
                             <div class="userInfo-header__submit">
-                                <button type="button" onclick="handleSaveEdit()">
+                                <button type="button" onclick="handleSaveEdit(event)">
                                     <i class="fa-solid fa-floppy-disk"></i>
                                     Lưu Lại
-                                <asp:Button ID="btnSave" OnClick="btnSave_Click" runat="server" Style="display: none;" />
+                                <asp:Button ID="btnSave" onclick="btnSave_Click" runat="server" Style="display: none;" />
                                 </button>
                             </div>
                         </div>
@@ -86,11 +86,12 @@
                     </div>
                 </div>
             </ContentTemplate>
-        </asp:UpdatePanel>
+        
 
     </div>
     <script>
-        function handleSaveEdit() {
+        function handleSaveEdit(e) {
+     
             __doPostBack('<%= btnSave.UniqueID %>', '');
         }
         function handleSavePassword() {

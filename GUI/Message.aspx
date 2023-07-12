@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
+﻿
+<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -44,8 +45,9 @@
                                                 <img src="<%# Eval("Avatar") %>" alt="avatar">
                                             </div>
                                             <div class="chat-item__box">
-                                                <a href="#"><%# Eval("DisplayName") %></a>
-                                                <p title="<%# Eval("AtCreate") %>"><%# Eval("Content") %> </p>
+                                                <a href="#"><%#  Eval("DisplayName")%></a>
+                                                <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# Eval("AtCreate") %>">
+                                                    <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %> </p>
                                                 <button type="button" class="chat-main__like hide">
                                                     <i class="fa-solid fa-thumbs-up"></i>
                                                     <span>3</span>
@@ -60,8 +62,8 @@
                                                             <ul class="chat-ellips__dropdown__menu" >
                                                                 <li>
                                               
-                                                                    <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="DeleteMessage" CommandArgument="<%# Container.ItemIndex %>" />
-                                                                </li>
+                                                                   <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClick="btnDelete_Click" CommandArgument='<%# Eval("Id") %>' />
+                                                                 </li>
                                                                 <li>
                                                                     <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
                                                                 </li>
@@ -84,7 +86,7 @@
 
                     <div class="chat-footer">
                         <div class="chat-footer__form">
-                            <asp:TextBox ID="txt_Message" TextMode="MultiLine" runat="server" spellcheck="false" placeholder="Enter Message..." onkeypress="handleKeyPress(event)"></asp:TextBox>
+                            <asp:TextBox ID="txt_Message" TextMode="MultiLine" runat="server" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></asp:TextBox>
                             <button class="btn btn-chat-footer" onclick="handleSendMessage()">
                                 Send
                                 <i class="fa-solid fa-paper-plane"></i>

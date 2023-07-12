@@ -22,6 +22,7 @@ namespace GUI
                 AssignInfo();
                 Debug.WriteLine("Assigned User");
             }
+            return;
         }
 
         private void AssignInfo()
@@ -40,10 +41,12 @@ namespace GUI
             Debug.WriteLine(CheckingValidUser.Id);
             if (UserFromCookie.Id == CheckingValidUser.Id)
             {
-                Debug.WriteLine(uploadAvatar.FileName);
+              
                 Debug.WriteLine("Saving...");
+                Debug.WriteLine(uploadAvatar.HasFile);
                 if (uploadAvatar.HasFile)
                 {
+                    Debug.WriteLine(uploadAvatar.FileName);
                     // Get the file name and extension
                     string fileName = $"U_{CheckingValidUser.Id}";
                     string extension = Path.GetExtension(uploadAvatar.FileName);
@@ -68,6 +71,8 @@ namespace GUI
 
                 UserFromCookie.Save();
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "my", "toggleModal()", true);
+
+                AssignInfo();
             }
         }
 
