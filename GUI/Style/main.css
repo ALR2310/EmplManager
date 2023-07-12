@@ -325,7 +325,8 @@ html {
 
     .chat-main__item--right .chat-ellips__dropdown__menu {
         left: auto;
-        right: 0;
+        right: 20%;
+        top: -360%;
     }
 
 .chat-item__box {
@@ -379,13 +380,6 @@ html {
 
     .chat-main__like i {
         color: #569ff3;
-    }
-
-    .chat-main__like span {
-        font-size: 12px;
-        position: absolute;
-        bottom: -30%;
-        color: #EEEEEE;
     }
 
 .chat-main__item--right .chat-main__like {

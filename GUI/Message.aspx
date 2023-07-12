@@ -45,7 +45,7 @@
             </div>
 
             <div class="buttonsmodal">
-                <button class="btn-modal close-btn">Đóng</button>
+                <button type="button" class="btn-modal close-btn">Đóng</button>
             </div>
         </div>
     </div>
@@ -96,8 +96,7 @@
                                                     <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                 </p>
                                                 <button type="button" onclick="toggleModal()" class="chat-main__like hide">
-                                                    <i class="fa-solid fa-thumbs-up"></i>
-                                                    <span>3</span>
+                                                    <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
                                                 </button>
 
                                                 <div class="chat-main__ellips">
@@ -184,7 +183,7 @@
     </div>
     <script>
 
-    </script>
+</script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="JS/modal.js"></script>
@@ -212,7 +211,7 @@
                 handleSendMessage(event);
             }
         }
-     
+
         function handleSendMessage() {
 
             __doPostBack('<%= btnSend.UniqueID %>', '');
