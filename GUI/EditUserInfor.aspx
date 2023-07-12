@@ -13,65 +13,80 @@
 
     <div id="toast"></div>
 
+    <div class="modal hide">
+        <span class="overlay"></span>
+        <div class="modal-box">
+
+            <div class="content-modal">
+                <i class="fa-regular fa-circle-check"></i>
+                <h2>Cập Nhật Thành Công</h2>
+                <h3>Bạn đã cập nhật thông tin thành công!</h3>
+            </div>
+
+            <div class="buttonsmodal">
+                <button class="btn-modal close-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
 
     <div class="content">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
-        <contenttemplate>
-            <div class="userInfo">
-                <div class="userInfo__header">
-                    <div class="userInfo-header__content">
-                        <div class="userInfo-header__img">
-                            <asp:Image ID="ImageAvatar" ImageUrl="images/avatar/defaultAvatar.jpg" runat="server" />
-                        </div>
-                        <div class="userInfo-header__info">
-                            <asp:Label ID="lblUpload" runat="server" AssociatedControlID="uploadAvatar" CssClass="custom-file-upload">
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <div class="userInfo">
+                    <div class="userInfo__header">
+                        <div class="userInfo-header__content">
+                            <div class="userInfo-header__img">
+                                <asp:Image ID="ImageAvatar" ImageUrl="images/avatar/defaultAvatar.jpg" runat="server" />
+                            </div>
+                            <div class="userInfo-header__info">
+                                <asp:Label ID="lblUpload" runat="server" AssociatedControlID="uploadAvatar" CssClass="custom-file-upload">
                                 <i class="fa fa-cloud-upload"></i>Tải Lên Avatar
-                            </asp:Label>
+                                </asp:Label>
 
-                            <asp:FileUpload onchange="handleFileChange(this)" ID="uploadAvatar" runat="server" />
+                                <asp:FileUpload onchange="handleFileChange(this)" ID="uploadAvatar" runat="server" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="userInfo-header__desc">
-                        <h2>Cập Nhật Thông Tin</h2>
-                        <div class="inputGroup">
-                            <asp:TextBox ID="tblEmail" TextMode="Email" autocomplete="off" required="" runat="server"></asp:TextBox>
-                            <label>Email</label>
-                        </div>
-                        <div class="inputGroup">
-                            <asp:TextBox ID="tblDisplayName" autocomplete="off" required="" runat="server"></asp:TextBox>
-                            <label>Họ Và Tên</label>
-                        </div>
-                        <div class="userInfo-header__submit">
-                            <button type="button" onclick="handleSaveEdit()">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                                Lưu Lại
+                        <div class="userInfo-header__desc">
+                            <h2>Cập Nhật Thông Tin</h2>
+                            <div class="inputGroup">
+                                <asp:TextBox ID="tblEmail" TextMode="Email" autocomplete="off" runat="server"></asp:TextBox>
+                                <label>Email</label>
+                            </div>
+                            <div class="inputGroup">
+                                <asp:TextBox ID="tblDisplayName" autocomplete="off" runat="server"></asp:TextBox>
+                                <label>Họ Và Tên</label>
+                            </div>
+                            <div class="userInfo-header__submit">
+                                <button type="button" onclick="handleSaveEdit()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    Lưu Lại
                                 <asp:Button ID="btnSave" OnClick="btnSave_Click" runat="server" Style="display: none;" />
-                            </button>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="userInfo-header__desc">
-                        <h2>Thay Đổi Mật Khẩu</h2>
-                        <div class="inputGroup">
-                            <asp:TextBox ID="tblOldPassword" TextMode="Password" autocomplete="off" required="" runat="server"></asp:TextBox>
-                            <label>Mật Khẩu Cũ</label>
-                        </div>
-                        <div class="inputGroup">
-                            <asp:TextBox ID="tblNewPassword" TextMode="Password" autocomplete="off" required="" runat="server"></asp:TextBox>
-                            <label>Mật Khẩu Mới</label>
-                        </div>
-                        <div class="userInfo-header__submit">
-                            <button type="button" onclick="handleSavePassword()">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                                Thay Đổi
+                        <div class="userInfo-header__desc">
+                            <h2>Thay Đổi Mật Khẩu</h2>
+                            <div class="inputGroup">
+                                <asp:TextBox ID="tblOldPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
+                                <label>Mật Khẩu Cũ</label>
+                            </div>
+                            <div class="inputGroup">
+                                <asp:TextBox ID="tblNewPassword" TextMode="Password" autocomplete="off" runat="server"></asp:TextBox>
+                                <label>Mật Khẩu Mới</label>
+                            </div>
+                            <div class="userInfo-header__submit">
+                                <button type="button" onclick="handleSavePassword()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    Thay Đổi
                                 <asp:Button ID="btnChanges" runat="server" OnClick="btnChanges_Click" Style="display: none;" />
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </contenttemplate>
-
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
     </div>
     <script>
@@ -98,5 +113,6 @@
 
     </script>
     <script src="JS/edituser.js"></script>
+    <script src="JS/modal.js"></script>
 
 </asp:Content>
