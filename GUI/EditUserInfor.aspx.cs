@@ -18,7 +18,6 @@ namespace GUI
         {
             tblEmail.Text = UserFromCookie.Email;
             tblDisplayName.Text = UserFromCookie.DisplayName;
-            tblUserName.Text = UserFromCookie.UserName;
             ImageAvatar.ImageUrl = UserFromCookie.Avatar;
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -68,15 +67,19 @@ namespace GUI
 
                     UserFromCookie.Email = tblEmail.Text;
                     UserFromCookie.DisplayName = tblDisplayName.Text;
-                    UserFromCookie.UserName = tblUserName.Text;
 
                     UserFromCookie.Save();
                     ToastManager.SuccessToast("Cập Nhật Thành Công..");
 
 
                 }
-              
+
             }
+        }
+
+        protected void btnChanges_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

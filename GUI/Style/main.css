@@ -286,18 +286,21 @@ html {
     color: #cccccc;
     text-decoration: none;
 }
-.chat-main__ellips{
+
+.chat-main__ellips {
     z-index: 2;
 }
+
 .chat-main__item:nth-last-child(-n+3) > div > .chat-item__box > .chat-main__ellips > .chat-ellips__dropdown > button > ul {
     top: -340%;
 }
+
 .chat-main__item--right {
     justify-content: flex-end;
 }
 
     .chat-main__item--right .chat-main__content {
-        flex-direction: row-reverse;    
+        flex-direction: row-reverse;
         margin-right: 15px;
     }
 
@@ -760,8 +763,7 @@ html {
 
 .userInfo-header__desc {
     margin: 15px 0 15px 0;
-    padding: 15px;
-    padding-left: 30px;
+    padding: 15px 30px;
     flex: 1;
     border-left: 1px solid var(--border-color);
 }
@@ -853,3 +855,41 @@ html {
         .userInfo-header__submit button:hover {
             opacity: 0.8;
         }
+
+.inputGroup {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 1em 0 1em 0;
+    position: relative;
+}
+
+    .inputGroup input {
+        font-size: 100%;
+        padding: 8px 15px;
+        outline: none;
+        border: 1px solid var(--border-color);
+        background-color: transparent;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .inputGroup label {
+        font-size: 100%;
+        position: absolute;
+        left: 0;
+        padding: 7px 10px;
+        margin-left: 0.5em;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .inputGroup :is(input:focus, input:valid) ~ label {
+        transform: translateY(-50%) scale(.9);
+        margin: 0em;
+        margin-left: 1.3em;
+        padding: 0.4em;
+        background-color: white;
+    }
+
+    .inputGroup :is(input:focus, input:valid) {
+        border-color: rgb(150, 150, 200);
+    }
