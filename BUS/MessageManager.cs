@@ -56,5 +56,10 @@ namespace BUS
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
             return list;
         }
+
+        public static Like InsertLike(Like like)
+        {
+            return new LikeController().Insert(like);
+        }
     }
 }
