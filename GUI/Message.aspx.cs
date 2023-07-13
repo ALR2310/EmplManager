@@ -155,17 +155,6 @@ namespace GUI
             return;
         }
 
-        public void InsertEmoji(int index)
-        {
-            Like like = new Like();
-            like.UserId = UserFromCookie.Id;
-            like.MessageId = messages[index].Id;
-
-            LikeManager.InsertLike(like);
-
-            LoadMessage();
-        }
-
         public void LoadEmoji()
         {
             List<LikeJoinUser> emojiInfor = LikeManager.GetAllUserAndEmoji();
