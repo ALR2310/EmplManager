@@ -105,7 +105,7 @@
                                                     <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
                                                 </button>
 
-                                                <div class="chat-main__ellips">
+                                                <div class="chat-main__ellips" <%#(int)Eval("Status") != 1 ? "style='display:none !important'" : ""%>>
                                                     <div class="chat-ellips__dropdown">
                                                         <button type="button" class="chat-ellips__emoji__toggle"
                                                             onmouseenter="toggleEmoji(event, 'flex')"
