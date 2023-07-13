@@ -119,22 +119,22 @@
                                                                     <a id="Emoji_2" runat="server">&#128077</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_3" runat="server">&#128513</a>
+                                                                    <a id="Emoji_3" runat="server">&#128514</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_4" runat="server">&#128514</a>
+                                                                    <a id="Emoji_4" runat="server">&#128517</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_5" runat="server">&#128516</a>
+                                                                    <a id="Emoji_5" runat="server">🥳</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_6" runat="server">&#128517</a>
+                                                                    <a id="Emoji_6" runat="server">👀</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_7" runat="server">&#128518</a>
+                                                                    <a id="Emoji_7" runat="server">🤯</a>
                                                                 </li>
                                                                 <li class="chat-ellips__item">
-                                                                    <a id="Emoji_8" runat="server">&#128525</a>
+                                                                    <a id="Emoji_8" runat="server">🥲</a>
                                                                 </li>
                                                                 <box class="boxhidentop"></box>
                                                                 <box class="boxhidenbottom"></box>

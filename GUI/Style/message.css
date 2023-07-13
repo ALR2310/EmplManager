@@ -57,11 +57,26 @@
 
 
 .chat-ellips__item {
-  padding: 5px;
+  padding: 6px 6px;
+  margin: 0 6px;
 }
 
-.chat-ellips__item:hover {
-    transform: scale(2);
-    margin: 0 10px;
-}
+    .chat-ellips__item:hover {
+        animation-name: emoji_scale;
+        animation-duration: .25s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(.24,1.49,1,.99);
+    }
 
+@keyframes emoji_scale{
+    0% {
+        transform: scale(1);
+       
+    }
+    100% {
+        padding: 6px 3px;
+        margin: 0 9px;
+        transform: scale(2) translateY(-10%);
+      
+    }
+}
