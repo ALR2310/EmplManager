@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Web.Services.Description;
 using SubSonic.Sugar;
+using System.Web.UI.HtmlControls;
 
 namespace GUI
 {
@@ -38,7 +39,6 @@ namespace GUI
                 Debug.WriteLine("Refreshing messages...");
                 UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
-                LoadEmoji();
                 return;
             }
             Debug.WriteLine(messages.Count);
@@ -50,13 +50,6 @@ namespace GUI
             TimeSpan TimeDiff = lastIndexedTime - messages[itemIndex].AtCreate;
             lastIndexedTime = messages[itemIndex].AtCreate;
             if (Math.Abs(TimeDiff.TotalMinutes) < 30) { return false; }
-
-
-
-
-
-
-
 
             return true;
         }
@@ -155,16 +148,42 @@ namespace GUI
             return;
         }
 
-        public void LoadEmoji()
+        public void LoadEmoji(int IdMessage)
         {
-            List<LikeJoinUser> emojiInfor = LikeManager.GetAllUserAndEmoji();
+            List<LikeJoinUser> emojiInfor = LikeManager.GetAllUserAndEmoji(IdMessage);
             ListEmoji_Repeater.DataSource = emojiInfor;
             ListEmoji_Repeater.DataBind();
         }
 
+        protected void OpenEmojiModal_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int IdMessage = Convert.ToInt32(button.CommandArgument);
+
+            LoadEmoji(IdMessage);
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), "myjs", "toggleModal()", true);
+        }
+
         protected void RemoveEmoji_ServerClick(object sender, EventArgs e)
         {
+            HtmlAnchor link = (HtmlAnchor)sender;
+            string commandArgument = link.Attributes["CommandArgument"];
+            int likeId = Convert.ToInt32(commandArgument);
 
+            LikeManager.ChangeStatusLike(likeId);
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), "myjs", "toggleModal()", true);
+        }
+
+        protected void ListEmoji_Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                HtmlAnchor RemoveEmoji = (HtmlAnchor)e.Item.FindControl("RemoveEmoji");
+                if (RemoveEmoji != null)
+                {
+                    UpdatePanel2.Triggers.Add(new AsyncPostBackTrigger { ControlID = RemoveEmoji.UniqueID, EventName = "ServerClick" });
+                }
+            }
         }
     }
 }
