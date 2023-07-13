@@ -88,10 +88,6 @@ namespace GUI
 
         }
 
-        protected void InsertEmoji(int emojiid)
-        {
-            Debug.WriteLine(emojiid);
-        }
         protected string IsHideDropdown(int index)
         {
             string returned_str = UserFromCookie.Id == messages[index].UserId ? "" : "hide";

@@ -58,7 +58,7 @@
 
 .chat-ellips__item {
   padding: 6px 6px;
-  margin: 0 1px;
+  margin: 0 6px;
 }
 
     .chat-ellips__item:hover {
@@ -75,7 +75,7 @@
     }
     100% {
         padding: 6px 3px;
-        margin: 0 4px;
+        margin: 0 9px;
         transform: scale(2) translateY(-10%);
       
     }
