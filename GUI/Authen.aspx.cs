@@ -30,11 +30,13 @@ namespace GUI
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "myjs", "startCountdown()", true);
         }
 
+        //Xác thực tài khoản
         protected void btnAuthen_Click(object sender, EventArgs e)
         {
             if (tbl_verifyCode.Text.Trim() == verifyCode)
             {
                 Console.WriteLine("Mã xác thực chính xác");
+                //Luồn đi ban đầu của tui như sau, sau khi đăng ký tài khoản 
             }
 
         }

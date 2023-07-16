@@ -32,7 +32,7 @@ namespace GUI
                     user.Password = txtPassword.Text;
                     user.AtCreate = DateTime.Now;
                     user.UserType = 1;
-                    user.Status = 1;
+                    user.Status = 2;
 
                     int emailExists = UserManager.CheckEmailUser(user.Email);
                     int usernameExists = UserManager.CheckUserName(user.UserName);
@@ -49,8 +49,9 @@ namespace GUI
 
                         Response.Cookies.Add(authCookie);
 
-                        string script = "toggleModal()";
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "mymodal", script, true);
+                        Response.Redirect("Authen.aspx");
+                        //string script = "toggleModal()";
+                        //ScriptManager.RegisterClientScriptBlock(this, GetType(), "mymodal", script, true);
 
                         //script = "setTimeout(function(){this.location = \"./message.aspx\"},5000)";
                         //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
