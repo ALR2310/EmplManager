@@ -174,6 +174,7 @@
                                 </ul>
                             </button>
 
+<<<<<<< HEAD
                         </div>
                         <div class="chat-ellips__dropdown ">
                             <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
@@ -192,16 +193,24 @@
 
                         </div>
                     </div>
-                </ContentTemplate>
+                         <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
 
+
+                </ContentTemplate>
+     
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="Button1" />
+                </Triggers>
+         
             </asp:UpdatePanel>
 
+                    
 
         </div>
     </div>
     <script>
 
-</script>
+    </script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="JS/modal.js"></script>
