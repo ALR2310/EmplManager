@@ -17,6 +17,8 @@ namespace DAL.Model
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string DisplayName { get; set; }
+        
+        public Dictionary<int, List<int>> Reactions { get; set; }
 
       
     }

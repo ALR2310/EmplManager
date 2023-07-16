@@ -8,6 +8,7 @@ using SubSonic;
 using DAL.Model;
 using System.Diagnostics;
 using System.Web.UI;
+using System.Security.Cryptography;
 
 namespace BUS
 {
@@ -23,12 +24,13 @@ namespace BUS
             return new Select().From(Message.Schema.TableName).Where(Message.Columns.Id).IsEqualTo(id).
                 ExecuteSingle<Message>();
         }
-        public static void SetMessStatusToDeleted(int messageid, int status)
+        public static void SetMessStatusToDeleted(MessageJoinUser message, int status)
         {
-            Message mess = GetMessageById(messageid);
-            mess.Status = status;
-            mess.Save();
+            var query = new InlineQuery();
+            var sqlquery = $"Update Messages SET Status = {status} where Id = {message.Id}";
+            query.Execute(sqlquery);
 
+            message.Status = status;
         }
         public static void DeleteMessageById(int id)
         {
@@ -36,25 +38,33 @@ namespace BUS
 
 
         }
-        public static List<MessageJoinUser> GetListMessageByStatus()
+        public static void InsertEmoji(int UID,int MID,int EmojiId)
         {
+
             var query = new InlineQuery();
-            var sqlquery = "SELECT dbo.Messages.*, Avatar, Email, DisplayName FROM dbo.Messages " +
-                "INNER JOIN dbo.Users ON Users.Id = Messages.UserId WHERE dbo.Messages.Status = 1";
-            List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
-            return list;
+            var sqlquery = $"InsertEmojiToMessage @uid = {UID}, @mid {MID}, @emj = {EmojiId}";
+            query.Execute(sqlquery);
         }
 
-        public static List<MessageJoinUser> GetListMessageByAtCreate(int Page)
+        public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int Page)
         {
             var query = new InlineQuery();
-            var sqlquery = "SELECT * FROM ( SELECT [QuanLyRaVaoCty].[dbo].[Messages].*, Avatar, Email, DisplayName " +
-                "FROM [QuanLyRaVaoCty].[dbo].[Messages] INNER JOIN dbo.Users ON Users.Id = Messages.UserId " +
-                $"ORDER BY Messages.AtCreate DESC OFFSET {(Page - 1) * 25} ROWS FETCH NEXT 25 ROWS ONLY) AS Subquery " +
-                "ORDER BY Subquery.AtCreate ASC;";
+            var sqlquery = $"EXECUTE dbo.GetListMessageByAtCreate @page = {Page}";
             Debug.WriteLine(sqlquery);
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
-            return list;
+
+            foreach (MessageJoinUser mess in list)
+            {
+                var reactionQuery = $"EXEC get_message_reactions @MID = ${mess.Id}";
+
+
+                Dictionary<int, List<int>> reactions = query.ExecuteTypedList<(int Status, string UserIds)>(reactionQuery)
+                    .ToDictionary(item => item.Status, item => item.UserIds.Split(',').Select(int.Parse).ToList());
+
+                mess.Reactions = reactions;
+            }
+
+            return list.ToDictionary(item => item.Id, item => item);
         }
     }
 }

@@ -12,25 +12,81 @@ using System.Reflection;
 using System.Web.Services.Description;
 using SubSonic.Sugar;
 using System.Web.UI.HtmlControls;
-
+using System.Text.Json;
 namespace GUI
 {
     public partial class Message : System.Web.UI.Page
     {
         public static User UserFromCookie;
-        private Dictionary<int, string> DayToStringDict = new Dictionary<int, string>();
+        [NonSerialized]
+        private Dictionary<string, Action<Dictionary<string, object>>> _requestFunctions;
 
-        private List<MessageJoinUser> messages
+
+
+        private Dictionary<string, Action<Dictionary<string, object>>> RequestMethods
         {
-            get { return ViewState["messages"] as List<MessageJoinUser>; }
+            get {
+                if (_requestFunctions == null)
+
+                    _requestFunctions = new Dictionary<string, Action<Dictionary<string, object>>>
+                {
+                    { "DeleteMessage", DeleteMessage},
+                        {"InsertEmoji",InsertEmoji }
+
+                };
+
+                return _requestFunctions;
+            }
+        }
+        #region RequestMethods
+        protected void InsertEmoji(Dictionary<string, object> args){
+
+            MessageManager.InsertEmoji(UserFromCookie.Id, (int)args["Message_Id"], (int)args["Emoji_Id"]);
+
+        }
+        protected void DeleteMessage(Dictionary<string, object> args)
+        {
+
+
+            int Id = int.Parse(args["Message_Id"].ToString());
+
+            MessageJoinUser DeletingMessage = messages[Id];
+
+            Debug.WriteLine(Id);
+            if (DeletingMessage == null) { return; }
+            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
+            MessageManager.SetMessStatusToDeleted(DeletingMessage, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
+
+            return;
+        }
+        #endregion
+        private Dictionary<int,MessageJoinUser> messages
+        {
+            get { return ViewState["messages"] as Dictionary<int,MessageJoinUser>; }
             set { ViewState["messages"] = value; }
+        }
+
+        private Dictionary<int,string> DayToStringDict
+        {
+            get
+            {
+                if (ViewState["DayToStringDict"] == null)
+                {
+                    ViewState["DayToStringDict"] = new Dictionary<int, string>
+                    {
+                        {0,"Hôm nay" },
+                        {1,"Hôm qua" },
+                        {2,"Hôm kia" }
+                    };
+
+                }
+                return ViewState["DayToStringDict"] as Dictionary<int, string>;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DayToStringDict.Add(0, "Hôm nay");
-            DayToStringDict.Add(1, "Hôm qua");
-            DayToStringDict.Add(2, "Hôm kia");
+
 
 
             Debug.WriteLine("Refreshing page...");
@@ -39,12 +95,24 @@ namespace GUI
                 Debug.WriteLine("Refreshing messages...");
                 UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
-                return;
+             
             }
+
+            string targetControlID = Request["__EVENTTARGET"];
+            string eventArgument = Request["__EVENTARGUMENT"];
+
+            Debug.WriteLine(targetControlID);
+            if (targetControlID != null && RequestMethods.ContainsKey(targetControlID))
+            {
+                Debug.WriteLine(eventArgument);
+                RequestMethods[targetControlID].Invoke(JsonSerializer.Deserialize<Dictionary<string, object>>(eventArgument));
+            }
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "ChatListInit", "init();", true);
             Debug.WriteLine(messages.Count);
         }
         private DateTime lastIndexedTime = DateTime.Now;
-
+        #region genericMethods
         protected bool GetTimeGap(int itemIndex)
         {
             TimeSpan TimeDiff = lastIndexedTime - messages[itemIndex].AtCreate;
@@ -65,22 +133,28 @@ namespace GUI
 
             return DateStr;
         }
+        void ReloadMessages()
+        {
+            ListMessage_Repeater.DataSource = messages.Values.ToList();
+            ListMessage_Repeater.DataBind();
+        }
         void LoadMessage()
         {
             messages = MessageManager.GetListMessageByAtCreate(1);
             Debug.WriteLine(messages.Count);
-            ListMessage_Repeater.DataSource = messages;
-            ListMessage_Repeater.DataBind();
+
+            ReloadMessages();
+        
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
-
+    
             return;
         }
 
 
         protected string IsOwnerMessage(int index)
         {
-            string returned_str = UserFromCookie.Id == messages[index].UserId ? "chat-main__item--right" : "";
+            string returned_str = UserFromCookie.Id == messages[index].UserId ? "owner='true'" : "";
 
             index = index + 1;
 
@@ -106,31 +180,13 @@ namespace GUI
 
             return roundedTime.ToString();
         }
+        #endregion
 
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-
-            Debug.WriteLine("Deleting");
-            Button btn = (Button)sender;
-
-            int Id = int.Parse(btn.CommandArgument.ToString());
-
-            DAL.Message DeletingMessage = MessageManager.GetMessageById(Id);
-
-            Debug.WriteLine(Id);
-            if (DeletingMessage == null) { return; }
-            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
-            MessageManager.SetMessStatusToDeleted(DeletingMessage.Id, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
-
-            Debug.WriteLine("Deleted");
-            LoadMessage();
-
-            return;
-        }
         protected void btnSend_Click(object sender, EventArgs e)
         {
             if (txt_Message.Text == "") { LoadMessage(); return; }
 
+            Debug.WriteLine("Send");
             DAL.Message message = new DAL.Message();
             message.UserId = UserFromCookie.Id;
             message.Content = txt_Message.Text;

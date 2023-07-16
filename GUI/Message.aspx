@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
+﻿<%@ Page Title=""   Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server" >
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="toast"></div>
 
@@ -17,7 +17,7 @@
                 <div class="crossbar"></div>
                 <ul class="list-emoji">
 
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
 
                             <asp:Repeater ID="ListEmoji_Repeater" runat="server">
@@ -87,10 +87,10 @@
                         <ul class="chat-main__list">
                             <asp:Repeater ID="ListMessage_Repeater" runat="server">
                                 <ItemTemplate>
-                                    <div class="time-gap" <%#GetTimeGap(Container.ItemIndex) == true ? "" : "style='display:none'" %>>
-                                        <div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr(Container.ItemIndex)  %></div>
+                                    <div class="time-gap" <%#GetTimeGap((int)Eval("Id")) == true ? "" : "style='display:none'" %>>
+                                        <div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr((int)Eval("Id"))  %></div>
                                     </div>
-                                    <li class="chat-main__item <%# IsOwnerMessage(Container.ItemIndex) %>">
+                                    <li class="chat-main__item" message_id=<%#Eval("Id") %> <%# IsOwnerMessage((int)Eval("Id")) %>>
                                         <div class="chat-main__content">
                                             <div class="chat-main__avatar">
                                                 <asp:Image ID="ImgAvatar" runat="server" />
@@ -99,7 +99,7 @@
 
                                             <div class="chat-wrapper">
                                                 <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>
-                                                <div class="chat-item__box">
+                                                <div class="chat-item__box" drop_hidden="<%#(int)Eval("Status") != 1 ? "true" : ""%>">
 
                                                     <div class="titles">
                                                         <a href="#"><%#  Eval("DisplayName")%></a>
@@ -115,60 +115,7 @@
                                                     </button>
 
 
-                                                    <div class="chat-main__ellips" <%#(int)Eval("Status") != 1 ? "style='display:none !important'" : ""%>>
-                                                        <div class="chat-ellips__dropdown">
-                                                            <button type="button" class="chat-ellips__emoji__toggle"
-                                                                onmouseenter="toggleEmoji(event, 'flex')"
-                                                                onclick="toggleEmoji(event, 'flex')" onmouseleave="toggleEmoji(event, 'none')">
-                                                                <i class="fa-regular fa-face-smile"></i>
-                                                                <ul class="chat-ellips__show_emoji">
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_1" runat="server" style="color: red;">&#10084</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_2" runat="server">&#128077</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_3" runat="server">&#128514</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_4" runat="server">&#128517</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_5" runat="server">🥳</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_6" runat="server">👀</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_7" runat="server">🤯</a>
-                                                                    </li>
-                                                                    <li class="chat-ellips__item">
-                                                                        <a id="Emoji_8" runat="server">🥲</a>
-                                                                    </li>
-                                                                    <box class="boxhidentop"></box>
-                                                                    <box class="boxhidenbottom"></box>
-                                                                </ul>
-                                                            </button>
 
-                                                        </div>
-                                                        <div class="chat-ellips__dropdown <%# IsHideDropdown(Container.ItemIndex) %>">
-                                                            <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
-                                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                                <ul class="chat-ellips__dropdown__menu">
-                                                                    <li>
-                                                                        <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClick="btnDelete_Click" CommandArgument='<%# Eval("Id") %>' />
-                                                                    </li>
-                                                                    <li>
-                                                                        <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
-                                                                    </li>
-                                                                    <box class="boxhidentop"></box>
-                                                                    <box class="boxhidenbottom"></box>
-                                                                </ul>
-                                                            </button>
-
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                             </div>
@@ -191,8 +138,62 @@
                             </button>
                         </div>
                     </div>
+                    <div id="main__ellips" class="chat-main__ellips">
+                        <div class="chat-ellips__dropdown">
+                            <button type="button" class="chat-ellips__emoji__toggle"
+                                onmouseenter="toggleEmoji(event, 'flex')"
+                                onclick="toggleEmoji(event, 'flex')" onmouseleave="toggleEmoji(event, 'none')">
+                                <i class="fa-regular fa-face-smile"></i>
+                                <ul class="chat-ellips__show_emoji">
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_1" class="Emoji" runat="server" style="color: red;">&#10084</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_2" class="Emoji" runat="server">&#128077</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_3" class="Emoji" runat="server">&#128514</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_4" class="Emoji" runat="server">&#128517</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_5" class="Emoji" runat="server">🥳</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_6" class="Emoji" runat="server">👀</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_7" class="Emoji" runat="server">🤯</a>
+                                    </li>
+                                    <li class="chat-ellips__item">
+                                        <a id="Emoji_8" class="Emoji" runat="server">🥲</a>
+                                    </li>
+                                    <box class="boxhidentop"></box>
+                                    <box class="boxhidenbottom"></box>
+                                </ul>
+                            </button>
 
+                        </div>
+                        <div class="chat-ellips__dropdown ">
+                            <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <ul class="chat-ellips__dropdown__menu">
+                                    <li>
+                                        <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="mess_delete()" />
+                                    </li>
+                                    <li>
+                                        <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
+                                    </li>
+                                    <box class="boxhidentop"></box>
+                                    <box class="boxhidenbottom"></box>
+                                </ul>
+                            </button>
+
+                        </div>
+                    </div>
                 </ContentTemplate>
+
             </asp:UpdatePanel>
 
 
@@ -204,6 +205,9 @@
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="JS/modal.js"></script>
+    <script>
+  
+    </script>
     <script>
 
         function scrollBottom() {
@@ -233,11 +237,53 @@
 
             __doPostBack('<%= btnSend.UniqueID %>', '');
         }
+        const ellips = $("#main__ellips");
+        function toggleEllips(e) {
 
-        <%--function handleShowModalEmoji() {
-            __doPostBack('<%= OpenModalEmoji.UniqueID %>', '');
-        }--%>
+            var parele = $(e.target).closest(".chat-main__item");
+            console.log(parele.find(".chat-item__box"));
+            ellips.appendTo(parele.find(".chat-item__box"));
+            ellips.css("display", "flex");
+
+            ellips.attr("Message_Id", parele.attr("message_id"));
+        }
+
+
+        function mess_delete() {
+            __doPostBack("DeleteMessage", `{"Message_Id": ${ellips.attr("Message_Id")} }`);
+        }
+        function init() {
+
+
+            var inputElement = $("#<%= txt_Message.ClientID %>")
+            document.addEventListener('keydown', function (event) {
+                const key = event.key;
+                const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
+
+
+                if (isAlphaNumeric) {
+                    inputElement.focus();
+                }
+            });
+
+            $(".chat-main__item").on("mouseenter", toggleEllips);
+            
+            var chat_scroll = $(".chat-main__list");
+
+            last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll.scrollHeight;
+
+
+
+            chat_scroll[0].scroll(0, last_scroll_pos);
+
+            chat_scroll.on('scroll', function () {
+                var scrollTop = $(this).scrollTop();
+                console.log(scrollTop)
+                sessionStorage.setItem("scrollpos", scrollTop.toString());
+            });
+        }
+
     </script>
-
+    <script src="JS/emoji.js"></script>
 </asp:Content>
 

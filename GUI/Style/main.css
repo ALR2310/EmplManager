@@ -291,29 +291,31 @@ html {
 .chat-main__ellips {
     z-index: 2;
 }
-
-.chat-main__item--right {
+.chat-item__box[drop_hidden='true'] > #main__ellips {
+    display: none !important;
+}
+.chat-main__item[owner='true'] {
     justify-content: flex-end;
 }
 
-    .chat-main__item--right .chat-main__content {
+    .chat-main__item[owner='true'] .chat-main__content {
         flex-direction: row-reverse;
         margin-right: 15px;
     }
 
-    .chat-main__item--right .chat-item__box {
+    .chat-main__item[owner='true'] .chat-item__box {
         background-color: #5990ce;
     }
 
-    .chat-main__item--right .chat-item__box-name {
+    .chat-main__item[owner='true'] .chat-item__box-name {
         display: none;
     }
 
-    .chat-main__item--right .chat-main__avatar {
+    .chat-main__item[owner='true'] .chat-main__avatar {
         display: none;
     }
 
-    .chat-main__item--right .chat-main__ellips {
+    .chat-main__item[owner='true'] .chat-main__ellips {
         flex-direction: row-reverse;
         left: auto;
         right: 100%;
@@ -323,7 +325,7 @@ html {
         z-index: 2;
     }
 
-    .chat-main__item--right .chat-ellips__dropdown__menu {
+    .chat-main__item[owner='true'] .chat-ellips__dropdown__menu {
         left: auto;
         right: 20%;
         top: -340%;
@@ -382,12 +384,12 @@ html {
         color: #569ff3;
     }
 
-.chat-main__item--right .chat-main__like {
+.chat-main__item[owner='true'] .chat-main__like {
     right: auto;
     left: 7%;
 }
 
-    .chat-main__item--right .chat-main__like i {
+    .chat-main__item[owner='true'] .chat-main__like i {
         color: var(--primary-color);
     }
 
@@ -438,7 +440,7 @@ html {
             transform: scale(2,2);
         }
 
-.chat-main__item--right .chat-ellips__show_emoji {
+.chat-main__item[owner='true'] .chat-ellips__show_emoji {
     bottom: 150%;
     left: auto;
     right: -270%
@@ -488,9 +490,9 @@ html {
 .boxhidenbottom {
     
     width: 100%;
-    height: 30px;
+    height: 20px;
     position: absolute;
-    bottom: -30px;
+    bottom: -15px;
     left: 0;
     z-index: 10;
   
