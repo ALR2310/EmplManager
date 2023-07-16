@@ -36,7 +36,10 @@ namespace GUI
             if (tbl_verifyCode.Text.Trim() == verifyCode)
             {
                 Console.WriteLine("Mã xác thực chính xác");
-                //Luồn đi ban đầu của tui như sau, sau khi đăng ký tài khoản 
+                //Luồn đi ban đầu của tui như sau, sau khi đăng ký tài khoản thành công sẽ mở trang này và
+                //tiến hành đưa Email đã đăng ký lên lable Email, sau đó gửi mã xác thực về Email, hiện đã gửi mã được.
+                //Tiếp theo là sẽ kiểm tra mã xác thực nhập vào, nếu đúng thì tiến hành cập nhật lại Status của tài khoản từ 2 thành 1
+                //để kích hoạt tài khoản rồi trả về trang Message.aspx
             }
 
         }
