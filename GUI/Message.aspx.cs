@@ -157,6 +157,9 @@ namespace GUI
 
         protected void OpenEmojiModal_Click(object sender, EventArgs e)
         {
+            //HtmlButton htmlButton = (HtmlButton)sender;
+            //int IdMessage = Convert.ToInt32(htmlButton.Attributes["CommandArgument"]);
+
             Button button = (Button)sender;
             int IdMessage = Convert.ToInt32(button.CommandArgument);
 

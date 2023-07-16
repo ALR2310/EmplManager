@@ -109,9 +109,9 @@
                                                     <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# GetTime((DateTime)Eval("AtCreate")) %>">
                                                         <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
                                                     </p>
-                                                    <button type="button" class="chat-main__like <%--hide--%>">
+                                                    <button type="button" runat="server" onserverclick="OpenEmojiModal_Click" commandargument='<%# Eval("Id") %>' class="chat-main__like <%--hide--%>">
                                                         <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
-                                                        <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
+                                                        <%--<asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />--%>
                                                     </button>
 
 
@@ -192,9 +192,14 @@
                         </div>
                     </div>
 
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
 
+                </ContentTemplate>
+
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="Button1" />
+                </Triggers>
+            </asp:UpdatePanel>
 
         </div>
     </div>
