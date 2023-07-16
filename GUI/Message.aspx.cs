@@ -13,38 +13,48 @@ using System.Web.Services.Description;
 using SubSonic.Sugar;
 using System.Web.UI.HtmlControls;
 using System.Text.Json;
+using SubSonic;
+
 namespace GUI
 {
     public partial class Message : System.Web.UI.Page
     {
         public static User UserFromCookie;
         [NonSerialized]
-        private Dictionary<string, Action<Dictionary<string, object>>> _requestFunctions;
+        private Dictionary<string, Func<Dictionary<string, object>, bool>> _requestFunctions;
 
 
 
-        private Dictionary<string, Action<Dictionary<string, object>>> RequestMethods
+        private Dictionary<string, Func<Dictionary<string, object>, bool>> RequestMethods
         {
-            get {
+            get
+            {
                 if (_requestFunctions == null)
-
-                    _requestFunctions = new Dictionary<string, Action<Dictionary<string, object>>>
                 {
-                    { "DeleteMessage", DeleteMessage},
-                        {"InsertEmoji",InsertEmoji }
-
-                };
+                    _requestFunctions = new Dictionary<string, Func<Dictionary<string, object>, bool>>
+                    {
+                { "DeleteMessage", new Func<Dictionary<string, object>, bool>(DeleteMessage) }
+            };
+                }
 
                 return _requestFunctions;
             }
         }
         #region RequestMethods
-        protected void InsertEmoji(Dictionary<string, object> args){
-
-            MessageManager.InsertEmoji(UserFromCookie.Id, (int)args["Message_Id"], (int)args["Emoji_Id"]);
+        protected bool InsertEmoji(Dictionary<string, object> args)
+        {
+            try
+            {
+                MessageManager.InsertEmoji(UserFromCookie.Id, int.Parse((string)args["Message_Id"]), int.Parse((string)args["Emoji_Id"]));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
 
         }
-        protected void DeleteMessage(Dictionary<string, object> args)
+        protected bool DeleteMessage(Dictionary<string, object> args)
         {
 
 
@@ -53,20 +63,20 @@ namespace GUI
             MessageJoinUser DeletingMessage = messages[Id];
 
             Debug.WriteLine(Id);
-            if (DeletingMessage == null) { return; }
-            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return; }
+            if (DeletingMessage == null) { return false; }
+            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return false; }
             MessageManager.SetMessStatusToDeleted(DeletingMessage, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
-
-            return;
+            ReloadMessages();
+            return true;
         }
         #endregion
-        private Dictionary<int,MessageJoinUser> messages
+        private Dictionary<int, MessageJoinUser> messages
         {
-            get { return ViewState["messages"] as Dictionary<int,MessageJoinUser>; }
+            get { return ViewState["messages"] as Dictionary<int, MessageJoinUser>; }
             set { ViewState["messages"] = value; }
         }
 
-        private Dictionary<int,string> DayToStringDict
+        private Dictionary<int, string> DayToStringDict
         {
             get
             {
@@ -95,17 +105,26 @@ namespace GUI
                 Debug.WriteLine("Refreshing messages...");
                 UserFromCookie = MyLayout.UserFromCookie;
                 LoadMessage();
-             
-            }
 
+            }
+           
             string targetControlID = Request["__EVENTTARGET"];
             string eventArgument = Request["__EVENTARGUMENT"];
 
-            Debug.WriteLine(targetControlID);
+
             if (targetControlID != null && RequestMethods.ContainsKey(targetControlID))
             {
-                Debug.WriteLine(eventArgument);
-                RequestMethods[targetControlID].Invoke(JsonSerializer.Deserialize<Dictionary<string, object>>(eventArgument));
+  
+                bool success = RequestMethods[targetControlID].Invoke(JsonSerializer.Deserialize<Dictionary<string, object>>(eventArgument));
+
+                if (!success)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    Response.Write("Internal error");
+                    Response.End();
+                    Debug.WriteLine("Lỗi khi xử lý yêu cầu");
+                    return;
+                }
             }
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ChatListInit", "init();", true);
@@ -141,13 +160,13 @@ namespace GUI
         void LoadMessage()
         {
             messages = MessageManager.GetListMessageByAtCreate(1);
-            Debug.WriteLine(messages.Count);
+            Debug.WriteLine("Loading Messages");
 
             ReloadMessages();
-        
+
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
-    
+
             return;
         }
 

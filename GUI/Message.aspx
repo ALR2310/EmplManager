@@ -180,10 +180,10 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                                 <ul class="chat-ellips__dropdown__menu">
                                     <li>
-                                        <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="mess_delete()" />
+                                        <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="mess_delete(); return false;" />
                                     </li>
                                     <li>
-                                        <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" />
+                                        <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" OnClientClick="return false;" />
                                     </li>
                                     <box class="boxhidentop"></box>
                                     <box class="boxhidenbottom"></box>
@@ -248,8 +248,11 @@
             ellips.attr("Message_Id", parele.attr("message_id"));
         }
 
+        var delete_cd = false;
+        function mess_delete(e) {
 
-        function mess_delete() {
+            if (delete_cd == true) { return; }
+            delete_cd = true;
             __doPostBack("DeleteMessage", `{"Message_Id": ${ellips.attr("Message_Id")} }`);
         }
         function init() {
