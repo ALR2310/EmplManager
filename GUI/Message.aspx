@@ -192,8 +192,6 @@
                         </div>
                     </div>
 
-                    <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
-
                 </ContentTemplate>
 
                 <Triggers>
@@ -205,7 +203,7 @@
     </div>
     <script>
 
-    </script>
+</script>
     <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="JS/modal.js"></script>

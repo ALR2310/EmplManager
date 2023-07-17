@@ -47,13 +47,6 @@ namespace GUI
 
                 string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
                 ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
-
-                //Luồn đi ban đầu của tui như sau, sau khi đăng ký tài khoản thành công sẽ mở trang này và
-                //tiến hành đưa Email đã đăng ký lên lable Email, sau đó gửi mã xác thực về Email, hiện đã gửi mã được.
-                //Tiếp theo là sẽ kiểm tra mã xác thực nhập vào, nếu đúng thì tiến hành cập nhật lại Status của tài khoản từ 2 thành 1
-                //để kích hoạt tài khoản rồi trả về trang Message.aspx
-
-                //Hiện tui đang gặp chút vấn đề về việc so sánh mã xác thực, nếu có gì còn kém thì ông có thể cải tiếng thêm.
             }
             else
             {
