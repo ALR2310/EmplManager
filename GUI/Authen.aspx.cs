@@ -66,9 +66,10 @@ namespace GUI
                 User user = RegisteringUser;
 
                 user.Status = 1;
-                UserManager.UpdateUser(user);
+                UserManager.InsertUser(user);
+                user.Save();
 
-                String authToken = UserManager.Login(user.UserName, user.Password);
+                string authToken = UserManager.Login(user.UserName, user.Password);
 
                 HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
                 authCookie.Expires = DateTime.Now.AddDays(7);
@@ -80,7 +81,7 @@ namespace GUI
                     return;
                 }
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "abc", "toggleModal()", true);
-
+                Response.Redirect("Message.aspx");
                 //string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
                 //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
             }
