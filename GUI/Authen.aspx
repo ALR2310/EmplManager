@@ -42,7 +42,7 @@
 
                             <p class="authen_text">
                                 Một mã xác thực kích hoạt tài khoản đã được gửi đến Email
-                                <asp:Label ID="lbl_Email" runat="server" class="email-hide">lethanhan342004@gmail.com</asp:Label>, vui lòng kiểm tra hộp thư.
+                                <asp:Label ID="lbl_Email" runat="server" class="email-hide"></asp:Label>, vui lòng kiểm tra hộp thư.
                             </p>
 
                             <div class="login-form__field">

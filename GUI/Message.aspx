@@ -174,7 +174,6 @@
                                 </ul>
                             </button>
 
-<<<<<<< HEAD
                         </div>
                         <div class="chat-ellips__dropdown ">
                             <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">

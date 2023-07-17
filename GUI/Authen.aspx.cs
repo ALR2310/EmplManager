@@ -10,19 +10,42 @@ using System.Web.UI.WebControls;
 using BUS;
 using DAL;
 
+using System.Diagnostics;
+using DAL.Model;
+
 namespace GUI
 {
     public partial class Authen : System.Web.UI.Page
     {
-        private string verifyCode;
-        public static User UserFromCookie;
+        protected User RegisteringUser;
+
+        private string VerifyCode {
+
+            get { return ViewState["VerifyCode"] as string; }
+            set { 
+                Debug.WriteLine($"New key: {value}");
+                ViewState["VerifyCode"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            RegisteringUser = Register.RegisteringUser;
+            if (RegisteringUser == null)
+            {
+                Response.Redirect("Register.aspx");
+                return;
+            }
+            lbl_Email.Text = RegisteringUser.Email;
+            Debug.WriteLine(RegisteringUser.Email);
+       
+
             if (!IsPostBack)
             {
-                UserFromCookie = MyLayout.UserFromCookie;
                 SendVerificationCode();
             }
+
+           
 
         }
 
@@ -36,13 +59,26 @@ namespace GUI
         //Xác thực tài khoản
         protected void btnAuthen_Click(object sender, EventArgs e)
         {
-            if (tbl_verifyCode.Text.Trim() == verifyCode)
+            Debug.WriteLine($"Verify Code: {VerifyCode}");
+            Debug.WriteLine(tbl_verifyCode.Text.Trim());
+            if (tbl_verifyCode.Text.Trim() == VerifyCode)
             {
-                User user = new User();
-                user.Id = UserFromCookie.Id;
-                user.Status = 1;
-                UserManager.UpdateUser(user);
 
+        
+                UserManager.InsertUser(RegisteringUser);
+                RegisteringUser.Save();
+
+                String authToken = UserManager.Login(RegisteringUser.UserName, RegisteringUser.Password);
+
+                HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+                authCookie.Expires = DateTime.Now.AddDays(7);
+                Response.Cookies.Add(authCookie);
+
+                if (authToken == "_failed_")
+                {
+                    ToastManager.ErrorToast("Đã có lỗi xảy ra trong lúc đăng nhập tài khoản");
+                    return;
+                }
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "abc", "toggleModal()", true);
 
                 string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
@@ -76,8 +112,8 @@ namespace GUI
         //Gửi mã code về Email
         private void SendVerificationCode()
         {
-            verifyCode = GenerateVerifyCode();
 
+            VerifyCode = GenerateVerifyCode();
             // Khởi tạo cấu hình FluentEmail
             var sender = new SmtpSender(() => new System.Net.Mail.SmtpClient("smtp.gmail.com")
             {
@@ -90,9 +126,9 @@ namespace GUI
 
             // Xây dựng email
             var email = Email.From("ansaka147@gmail.com")
-                .To(lbl_Email.Text.Trim())
+                .To(RegisteringUser.Email)
                 .Subject("Mã Xác Thực")
-                .Body($"Mã xác thực của bạn là: " + verifyCode);
+                .Body($"Mã xác thực của bạn là: " + VerifyCode);
 
             // Gửi email
             var response = email.Send();

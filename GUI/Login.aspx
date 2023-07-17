@@ -61,7 +61,7 @@
                                 <i class="fa-sharp fa-solid fa-key"></i>
                                 <asp:TextBox ID="txtPassword" TextMode="Password" placeholder="Mật Khẩu" runat="server"></asp:TextBox>
                             </div>
-
+                                      <a href="Register.aspx">Chưa có tài khoản? bấm vào để đăng ký ngay!</a>
                             <div class="login-form__field error-field">
                                 <asp:Label ID="lblError" runat="server" class="text-error"></asp:Label>
                             </div>

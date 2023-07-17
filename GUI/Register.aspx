@@ -66,7 +66,7 @@
                                 <i class="fa-sharp fa-solid fa-key"></i>
                                 <asp:TextBox ID="txtConfirmPassword" TextMode="Password" runat="server" type="text" placeholder="Xác Nhận Mật Khẩu"></asp:TextBox>
                             </div>
-
+                  
                             <div class="login-form__field error-field">
                                 <asp:Label ID="lblError" runat="server" Text="" class="text-error"></asp:Label>
                             </div>
