@@ -38,15 +38,15 @@ namespace GUI
         {
             if (tbl_verifyCode.Text.Trim() == verifyCode)
             {
-                User user = new User();
-                user.Id = UserFromCookie.Id;
-                user.Status = 1;
-                UserManager.UpdateUser(user);
+                //User user = new User();
+                //user.Id = UserFromCookie.Id;
+                //user.Status = 1;
+                //UserManager.UpdateUser(user);
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "abc", "toggleModal()", true);
 
-                string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
-                ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
+                //string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
+                //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
             }
             else
             {
