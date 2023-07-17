@@ -62,7 +62,6 @@ namespace GUI
 
             MessageJoinUser DeletingMessage = messages[Id];
 
-            Debug.WriteLine(Id);
             if (DeletingMessage == null) { return false; }
             if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return false; }
             MessageManager.SetMessStatusToDeleted(DeletingMessage, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
@@ -111,7 +110,7 @@ namespace GUI
             string targetControlID = Request["__EVENTTARGET"];
             string eventArgument = Request["__EVENTARGUMENT"];
 
-
+            Debug.WriteLine(eventArgument);
             if (targetControlID != null && RequestMethods.ContainsKey(targetControlID))
             {
   

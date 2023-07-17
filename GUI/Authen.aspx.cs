@@ -63,10 +63,16 @@ namespace GUI
             Debug.WriteLine(tbl_verifyCode.Text.Trim());
             if (tbl_verifyCode.Text.Trim() == VerifyCode)
             {
-                User user = new User();
-                user.Id = UserFromCookie.Id;
+                User user = RegisteringUser;
+
                 user.Status = 1;
                 UserManager.UpdateUser(user);
+
+                String authToken = UserManager.Login(user.UserName, user.Password);
+
+                HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+                authCookie.Expires = DateTime.Now.AddDays(7);
+                Response.Cookies.Add(authCookie);
 
                 if (authToken == "_failed_")
                 {

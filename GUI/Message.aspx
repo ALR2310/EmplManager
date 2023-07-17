@@ -194,17 +194,15 @@
                     </div>
                          <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
 
-<<<<<<< HEAD
-
-                </ContentTemplate>
-     
+                    
                 <Triggers>
                     <asp:PostBackTrigger ControlID="Button1" />
                 </Triggers>
          
-=======
+
                 </ContentTemplate>
->>>>>>> c3b28e0f93a0468070faea9ba48f6b1ff3db8339
+     
+
             </asp:UpdatePanel>
 
                     
