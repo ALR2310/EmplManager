@@ -33,7 +33,8 @@ namespace GUI
                 {
                     _requestFunctions = new Dictionary<string, Func<Dictionary<string, object>, bool>>
                     {
-                { "DeleteMessage", new Func<Dictionary<string, object>, bool>(DeleteMessage) }
+                { "DeleteMessage", new Func<Dictionary<string, object>, bool>(DeleteMessage) },
+                { "InsertEmoji", new Func<Dictionary<string, object>, bool>(InsertEmoji)  }
             };
                 }
 
@@ -45,11 +46,12 @@ namespace GUI
         {
             try
             {
-                MessageManager.InsertEmoji(UserFromCookie.Id, int.Parse((string)args["Message_Id"]), int.Parse((string)args["Emoji_Id"]));
+                MessageManager.InsertEmoji(UserFromCookie.Id, int.Parse(args["Message_Id"].ToString()), int.Parse(args["Emoji_Id"].ToString()));
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Debug.Write(e);
                 return false;
             }
 
@@ -120,8 +122,9 @@ namespace GUI
                 {
                     Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                     Response.Write("Internal error");
-                    Response.End();
                     Debug.WriteLine("Lỗi khi xử lý yêu cầu");
+                    Response.End();
+  
                     return;
                 }
             }
@@ -223,6 +226,7 @@ namespace GUI
             List<LikeJoinUser> emojiInfor = LikeManager.GetAllUserAndEmoji(IdMessage);
             ListEmoji_Repeater.DataSource = emojiInfor;
             ListEmoji_Repeater.DataBind();
+
         }
 
         protected void OpenEmojiModal_Click(object sender, EventArgs e)

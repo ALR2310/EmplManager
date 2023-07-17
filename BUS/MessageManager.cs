@@ -42,7 +42,8 @@ namespace BUS
         {
 
             var query = new InlineQuery();
-            var sqlquery = $"InsertEmojiToMessage @uid = {UID}, @mid {MID}, @emj = {EmojiId}";
+            var sqlquery = $"eXEC InsertEmojiToMessage @uid = {UID}, @mid = {MID}, @emj = {EmojiId}";
+            Debug.WriteLine(sqlquery);
             query.Execute(sqlquery);
         }
 
