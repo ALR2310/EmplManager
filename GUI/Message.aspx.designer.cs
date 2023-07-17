@@ -69,13 +69,31 @@ namespace GUI
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// ListMessage_Repeater control.
+        /// ImgAvatar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater ListMessage_Repeater;
+        protected global::System.Web.UI.WebControls.Image ImgAvatar;
+
+        /// <summary>
+        /// lblEmoji control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmoji;
+
+        /// <summary>
+        /// OpenEmojiModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OpenEmojiModal;
 
         /// <summary>
         /// txt_Message control.

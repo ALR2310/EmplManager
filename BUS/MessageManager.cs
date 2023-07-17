@@ -58,11 +58,16 @@ namespace BUS
             {
                 var reactionQuery = $"EXEC get_message_reactions @MID = ${mess.Id}";
 
+       
+                List<Reactions> reactionlist = query.ExecuteTypedList<Reactions> (reactionQuery);
 
-                Dictionary<int, List<int>> reactions = query.ExecuteTypedList<(int Status, string UserIds)>(reactionQuery)
-                    .ToDictionary(item => item.Status, item => item.UserIds.Split(',').Select(int.Parse).ToList());
+                if (reactionlist.Count > 0) {
+            
+                    Dictionary<int, List<int>> reactions = reactionlist.ToDictionary(item => item.Status, item => item.Usernames.Split(',').Select(s => int.Parse(s.Trim())).ToList());
 
-                mess.Reactions = reactions;
+                    mess.Reactions = reactions;
+                }
+             
             }
 
             return list.ToDictionary(item => item.Id, item => item);

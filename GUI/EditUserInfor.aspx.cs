@@ -16,9 +16,10 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
-                UserFromCookie = MyLayout.UserFromCookie;
+
                 AssignInfo();
                 Debug.WriteLine("Assigned User");
             }

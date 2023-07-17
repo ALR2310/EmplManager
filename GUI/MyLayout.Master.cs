@@ -11,7 +11,7 @@ namespace GUI
 {
     public partial class MyLayout : System.Web.UI.MasterPage
     {
-        public static User UserFromCookie;
+        public User UserFromCookie;
 
         private void AssignInfos()
         {

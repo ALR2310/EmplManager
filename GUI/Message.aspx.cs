@@ -15,11 +15,12 @@ using System.Web.UI.HtmlControls;
 using System.Text.Json;
 using SubSonic;
 
+
 namespace GUI
 {
     public partial class Message : System.Web.UI.Page
     {
-        public static User UserFromCookie;
+        public User UserFromCookie;
         [NonSerialized]
         private Dictionary<string, Func<Dictionary<string, object>, bool>> _requestFunctions;
 
@@ -56,10 +57,28 @@ namespace GUI
             }
 
         }
+        [System.Web.Services.WebMethod]
+        public static string GetMessageJsonData(int page)
+        {
+           
+
+            var jsonData = JsonSerializer.Serialize(MessageManager.GetListMessageByAtCreate(page));
+
+            return jsonData;
+        }
+
+        [System.Web.Services.WebMethod]
+        public string GetUserFromCookieData()
+        {
+
+            var jsonData = JsonSerializer.Serialize(UserFromCookie);
+
+            return jsonData;
+        }
         protected bool DeleteMessage(Dictionary<string, object> args)
         {
 
-
+            /*
             int Id = int.Parse(args["Message_Id"].ToString());
 
             MessageJoinUser DeletingMessage = messages[Id];
@@ -69,9 +88,11 @@ namespace GUI
             MessageManager.SetMessStatusToDeleted(DeletingMessage, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
             ReloadMessages();
             return true;
+            */
+            return true;
         }
         #endregion
-        private Dictionary<int, MessageJoinUser> messages
+        protected Dictionary<int, MessageJoinUser> messages
         {
             get { return ViewState["messages"] as Dictionary<int, MessageJoinUser>; }
             set { ViewState["messages"] = value; }
@@ -94,18 +115,18 @@ namespace GUI
                 return ViewState["DayToStringDict"] as Dictionary<int, string>;
             }
         }
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
 
 
-
+            UserFromCookie = ((MyLayout)Master).UserFromCookie;
             Debug.WriteLine("Refreshing page...");
             if (!IsPostBack)
             {
                 Debug.WriteLine("Refreshing messages...");
-                UserFromCookie = MyLayout.UserFromCookie;
-                LoadMessage();
+
+                //LoadMessage();
 
             }
            
@@ -127,10 +148,12 @@ namespace GUI
   
                     return;
                 }
+             
             }
-
+            /*
             ScriptManager.RegisterStartupScript(this, GetType(), "ChatListInit", "init();", true);
             Debug.WriteLine(messages.Count);
+            */
         }
         private DateTime lastIndexedTime = DateTime.Now;
         #region genericMethods
@@ -154,6 +177,7 @@ namespace GUI
 
             return DateStr;
         }
+        /*
         void ReloadMessages()
         {
             ListMessage_Repeater.DataSource = messages.Values.ToList();
@@ -171,7 +195,7 @@ namespace GUI
 
             return;
         }
-
+        */
 
         protected string IsOwnerMessage(int index)
         {
@@ -204,7 +228,7 @@ namespace GUI
         #endregion
 
         protected void btnSend_Click(object sender, EventArgs e)
-        {
+        {   /*
             if (txt_Message.Text == "") { LoadMessage(); return; }
 
             Debug.WriteLine("Send");
@@ -219,6 +243,7 @@ namespace GUI
 
             ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
             return;
+            */
         }
 
         public void LoadEmoji(int IdMessage)

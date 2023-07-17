@@ -1,10 +1,10 @@
-﻿<%@ Page Title=""   Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
+﻿<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/MyLayout.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="GUI.Message" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server" >
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="toast"></div>
 
@@ -85,45 +85,42 @@
 
                     <div class="chat-main">
                         <ul class="chat-main__list">
-                            <asp:Repeater ID="ListMessage_Repeater" runat="server">
-                                <ItemTemplate>
-                                    <div class="time-gap" <%#GetTimeGap((int)Eval("Id")) == true ? "" : "style='display:none'" %>>
-                                        <div class="timer"><%# GetTime((DateTime)Eval("AtCreate")) + " " + GetDateStr((int)Eval("Id"))  %></div>
-                                    </div>
-                                    <li class="chat-main__item" message_id=<%#Eval("Id") %> <%# IsOwnerMessage((int)Eval("Id")) %>>
-                                        <div class="chat-main__content">
-                                            <div class="chat-main__avatar">
-                                                <asp:Image ID="ImgAvatar" runat="server" />
-                                                <img src="<%# Eval("Avatar") %>" alt="avatar">
-                                            </div>
+                            <div id="chat-template" style="display:none">
+                                <div class="time-gap" style="_timegaptostyle_">
+                                    <div class="timer">_timeanddatestr_</div>
+                                </div>
+                                <li class="chat-main__item" message_id='_messageid_' <%# IsOwnerMessage((int)Eval("Id")) %>>
+                                    <div class="chat-main__content">
+                                        <div class="chat-main__avatar">
+                                            <asp:Image ID="ImgAvatar" runat="server" />
+                                            <img src="<%# Eval("Avatar") %>" alt="avatar">
+                                        </div>
 
-                                            <div class="chat-wrapper">
-                                                <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>
-                                                <div class="chat-item__box" drop_hidden="<%#(int)Eval("Status") != 1 ? "true" : ""%>">
+                                        <div class="chat-wrapper">
+                                            <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>
+                                            <div class="chat-item__box" drop_hidden="<%#(int)Eval("Status") != 1 ? "true" : ""%>">
 
-                                                    <div class="titles">
-                                                        <a href="#"><%#  Eval("DisplayName")%></a>
-
-                                                    </div>
-
-                                                    <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# GetTime((DateTime)Eval("AtCreate")) %>">
-                                                        <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
-                                                    </p>
-                                                    <button type="button" class="chat-main__like <%--hide--%>">
-                                                        <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
-                                                        <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
-                                                    </button>
-
-
+                                                <div class="titles">
+                                                    <a href="#"><%#  Eval("DisplayName")%></a>
 
                                                 </div>
 
+                                                <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# GetTime((DateTime)Eval("AtCreate")) %>">
+                                                    <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
+                                                </p>
+                                                <button type="button" class="chat-main__like <%--hide--%>">
+                                                    <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
+                                                    <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
+                                                </button>
+
+
+
                                             </div>
-                                    </li>
 
-                                </ItemTemplate>
-                            </asp:Repeater>
+                                        </div>
+                                </li>
 
+                            </div>
                         </ul>
 
                     </div>
@@ -192,32 +189,33 @@
 
                         </div>
                     </div>
-                         <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
+                    <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
 
-                    
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="Button1" />
-                </Triggers>
-         
+
+                    <triggers>
+                        <asp:PostBackTrigger ControlID="Button1" />
+                    </triggers>
+
 
                 </ContentTemplate>
-     
+
 
             </asp:UpdatePanel>
 
-                    
+
 
         </div>
     </div>
     <script>
 
 </script>
-    <script src="JS/message.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="JS/message.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="JS/modal.js"></script>
     <script>
-  
-    </script>
+
+</script>
     <script>
 
         function scrollBottom() {
@@ -234,7 +232,8 @@
     </script>
 
     <script>
-
+        var MessageJoinUserList = <%# messages.ToString() %>
+            console.log(MessageJoinUserList);
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -280,13 +279,13 @@
             });
 
             $(".chat-main__item").on("mouseenter", toggleEllips);
-            
+
             var chat_scroll = $(".chat-main__list");
 
-            last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll.scrollHeight;
+            last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
 
 
-
+            console.log(last_scroll_pos);
             chat_scroll[0].scroll(0, last_scroll_pos);
 
             chat_scroll.on('scroll', function () {

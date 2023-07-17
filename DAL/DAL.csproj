@@ -52,6 +52,7 @@
     <Compile Include="LikeController.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageController.cs" />
+    <Compile Include="Model\Reactions.cs" />
     <Compile Include="Model\LikeJoinUser.cs" />
     <Compile Include="Model\MessageJoinUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
