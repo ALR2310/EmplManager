@@ -193,10 +193,6 @@
                     </div>
 
                 </ContentTemplate>
-
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="Button1" />
-                </Triggers>
             </asp:UpdatePanel>
 
         </div>
