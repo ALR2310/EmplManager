@@ -247,17 +247,5 @@ namespace GUI
             LikeManager.ChangeStatusLike(likeId);
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "myjs", "toggleModal()", true);
         }
-
-        protected void ListEmoji_Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                HtmlAnchor RemoveEmoji = (HtmlAnchor)e.Item.FindControl("RemoveEmoji");
-                if (RemoveEmoji != null)
-                {
-                    UpdatePanel2.Triggers.Add(new AsyncPostBackTrigger { ControlID = RemoveEmoji.UniqueID, EventName = "ServerClick" });
-                }
-            }
-        }
     }
 }
