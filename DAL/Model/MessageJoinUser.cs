@@ -14,9 +14,6 @@ namespace DAL.Model
         public string Content { get; set; }
         public DateTime AtCreate { get; set; }
         public int Status { get; set; }
-        public string Avatar { get; set; }
-        public string Email { get; set; }
-        public string DisplayName { get; set; }
         
         public Dictionary<int, List<int>> Reactions { get; set; }
 

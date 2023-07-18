@@ -1,29 +1,34 @@
 ﻿using BUS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DAL;
 using DAL.Model;
 using System.Diagnostics;
-using System.Reflection;
-using System.Web.Services.Description;
-using SubSonic.Sugar;
+
 using System.Web.UI.HtmlControls;
 using System.Text.Json;
-using SubSonic;
 
+
+
+
+
+using Microsoft.AspNet.SignalR;
+using SignalRChat.Hubs;
 
 namespace GUI
 {
+
+
+
     public partial class Message : System.Web.UI.Page
     {
         public User UserFromCookie;
         [NonSerialized]
         private Dictionary<string, Func<Dictionary<string, object>, bool>> _requestFunctions;
-
 
 
         private Dictionary<string, Func<Dictionary<string, object>, bool>> RequestMethods
@@ -42,7 +47,7 @@ namespace GUI
                 return _requestFunctions;
             }
         }
-        #region RequestMethods
+      
         protected bool InsertEmoji(Dictionary<string, object> args)
         {
             try
@@ -68,12 +73,40 @@ namespace GUI
         }
 
         [System.Web.Services.WebMethod]
-        public string GetUserFromCookieData()
+        public static string GetUser(int id,bool fromCookie)
         {
+            if (fromCookie) { 
+           
+            string authTokenCookie = HttpContext.Current.Request.Cookies["authToken"].Value;
 
-            var jsonData = JsonSerializer.Serialize(UserFromCookie);
+            return JsonSerializer.Serialize(UserManager.getTokenUser(authTokenCookie));
+            }
+            return JsonSerializer.Serialize(UserManager.GetUsersById(id));
+        }
 
-            return jsonData;
+        [System.Web.Services.WebMethod]
+
+
+
+        public static void SendMessage(string content)
+        {
+            if (content == "") { return; }
+            string authTokenCookie = HttpContext.Current.Request.Cookies["authToken"].Value;
+            User sendingUser = UserManager.getTokenUser(authTokenCookie);
+            if (sendingUser == null) { return;  }
+
+    
+            DAL.Message message = new DAL.Message();
+            message.UserId = UserManager.getTokenUser(authTokenCookie).Id;
+            message.Content = content;
+            message.AtCreate = DateTime.Now;
+            message.Status = 1;
+
+
+            MessageManager.InsertMessage(message);
+
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+            hubContext.Clients.All.ReceiveMessage(JsonSerializer.Serialize(message));
         }
         protected bool DeleteMessage(Dictionary<string, object> args)
         {
@@ -91,7 +124,7 @@ namespace GUI
             */
             return true;
         }
-        #endregion
+    
         protected Dictionary<int, MessageJoinUser> messages
         {
             get { return ViewState["messages"] as Dictionary<int, MessageJoinUser>; }
@@ -155,78 +188,11 @@ namespace GUI
             Debug.WriteLine(messages.Count);
             */
         }
-        private DateTime lastIndexedTime = DateTime.Now;
-        #region genericMethods
-        protected bool GetTimeGap(int itemIndex)
-        {
-            TimeSpan TimeDiff = lastIndexedTime - messages[itemIndex].AtCreate;
-            lastIndexedTime = messages[itemIndex].AtCreate;
-            if (Math.Abs(TimeDiff.TotalMinutes) < 30) { return false; }
+  
 
-            return true;
-        }
+       
 
-        protected string GetDateStr(int itemIndex)
-        {
-
-            DateTime atCreate = messages[itemIndex].AtCreate;
-            TimeSpan TimeDiff = DateTime.Now - atCreate;
-            int DayDiff = (int)TimeDiff.TotalDays;
-            string DateStr = DayToStringDict.ContainsKey(DayDiff) ? DayToStringDict[DayDiff] : atCreate.ToString("dd/M/yyyy");
-
-
-            return DateStr;
-        }
-        /*
-        void ReloadMessages()
-        {
-            ListMessage_Repeater.DataSource = messages.Values.ToList();
-            ListMessage_Repeater.DataBind();
-        }
-        void LoadMessage()
-        {
-            messages = MessageManager.GetListMessageByAtCreate(1);
-            Debug.WriteLine("Loading Messages");
-
-            ReloadMessages();
-
-
-            ScriptManager.RegisterStartupScript(this, GetType(), "ScrollBottomScript", "scrollBottom(); clearText();", true);
-
-            return;
-        }
-        */
-
-        protected string IsOwnerMessage(int index)
-        {
-            string returned_str = UserFromCookie.Id == messages[index].UserId ? "owner='true'" : "";
-
-            index = index + 1;
-
-            return returned_str;
-
-        }
-
-        protected string IsHideDropdown(int index)
-        {
-            string returned_str = UserFromCookie.Id == messages[index].UserId ? "" : "hide";
-
-
-
-            return returned_str;
-        }
-
-        protected string GetTime(DateTime date)
-        {
-            TimeSpan time = date.TimeOfDay;
-
-
-            TimeSpan roundedTime = time.Subtract(TimeSpan.FromMilliseconds(time.Milliseconds));
-
-            return roundedTime.ToString();
-        }
-        #endregion
-
+     
         protected void btnSend_Click(object sender, EventArgs e)
         {   /*
             if (txt_Message.Text == "") { LoadMessage(); return; }

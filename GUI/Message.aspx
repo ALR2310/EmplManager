@@ -87,26 +87,26 @@
                         <ul class="chat-main__list">
                             <div id="chat-template" style="display:none">
                                 <div class="time-gap" style="_timegaptostyle_">
-                                    <div class="timer">_timeanddatestr_</div>
+                                    <div class="timer">_timestr_, _datestr_</div>
                                 </div>
-                                <li class="chat-main__item" message_id='_messageid_' <%# IsOwnerMessage((int)Eval("Id")) %>>
+                                <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
                                     <div class="chat-main__content">
                                         <div class="chat-main__avatar">
-                                            <asp:Image ID="ImgAvatar" runat="server" />
-                                            <img src="<%# Eval("Avatar") %>" alt="avatar">
+                                
+                                            <img src="_message_avatar_" alt="avatar">
                                         </div>
 
                                         <div class="chat-wrapper">
-                                            <span><%# GetTime((DateTime)Eval("AtCreate")) %> </span>
-                                            <div class="chat-item__box" drop_hidden="<%#(int)Eval("Status") != 1 ? "true" : ""%>">
+                                            <span>_timestr_</span>
+                                            <div class="chat-item__box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles">
-                                                    <a href="#"><%#  Eval("DisplayName")%></a>
+                                                    <a class="mess_display_name" href="#">_display_name_</a>
 
                                                 </div>
 
-                                                <p class="<%#(int)Eval("Status") != 1 ? "italic" : "" %>" title="<%# GetTime((DateTime)Eval("AtCreate")) %>">
-                                                    <%# (int)Eval("Status") == 0 ? "Tin nhắn đã được thu hồi" : (int)Eval("Status") == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : Eval("Content")  %>
+                                                <p class="_deleted_italic_">
+                                                     _deleted_or_content_
                                                 </p>
                                                 <button type="button" class="chat-main__like <%--hide--%>">
                                                     <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
@@ -127,11 +127,11 @@
 
                     <div class="chat-footer">
                         <div class="chat-footer__form">
-                            <asp:TextBox ID="txt_Message" TextMode="MultiLine" runat="server" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></asp:TextBox>
-                            <button class="btn btn-chat-footer" onclick="handleSendMessage()">
+                           <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                            <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                                 Send
                                 <i class="fa-solid fa-paper-plane"></i>
-                                <asp:Button ID="btnSend" runat="server" OnClick="btnSend_Click" Style="display: none" />
+                      
                             </button>
                         </div>
                     </div>
@@ -211,7 +211,9 @@
 </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="JS/message.js"></script>
-    <script src="Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+
+<
     <script src="JS/modal.js"></script>
     <script>
 
@@ -242,15 +244,15 @@
             }
         }
 
-        function handleSendMessage() {
-
-            __doPostBack('<%= btnSend.UniqueID %>', '');
+        function handleSendMessage(event) {
+            event.preventDefault();
+            sendMessage();
         }
         const ellips = $("#main__ellips");
         function toggleEllips(e) {
 
             var parele = $(e.target).closest(".chat-main__item");
-            console.log(parele.find(".chat-item__box"));
+          
             ellips.appendTo(parele.find(".chat-item__box"));
             ellips.css("display", "flex");
 
@@ -264,10 +266,10 @@
             delete_cd = true;
             __doPostBack("DeleteMessage", `{"Message_Id": ${ellips.attr("Message_Id")} }`);
         }
-        function init() {
+       
 
 
-            var inputElement = $("#<%= txt_Message.ClientID %>")
+        var inputElement = $("#txt_Message");
             document.addEventListener('keydown', function (event) {
                 const key = event.key;
                 const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
@@ -278,14 +280,14 @@
                 }
             });
 
-            $(".chat-main__item").on("mouseenter", toggleEllips);
+            
 
             var chat_scroll = $(".chat-main__list");
 
             last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
 
 
-            console.log(last_scroll_pos);
+   
             chat_scroll[0].scroll(0, last_scroll_pos);
 
             chat_scroll.on('scroll', function () {
@@ -293,9 +295,10 @@
                 console.log(scrollTop)
                 sessionStorage.setItem("scrollpos", scrollTop.toString());
             });
-        }
-
+       
     </script>
     <script src="JS/emoji.js"></script>
+        <script src="JS/client_interact.js"></script>
+    <script src="JS/signalr_connection.js"></script>
 </asp:Content>
 

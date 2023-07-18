@@ -46,7 +46,7 @@ function toggleDropdown(event, str) {
 
     var dropdownMenu = event.target.parentNode.querySelector(
         '.chat-ellips__dropdown__menu');
-    console.log("Toggle");
+
     if (!dropdownMenu) { return; }
     dropdownMenu.style.display = str;
 
@@ -104,90 +104,5 @@ function handleSearchChat(event) {
         __doPostBack('<%= btnSearchChat.UniqueID%>', ''); // Id của button searchchat
     }
 }
-var lastIndexedTime = new Date();
-function getTimeGap(time) {
 
 
-    var timeDiff = lastIndexedTime - time
-    lastIndexedTime = time;
-    console.log(timeDiff / 1000 / 60);
-    if (Math.abs(timeDiff / 1000 / 60) < 30) { return false; }
-
-    return true;
-
-
-}
-
-const DayStrList = {
-    0: "Hôm nay",
-    1: "Hôm qua",
-    2: "Hôm kia"
-}
-
-var CurrentTime = new Date();
-const FormatFuncs = {
-    '_timegaptostyle_': function (message) {
-        return getTimeGap(message.AtCreate) == true ? "" : "display:none";
-    },
-    '_timeanddatestr_': function (message) {
-        var AtCreate = message.AtCreate;
-        var time = message.AtCreate.toLocaleTimeString("vi-VN");
-        var dayint = Math.floor(Math.abs(CurrentTime - message.AtCreate) / (1000 * 60 * 60 * 24));
-        return `${time}, ${!!DayStrList[dayint] ? DayStrList[dayint] : AtCreate.toLocaleDateString("vi-VN")}`;
-    },
-    '_messageid_': function (message) {
-        return message.Id;
-    }
-}
-
-var UserFromCookie;
-async function getUserFromCookie() {
-    $.ajax({
-        url: 'Message.aspx/GetUserFromCookieData',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ page: page }),
-        success: function (response) {
-            UserFromCookie = response.d;
-        },
-        error: function (xhr, status, error) {
-            // Handle any errors
-            console.error(error);
-        }
-    });
-}
-async function requestJsonData(page) {
-    $.ajax({
-        url: 'Message.aspx/GetMessageJsonData',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ page: page }),
-        success: function (response) {
-            const messages = JSON.parse(response.d);
-
-            for ([key, message] of Object.entries(messages)) {
-
-                message.AtCreate = new Date(message.AtCreate);
-                const message_ele = $("#chat-template").clone();
-                var finalhtml = message_ele.html();
-         
-                for ([replaceTargetstr,formatFunc] of Object.entries(FormatFuncs)) {
-                    finalhtml = finalhtml.replaceAll(replaceTargetstr, formatFunc(message));
-                }
-    
-                message_ele.html(finalhtml);
-                message_ele.children().appendTo(".chat-main__list")[0];
-                message["message_element"] = message_ele;
-
-
-            }
-        },
-        error: function (xhr, status, error) {
-            // Handle any errors
-            console.error(error);
-        }
-    });
-}
-requestJsonData(1);
