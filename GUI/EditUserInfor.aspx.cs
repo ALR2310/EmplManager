@@ -47,7 +47,8 @@ namespace GUI
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            User CheckingValidUser = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+            int? UserId = UserManager.getTokenUserId(Request.Cookies["AuthToken"].Value);
+            User CheckingValidUser = UserManager.GetUsersById((int)UserId);
             if (CheckingValidUser == null) { return; }
 
    

@@ -32,10 +32,21 @@ namespace GUI
 
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
 
+        private static string success_str = "{\"success\":true}";
+        private static string failed_str = "{\"success\":false}";
 
         private static bool VerifyUser(HttpContext context)
         {
-            Debug.WriteLine("Verifying authToken");
+            if (HttpContext.Current.Request.HttpMethod != "POST")
+            {
+
+                if (HttpContext.Current.Request.HttpMethod == "GET")
+                {
+                    HttpContext.Current.Response.Redirect("Message.aspx");
+                }
+                   
+                return false; // Return null, as the response will be redirected
+            }
 
             if (context == null || context.Request.Cookies["authToken"] == null)
             {
@@ -43,8 +54,9 @@ namespace GUI
             }
 
             string authToken = context.Request.Cookies["authToken"].Value;
-            User user = UserManager.getTokenUser(authToken);
-
+            int? id = UserManager.getTokenUserId(authToken);
+            if (id==null) { return false; }
+            BasicUserData user = UserManager.GetUserBasicDataById((int)id);
 
             context.Items["RequestedUser"] = user;
             if (user == null)
@@ -54,30 +66,27 @@ namespace GUI
             return true;
         }
 
-        protected bool InsertEmoji(Dictionary<string, object> args)
+      
+        [System.Web.Services.WebMethod]
+        public static string ToggleEmoji(int Message_Id, int Emoji_Id)
         {
-            /*
-            try
-            {
-                MessageManager.InsertEmoji(UserFromCookie.Id, int.Parse(args["Message_Id"].ToString()), int.Parse(args["Emoji_Id"].ToString()));
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.Write(e);
-                return false;
-            }
-            */
-            return true;
+            HttpContext context = HttpContext.Current;
+            if (!VerifyUser(context)) { return failed_str; }
+            BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
+            MessageManager.InsertEmoji(RequestedUser.Id, Message_Id, Emoji_Id);
+
+            return success_str;
         }
-    
+
         [System.Web.Services.WebMethod]
      
         public static string GetMessageJsonData(int page)
         {
             
             HttpContext context = HttpContext.Current;
-            if (!VerifyUser(context)) { return "{d:null}"; }
+            if (!VerifyUser(context)) { return failed_str; }
+
+            
 
             var jsonData = JsonSerializer.Serialize(MessageManager.GetListMessageByAtCreate(page));
 
@@ -85,31 +94,31 @@ namespace GUI
         }
 
         [System.Web.Services.WebMethod]
-        [VerifyAuthToken]
+    
         public static string GetUser(int id, bool fromCookie)
         {
             HttpContext context = HttpContext.Current;
-            if (!VerifyUser(context)) { return "{d:null}"; }
+            if (!VerifyUser(context)) { return failed_str; ; }
             if (fromCookie)
             {
 
 
-                User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+                BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
                 Debug.WriteLine(JsonSerializer.Serialize(RequestedUser));   
                 return JsonSerializer.Serialize(RequestedUser);
             }
-            return JsonSerializer.Serialize(UserManager.GetUsersById(id));
+            return JsonSerializer.Serialize(UserManager.GetUserBasicDataById(id));
         }
 
         [System.Web.Services.WebMethod]
-        public static void SendMessage(string content)
+        public static string SendMessage(string content)
         {
             HttpContext context = HttpContext.Current;
-            if (!VerifyUser(context)) { return; }
-            if (content == "") { return; }
-        
+            if (!VerifyUser(context)) { return failed_str; }
+            if (content == "") { return failed_str; }
 
-            User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+
+            BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
 
             DAL.Message message = new DAL.Message();
             message.UserId = RequestedUser.Id;
@@ -122,25 +131,27 @@ namespace GUI
 
 
             hubContext.Clients.All.ReceiveMessage(JsonSerializer.Serialize(message));
+            return success_str;
         }
         [System.Web.Services.WebMethod]
    
-        public static void DeleteMessage(int id)
+        public static string DeleteMessage(int id)
         {
             HttpContext context = HttpContext.Current;
-            if (!VerifyUser(context)) { return; }
+            if (!VerifyUser(context)) { return failed_str; }
 
 
-            User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+            BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
             DAL.Message DeletingMessage = MessageManager.GetMessageById(id);
 
-            if (DeletingMessage == null) { return; }
-            if (!(RequestedUser.UserType == 0 || DeletingMessage.UserId == RequestedUser.Id)) { return; }
-            if (MessageManager.SetMessStatusToDeleted(id, DeletingMessage.UserId == RequestedUser.Id ? 0 : -1))
+            if (DeletingMessage == null) { return failed_str; }
+            if (!(RequestedUser.UserType == 0 || DeletingMessage.UserId == RequestedUser.Id)) { return failed_str; }
+            int deleting_status = DeletingMessage.UserId == RequestedUser.Id ? 0 : -1;
+            if (MessageManager.SetMessStatusToDeleted(id, deleting_status))
             {
-                hubContext.Clients.All.MessageDeleted(id);
+                hubContext.Clients.All.MessageDeleted($"{{ \"id\": {id}, \"status\": {deleting_status}}}");
             }
-
+            return success_str;
 
         }
 

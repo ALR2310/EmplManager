@@ -97,11 +97,16 @@ const FormatFuncs = {
 
     }
 }
+var FetchingUsers = {}
 
 async function fetchUser(id, fromCookie) {
     if (id == null) fromCookie = true;
-
-    await $.ajax({
+    if (FetchingUsers[id]) {
+        console.log("Found cached requets... canceling....");
+        await FetchingUsers[id];
+        return;
+    }
+    FetchingUsers[id] = $.ajax({
         url: 'Message.aspx/GetUser',
         type: 'POST',
         contentType: 'application/json',
@@ -112,15 +117,19 @@ async function fetchUser(id, fromCookie) {
 
             if (fromCookie) {
                 Users["CLIENT_USER"] = user;
-                return;
+         
             }
             Users[user.Id] = user;
         },
         error: function (xhr, status, error) {
             // Handle any errors
             console.error(error);
+        },
+        complete: function () {
+            FetchingUsers[id] = null;
         }
     });
+    await FetchingUsers[id];
 }
 
 async function renderMessage(message) {
@@ -184,9 +193,26 @@ async function requestJsonData(page) {
         }
     });
 }
+const DeleteMessage = function (data) {
+    console.log(data);
+    data = JSON.parse(data);
+    var message_id = data.id;
+    var status = data.status;
+    console.log(message_id);
+    console.log(status);
+
+    var deleting_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".mess_content");
+    console.log(deleting_ele);  
+    deleting_ele.addClass("italic");
+    var deleted_mess =
+        status == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : "Tin nhắn đã được thu hồi";
+    deleting_ele.text(deleted_mess);
+
+}
+
 var sendCD = false;
 function sendMessage() {
-    if (sendCD) { return; }
+    if (sendCD || inputElement.val() == "") { return; }
     sendCD = true;
     $.ajax({
         url: 'Message.aspx/SendMessage',
@@ -203,10 +229,14 @@ function sendMessage() {
             console.error(error);
         }
     });
+
     inputElement.val("");
+    setTimeout(function () { inputElement.blur(); }, 1);
     scrollBottom();
     sendCD = false;
 }
+
+
 (async function main() {
     await fetchUser();
     await requestJsonData(1);

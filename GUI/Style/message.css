@@ -22,7 +22,7 @@
     box-sizing: content-box;
     display: flex;
     flex-direction: column;
-    max-width: 50%;
+    max-width: 45vw;
 }
 
 

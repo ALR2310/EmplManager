@@ -5,12 +5,17 @@
     hubProxy.on('ReceiveMessage', async function (message) {
         message = JSON.parse(message);
 
-   
-        await   renderMessage(message);
         Saved_Messages[message.Id] = message;
+        await   renderMessage(message);
+        
    
         if (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < 200) { setTimeout(scrollBottom,10); }
     }); 
+
+    hubProxy.on('MessageDeleted', async function (message) {
+        DeleteMessage(message);
+    });
+
 
     function connect() {
         connection.start()

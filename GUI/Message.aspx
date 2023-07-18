@@ -105,7 +105,7 @@
 
                                                 </div>
 
-                                                <p class="_deleted_italic_">
+                                                <p class="_deleted_italic_ mess_content">
                                                      _deleted_or_content_
                                                 </p>
                                                 <button type="button" class="chat-main__like <%--hide--%>">
@@ -253,6 +253,7 @@
         function handleSendMessage(event) {
             event.preventDefault();
             sendMessage();
+
         }
         const ellips = $("#main__ellips");
         function toggleEllips(e) {
@@ -265,11 +266,11 @@
             ellips.attr("Message_Id", parele.attr("message_id"));
         }
 
-        var delete_cd = false;
+        var delete_cd = {};
         function mess_delete(e) {
 
-            if (delete_cd == true) { return; }
-            delete_cd = true;
+            if (delete_cd[Number(ellips.attr("Message_Id"))] == true) { return; }
+            delete_cd[Number(ellips.attr("Message_Id"))] = true;
             $.ajax({
                 url: 'Message.aspx/DeleteMessage',
                 type: 'POST',
@@ -295,8 +296,7 @@
                 const key = event.key;
                 const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
-
-                if (isAlphaNumeric) {
+                if (isAlphaNumeric || key == "Enter" && document.activeElement != inputElement[0]) {
                     inputElement.focus();
                 }
             });

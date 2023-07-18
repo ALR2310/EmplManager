@@ -5,6 +5,8 @@ using System;
 
 using System.Web.Routing;
 using SignalRChat.Hubs;
+using Microsoft.AspNet.SignalR;
+
 [assembly: OwinStartup(typeof(GUI.Startup))]
 
 namespace GUI
@@ -28,7 +30,7 @@ namespace GUI
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-         
+            //GlobalHost.HubPipeline.AddModule(new CustomAuthorizationModule());
             RouteTable.Routes.MapPageRoute("", "", "~/Message.aspx");
 
 

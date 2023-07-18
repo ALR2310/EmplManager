@@ -18,9 +18,9 @@ namespace GUI
         {
             if (!IsPostBack)
             {
-                bool validcookie = UserManager.checkValidCookie(Request);
+                int? validcookie = UserManager.checkValidCookie(Request);
                 Debug.WriteLine(validcookie);
-                if (validcookie)
+                if (validcookie != null)
                 {
                     string script = "this.location = \"./message.aspx\";";
 

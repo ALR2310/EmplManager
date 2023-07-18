@@ -401,9 +401,15 @@ html {
     align-items: center;
 }
 
+.chat-main__item:hover {
+    background: rgb(251 251 251);
+}
+
 .chat-item__box p {
     line-height: 1.6;
     word-wrap: break-word;
+    min-width:5vw;
+    max-width: 40vw;
 }
 
 .chat-ellips__dropdown {

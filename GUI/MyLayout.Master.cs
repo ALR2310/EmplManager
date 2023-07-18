@@ -20,11 +20,11 @@ namespace GUI
         protected void Page_Init(object sender, EventArgs e)
         {
 
-            bool validcookie = UserManager.checkValidCookie(Request);
+            int? id_from_validcookie = UserManager.checkValidCookie(Request);
 
-            if (!validcookie) { Response.Redirect("login.aspx"); return; }
-
-            UserFromCookie = UserManager.getTokenUser(Request.Cookies["AuthToken"].Value);
+            if (id_from_validcookie == null) { Response.Redirect("login.aspx"); return; }
+      
+            UserFromCookie = UserManager.GetUsersById((int)id_from_validcookie);
 
 
 

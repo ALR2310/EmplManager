@@ -1,4 +1,5 @@
 ﻿using DAL;
+using DAL.Model;
 using SubSonic;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace BUS
     public class UserManager
     {
 
-        public static bool checkValidCookie(HttpRequest Request)
+        public static int? checkValidCookie(HttpRequest Request)
         {
-            if (Request.Cookies["AuthToken"] == null) { return false; }
+            if (Request.Cookies["AuthToken"] == null) { return null; }
 
             string authToken = Request.Cookies["AuthToken"].Value;
-            bool isValid = getTokenUser(authToken) != null;
+            int? isValid = getTokenUserId(authToken);
 
             /*
                 string comment = isValid  ? "Valid " : "InValid ";
@@ -34,13 +35,23 @@ namespace BUS
 
 
         }
-        public static User getTokenUser(string token)
+        public static BasicUserData GetUserBasicDataById(int id)
+        {
+            InlineQuery qry = new InlineQuery();
+            string query = $"select Id,Avatar,DisplayName,UserType from users where id = '{id}'";
+         
+            var UserData = qry.ExecuteTypedList<BasicUserData>(query);
+      
+            return UserData.Count != 0 ? UserData[0] : null;
+
+        }
+        public static int? getTokenUserId(string token)
         {
             InlineQuery qry = new InlineQuery();
             string query = $"Select Id From authTokens Where authToken = '{token}'";
             List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
             if (LoggedTokens.Count == 0) { return null; }
-            return GetUsersById(LoggedTokens[0].Id);
+            return LoggedTokens[0].Id;
 
         }
         public static string generateAndSetToken(int id, string username, string password)
