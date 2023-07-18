@@ -275,6 +275,7 @@
     <Content Include="Animation\Check\style.css" />
     <Content Include="Authen.aspx" />
     <Content Include="EditUserInfor.aspx" />
+    <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />
@@ -326,6 +327,13 @@
     </Compile>
     <Compile Include="EditUserInfor.aspx.designer.cs">
       <DependentUpon>EditUserInfor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empolyee.aspx.cs">
+      <DependentUpon>Empolyee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empolyee.aspx.designer.cs">
+      <DependentUpon>Empolyee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
