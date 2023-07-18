@@ -26,30 +26,37 @@ namespace GUI
 
     public partial class Message : System.Web.UI.Page
     {
-        public User UserFromCookie;
+
         [NonSerialized]
         private Dictionary<string, Func<Dictionary<string, object>, bool>> _requestFunctions;
 
+        private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
 
-        private Dictionary<string, Func<Dictionary<string, object>, bool>> RequestMethods
+
+        private static bool VerifyUser(HttpContext context)
         {
-            get
-            {
-                if (_requestFunctions == null)
-                {
-                    _requestFunctions = new Dictionary<string, Func<Dictionary<string, object>, bool>>
-                    {
-                { "DeleteMessage", new Func<Dictionary<string, object>, bool>(DeleteMessage) },
-                { "InsertEmoji", new Func<Dictionary<string, object>, bool>(InsertEmoji)  }
-            };
-                }
+            Debug.WriteLine("Verifying authToken");
 
-                return _requestFunctions;
+            if (context == null || context.Request.Cookies["authToken"] == null)
+            {
+                return false;
             }
+
+            string authToken = context.Request.Cookies["authToken"].Value;
+            User user = UserManager.getTokenUser(authToken);
+
+
+            context.Items["RequestedUser"] = user;
+            if (user == null)
+            {
+                return false;
+            }
+            return true;
         }
-      
+
         protected bool InsertEmoji(Dictionary<string, object> args)
         {
+            /*
             try
             {
                 MessageManager.InsertEmoji(UserFromCookie.Id, int.Parse(args["Message_Id"].ToString()), int.Parse(args["Emoji_Id"].ToString()));
@@ -60,12 +67,17 @@ namespace GUI
                 Debug.Write(e);
                 return false;
             }
-
+            */
+            return true;
         }
+    
         [System.Web.Services.WebMethod]
+     
         public static string GetMessageJsonData(int page)
         {
-           
+            
+            HttpContext context = HttpContext.Current;
+            if (!VerifyUser(context)) { return "{d:null}"; }
 
             var jsonData = JsonSerializer.Serialize(MessageManager.GetListMessageByAtCreate(page));
 
@@ -73,31 +85,34 @@ namespace GUI
         }
 
         [System.Web.Services.WebMethod]
-        public static string GetUser(int id,bool fromCookie)
+        [VerifyAuthToken]
+        public static string GetUser(int id, bool fromCookie)
         {
-            if (fromCookie) { 
-           
-            string authTokenCookie = HttpContext.Current.Request.Cookies["authToken"].Value;
+            HttpContext context = HttpContext.Current;
+            if (!VerifyUser(context)) { return "{d:null}"; }
+            if (fromCookie)
+            {
 
-            return JsonSerializer.Serialize(UserManager.getTokenUser(authTokenCookie));
+
+                User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+                Debug.WriteLine(JsonSerializer.Serialize(RequestedUser));   
+                return JsonSerializer.Serialize(RequestedUser);
             }
             return JsonSerializer.Serialize(UserManager.GetUsersById(id));
         }
 
         [System.Web.Services.WebMethod]
-
-
-
         public static void SendMessage(string content)
         {
+            HttpContext context = HttpContext.Current;
+            if (!VerifyUser(context)) { return; }
             if (content == "") { return; }
-            string authTokenCookie = HttpContext.Current.Request.Cookies["authToken"].Value;
-            User sendingUser = UserManager.getTokenUser(authTokenCookie);
-            if (sendingUser == null) { return;  }
+        
 
-    
+            User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+
             DAL.Message message = new DAL.Message();
-            message.UserId = UserManager.getTokenUser(authTokenCookie).Id;
+            message.UserId = RequestedUser.Id;
             message.Content = content;
             message.AtCreate = DateTime.Now;
             message.Status = 1;
@@ -105,26 +120,30 @@ namespace GUI
 
             MessageManager.InsertMessage(message);
 
-            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+
             hubContext.Clients.All.ReceiveMessage(JsonSerializer.Serialize(message));
         }
-        protected bool DeleteMessage(Dictionary<string, object> args)
+        [System.Web.Services.WebMethod]
+   
+        public static void DeleteMessage(int id)
         {
+            HttpContext context = HttpContext.Current;
+            if (!VerifyUser(context)) { return; }
 
-            /*
-            int Id = int.Parse(args["Message_Id"].ToString());
 
-            MessageJoinUser DeletingMessage = messages[Id];
+            User RequestedUser = (User)HttpContext.Current.Items["RequestedUser"];
+            DAL.Message DeletingMessage = MessageManager.GetMessageById(id);
 
-            if (DeletingMessage == null) { return false; }
-            if (!(UserFromCookie.UserType == 0 || DeletingMessage.UserId == UserFromCookie.Id)) { return false; }
-            MessageManager.SetMessStatusToDeleted(DeletingMessage, DeletingMessage.UserId == UserFromCookie.Id ? 0 : -1);
-            ReloadMessages();
-            return true;
-            */
-            return true;
+            if (DeletingMessage == null) { return; }
+            if (!(RequestedUser.UserType == 0 || DeletingMessage.UserId == RequestedUser.Id)) { return; }
+            if (MessageManager.SetMessStatusToDeleted(id, DeletingMessage.UserId == RequestedUser.Id ? 0 : -1))
+            {
+                hubContext.Clients.All.MessageDeleted(id);
+            }
+
+
         }
-    
+
         protected Dictionary<int, MessageJoinUser> messages
         {
             get { return ViewState["messages"] as Dictionary<int, MessageJoinUser>; }
@@ -148,51 +167,19 @@ namespace GUI
                 return ViewState["DayToStringDict"] as Dictionary<int, string>;
             }
         }
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
 
-            UserFromCookie = ((MyLayout)Master).UserFromCookie;
-            Debug.WriteLine("Refreshing page...");
-            if (!IsPostBack)
-            {
-                Debug.WriteLine("Refreshing messages...");
 
-                //LoadMessage();
 
-            }
-           
-            string targetControlID = Request["__EVENTTARGET"];
-            string eventArgument = Request["__EVENTARGUMENT"];
-
-            Debug.WriteLine(eventArgument);
-            if (targetControlID != null && RequestMethods.ContainsKey(targetControlID))
-            {
-  
-                bool success = RequestMethods[targetControlID].Invoke(JsonSerializer.Deserialize<Dictionary<string, object>>(eventArgument));
-
-                if (!success)
-                {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                    Response.Write("Internal error");
-                    Debug.WriteLine("Lỗi khi xử lý yêu cầu");
-                    Response.End();
-  
-                    return;
-                }
-             
-            }
-            /*
-            ScriptManager.RegisterStartupScript(this, GetType(), "ChatListInit", "init();", true);
-            Debug.WriteLine(messages.Count);
-            */
         }
-  
 
-       
 
-     
+
+
+
         protected void btnSend_Click(object sender, EventArgs e)
         {   /*
             if (txt_Message.Text == "") { LoadMessage(); return; }

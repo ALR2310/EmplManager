@@ -9,5 +9,9 @@ namespace SignalRChat.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage",  message);
         }
+        public async Task MessageDeleted(int mess_id)
+        {
+            await Clients.All.SendAsync("MessageDeleted", mess_id);
+        }
     }
 }

@@ -37,7 +37,7 @@ const DayStrList = {
 var Users = {};
 var CurrentTime = new Date();
 const FormatFuncs = {
-    '_timegaptostyle_': function (message) {
+    '_timegaptostyle_': async function (message) {
         return getTimeGap(message.AtCreate) == true ? "" : "display:none";
     },
     '_timestr_': function (message) {
@@ -59,7 +59,7 @@ const FormatFuncs = {
 
         return Users.CLIENT_USER.Id == message.UserId ? "true" : "";
     },
-    '_message_avatar_': function (message) {
+    '_message_avatar_=""': function (message) {
 
 
         setTimeout(async function () {
@@ -69,7 +69,7 @@ const FormatFuncs = {
             $(`.chat-main__item[message_id=${message.Id}]`).find("img").attr("src", Users[message.UserId].Avatar);
         }, 0)
 
-        return "";
+        return "";  
 
     },
     '_drop_hidden_': function (message) {
@@ -89,7 +89,7 @@ const FormatFuncs = {
 
         return message.Status != 1 ? "italic" : "";
     },
-    '_deleted_or_content': function (message) {
+    '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
         return messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
@@ -137,6 +137,9 @@ async function renderMessage(message) {
     message_ele.children().appendTo(".chat-main__list")[0];
     message["message_element"] = message_ele;
 
+    Saved_Messages[message.id] = message;
+
+
 }
 async function loadMessages(messages_data) {
     for ([key, message] of Object.entries(messages_data)) {
@@ -145,7 +148,24 @@ async function loadMessages(messages_data) {
 
     }
 }
-var Saved_Messages
+const Saved_Messages = (() => {
+    const myDictionary = {
+
+    };
+
+    return {
+        get(key) {
+            return myDictionary[key];
+        },
+        set(key, value) {
+            myDictionary[key] = value;
+        },
+        getAll() {
+            return { ...myDictionary };
+        },
+    };
+})();
+
 async function requestJsonData(page) {
     $.ajax({
         url: 'Message.aspx/GetMessageJsonData',
@@ -153,10 +173,10 @@ async function requestJsonData(page) {
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({ page: page }),
-        success: function (response) {
-            Saved_Messages = JSON.parse(response.d);
-            loadMessages(Saved_Messages);
-
+        success: async function (response) {
+        
+            await loadMessages(JSON.parse(response.d));
+            scrollBottom();
         },
         error: function (xhr, status, error) {
             // Handle any errors

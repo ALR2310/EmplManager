@@ -93,7 +93,7 @@
                                     <div class="chat-main__content">
                                         <div class="chat-main__avatar">
                                 
-                                            <img src="_message_avatar_" alt="avatar">
+                                            <img _message_avatar_="" alt="avatar">
                                         </div>
 
                                         <div class="chat-wrapper">
@@ -220,12 +220,19 @@
 </script>
     <script>
 
-        function scrollBottom() {
+        const scrollBottom = function() {
 
+         
             const scroll = $(".chat-main__list")[0];
             scroll.scrollTo(0, scroll.scrollHeight);
         }
 
+        const getScrollPos = function () {
+            const scroll = $(".chat-main__list")[0];
+            var pos = scroll.scrollHeight - scroll.clientHeight - scroll.scrollTop;
+            console.log(pos);
+            return pos;
+        }
         function clearText() {
             $("#ContentPlaceHolder1_txt_Message").val("");
         }
@@ -234,8 +241,7 @@
     </script>
 
     <script>
-        var MessageJoinUserList = <%# messages.ToString() %>
-            console.log(MessageJoinUserList);
+     
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -264,7 +270,22 @@
 
             if (delete_cd == true) { return; }
             delete_cd = true;
-            __doPostBack("DeleteMessage", `{"Message_Id": ${ellips.attr("Message_Id")} }`);
+            $.ajax({
+                url: 'Message.aspx/DeleteMessage',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({ id: Number(ellips.attr("Message_Id")) }),
+                success: function (response) {
+
+
+                },
+                error: function (xhr, status, error) {
+            
+                    console.error(error);
+                }
+            });
+ 
         }
        
 
@@ -292,7 +313,7 @@
 
             chat_scroll.on('scroll', function () {
                 var scrollTop = $(this).scrollTop();
-                console.log(scrollTop)
+  
                 sessionStorage.setItem("scrollpos", scrollTop.toString());
             });
        

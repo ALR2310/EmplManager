@@ -299,6 +299,7 @@
     <Content Include="Register.aspx" />
     <Content Include="JS\client_interact.js" />
     <Content Include="libman.json" />
+    <Compile Include="MiddlewareMethods\VerifyAuthToken.cs" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

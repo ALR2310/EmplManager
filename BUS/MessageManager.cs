@@ -24,13 +24,22 @@ namespace BUS
             return new Select().From(Message.Schema.TableName).Where(Message.Columns.Id).IsEqualTo(id).
                 ExecuteSingle<Message>();
         }
-        public static void SetMessStatusToDeleted(MessageJoinUser message, int status)
+        public static bool SetMessStatusToDeleted(int Id, int status)
         {
-            var query = new InlineQuery();
-            var sqlquery = $"Update Messages SET Status = {status} where Id = {message.Id}";
-            query.Execute(sqlquery);
+            try
+            {
+                var query = new InlineQuery();
+                var sqlquery = $"Update Messages SET Status = {status} where Id = {Id}";
+                query.Execute(sqlquery);
 
-            message.Status = status;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
+         
         }
         public static void DeleteMessageById(int id)
         {
