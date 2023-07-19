@@ -108,15 +108,16 @@
                                                 <p class="_deleted_italic_ mess_content">
                                                      _deleted_or_content_
                                                 </p>
-                                                <button type="button" class="chat-main__like <%--hide--%>">
+                                             
+                                                <button type="button" class="chat-main__like hide">
                                                     <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
                                                     <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
                                                 </button>
-
+                                               
 
 
                                             </div>
-
+                                            <div class="emoji_holder">hello</div>
                                         </div>
                                 </li>
 

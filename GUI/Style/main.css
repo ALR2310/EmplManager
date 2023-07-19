@@ -278,7 +278,7 @@ html {
 }
 
     .chat-main__avatar img {
-        height:5vh;
+        height: 5vh;
         flex-shrink: 1;
         width: 5vh;
         border-radius: 50% !important;
@@ -292,9 +292,11 @@ html {
 .chat-main__ellips {
     z-index: 2;
 }
+
 .chat-item__box[drop_hidden='true'] > #main__ellips {
     display: none !important;
 }
+
 .chat-main__item[owner='true'] {
     justify-content: flex-end;
 }
@@ -408,7 +410,7 @@ html {
 .chat-item__box p {
     line-height: 1.6;
     word-wrap: break-word;
-    min-width:5vw;
+    min-width: 5vw;
     max-width: 40vw;
 }
 
@@ -1032,6 +1034,10 @@ html {
 .authen_text {
     margin-bottom: 20px;
     text-align: center;
+}
+
+.emoji_holder{
+    height: 5vh;
 }
 
 .authen_resend {
