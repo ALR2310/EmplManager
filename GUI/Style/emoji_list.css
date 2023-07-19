@@ -1,0 +1,108 @@
+﻿.chat-content {
+    background-color: rgb(159 218 255);
+    width: 15vw;
+    padding: 5vh 10px;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.emoji_list {
+    padding: 5px 0;
+}
+
+.emoji_display {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    display: flex;
+    align-items: center;
+    background-color: #87878769;
+    border-radius: 5px;
+    width: max-content;
+    padding: 2px 5px;
+    border: rgba(0, 0, 0, 0) solid;
+    cursor: pointer;
+    border-width: 2px;
+}
+
+    .emoji_display > img {
+        height: 20px
+    }
+
+.emoji_count {
+    font-family: sans-serif;
+    pointer-events: none;
+    color: rgb(247, 251, 255);
+    position: relative;
+    display: inline-block;
+    min-width: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+
+}
+
+    .emoji_count > .count {
+        display: flex;
+        flex-direction: column;
+        height: 20px;
+    }
+
+.count > span {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    
+    margin-top: 1px;
+}
+
+.emoji_display:hover {
+    animation: emoji_display_border .2s;
+    animation-fill-mode: forwards;
+}
+
+.new_count_anim {
+    animation: new_count .3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0,1.23,1,1.09);
+}
+
+.new_count_reverse_anim {
+    animation: new_count_reverse .3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0,1.23,1,1.09);
+}
+
+
+
+@keyframes emoji_display_border {
+    0% {
+        border-color: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        border-color: #87878769;
+        background-color: #a7a7a769;
+    }
+}
+
+@keyframes new_count {
+    0% {
+        transform: translatey(0%);
+    }
+
+    100% {
+        transform: translatey(-100%);
+    }
+}
+
+@keyframes new_count_reverse {
+    0% {
+        transform: translatey(-100%);
+    }
+
+    100% {
+        transform: translatey(0%);
+    }
+}

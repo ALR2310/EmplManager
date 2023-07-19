@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
+        <link rel="stylesheet" href="Style/emoji_list.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -85,14 +86,14 @@
 
                     <div class="chat-main">
                         <ul class="chat-main__list">
-                            <div id="chat-template" style="display:none">
+                            <div id="chat-template" style="display: none">
                                 <div class="time-gap" style="_timegaptostyle_">
                                     <div class="timer">_timestr_, _datestr_</div>
                                 </div>
                                 <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
                                     <div class="chat-main__content">
                                         <div class="chat-main__avatar">
-                                
+
                                             <img _message_avatar_="" alt="avatar">
                                         </div>
 
@@ -106,18 +107,26 @@
                                                 </div>
 
                                                 <p class="_deleted_italic_ mess_content">
-                                                     _deleted_or_content_
+                                                    _deleted_or_content_
                                                 </p>
-                                             
+
                                                 <button type="button" class="chat-main__like hide">
                                                     <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
                                                     <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
                                                 </button>
-                                               
+
 
 
                                             </div>
-                                            <div class="emoji_holder">hello</div>
+                                            <div class="emoji_list">
+                                                <div class="emoji_display popout_anim">
+                                                    <span class="emoji_emoji">🥳</span>
+                                                    <div class="emoji_count">
+                                                        <span class="count"><span class="ogcount">1</span><span class="ncount">1</span></span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                 </li>
 
@@ -128,11 +137,11 @@
 
                     <div class="chat-footer">
                         <div class="chat-footer__form">
-                           <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                            <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                             <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                                 Send
                                 <i class="fa-solid fa-paper-plane"></i>
-                      
+
                             </button>
                         </div>
                     </div>
@@ -193,10 +202,6 @@
                     <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
 
 
-                    <triggers>
-                        <asp:PostBackTrigger ControlID="Button1" />
-                    </triggers>
-
 
                 </ContentTemplate>
 
@@ -214,16 +219,16 @@
     <script src="JS/message.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 
-<
+    <
     <script src="JS/modal.js"></script>
     <script>
 
 </script>
     <script>
 
-        const scrollBottom = function() {
+        const scrollBottom = function () {
 
-         
+
             const scroll = $(".chat-main__list")[0];
             scroll.scrollTo(0, scroll.scrollHeight);
         }
@@ -242,7 +247,7 @@
     </script>
 
     <script>
-     
+
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -260,7 +265,7 @@
         function toggleEllips(e) {
 
             var parele = $(e.target).closest(".chat-main__item");
-          
+
             ellips.appendTo(parele.find(".chat-item__box"));
             ellips.css("display", "flex");
 
@@ -283,44 +288,44 @@
 
                 },
                 error: function (xhr, status, error) {
-            
+
                     console.error(error);
                 }
             });
- 
+
         }
-       
+
 
 
         var inputElement = $("#txt_Message");
-            document.addEventListener('keydown', function (event) {
-                const key = event.key;
-                const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
+        document.addEventListener('keydown', function (event) {
+            const key = event.key;
+            const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
-                if (isAlphaNumeric || key == "Enter" && document.activeElement != inputElement[0]) {
-                    inputElement.focus();
-                }
-            });
-
-            
-
-            var chat_scroll = $(".chat-main__list");
-
-            last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
+            if (isAlphaNumeric || key == "Enter" && document.activeElement != inputElement[0]) {
+                inputElement.focus();
+            }
+        });
 
 
-   
-            chat_scroll[0].scroll(0, last_scroll_pos);
 
-            chat_scroll.on('scroll', function () {
-                var scrollTop = $(this).scrollTop();
-  
-                sessionStorage.setItem("scrollpos", scrollTop.toString());
-            });
-       
+        var chat_scroll = $(".chat-main__list");
+
+        last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
+
+
+
+        chat_scroll[0].scroll(0, last_scroll_pos);
+
+        chat_scroll.on('scroll', function () {
+            var scrollTop = $(this).scrollTop();
+
+            sessionStorage.setItem("scrollpos", scrollTop.toString());
+        });
+
     </script>
     <script src="JS/emoji.js"></script>
-        <script src="JS/client_interact.js"></script>
+    <script src="JS/client_interact.js"></script>
     <script src="JS/signalr_connection.js"></script>
 </asp:Content>
 

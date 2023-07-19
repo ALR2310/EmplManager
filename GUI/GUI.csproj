@@ -303,6 +303,7 @@
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Style\emoji_list.css" />
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
     <Content Include="Style\modal.css" />
