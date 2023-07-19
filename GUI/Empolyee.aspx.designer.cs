@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GUI
-{
-
-
-    public partial class Empolyee
-    {
+namespace GUI {
+    
+    
+    public partial class Empolyee {
     }
 }
