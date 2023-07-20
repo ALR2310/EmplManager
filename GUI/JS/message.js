@@ -47,9 +47,13 @@ function toggleDropdown(event, str) {
     var dropdownMenu = event.target.parentNode.querySelector(
         '.chat-ellips__dropdown__menu');
 
+    var emojiShowMenu = event.target.parentNode.parentNode.querySelector(
+        '.chat-ellips__show_emoji');
     if (!dropdownMenu) { return; }
+    console.log("BRAH");
+    emojiShowMenu.style.display = "none";
     dropdownMenu.style.display = str;
-
+ 
 }
 
 function toggleEmoji(event, str) {

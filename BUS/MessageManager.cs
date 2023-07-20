@@ -70,10 +70,10 @@ namespace BUS
 
             return null;
         }
-        public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int Page)
+        public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int after_id)
         {
             var query = new InlineQuery();
-            var sqlquery = $"EXECUTE dbo.GetListMessageByAtCreate @page = {Page}";
+            var sqlquery = $"EXECUTE dbo.GetListMessageByAtCreateAfterId @id = {after_id}";
             Debug.WriteLine(sqlquery);
             List<MessageJoinUser> list = query.ExecuteTypedList<MessageJoinUser>(sqlquery);
 

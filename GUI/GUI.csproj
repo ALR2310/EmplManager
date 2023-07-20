@@ -284,6 +284,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\sweetsoft-logo.png" />
     <Content Include="Images\team.png" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\signalr.js" />

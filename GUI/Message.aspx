@@ -97,8 +97,10 @@
 
                 <div class="chat-main">
                     <ul class="chat-main__list">
-                        <div id="chat-template" style="display: none">
-                            <div class="time-gap" style="_timegaptostyle_">
+                       
+                    </ul>
+                     <div id="chat-template" style="display: none">
+                            <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
                                 <div class="timer">_timestr_, _datestr_</div>
                             </div>
                             <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
@@ -139,8 +141,6 @@
                             </li>
 
                         </div>
-                    </ul>
-
                 </div>
 
                 <div class="chat-footer">
@@ -222,7 +222,7 @@
     <script>
 
 </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="JS/message.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 
@@ -235,7 +235,7 @@
 
         const scrollBottom = function () {
 
-
+            console.log("scrolled bottom");
             const scroll = $(".chat-main__list")[0];
             scroll.scrollTo(0, scroll.scrollHeight);
         }
@@ -326,9 +326,16 @@
 
         chat_scroll[0].scroll(0, last_scroll_pos);
 
-        chat_scroll.on('scroll', function () {
+        const scroll_DOM = chat_scroll[0];
+        chat_scroll.on('scroll', async function () {
             var scrollTop = $(this).scrollTop();
+            if (scrollTop == 0) {
+                var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
 
+                await requestJsonData(last_ele.getAttribute("message_id"));
+
+
+            }
             sessionStorage.setItem("scrollpos", scrollTop.toString());
         });
 

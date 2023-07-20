@@ -60,17 +60,14 @@ const FormatFuncs = {
 
         return Users.CLIENT_USER.Id == message.UserId ? "true" : "";
     },
-    '_message_avatar_=""': function (message) {
+    '_message_avatar_=""': async function (message) {
 
 
-        setTimeout(async function () {
+     
             if (Users[message.UserId] == null) { await fetchUser(message.UserId) }
 
 
-            $(`.chat-main__item[message_id=${message.Id}]`).find("img").attr("src", Users[message.UserId].Avatar);
-        }, 0)
-
-        return "";
+        return Users[message.UserId].Avatar;
 
     },
     '_drop_hidden_': function (message) {
@@ -78,13 +75,11 @@ const FormatFuncs = {
     },
     '_display_name_': async function (message) {
 
-        setTimeout(async function () {
+    
             if (Users[message.UserId] == null) { await fetchUser(message.UserId); }
 
-            $(`.chat-main__item[message_id=${message.Id}]`).find(".mess_display_name").text(Users[message.UserId].DisplayName);
-        }, 0)
-
-        return "";
+        
+        return Users[message.UserId].DisplayName;
     },
     '_deleted_italic_': function (message) {
 
@@ -232,12 +227,36 @@ async function renderMessage(message) {
         return;
     }, 100);*/
 }
-async function loadMessages(messages_data) {
+async function loadMessages(messages_data, scrollToBottomAtLoad) {
     for ([key, message] of Object.entries(messages_data)) {
 
         await renderMessage(message);
 
     }
+    if (scrollToBottomAtLoad == true) { setTimeout(scrollBottom, 100); }
+    else {
+ 
+            let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
+            setTimeout(function () {
+                scroll_DOM.scrollTo(0, scroll_DOM.scrollHeight - old_pos);
+            }, 10);
+
+      
+    }
+
+    const $children = $(".chat-main__list").children();
+
+
+    const customSort = function (a, b) {
+        const aNum = parseInt($(a).attr('message_id'));
+        const bNum = parseInt($(b).attr('message_id'));
+        return aNum - bNum;
+    };
+
+
+    $children.sort(customSort);
+    
+    $(".chat-main__list").append($children);
 }
 const Saved_Messages = (() => {
     const myDictionary = {
@@ -257,17 +276,20 @@ const Saved_Messages = (() => {
     };
 })();
 
-async function requestJsonData(page) {
+async function requestJsonData(afterid,scrollToBottomAtLoad) {
     $.ajax({
         url: 'Message.aspx/GetMessageJsonData',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ page: page }),
+        data: JSON.stringify({ page: afterid }),
         success: async function (response) {
+            if (!scrollToBottomAtLoad) {
 
-            await loadMessages(JSON.parse(response.d));
-            scrollBottom();
+            }
+            await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad);
+  
+        
         },
         error: function (xhr, status, error) {
             // Handle any errors
@@ -324,7 +346,7 @@ function sendMessage() {
 setTimeout(async function () {
 
     await fetchUser();
-    await requestJsonData(1);
+    await requestJsonData(-1,true);
 
 
 }, 0);
