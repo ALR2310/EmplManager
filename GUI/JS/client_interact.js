@@ -162,7 +162,7 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     emoji_display.find(".ogcount").text(list.length);
     emoji_display.find(".ncount").text(list.length);
 
-    last_num_list[emoji_display] = list.length;
+    last_num_list[message_id + '' + emoji_id] = list.length;
 
     emoji_display.find(".emoji_emoji").text(emoji_id_to_emoji_txt[emoji_id - 1]);
 
@@ -329,18 +329,19 @@ setTimeout(async function () {
 }, 0);
 
 
-function AssignNewNum(num, emoji_display_ele) {
+function AssignNewNum(num, emoji_display_ele,key) {
     var ncount = emoji_display_ele.find(".ncount");
     var ogcount = emoji_display_ele.find(".ogcount");
 
-    last_num = last_num_list[emoji_display_ele];
+    let last_num = last_num_list[key];
+    console.log(last_num_list);
     console.log(last_num);
     console.log(num);
     var islarger = last_num >= num;
     console.log(islarger);
-    console.log(last_num);
 
-    last_num_list[emoji_display_ele] = num;
+
+    last_num_list[key] = num;
 
 
     var og_num_txt = islarger ? last_num : num;
@@ -373,6 +374,7 @@ const UpdateMessageReaction = function (data) {
         var element = RenderedMessageReaction[message_id][emoji_id];
         element.remove();
         element.off("click");
+        RenderedMessageReaction[message_id][emoji_id] = null;
         return;
     }
     if (!isRendered) {
@@ -384,5 +386,5 @@ const UpdateMessageReaction = function (data) {
 
     var emoji_display = emoji_list_ele.find(`.emoji_display[emoji_id=${emoji_id}]`);
     emoji_display.toggleClass("emoji_display_active", contains_own_reaction);
-    AssignNewNum(data.Reaction_Ids.length,emoji_display);
+    AssignNewNum(data.Reaction_Ids.length,emoji_display,message_id+''+emoji_id);
 }

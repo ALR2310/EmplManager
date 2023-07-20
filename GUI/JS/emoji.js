@@ -1,14 +1,19 @@
 ﻿
 var Emoji_Insert_Cooldown = {}
 async function ToggleEmoji(id) {
+    id = parseInt(id.match(/\d+/));
     if (Emoji_Insert_Cooldown[id] == true) { return; }
+
+  
+    var ele = $(`.chat-main__item[message_id=${ellips.attr("Message_Id")}]`).find(`.emoji_display[emoji_id=${id}]`);
+    if (ele[0] != null && ele.hasClass("emoji_display_active")) return;
     Emoji_Insert_Cooldown[id] = true;
     await $.ajax({
         url: 'Message.aspx/ToggleEmoji',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: `{ "Message_Id": ${ellips.attr("Message_Id")},"Emoji_Id": ${parseInt(id.match(/\d+/))}}`,
+        data: `{ "Message_Id": ${ellips.attr("Message_Id")},"Emoji_Id": ${id}}`,
         success: function (response) {
 
 

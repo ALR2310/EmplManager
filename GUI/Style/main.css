@@ -152,6 +152,7 @@ html {
 }
 
 .container {
+    height: calc(100vh - 60px);
     display: flex;
 }
 
@@ -209,7 +210,7 @@ html {
 }
 
 .content {
-    flex: 3;
+    flex: 1;
 }
 
 .chat {
@@ -217,7 +218,12 @@ html {
     margin: 40px auto 40px auto;
     border-radius: 5px;
     border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column; /* Add this line */
+    justify-content: space-between; /* Add this line */
+    flex: 1; /* Add this line */
 }
+
 
 .chat-header__title {
     display: flex;
@@ -251,7 +257,7 @@ html {
 
 .chat-main {
     display: flex;
-    height: 470px;
+    height:50%; 
     margin-top: 20px;
 }
 
@@ -551,32 +557,41 @@ html {
 .chat__search-box.open {
     width: 200px;
 }
-
+#UpdatePanel1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+ 
+}
 .chat-footer {
     margin-top: 25px;
     border-top: 1px solid var(--border-color);
     display: flex;
-}
-
-.chat-footer__form {
     padding: 15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 85px;
+    height: 85px;
 }
 
-    .chat-footer__form textarea {
+
+    .chat-footer textarea {
+        font-family: 'Roboto', sans-serif;
         flex: 1;
-        height: 40px;
+        min-height: 40px;
         resize: none;
         overflow: hidden;
         border-radius: 5px;
         border: 1px solid var(--border-color);
         outline: none;
-        padding: 10px 0 10px 10px;
+        padding: 10px;
         margin-right: 10px;
         background-color: #f6f6f9;
+        box-sizing: border-box; /* Add this line */
+        height: 100%;
+        font-size: 15px;
     }
 
 .btn-chat-footer {

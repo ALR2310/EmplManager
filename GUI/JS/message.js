@@ -6,15 +6,15 @@ function scrollToBottom() {
 
 
 //js đặt height cho textarea khi có nội dung nhiều hơn
-var chatInput = document.querySelector(".chat-footer__form textarea");
+var chatInput = document.querySelector(".chat-footer textarea");
 
 const handleInput = () => {
     if (chatInput.value.trim() === "") {
-        chatInput.style.height = "40px";
+        chatInput.parentNode.style.height = "40px";
     }
     else {
-        chatInput.style.height = "auto";
-        chatInput.style.height = `${chatInput.scrollHeight}px`;
+        chatInput.parentNode.style.height = "auto";
+        chatInput.parentNode.style.height = `${chatInput.scrollHeight+30}px`;
     }
 }
 chatInput.addEventListener("keyup", handleInput);
