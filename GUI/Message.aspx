@@ -92,7 +92,7 @@
 
                 </div>
             </div>
-            <div id="UpdatePanel1" style="height: calc(100vh - 420px + 200px);">
+            <div id="UpdatePanel1" >
 
 
                 <div class="chat-main">
@@ -265,6 +265,7 @@
 
         function handleSendMessage(event) {
             event.preventDefault();
+
             sendMessage();
 
         }

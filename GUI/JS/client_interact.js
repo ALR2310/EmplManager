@@ -315,6 +315,7 @@ function sendMessage() {
     inputElement.val("");
     setTimeout(function () { inputElement.blur(); }, 1);
     scrollBottom();
+    $(".chat-footer").css("height", "0px");
     sendCD = false;
 }
 

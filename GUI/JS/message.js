@@ -14,7 +14,7 @@ const handleInput = () => {
     }
     else {
         chatInput.parentNode.style.height = "auto";
-        chatInput.parentNode.style.height = `${chatInput.scrollHeight+30}px`;
+        chatInput.parentNode.style.height = `${chatInput.scrollHeight+29}px`;
     }
 }
 chatInput.addEventListener("keyup", handleInput);
@@ -70,11 +70,19 @@ function outsideClickHandler(event) {
         var dropdownToggle = dropdownMenu.parentNode.querySelector('.chat-ellips__dropdown__toggle');
         if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target)) {
             dropdownMenu.style.display = 'none';
+
         }
+   
     }
 }
 
-
+$(document).on("click", function (event) {
+    var ele = $(event.target);
+    if (ele.hasClass("fa-face-smile")) {
+        return;
+    }
+    toggleEmoji(event, 'none');
+})
 
 //js gọi sự kiện btnsend khi bấm enter
 function handleKeyPress(event) {
