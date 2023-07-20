@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
     <link rel="stylesheet" href="Style/emoji_list.css" />
+        <link rel="stylesheet" href="Style/speech_bubble.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -158,6 +159,10 @@
                         <button type="button" class="chat-ellips__emoji__toggle"
                             onclick="toggleEmoji(event, 'flex')">
                             <i class="fa-regular fa-face-smile"></i>
+                               <span class="sider-bar__span hide">Logout</span>
+                                                 <div class="speech bottom">
+                                    Thêm Biểu Cảm
+                                </div>
                             <ul class="chat-ellips__show_emoji">
                                 <li class="chat-ellips__item">
                                     <a id="Emoji_1" class="Emoji" runat="server" style="color: red;">&#10084</a>

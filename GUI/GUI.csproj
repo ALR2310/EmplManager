@@ -316,6 +316,7 @@
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
     <Content Include="Style\modal.css" />
+    <Content Include="Style\speech_bubble.css" />
     <Content Include="Style\toast.css" />
     <Content Include="Style\useredit.css" />
     <Content Include="Style\userinfo.css" />

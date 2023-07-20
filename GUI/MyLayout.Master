@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/Style/main.css" />
     <link rel="stylesheet" href="/Style/message.css" />
     <link rel="stylesheet" href="/Style/modal.css" />
+    <link rel="stylesheet" href="Style/speech_bubble.css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -56,25 +57,37 @@
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="#">
                                 <i class="fa-solid fa-house"></i>
-                                <span class="sider-bar__span hide">Dashboard</span>
+                                <div class="speech left">
+                                    Trang Chủ
+                                </div>
+                                <span class="sider-bar__span hide">Trang Chủ</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="Message.aspx">
                                 <i class="fa-sharp fa-solid fa-comments"></i>
+                                <div class="speech left">
+                                    Chat
+                                </div>
                                 <span class="sider-bar__span hide">Chat</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="Employee.aspx">
                                 <i class="fa-solid fa-user"></i>
-                                <span class="sider-bar__span hide">Employees</span>
+                                <div class="speech left">
+                                    Quản lý Nhân viên
+                                </div>
+                                <span class="sider-bar__span hide">Quản lý Nhân viên</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="#">
                                 <i class="fa-solid fa-envelope"></i>
-                                <span class="sider-bar__span hide">Notifications</span>
+                                <div class="speech left">
+                                    Thông báo
+                                </div>
+                                <span class="sider-bar__span hide">Thông báo</span>
                             </a>
                         </li>
                     </ul>
@@ -84,12 +97,18 @@
                             <a class="sidebar-item__link" href="#">
                                 <i class="fa-solid fa-gear"></i>
                                 <span class="sider-bar__span hide">Setting</span>
+                                                 <div class="speech left">
+                                    Cài đặt
+                                </div>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a id="A1" href="#" class="sidebar-item__link" onserverclick="A1_ServerClick" runat="server">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span class="sider-bar__span hide">Logout</span>
+                                                 <div class="speech left">
+                                    Đăng xuất
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -103,6 +122,8 @@
     </form>
 
     <script src="JS/layout.js"></script>
-
+    <script>
+        $(".speech").parent().addClass("contains_speech");
+    </script>
 </body>
 </html>
