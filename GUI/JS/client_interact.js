@@ -48,8 +48,25 @@ const FormatFuncs = {
         return `${time}`;
     },
     '_datestr_': function (message) {
-        var dayint = Math.floor(Math.abs(CurrentTime - message.AtCreate) / (1000 * 60 * 60 * 24));
-        return `${!!DayStrList[dayint] ? DayStrList[dayint] : AtCreate.toLocaleDateString("vi-VN")}`;
+        const date1 = CurrentTime;
+        const date2 = message.AtCreate;
+
+        // Get the date components (day, month, and year) of the two Date objects
+        const day1 = date1.getDate();
+        const month1 = date1.getMonth();
+        const year1 = date1.getFullYear();
+
+        const day2 = date2.getDate();
+        const month2 = date2.getMonth();
+        const year2 = date2.getFullYear();
+
+        let dayint = Math.abs(day1 - day2);
+        if (
+            month1 === month2 &&
+            year1 === year2 && dayint <= 2) {
+            return DayStrList[dayint]; 
+        }
+        return date2.toLocaleDateString("vi-VN");
     },
     '_messageid_': function (message) {
         return message.Id;
@@ -63,11 +80,11 @@ const FormatFuncs = {
     '_message_avatar_=""': async function (message) {
 
 
-     
-            if (Users[message.UserId] == null) { await fetchUser(message.UserId) }
+
+        if (Users[message.UserId] == null) { await fetchUser(message.UserId) }
 
 
-        return Users[message.UserId].Avatar;
+        return "src='" + Users[message.UserId].Avatar + "'";
 
     },
     '_drop_hidden_': function (message) {
@@ -75,10 +92,10 @@ const FormatFuncs = {
     },
     '_display_name_': async function (message) {
 
-    
-            if (Users[message.UserId] == null) { await fetchUser(message.UserId); }
 
-        
+        if (Users[message.UserId] == null) { await fetchUser(message.UserId); }
+
+
         return Users[message.UserId].DisplayName;
     },
     '_deleted_italic_': function (message) {
@@ -168,14 +185,14 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
 
     var revokeCooldown = false;
 
-    if (RenderedMessageReaction[message_id] == null) RenderedMessageReaction[message_id]= {};
+    if (RenderedMessageReaction[message_id] == null) RenderedMessageReaction[message_id] = {};
 
     RenderedMessageReaction[message_id][emoji_id] = emoji_display;
     emoji_display.on("click",
         async function () {
             if (revokeCooldown) return;
             revokeCooldown = true;
-            await $.ajax({  
+            await $.ajax({
                 url: 'Message.aspx/ToggleEmoji',
                 type: 'POST',
                 contentType: 'application/json',
@@ -228,20 +245,21 @@ async function renderMessage(message) {
     }, 100);*/
 }
 async function loadMessages(messages_data, scrollToBottomAtLoad) {
+    let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
     for ([key, message] of Object.entries(messages_data)) {
 
         await renderMessage(message);
 
     }
+
     if (scrollToBottomAtLoad == true) { setTimeout(scrollBottom, 100); }
     else {
- 
-            let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
-            setTimeout(function () {
-                scroll_DOM.scrollTo(0, scroll_DOM.scrollHeight - old_pos);
-            }, 10);
 
-      
+
+        scroll_DOM.scrollTo(0, scroll_DOM.scrollHeight - old_pos);
+
+
+
     }
 
     const $children = $(".chat-main__list").children();
@@ -255,7 +273,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad) {
 
 
     $children.sort(customSort);
-    
+
     $(".chat-main__list").append($children);
 }
 const Saved_Messages = (() => {
@@ -276,7 +294,7 @@ const Saved_Messages = (() => {
     };
 })();
 
-async function requestJsonData(afterid,scrollToBottomAtLoad) {
+async function requestJsonData(afterid, scrollToBottomAtLoad) {
     $.ajax({
         url: 'Message.aspx/GetMessageJsonData',
         type: 'POST',
@@ -288,8 +306,8 @@ async function requestJsonData(afterid,scrollToBottomAtLoad) {
 
             }
             await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad);
-  
-        
+
+
         },
         error: function (xhr, status, error) {
             // Handle any errors
@@ -346,13 +364,13 @@ function sendMessage() {
 setTimeout(async function () {
 
     await fetchUser();
-    await requestJsonData(-1,true);
+    await requestJsonData(-1, true);
 
 
 }, 0);
 
 
-function AssignNewNum(num, emoji_display_ele,key) {
+function AssignNewNum(num, emoji_display_ele, key) {
     var ncount = emoji_display_ele.find(".ncount");
     var ogcount = emoji_display_ele.find(".ogcount");
 
@@ -409,5 +427,5 @@ const UpdateMessageReaction = function (data) {
 
     var emoji_display = emoji_list_ele.find(`.emoji_display[emoji_id=${emoji_id}]`);
     emoji_display.toggleClass("emoji_display_active", contains_own_reaction);
-    AssignNewNum(data.Reaction_Ids.length,emoji_display,message_id+''+emoji_id);
+    AssignNewNum(data.Reaction_Ids.length, emoji_display, message_id + '' + emoji_id);
 }
