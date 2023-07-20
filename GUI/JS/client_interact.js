@@ -1,3 +1,4 @@
+var RenderedMessageReaction = {}
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -69,7 +70,7 @@ const FormatFuncs = {
             $(`.chat-main__item[message_id=${message.Id}]`).find("img").attr("src", Users[message.UserId].Avatar);
         }, 0)
 
-        return "";  
+        return "";
 
     },
     '_drop_hidden_': function (message) {
@@ -117,7 +118,7 @@ async function fetchUser(id, fromCookie) {
 
             if (fromCookie) {
                 Users["CLIENT_USER"] = user;
-         
+
             }
             Users[user.Id] = user;
         },
@@ -132,6 +133,63 @@ async function fetchUser(id, fromCookie) {
     await FetchingUsers[id];
 }
 
+const emoji_id_to_emoji_txt = [
+    "❤️",
+
+    "👍",
+
+    "😂",
+
+    "😅",
+
+    "🥳",
+
+    "👀",
+
+    "🤯",
+
+    "🥲",
+];
+var last_num_list = {}
+function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
+    const emoji_display = $("#emoji_display_placeholder").clone();
+    emoji_display.css("display", "unset");
+    emoji_display.attr("id", null);
+    emoji_display.attr("emoji_id", emoji_id);
+
+    emoji_display.appendTo(emoji_list_element);
+    emoji_display.addClass("emoji_display");
+    emoji_display.find(".ogcount").text(list.length);
+    emoji_display.find(".ncount").text(list.length);
+
+    last_num_list[emoji_display] = list.length;
+
+    emoji_display.find(".emoji_emoji").text(emoji_id_to_emoji_txt[emoji_id - 1]);
+
+
+    var contains_own_reaction = list.indexOf(Users.CLIENT_USER.Id) != -1;
+    emoji_display.addClass(contains_own_reaction ? "emoji_display_active" : "");
+
+
+    var revokeCooldown = false;
+
+    if (RenderedMessageReaction[message_id] == null) RenderedMessageReaction[message_id]= {};
+
+    RenderedMessageReaction[message_id][emoji_id] = emoji_display;
+    emoji_display.on("click",
+        async function () {
+            if (revokeCooldown) return;
+            revokeCooldown = true;
+            await $.ajax({  
+                url: 'Message.aspx/ToggleEmoji',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: `{ "Message_Id": ${message_id},"Emoji_Id": ${emoji_id}}`,
+            });
+            revokeCooldown = false;
+        });
+}
 async function renderMessage(message) {
     message.AtCreate = new Date(message.AtCreate);
     const message_ele = $("#chat-template").clone();
@@ -141,14 +199,38 @@ async function renderMessage(message) {
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
 
+    setTimeout(function () {
+        var emoji_list_ele = $(`.chat-main__item[message_id=${message["Id"]}]`).find(".emoji_list");
+        if (message.Reactions != null) {
+
+
+
+            for (const [emoji_id, list] of Object.entries(message.Reactions)) {
+                renderEmojiButton(emoji_list_ele, list, emoji_id, message["Id"]);
+
+            }
+        }
+
+    }, 0);
+
+
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
     message_ele.children().appendTo(".chat-main__list")[0];
+
     message["message_element"] = message_ele;
 
-    Saved_Messages[message.id] = message;
+    Saved_Messages[message.Id] = message;
 
 
+    /*setTimeout(function () {
+
+        var = $(`.chat-main__item[message_id=${message["Id"]}]`).find(".emoji_emoji").find("canvas")[0];
+   
+    
+        particleAnimate(canvas);
+        return;
+    }, 100);*/
 }
 async function loadMessages(messages_data) {
     for ([key, message] of Object.entries(messages_data)) {
@@ -183,7 +265,7 @@ async function requestJsonData(page) {
         dataType: 'json',
         data: JSON.stringify({ page: page }),
         success: async function (response) {
-        
+
             await loadMessages(JSON.parse(response.d));
             scrollBottom();
         },
@@ -194,7 +276,7 @@ async function requestJsonData(page) {
     });
 }
 const DeleteMessage = function (data) {
-    console.log(data);
+
     data = JSON.parse(data);
     var message_id = data.id;
     var status = data.status;
@@ -202,7 +284,7 @@ const DeleteMessage = function (data) {
     console.log(status);
 
     var deleting_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".mess_content");
-    console.log(deleting_ele);  
+
     deleting_ele.addClass("italic");
     var deleted_mess =
         status == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : "Tin nhắn đã được thu hồi";
@@ -237,7 +319,70 @@ function sendMessage() {
 }
 
 
-(async function main() {
+
+setTimeout(async function () {
+
     await fetchUser();
     await requestJsonData(1);
-})();
+
+
+}, 0);
+
+
+function AssignNewNum(num, emoji_display_ele) {
+    var ncount = emoji_display_ele.find(".ncount");
+    var ogcount = emoji_display_ele.find(".ogcount");
+
+    last_num = last_num_list[emoji_display_ele];
+    console.log(last_num);
+    console.log(num);
+    var islarger = last_num >= num;
+    console.log(islarger);
+    console.log(last_num);
+
+    last_num_list[emoji_display_ele] = num;
+
+
+    var og_num_txt = islarger ? last_num : num;
+    var ncount_txt = islarger ? num : last_num;
+
+
+    ogcount.text(og_num_txt);
+    ncount.text(ncount_txt);
+
+
+    var count_wrapper = emoji_display_ele.find(".count");
+    count_wrapper.removeClass('new_count_anim new_count_reverse_anim');
+    setTimeout(function () {
+        count_wrapper.addClass(islarger ? 'new_count_anim' : 'new_count_reverse_anim');
+    }, 0);
+
+}
+
+
+
+
+const UpdateMessageReaction = function (data) {
+    console.log(data);
+    var message_id = data.Message_Id;
+    var emoji_id = data.Emoji_Id;
+    var emoji_list_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".emoji_list");
+
+    var isRendered = !(RenderedMessageReaction[message_id] == null || RenderedMessageReaction[message_id][emoji_id] == null);
+    if (data.Reaction_Ids == null && isRendered) {
+        var element = RenderedMessageReaction[message_id][emoji_id];
+        element.remove();
+        element.off("click");
+        return;
+    }
+    if (!isRendered) {
+
+        renderEmojiButton(emoji_list_ele, data.Reaction_Ids, emoji_id, message_id);
+        return;
+    }
+    var contains_own_reaction = data.Reaction_Ids.indexOf(Users.CLIENT_USER.Id) != -1;
+
+    var emoji_display = emoji_list_ele.find(`.emoji_display[emoji_id=${emoji_id}]`);
+    emoji_display.toggleClass("emoji_display_active", contains_own_reaction);
+    AssignNewNum(data.Reaction_Ids.length,emoji_display);
+}

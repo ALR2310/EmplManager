@@ -124,10 +124,11 @@ html {
     visibility: hidden;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    margin-left: -10px;
+    margin-left:-10px;
+   
 }
 
     .dropdown-content a {
@@ -341,6 +342,7 @@ html {
     border-radius: 10px;
     background-color: var(--primary-color);
     display: inline-table;
+    padding-bottom: 7px;
 }
 
 .chat-main__content:hover .chat-main__ellips {
@@ -434,7 +436,8 @@ html {
     border-radius: 15px;
     padding: 7px 10px;
     bottom: 150%;
-    left: -300%;
+    left: 330%;
+    transform: translateX(-50%);
 }
 
 .chat-ellips__item {
@@ -451,15 +454,13 @@ html {
 
 .chat-main__item[owner='true'] .chat-ellips__show_emoji {
     bottom: 150%;
-    left: auto;
-    right: -270%
+    left: -220%;
 }
 
 .chat-ellips__dropdown__menu {
     display: none;
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: -340%;
     min-width: 120px;
     padding: 8px 0;
     margin: 0;
@@ -511,7 +512,7 @@ html {
 
 /* chat search */
 
-.chat__search-box {
+    .chat__search-box {
     width: 30px;
     height: 30px;
     border-radius: 10px;

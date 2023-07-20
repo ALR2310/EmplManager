@@ -74,7 +74,8 @@ namespace GUI
             if (!VerifyUser(context)) { return failed_str; }
             BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
             MessageManager.InsertEmoji(RequestedUser.Id, Message_Id, Emoji_Id);
-
+            List<int> reactions = MessageManager.GetReactionsByMessageId(Message_Id, Emoji_Id);
+            hubContext.Clients.All.UpdateReaction($"{{\"Message_Id\": {Message_Id},\"Emoji_Id\": {Emoji_Id}, \"Reaction_Ids\": {JsonSerializer.Serialize(reactions)}}}");
             return success_str;
         }
 

@@ -16,6 +16,12 @@
         DeleteMessage(message);
     });
 
+    hubProxy.on('UpdateReaction', async function (json) {
+      
+        var data = JSON.parse(json);
+        UpdateMessageReaction(data);
+    });
+
 
     function connect() {
         connection.start()

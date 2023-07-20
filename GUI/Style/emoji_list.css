@@ -7,16 +7,23 @@
 }
 
 .emoji_list {
-    padding: 5px 0;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+    
+.emoji_display_active {
+    background-color: #cde6ff91 !important;
 }
 
 .emoji_display {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
-    display: flex;
+    display: flex !important;
     align-items: center;
-    background-color: #87878769;
+    background-color: #5c5c5c61;
     border-radius: 5px;
     width: max-content;
     padding: 2px 5px;
@@ -38,7 +45,6 @@
     min-width: 20px;
     overflow: hidden;
     padding: 0 5px;
-
 }
 
     .emoji_count > .count {
@@ -53,9 +59,13 @@
     text-align: center;
     display: flex;
     justify-content: flex-end;
-    
     margin-top: 1px;
 }
+
+.emoji_display_active {
+    border-color: #87878769 !important;
+}
+
 
 .emoji_display:hover {
     animation: emoji_display_border .2s;
@@ -105,4 +115,26 @@
     100% {
         transform: translatey(0%);
     }
+}
+
+* {
+    position: relative;
+}
+
+.emoji_emoji > canvas {
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    z-index: 50;
+    position: absolute;
+    width: 100%;
+    transform: translate(10px, 10px);
 }

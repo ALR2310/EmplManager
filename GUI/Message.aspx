@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
-        <link rel="stylesheet" href="Style/emoji_list.css" />
+    <link rel="stylesheet" href="Style/emoji_list.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -91,6 +91,7 @@
                                     <div class="timer">_timestr_, _datestr_</div>
                                 </div>
                                 <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
+
                                     <div class="chat-main__content">
                                         <div class="chat-main__avatar">
 
@@ -109,7 +110,8 @@
                                                 <p class="_deleted_italic_ mess_content">
                                                     _deleted_or_content_
                                                 </p>
-
+                                                    <div class="emoji_list">
+                                            </div>
                                                 <button type="button" class="chat-main__like hide">
                                                     <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
                                                     <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
@@ -118,23 +120,25 @@
 
 
                                             </div>
-                                            <div class="emoji_list">
-                                                <div class="emoji_display popout_anim">
-                                                    <span class="emoji_emoji">🥳</span>
-                                                    <div class="emoji_count">
-                                                        <span class="count"><span class="ogcount">1</span><span class="ncount">1</span></span>
+                                     
 
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
+                                        </div>
+                                       
                                 </li>
 
                             </div>
                         </ul>
 
                     </div>
+                    <div id="emoji_display_placeholder"      style="display:none">
+                        <span class="emoji_emoji">🥳<canvas></canvas>
+                        </span>
+                        <div class="emoji_count">
+                            <span class="count"><span class="ogcount">1</span><span class="ncount">1</span></span>
 
+                        </div>
+                    </div>
                     <div class="chat-footer">
                         <div class="chat-footer__form">
                             <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
@@ -156,25 +160,25 @@
                                         <a id="Emoji_1" class="Emoji" runat="server" style="color: red;">&#10084</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_2" class="Emoji" runat="server">&#128077</a>
+                                        <a id="Emoji_2" class="Emoji">&#128077</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_3" class="Emoji" runat="server">&#128514</a>
+                                        <a id="Emoji_3" class="Emoji">&#128514</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_4" class="Emoji" runat="server">&#128517</a>
+                                        <a id="Emoji_4" class="Emoji">&#128517</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_5" class="Emoji" runat="server">🥳</a>
+                                        <a id="Emoji_5" class="Emoji">🥳</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_6" class="Emoji" runat="server">👀</a>
+                                        <a id="Emoji_6" class="Emoji">👀</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_7" class="Emoji" runat="server">🤯</a>
+                                        <a id="Emoji_7" class="Emoji">🤯</a>
                                     </li>
                                     <li class="chat-ellips__item">
-                                        <a id="Emoji_8" class="Emoji" runat="server">🥲</a>
+                                        <a id="Emoji_8" class="Emoji">🥲</a>
                                     </li>
                                     <box class="boxhidentop"></box>
                                     <box class="boxhidenbottom"></box>

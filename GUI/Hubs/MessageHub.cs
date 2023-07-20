@@ -15,5 +15,9 @@ namespace SignalRChat.Hubs
         {
             await Clients.All.SendAsync("MessageDeleted", mess_id);
         }
+        public async Task UpdateReaction(string json)
+        {
+            await Clients.All.SendAsync("UpdateReaction",json);
+        }
     }
 }

@@ -9,6 +9,7 @@ using DAL.Model;
 using System.Diagnostics;
 using System.Web.UI;
 using System.Security.Cryptography;
+using System.Collections;
 
 namespace BUS
 {
@@ -55,7 +56,20 @@ namespace BUS
             Debug.WriteLine(sqlquery);
             query.Execute(sqlquery);
         }
+        public static List<int> GetReactionsByMessageId(int messageId,int emoji_id)
+        {
+            var query = new InlineQuery();
+            var reactionQuery = $"EXEC get_reaction_id_list_by_emoji_id @MID = ${messageId}, @eid = ${emoji_id}";
+            List<Reactions> reactionlist = query.ExecuteTypedList<Reactions>(reactionQuery);
+            if (reactionlist.Count > 0)
+            {
 
+                return reactionlist[0].Usernames.Split(',').Select(s => int.Parse(s.Trim())).ToList();
+
+            }
+
+            return null;
+        }
         public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int Page)
         {
             var query = new InlineQuery();
@@ -65,10 +79,10 @@ namespace BUS
 
             foreach (MessageJoinUser mess in list)
             {
-                var reactionQuery = $"EXEC get_message_reactions @MID = ${mess.Id}";
 
-       
-                List<Reactions> reactionlist = query.ExecuteTypedList<Reactions> (reactionQuery);
+                var reactionQuery = $"EXEC get_message_reactions @MID = ${mess.Id}";
+        
+                List<Reactions> reactionlist = query.ExecuteTypedList<Reactions>(reactionQuery);
 
                 if (reactionlist.Count > 0) {
             
