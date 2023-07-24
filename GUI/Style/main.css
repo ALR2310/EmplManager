@@ -127,8 +127,7 @@ html {
     min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    margin-left:-10px;
-   
+    margin-left: -10px;
 }
 
     .dropdown-content a {
@@ -530,7 +529,7 @@ html {
 
 /* chat search */
 
-    .chat__search-box {
+.chat__search-box {
     width: 30px;
     height: 30px;
     border-radius: 10px;
@@ -1064,7 +1063,7 @@ html {
     text-align: center;
 }
 
-.emoji_holder{
+.emoji_holder {
     height: 5vh;
 }
 
@@ -1086,3 +1085,672 @@ html {
             opacity: 0.8;
             text-decoration: underline;
         }
+
+/* css employee page */
+
+.employee-management {
+    height: 87vh;
+}
+
+.employee {
+    width: 95%;
+    margin: 40px auto;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.employee-header {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-between;
+}
+
+.employee-header__content {
+    display: flex;
+    align-items: center;
+}
+
+    .employee-header__content p {
+        font-size: 16px;
+        font-weight: unset;
+        color: gray;
+    }
+
+        .employee-header__content p span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+.employee-header__ellipsis {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    margin-left: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    position: relative;
+}
+
+    .employee-header__ellipsis i {
+        font-size: 16px;
+    }
+
+    .employee-header__ellipsis .employee-card__ellipsis {
+        right: 0;
+        top: 35px;
+    }
+
+    .employee-header__ellipsis .employee-card__subEllipsis {
+        left: auto;
+        right: 160px;
+    }
+
+    .employee-header__ellipsis .employee-card__ellipsis::before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        right: 7px;
+        border: 10px solid;
+        border-color: transparent transparent white transparent;
+    }
+
+.employee-header-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 20px;
+}
+
+.employee-header-filter select {
+    outline: none;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    height: 35px;
+    font-size: 14px;
+    margin-right: 20px;
+    padding: 0 5px;
+}
+
+.employee-header-search {
+    position: relative;
+    height: 35px;
+    width: 220px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+    .employee-header-search input[type="search"] {
+        outline: none;
+        height: 100%;
+        width: 100%;
+        border: none;
+        padding: 5px 10px;
+        background-color: #f3f3f9;
+        border-radius: 5px;
+    }
+
+    .employee-header-search button {
+        outline: none;
+        position: absolute;
+        height: 100%;
+        width: 35px;
+        border: none;
+        right: 0;
+        border-radius: 0px 5px 5px 0;
+        color: var(--border-color);
+        background-color: var(--primary-color);
+        transition: all 0.5s ease;
+    }
+
+        .employee-header-search button:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+.employee-body {
+    height: 600px;
+}
+
+.employee-body-list {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.employee-body-card {
+    background-color: #f7f8f9;
+    width: 240px;
+    height: 305px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    border: 1px solid transparent;
+    margin-top: 10px;
+    margin-left: 11px;
+}
+
+    .employee-body-card:hover,
+    .employee-body-card.checked {
+        border-color: var(--primary-color);
+    }
+
+    .employee-body-card + .employee-body-card {
+        margin-left: 11px;
+    }
+
+.employee-card__header {
+    display: flex;
+    padding: 10px 15px;
+    justify-content: space-between;
+}
+
+    .employee-card__header input[type="checkbox"] {
+        width: 17px;
+        outline: none;
+        cursor: pointer;
+    }
+
+.employee-card__header-status {
+    border: 1px solid gray;
+    color: gray;
+    background-color: #e3e3e3;
+    border-radius: 5px;
+    outline: none;
+    padding: 2px 7px;
+}
+
+.Active {
+    /* Kích Hoạt */
+    border: 1px solid green;
+    color: green;
+    background-color: #e3ffe3;
+}
+
+.noActive {
+    /* Vô Hiệu */
+    border: 1px solid red;
+    color: red;
+    background-color: #ffeded;
+}
+
+.employee-card__header-ellipsis {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 22px;
+    font-size: 16px;
+    position: relative;
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+
+    .employee-card__header-ellipsis:hover {
+        background-color: var(--border-color);
+    }
+
+.employee-card__ellipsis {
+    display: none;
+    position: absolute;
+    list-style: none;
+    width: 160px;
+    background-color: white;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+    .employee-card__ellipsis li {
+        padding: 5px;
+        font-size: 14px;
+        display: flex;
+    }
+
+        .employee-card__ellipsis li:hover {
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+
+        .employee-card__ellipsis li a {
+            text-decoration: none;
+            color: var(--text-color);
+            width: 100%;
+        }
+
+.subEllipsis-Card {
+    color: var(--text-color);
+}
+
+    .subEllipsis-Card:hover .employee-card__subEllipsis {
+        display: block;
+    }
+
+.employee-card__subEllipsis {
+    display: none;
+    position: absolute;
+    list-style: none;
+    width: 115px;
+    padding: 10px 0;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    bottom: 1px;
+    left: 160px;
+}
+
+.employee-card__body-avatar {
+    margin-top: 10px;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+    .employee-card__body-avatar img {
+        border-radius: 50% !important;
+        flex-shrink: 1;
+    }
+
+.employee-card__body-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+    .employee-card__body-name h4 {
+        text-align: center;
+    }
+
+    .employee-card__body-name p {
+        text-align: center;
+        color: #959595;
+    }
+
+.employee-card-desc {
+    margin: 10px;
+    background-color: #e3ecf4;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.employee-card-desc__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.employee-card-desc-infor {
+    font-size: 14px;
+}
+
+    .employee-card-desc-infor h5 {
+        color: #7083a3;
+    }
+
+    .employee-card-desc-infor p {
+        margin-top: 3px;
+        color: #595f5f;
+        font-size: 13px;
+    }
+
+.employee-card-desc__body {
+    padding: 10px;
+}
+
+    .employee-card-desc__body p {
+        font-size: 14px;
+        color: var(--text-color);
+        font-weight: normal;
+    }
+
+        .employee-card-desc__body p + p {
+            margin-top: 7px;
+        }
+
+
+/* modal vertical */
+
+
+.modal-vertical {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+    .modal-vertical.hide {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+.modal-vertical__overlay {
+    flex: 2;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease;
+    /* transform: translateX(-100%); */
+    cursor: pointer;
+}
+
+.modal-vertical__container {
+    flex: 1;
+    background-color: white;
+    transition: all 0.3s ease;
+    position: relative;
+    transition: transform 0.5s ease;
+    /* transform: translateX(100%); */
+}
+
+.modal-vertical__container-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-vertical__close {
+    position: absolute;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    top: 5px;
+    left: 5px;
+    transition: all 0.5s ease;
+    border-radius: 20px;
+}
+
+    .modal-vertical__close:hover {
+        background-color: var(--border-color);
+    }
+
+
+@media (max-width: 1400px) {
+    .modal-vertical__container {
+        flex: 1.5;
+    }
+
+    @media (max-width: 1000px) {
+        .modal-vertical__container {
+            flex: 2;
+        }
+
+        @media (max-width: 900px) {
+            .modal-vertical__container {
+                flex: 3;
+            }
+
+            @media (max-width: 800px) {
+                .modal-vertical__container {
+                    flex: 4;
+                }
+
+                @media (max-width: 700px) {
+                    .modal-vertical__container {
+                        flex: 7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.userInfor {
+    margin: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userInfor-Avatar {
+    display: flex;
+    align-items: center;
+}
+
+.userInfor__image {
+    display: flex;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+}
+
+.userInfor__desc {
+    margin-left: 10px;
+}
+
+    .userInfor__desc p {
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+    }
+
+        .userInfor__desc p button {
+            margin-left: 10px;
+        }
+
+    .userInfor__desc span {
+        font-size: 14px;
+        color: gray;
+    }
+
+.userInfor__image img {
+    border-radius: 50% !important;
+    flex-shrink: 1;
+}
+
+.userInfor-SendMail button {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    outline: none;
+    color: black;
+    background-color: var(--border-color);
+    height: 30px;
+    padding: 0 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+    .userInfor-SendMail button:hover {
+        opacity: 0.8;
+        border-color: var(--primary-color);
+    }
+
+.userInfor-Detail {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 0 20px;
+    font-size: 14px;
+}
+
+.userInfor-Detail1 {
+    display: flex;
+    padding: 10px;
+}
+
+.userInfor-Detail__infor {
+    flex: 1;
+}
+
+    .userInfor-Detail__infor p {
+        margin-bottom: 5px;
+        color: rgb(118, 118, 118);
+    }
+
+.userInfor-Detail__action {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 20px;
+    font-size: 14px;
+}
+
+.userInfor-Detail__title {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+.UIDetail__action {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.btnEnable {
+    background-color: #04a604;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.btnDisable {
+    background-color: gray;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+    .btnUserType:hover,
+    .btnDelete:hover,
+    .btnEnable:hover,
+    .btnDisable:hover {
+        opacity: 0.8;
+    }
+
+.btnEnable + .btnDisable {
+    margin-left: 15px;
+}
+
+.btnDelete {
+    background-color: #f75858;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    width: 142px;
+}
+
+.btnUserType {
+    background-color: var(--primary-color);
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    width: 142px;
+}
+
+.userInfor-Detail1.hide {
+    display: none;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutModal {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.UIdetail-modal-delete-overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: fadeInModal 0.5s ease;
+}
+
+.UIdetail-modal-delete {
+    background-color: white;
+    width: 400px;
+    padding: 20px;
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.UIdetail-modal-delete-overlay.hidden {
+    animation: fadeOutModal 0.5s ease;
+    pointer-events: none; /* Ngăn modal bị click khi ẩn dần */
+}
+
+.UIdetail-modal-delete h3 {
+    text-align: center;
+}
+
+.UIdetail-modal-delete p {
+    font-size: 15px;
+    color: var(--text-color);
+    margin: 15px 0 20px 0;
+}
+
+.UIdetail-modal-delete div button {
+    background-color: var(--primary-color);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    transition: all 0.5s ease;
+}
+
+.UIdetail-modal-delete div {
+    display: flex;
+    margin: 0 auto;
+    width: 200px;
+    justify-content: space-evenly;
+}
+
+    .UIdetail-modal-delete div button:last-child {
+        background-color: gray;
+    }
+
+    .UIdetail-modal-delete div button:hover {
+        opacity: 0.8;
+    }
