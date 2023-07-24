@@ -3,6 +3,7 @@
     var hubProxy = connection.createHubProxy('chatHub');
 
     hubProxy.on('ReceiveMessage', async function (message) {
+
         message = JSON.parse(message);
 
         Saved_Messages[message.Id] = message;

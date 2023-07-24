@@ -60,10 +60,10 @@ function toggleEmoji(event, str) {
 
     var emojiShowMenu = event.target.parentNode.querySelector(
         '.chat-ellips__show_emoji');
-
+    var bubble = event.target.parentNode.querySelector('.speech, .bottom');
     if (!emojiShowMenu) { return; }
     emojiShowMenu.style.display = str;
-
+    bubble.style.display = str == "flex" ? "none" : "unset";
 }
 
 

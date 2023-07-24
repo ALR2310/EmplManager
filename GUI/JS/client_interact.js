@@ -246,8 +246,9 @@ async function renderMessage(message) {
 }
 async function loadMessages(messages_data, scrollToBottomAtLoad) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
+    console.log(messages_data);
     for ([key, message] of Object.entries(messages_data)) {
-
+        console.log(message);
         await renderMessage(message);
 
     }
@@ -305,7 +306,9 @@ async function requestJsonData(afterid, scrollToBottomAtLoad) {
             if (!scrollToBottomAtLoad) {
 
             }
-            await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad);
+            console.log(JSON.parse(response.d));
+            await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad)
+                             ;
 
 
         },

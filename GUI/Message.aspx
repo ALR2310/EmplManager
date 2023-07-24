@@ -95,7 +95,7 @@
             </div>
             <div id="UpdatePanel1" >
 
-
+                <div class="loader"></div>
                 <div class="chat-main">
                     <ul class="chat-main__list">
                        

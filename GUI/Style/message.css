@@ -80,3 +80,26 @@
       
     }
 }
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin .5s linear infinite;
+    position: absolute;
+    bottom: 100%;
+    left:50%;
+    z-index:5;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%,100%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%,100%) rotate(360deg);
+    }
+}
