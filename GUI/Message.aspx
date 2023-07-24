@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/modal.css" />
     <link rel="stylesheet" href="Style/emoji_list.css" />
-        <link rel="stylesheet" href="Style/speech_bubble.css" />
+    <link rel="stylesheet" href="Style/speech_bubble.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -85,63 +85,62 @@
                 <span class="emoji_emoji">🥳<canvas></canvas>
                 </span>
                 <div class="emoji_count">
-                    <span class="count">   
+                    <span class="count">
                         <span class="ogcount">1</span>
                         <span class="ncount">1</span>
-                        </span>
-                 
+                    </span>
+
 
                 </div>
             </div>
-            <div id="UpdatePanel1" >
+            <div id="UpdatePanel1">
 
                 <div id="loading_circle"></div>
                 <div class="chat-main">
                     <ul class="chat-main__list">
-                       
                     </ul>
-                     <div id="chat-template" style="display: none">
-                            <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
-                                <div class="timer">_timestr_, _datestr_</div>
-                            </div>
-                            <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
+                    <div id="chat-template" style="display: none">
+                        <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
+                            <div class="timer">_timestr_, _datestr_</div>
+                        </div>
+                        <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
-                                <div class="chat-main__content">
-                                    <div class="chat-main__avatar">
+                            <div class="chat-main__content">
+                                <div class="chat-main__avatar">
 
-                                        <img _message_avatar_="" alt="avatar">
-                                    </div>
+                                    <img _message_avatar_="" alt="avatar">
+                                </div>
 
-                                    <div class="chat-wrapper">
-                                        <span>_timestr_</span>
-                                        <div class="chat-item__box" drop_hidden="_drop_hidden_">
+                                <div class="chat-wrapper">
+                                    <span>_timestr_</span>
+                                    <div class="chat-item__box" drop_hidden="_drop_hidden_">
 
-                                            <div class="titles">
-                                                <a class="mess_display_name" href="#">_display_name_</a>
-
-                                            </div>
-
-                                            <p class="_deleted_italic_ mess_content">
-                                                _deleted_or_content_
-                                            </p>
-                                            <div class="emoji_list">
-                                            </div>
-                                            <button type="button" class="chat-main__like hide">
-                                                <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
-                                                <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
-                                            </button>
-
-
+                                        <div class="titles">
+                                            <a class="mess_display_name" href="#">_display_name_</a>
 
                                         </div>
 
+                                        <p class="_deleted_italic_ mess_content">
+                                            _deleted_or_content_
+                                        </p>
+                                        <div class="emoji_list">
+                                        </div>
+                                        <button type="button" class="chat-main__like hide">
+                                            <asp:Label ID="lblEmoji" runat="server" Text="&#128077"></asp:Label>
+                                            <asp:Button ID="OpenEmojiModal" OnClick="OpenEmojiModal_Click" Text="button" runat="server" CommandArgument='<%# Eval("Id") %>' Style="display: inherit;" />
+                                        </button>
+
+
 
                                     </div>
+
+
                                 </div>
+                            </div>
 
-                            </li>
+                        </li>
 
-                        </div>
+                    </div>
                 </div>
 
                 <div class="chat-footer">
@@ -159,10 +158,10 @@
                         <button type="button" class="chat-ellips__emoji__toggle"
                             onclick="toggleEmoji(event, 'flex')">
                             <i class="fa-regular fa-face-smile"></i>
-                               <span class="sider-bar__span hide">Logout</span>
-                                                 <div class="speech bottom">
-                                    Thêm Biểu Cảm
-                                </div>
+                            <span class="sider-bar__span hide">Logout</span>
+                            <div class="speech bottom">
+                                Thêm Biểu Cảm
+                            </div>
                             <ul class="chat-ellips__show_emoji">
                                 <li class="chat-ellips__item">
                                     <a id="Emoji_1" class="Emoji" runat="server" style="color: red;">&#10084</a>
@@ -211,11 +210,9 @@
 
                     </div>
                 </div>
-                <%--- <asp:Button ID="Button1" runat="server" OnClick="OpenEmojiModal_Click" CommandArgument="107" Text="ABCDEFG" />
- ---%>
 
 
-                </ContentTemplate>
+
 
 
             </div>
@@ -226,16 +223,16 @@
     </div>
     <script>
 
-</script>
+    </script>
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="JS/message.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 
-    <
+
     <script src="JS/modal.js"></script>
     <script>
 
-</script>
+    </script>
     <script>
 
         const scrollBottom = function () {

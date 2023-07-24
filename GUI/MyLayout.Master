@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="Employee.aspx">
+                            <a class="sidebar-item__link" href="Empolyee.aspx">
                                 <i class="fa-solid fa-user"></i>
                                 <div class="speech left">
                                     Quản lý Nhân viên
@@ -97,7 +97,7 @@
                             <a class="sidebar-item__link" href="#">
                                 <i class="fa-solid fa-gear"></i>
                                 <span class="sider-bar__span hide">Setting</span>
-                                                 <div class="speech left">
+                                <div class="speech left">
                                     Cài đặt
                                 </div>
                             </a>
@@ -106,7 +106,7 @@
                             <a id="A1" href="#" class="sidebar-item__link" onserverclick="A1_ServerClick" runat="server">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span class="sider-bar__span hide">Logout</span>
-                                                 <div class="speech left">
+                                <div class="speech left">
                                     Đăng xuất
                                 </div>
                             </a>
