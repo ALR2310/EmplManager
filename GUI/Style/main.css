@@ -573,6 +573,7 @@ html {
     flex-direction: column;
     justify-content: flex-end;
     height: calc(100vh - 420px + 225px);
+    overflow:hidden;
 }
 .chat-footer {
     margin-top: 25px;

@@ -81,7 +81,7 @@
     }
 }
 
-.loader {
+#loading_circle {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
     border-radius: 50%;
@@ -89,11 +89,23 @@
     height: 120px;
     animation: spin .5s linear infinite;
     position: absolute;
-    bottom: 100%;
-    left:50%;
-    z-index:5;
+    bottom: 125%;
+    left: 50%;
+    z-index: 5;
 }
 
+.loader_show{
+    animation: loader_show .5s ease-out;
+}
+
+@keyframes loader_show {
+    0%{
+        bottom: 125%;
+    }
+    100%{
+        bottom:100%;
+    }
+}
 @keyframes spin {
     0% {
         transform: translate(-50%,100%) rotate(0deg);
