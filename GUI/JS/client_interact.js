@@ -164,6 +164,7 @@ const emoji_id_to_emoji_txt = [
 ];
 var last_num_list = {}
 function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
+    var scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
     const emoji_display = $("#emoji_display_placeholder").clone();
     emoji_display.css("display", "unset");
     emoji_display.attr("id", null);
@@ -201,12 +202,22 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
             });
             revokeCooldown = false;
         });
+
+    if (scroll_to_bottom_again) {
+        scrollBottom();
+    }
 }
+
 async function renderMessage(message) {
+
+    if (lastRenderedMessage < message.Id) {
+
+        lastRenderedMessage = message.Id;
+    }
     message.AtCreate = new Date(message.AtCreate);
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
-    console.log(message);
+
     for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
@@ -246,15 +257,15 @@ async function renderMessage(message) {
 }
 async function loadMessages(messages_data, scrollToBottomAtLoad) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
-    console.log(messages_data);
+   
 
     for ([key, message] of Object.entries(messages_data)) {
-        console.log(message);
+
         await renderMessage(message);
-        console.log(messages_data)
+  
     }
 
-    if (scrollToBottomAtLoad == true) { setTimeout(scrollBottom, 100); }
+    if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 100); }
     else {
 
 
@@ -306,14 +317,13 @@ async function requestJsonData(afterid, scrollToBottomAtLoad) {
         dataType: 'json',
         data: JSON.stringify({ page: afterid }),
         success: async function (response) {
-            setTimeout(async function () {
+   
                 if (!scrollToBottomAtLoad) {
 
                 }
                 loading_circle.removeClass("loader_show");
                 await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad)
 
-            },5000);
 
 
         },

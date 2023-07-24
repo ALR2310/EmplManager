@@ -120,7 +120,8 @@
             </div>
         </main>
     </form>
-       <script src="Scripts/jquery-3.6.0.min.js"></script>
+      <script src="Scripts/jquery-3.6.0.min.js"></script>
+        <script src="Scripts/jquery.signalR-2.4.3.js"></script>
     <script src="JS/layout.js"></script>
     <script>
 

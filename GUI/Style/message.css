@@ -84,10 +84,10 @@
 #loading_circle {
     border: 10px solid #dfdfdf;
     border-top: 10px solid #3498db;
+    border-left: 10px dashed #e1edff;
     border-radius: 50%;
     width: 45px;
     height: 45px;
-    
     position: absolute;
     bottom: 125%;
     left: 50%;
@@ -116,4 +116,24 @@
     100% {
         transform: translate(-50%,100%) rotate(360deg);
     }
+}
+
+#unread_messages {
+    background-color: rgba(136, 191, 252,1);
+    width: calc(100% - 35px);
+    height: 30px;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%,100%);
+    z-index: 4;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    display:flex;
+    align-items: center;
+    padding: 5px 15px;
+}
+
+#unread_messages > * {
+    color: white;
 }

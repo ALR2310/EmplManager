@@ -26,3 +26,9 @@ btnMenuLeft.addEventListener("click", function () {
 });
 
 $(".speech").parent().addClass("contains_speech");
+
+
+const parts = window.location.href.split('/');
+var page = parts[parts.length - 1];
+var elem = $(`.sidebar-item__link[href='${page}']`);
+elem.addClass("active");

@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="Style/modal.css" />
     <link rel="stylesheet" href="Style/emoji_list.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
+           <script src="Scripts/jquery-3.6.0.min.js"></script>
+        <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -94,7 +96,10 @@
                 </div>
             </div>
             <div id="UpdatePanel1">
+                <div id="unread_messages">
+                    <p>9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
 
+                </div>
                 <div id="loading_circle"></div>
                 <div class="chat-main">
                     <ul class="chat-main__list">
@@ -221,20 +226,25 @@
 
         </div>
     </div>
-    <script>
-
-    </script>
-    <script src="Scripts/jquery-3.6.0.min.js"></script>
+  
     <script src="JS/message.js"></script>
-    <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+
 
 
     <script src="JS/modal.js"></script>
     <script>
+        var focused = true;
 
+        window.onfocus = function() {
+            focused = true;
+        };
+        window.onblur = function() {
+            focused = false;
+        };
     </script>
     <script>
-
+        var lastRenderedMessage = !!localStorage.getItem("lastRenderedMessage") ? localStorage.getItem("lastRenderedMessage") : 0 ;
+        console.log(lastRenderedMessage);
         const scrollBottom = function () {
 
             console.log("scrolled bottom");
@@ -335,9 +345,13 @@
                 var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
 
                 await requestJsonData(last_ele.getAttribute("message_id"));
-
+            
 
             }
+                if (getScrollPos() < 10){
+ 
+                    localStorage.setItem("lastRenderedMessage",lastRenderedMessage);
+                }
             sessionStorage.setItem("scrollpos", scrollTop.toString());
         });
 

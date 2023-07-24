@@ -16,18 +16,18 @@
     opacity: 0;
     pointer-events: none;
 }
+
 .sidebar:not(.sidebar-close) > .sidebar-list > .sidebar-item {
     width: 100%;
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
 }
 
     .sidebar:not(.sidebar-close) > .sidebar-list > .sidebar-item > a {
-
     }
 
 .sidebar:not(.sidebar-close) > .sidebar-list {
-    transform: unset;   
+    transform: unset;
 }
 
 .sidebar {
@@ -35,15 +35,24 @@
 }
 
 
-.sidebar:not(.sidebar-close) > .sidebar-list > .sidebar-item > .sidebar-item__link > .speech {
-    visibility: hidden !important;
-}
+    .sidebar:not(.sidebar-close) > .sidebar-list > .sidebar-item > .sidebar-item__link > .speech {
+        visibility: hidden !important;
+    }
+
 .contains_speech:hover > .speech.left {
     animation: speech_anim .2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
-
 }
+
+.sidebar-item__link.active > .speech {
+    background-color: var(--primary-color);
+}
+
+    .sidebar-item__link.active > .speech::after {
+        border-right-color: var(--primary-color);
+    }
+
 .contains_speech:hover > .speech.bottom {
     animation: speech_anim_bottom .2s;
     animation-fill-mode: forwards;
@@ -55,6 +64,7 @@
     top: -350%;
     transform: translateY(0px) translateX(-50%);
 }
+
 @keyframes speech_anim_bottom {
     0% {
         opacity: 0
@@ -67,7 +77,6 @@
 }
 
 .left {
- 
     transform: translatex(calc(50% + 45px));
 }
 
@@ -84,16 +93,15 @@
 
 
 
-    /* (B) ADD SPEECH "CALLOUT TAIL" */
-    /* (B1) USE ::AFTER TO CREATE THE "TAIL" */
-    .speech::after {
-        /* (B1-1) ATTACH TRANSPARENT BORDERS */
-        content: "";
-        border: 20px     solid transparent;
-        /* (B1-2) NECESSARY TO POSITION THE "TAIL" */
-        position: absolute;
-
-    }
+/* (B) ADD SPEECH "CALLOUT TAIL" */
+/* (B1) USE ::AFTER TO CREATE THE "TAIL" */
+.speech::after {
+    /* (B1-1) ATTACH TRANSPARENT BORDERS */
+    content: "";
+    border: 20px solid transparent;
+    /* (B1-2) NECESSARY TO POSITION THE "TAIL" */
+    position: absolute;
+}
 
 /* (B2) BOTTOM "CALLOUT TAIL" */
 .bottom.speech::after {
@@ -106,7 +114,7 @@
     margin-left: -20px;
 }
 
-/* (C) DIFFERENT TAIL POSITIONS */  
+/* (C) DIFFERENT TAIL POSITIONS */
 /* (C1) TOP */
 .top.speech::after {
     /* (C1-1) UP TRIANGLE */

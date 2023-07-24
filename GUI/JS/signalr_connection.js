@@ -10,7 +10,7 @@
         await   renderMessage(message);
         
    
-        if (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < 200) { setTimeout(scrollBottom, 10); }
+        if (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < 150 && focused) { setTimeout(scrollBottom, 0); }
        
     }); 
 
