@@ -64,7 +64,7 @@ const FormatFuncs = {
         if (
             month1 === month2 &&
             year1 === year2 && dayint <= 2) {
-            return DayStrList[dayint]; 
+            return DayStrList[dayint];
         }
         return date2.toLocaleDateString("vi-VN");
     },
@@ -206,7 +206,7 @@ async function renderMessage(message) {
     message.AtCreate = new Date(message.AtCreate);
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
-
+    console.log(message);
     for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
@@ -250,7 +250,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad) {
     for ([key, message] of Object.entries(messages_data)) {
         console.log(message);
         await renderMessage(message);
-
+        console.log(messages_data)
     }
 
     if (scrollToBottomAtLoad == true) { setTimeout(scrollBottom, 100); }
