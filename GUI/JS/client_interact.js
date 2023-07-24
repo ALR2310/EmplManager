@@ -364,13 +364,6 @@ function sendMessage() {
 
 
 
-setTimeout(async function () {
-
-    await fetchUser();
-    await requestJsonData(-1, true);
-
-
-}, 0);
 
 
 function AssignNewNum(num, emoji_display_ele, key) {
@@ -432,3 +425,12 @@ const UpdateMessageReaction = function (data) {
     emoji_display.toggleClass("emoji_display_active", contains_own_reaction);
     AssignNewNum(data.Reaction_Ids.length, emoji_display, message_id + '' + emoji_id);
 }
+
+setTimeout(async function () {
+    console.log("A");
+    await fetchUser();
+    await requestJsonData(-1, true);
+    console.log("B");
+
+}, 0);
+console.log("C");
