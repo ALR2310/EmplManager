@@ -120,10 +120,10 @@
             </div>
         </main>
     </form>
-
+       <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="JS/layout.js"></script>
     <script>
-        $(".speech").parent().addClass("contains_speech");
+
     </script>
 </body>
 </html>

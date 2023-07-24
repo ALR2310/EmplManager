@@ -67,9 +67,8 @@
 }
 
 .left {
-    left: calc(20px + 50%);
-    top: 50%;
-    transform: translateY(-50%) translateX(25px);
+ 
+    transform: translatex(calc(50% + 45px));
 }
 
 @keyframes speech_anim {
@@ -79,7 +78,7 @@
 
     100% {
         opacity: 1;
-        transform: translateY(-50%) translateX(15px);
+        transform: translatex(calc(50% + 35px));
     }
 }
 

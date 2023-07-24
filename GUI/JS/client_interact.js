@@ -247,6 +247,7 @@ async function renderMessage(message) {
 async function loadMessages(messages_data, scrollToBottomAtLoad) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
     console.log(messages_data);
+
     for ([key, message] of Object.entries(messages_data)) {
         console.log(message);
         await renderMessage(message);
@@ -295,7 +296,9 @@ const Saved_Messages = (() => {
     };
 })();
 
+var loading_circle = $("#loading_circle");
 async function requestJsonData(afterid, scrollToBottomAtLoad) {
+    loading_circle.addClass("loader_show");
     $.ajax({
         url: 'Message.aspx/GetMessageJsonData',
         type: 'POST',
@@ -303,12 +306,14 @@ async function requestJsonData(afterid, scrollToBottomAtLoad) {
         dataType: 'json',
         data: JSON.stringify({ page: afterid }),
         success: async function (response) {
-            if (!scrollToBottomAtLoad) {
+            setTimeout(async function () {
+                if (!scrollToBottomAtLoad) {
 
-            }
-            console.log(JSON.parse(response.d));
-            await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad)
-                             ;
+                }
+                loading_circle.removeClass("loader_show");
+                await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad)
+
+            },5000);
 
 
         },

@@ -24,3 +24,5 @@ btnMenuLeft.addEventListener("click", function () {
         }
     }
 });
+
+$(".speech").parent().addClass("contains_speech");

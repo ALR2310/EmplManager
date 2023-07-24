@@ -82,20 +82,22 @@
 }
 
 #loading_circle {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
+    border: 10px solid #dfdfdf;
+    border-top: 10px solid #3498db;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin .5s linear infinite;
+    width: 45px;
+    height: 45px;
+    
     position: absolute;
     bottom: 125%;
     left: 50%;
     z-index: 5;
 }
 
-.loader_show{
-    animation: loader_show .5s ease-out;
+.loader_show {
+    animation: loader_show .25s ease-out, spin .5s linear infinite !important;
+    animation-fill-mode: forwards !important;
+    bottom: unset;
 }
 
 @keyframes loader_show {
