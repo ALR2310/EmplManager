@@ -191,6 +191,14 @@ html {
     display: flex;
 }
 
+    .sidebar-item__link .active {
+        flex: 1;
+        text-align: center;
+        color: var(--primary-color);
+
+    }
+
+
     .sidebar-item__link i {
         flex: 1;
         text-align: center;
