@@ -83,14 +83,18 @@ namespace GUI
      
         public static string GetMessageJsonData(int page)
         {
-            
+            Debug.WriteLine("Verifying User..");
             HttpContext context = HttpContext.Current;
             if (!VerifyUser(context)) { return failed_str; }
 
-            
 
-            var jsonData = JsonSerializer.Serialize(MessageManager.GetListMessageByAtCreate(page));
+            Debug.WriteLine("Getting Data..");
+            Dictionary<int, MessageJoinUser> messages = MessageManager.GetListMessageByAtCreate(page);
 
+            Debug.WriteLine("Json Serializing..");
+            string jsonData = JsonSerializer.Serialize(messages);
+            Debug.WriteLine("Finished!");
+            Debug.WriteLine(jsonData);
             return jsonData;
         }
 
