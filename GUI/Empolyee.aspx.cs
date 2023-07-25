@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -87,9 +88,6 @@ namespace GUI
             LinkButton linkButton = (LinkButton)sender;
             int userId = Convert.ToInt32(linkButton.CommandArgument);
 
-            //Button button = (Button)sender;
-            //int userId = Convert.ToInt32(button.CommandArgument);
-
             EmpolyeeInfor empolyeeInfor = EmpolyeeManager.GetEmpolyeeById(userId);
 
             AvatarImg.ImageUrl = empolyeeInfor.Avatar;
@@ -129,6 +127,24 @@ namespace GUI
                 case 1:
                     lblUserType.Text = "Nhân Viên";
                     break;
+            }
+        }
+
+
+        [WebMethod]
+        public static string GetEmpolyeeData(int Id)
+        {
+            EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Id);
+
+            if (empolyee != null)
+            {
+                // Chuyển đổi đối tượng nhân viên thành chuỗi JSON và trả về.
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                return serializer.Serialize(empolyee);
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }

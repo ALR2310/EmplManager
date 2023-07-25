@@ -106,22 +106,10 @@
                                                 </div>
                                             </div>
                                             <div class="employee-card__body">
-                                                <%--<a class="employee-card__body-avatar" runat="server" title="Xem Thông Tin Chi Tiết"
-                                                    onserverclick="ShowModalInfor_ServerClick" commandargument='<%# Eval("Id")%>' onclick="showModal()">
+                                                <a class="employee-card__body-avatar" title="Xem Thông Tin Chi Tiết"
+                                                    commandargument='<%# Eval("Id") %>' onclick="showInfor(this)">
                                                     <img alt="" src="<%# Eval("Avatar") %>" />
-                                                </a>--%>
-
-                                                <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                                                    <ContentTemplate>
-                                                        <asp:LinkButton ID="ShowModalInfor" runat="server" OnClick="ShowModalInfor_Click"
-                                                            CommandArgument='<%# Eval("Id")%>' title="Xem Thông Tin Chi Tiết" class="employee-card__body-avatar">
-                                                            <img alt="" src="<%# Eval("Avatar") %>" />
-                                                        </asp:LinkButton>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-
-
-
+                                                </a>
 
                                                 <div class="employee-card__body-name" onclick="showModal()">
                                                     <h4><%# Eval("DisplayName") %></h4>
@@ -356,7 +344,31 @@
         </div>
     </div>
 
+    <script>
 
+
+        function showInfor(element) {
+            var usersId = element.getAttribute("commandargument");
+            console.log(usersId);
+
+            $.ajax({
+                type: "GET",
+                url: "Empolyee.aspx/GetEmpolyeeData",
+                data: { id: usersId },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
+
+    </script>
 
     <script>
         function handleSearch() {
