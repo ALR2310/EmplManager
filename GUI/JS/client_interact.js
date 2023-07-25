@@ -482,20 +482,7 @@ setTimeout(async function () {
 }, 0);
 
 
-function findLatestMessageId() {
-    return Object.keys(Saved_Messages).reduce((max, current) => {
 
-        const number = parseInt(current, 10);
-
-
-        if (isNaN(number) || number <= max) {
-            return max;
-        }
-
-        return number;
-    }, Number.NEGATIVE_INFINITY);
-
-}
 
 
 function markasread(event, scroll_bottom) {

@@ -1,4 +1,4 @@
-﻿var last_unread_message_id;
+﻿
 
 
 
@@ -46,7 +46,7 @@ $(function () {
 
             
 
-                unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} chưa đọc kể từ ${date}`);
+                unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} tin nhắn chưa đọc kể từ ${date}`);
 
                 last_unread_message_id = last_read_message;
             }

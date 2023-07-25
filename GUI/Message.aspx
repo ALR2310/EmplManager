@@ -175,28 +175,28 @@
                             </div>
                             <ul class="chat-ellips__show_emoji">
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_1" class="Emoji" runat="server" style="color: red;">&#10084</a>
+                                    <img src="Images/Emojis/heart.svg" id="Emoji_1" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_2" class="Emoji">&#128077</a>
+                                    <img src="Images/Emojis/thumbsup.svg" id="Emoji_2" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_3" class="Emoji">&#128514</a>
+                               <img src="Images/Emojis/joy.svg" id="Emoji_3" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_4" class="Emoji">&#128517</a>
+                                    <img src="Images/Emojis/sweat_smile.svg" id="Emoji_4" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_5" class="Emoji">🥳</a>
+                                        <img src="Images/Emojis/party.svg" id="Emoji_5" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_6" class="Emoji">👀</a>
+                                    <img src="Images/Emojis/eyes.svg" id="Emoji_6" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_7" class="Emoji">🤯</a>
+                                <img src="Images/Emojis/OPPENHEIMER.svg" id="Emoji_7" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                    <a id="Emoji_8" class="Emoji">🥲</a>
+                                <img src="Images/Emojis/smile_tear.svg" id="Emoji_8" class="Emoji">
                                 </li>
                                 <box class="boxhidentop"></box>
                                 <box class="boxhidenbottom"></box>
@@ -239,6 +239,23 @@
 
     <script src="JS/modal.js"></script>
     <script>
+
+function findLatestMessageId() {
+return Object.keys(Saved_Messages).reduce((max, current) => {
+
+    const number = parseInt(current, 10);
+
+
+    if (isNaN(number) || number <= max) {
+        return max;
+    }
+
+    return number;
+}, Number.NEGATIVE_INFINITY);
+
+}
+
+
         var unread_messages_ele = $("#unread_messages");
         var focused = true;
 
@@ -255,6 +272,8 @@
         var loadedbottom = false;
         var renderingmessages = true;
         var is_firsttime_load = true;
+        var last_unread_message_id;
+
 
         var Users = {};
 
@@ -370,6 +389,9 @@
 
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
+              if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
+                latest_message_id = JSON.parse(latest_message_id.d).Id;
+
 
             let lastRenderedMessageStr = localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id);
             console.log(JSON.stringify(lastRenderedMessageStr));
@@ -381,8 +403,14 @@
 
             await requestJsonData(lastRenderedMessage != -1 ? lastRenderedMessage + 1 : -1, false);
 
-            let oldpos = scroll.scrollTop;
 
+
+             if (latest_message_id == findLatestMessageId()) {
+                console.log("it seems that we loaded the new messages! scrolling bottom...");
+                is_firsttime_load = false;
+                scrollBottom();
+                return;
+             }
 
 
             var returned_bool = await requestJsonData(lastRenderedMessage + 25, false);
@@ -399,19 +427,19 @@
             else {
                
         
-                if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
-                latest_message_id = JSON.parse(latest_message_id.d).Id;
+              
                 let new_messages_ever_since = latest_message_id - last_read_message;
-
-
+                    
+                last_unread_message_id = last_read_message;
                 setTimeout(function () {
        
                     var new_bar = new_messages_template.clone();
-                    new_bar.attr("id", "");
-          
+                       new_bar.attr("id", "markasread_active");
+
+
                     new_bar.insertBefore(Saved_Messages[last_read_message+1].message_element);
                     scroll.scrollTo(0, Saved_Messages[last_read_message+1].message_element[0].offsetTop - scroll.clientHeight/2);
-
+                    
                 }, 0);
                  unread_messages_ele.css("display", ""); 
 
@@ -419,7 +447,7 @@
          
                 let date = FormatFuncs["_timestr_"](Saved_Messages[last_read_message+1]);
            
-                unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} chưa đọc kể từ ${date}`);
+                unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} tin nhắn mới chưa đọc kể từ ${date}`);
             }
             is_firsttime_load = false;
 

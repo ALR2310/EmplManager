@@ -11,6 +11,7 @@
     --text-color: #333;
     --border-color: #ddd;
     --owner-mess-color: 89, 144, 206;
+    --primary-color-component: 81, 86, 190;
 }
 
 
@@ -467,6 +468,12 @@ html {
 
 .chat-ellips__item {
     text-decoration: none;
+    flex-wrap: wrap;
+    padding: 6px 6px;
+    margin: 0 6px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
     .chat-ellips__item a {
@@ -573,8 +580,98 @@ html {
     cursor: pointer;
 }
 
-.chat__search-box.open {
-    width: 200px;
+.chat__search-box.not_loaded {
+    animation: none !important;
+}
+
+    .chat__search-box.not_loaded > .chat__search-box__input {
+        animation: none !important;
+    }
+
+.chat__search-box.open > .chat__search-box__input {
+    animation: chat__search_txt_opacity .75s;
+    animation-fill-mode: forwards;
+}
+
+
+.chat__search-box > .chat__search-box__input {
+    animation: chat__search_txt_opacity_reverse .75s;
+    animation-fill-mode: forwards;
+}
+
+.chat__search-box {
+    animation: chat__search-box_border_revert .75s;
+    animation-fill-mode: forwards;
+}
+
+    .chat__search-box.open {
+        animation: chat__search-box_border_anim .75s;
+        animation-fill-mode: forwards;
+    }
+
+@keyframes chat__search_txt_opacity_reverse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes chat__search_txt_opacity {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes chat__search-box_border_revert {
+    0% {
+        width: calc(0px + 50vw);
+        color: var(--primary-color);
+        border: 1px solid rgba(var(--primary-color-component),1);
+    }
+
+    50% {
+        color: var(--primary-color);
+        border: 1px solid rgba(var(--primary-color-component),1);
+    }
+
+    100% {
+        width: calc(30px + 0vw);
+        color: #000000;
+        border: 1px solid rgba(var(--primary-color-component),0);
+    }
+}
+
+@keyframes chat__search-box_border_anim {
+    0% {
+        color: #000000;
+        border: 1px solid rgba(var(--primary-color-component),0);
+    }
+
+    50% {
+        color: var(--primary-color);
+        border: 1px solid rgba(var(--primary-color-component),1);
+    }
+
+    100% {
+        width: calc(0px + 50vw);
+        color: var(--primary-color);
+        border: 1px solid rgba(var(--primary-color-component),1);
+    }
 }
 
 #UpdatePanel1 {

@@ -17,6 +17,13 @@
     background-color: #cde6ff91 !important;
 }
 
+.Emoji{
+    height: 135%;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+}
+
 .emoji_display {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
