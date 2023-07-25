@@ -184,7 +184,6 @@ html {
 
 .sidebar-item {
     width: 400%;
-
     padding: 15px 0;
 }
 
@@ -218,8 +217,8 @@ html {
     color: var(--text-color);
     display: flex;
     justify-content: center;
-    align-items:center;
-    width: 100%; 
+    align-items: center;
+    width: 100%;
     height: 250%;
 }
 
@@ -275,10 +274,10 @@ html {
 }
 
 .chat-main {
-    flex-grow: 1;   
+    flex-grow: 1;
     display: flex;
     height:50%; 
-    margin-top: 5px;
+    margin-top: 20px;
 }
 
 .chat-main__list {
@@ -577,6 +576,7 @@ html {
 .chat__search-box.open {
     width: 200px;
 }
+
 #UpdatePanel1 {
     display: flex;
     flex-direction: column;
@@ -584,6 +584,7 @@ html {
     height: calc(100vh - 420px + 225px);
     overflow:hidden;
 }
+
 .chat-footer {
     margin-top: 25px;
     border-top: 1px solid var(--border-color);
@@ -1319,7 +1320,8 @@ html {
     .employee-card__ellipsis li {
         padding: 5px;
         font-size: 14px;
-        display: flex;
+        color: var(--text-color);
+        text-align: center;
     }
 
         .employee-card__ellipsis li:hover {
@@ -1358,6 +1360,7 @@ html {
     height: 70px;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
     .employee-card__body-avatar img {
@@ -1371,6 +1374,7 @@ html {
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    cursor: pointer;
 }
 
     .employee-card__body-name h4 {
@@ -1448,7 +1452,7 @@ html {
     flex: 2;
     background-color: rgba(0, 0, 0, 0.2);
     transition: transform 0.5s ease;
-    /* transform: translateX(-100%); */
+    transform: translateX(-100%);
     cursor: pointer;
 }
 
@@ -1458,7 +1462,7 @@ html {
     transition: all 0.3s ease;
     position: relative;
     transition: transform 0.5s ease;
-    /* transform: translateX(100%); */
+    transform: translateX(100%);
 }
 
 .modal-vertical__container-title {
@@ -1541,11 +1545,16 @@ html {
 }
 
     .userInfor__desc p {
-        font-size: 18px;
-        font-weight: 500;
         display: flex;
-        align-items: center;
     }
+
+        .userInfor__desc p span {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
 
         .userInfor__desc p button {
             margin-left: 10px;
