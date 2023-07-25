@@ -27,13 +27,15 @@ var counter = 0;
 btnSearch.addEventListener('click', function () {
     this.parentElement.classList.toggle('open');
     this.previousElementSibling.focus();
+    this.parentElement.classList.remove("not_loaded");
     if (counter === 0) {
-        searchInput.style.border = "1px solid var(--primary-color)";
-        btnSearch.style.color = "var(--primary-color)";
+        search_box.focus();
+       
+      
         counter = 1;
     } else {
-        searchInput.style.border = "none";
-        btnSearch.style.color = "black";
+        search_box.blur();
+  
         counter = 0;
     }
 })

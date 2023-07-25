@@ -51,15 +51,6 @@ namespace GUI
         protected global::System.Web.UI.WebControls.Button btnSearchChat;
 
         /// <summary>
-        /// txtSearchChat control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchChat;
-
-        /// <summary>
         /// lblEmoji control.
         /// </summary>
         /// <remarks>

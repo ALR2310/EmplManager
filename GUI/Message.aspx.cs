@@ -18,6 +18,9 @@ using System.Text.Json;
 
 using Microsoft.AspNet.SignalR;
 using SignalRChat.Hubs;
+using SubSonic;
+using System.Data;
+using System.Threading;
 
 namespace GUI
 {
@@ -114,7 +117,28 @@ namespace GUI
             }
             return JsonSerializer.Serialize(UserManager.GetUserBasicDataById(id));
         }
+        [System.Web.Services.WebMethod]
+        public static string GetTotalMessage()
+        {
+            InlineQuery query = new InlineQuery();
+            IDataReader reader = query.ExecuteReader("select top 1 Id from Messages order by id desc;");
 
+           
+            if (reader.Read())
+            {
+                // Assuming 'AtCreate' is of DateTime type in the database.
+        
+                Dictionary<string,string> returned = new Dictionary<string,string>();
+                returned["Id"] = Convert.ToString(reader["Id"]);
+                return JsonSerializer.Serialize(returned);
+            }
+
+
+            reader.Close();
+            return "";  
+
+
+        }
         [System.Web.Services.WebMethod]
         public static string SendMessage(string content)
         {

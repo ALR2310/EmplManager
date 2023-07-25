@@ -277,6 +277,7 @@
     <Content Include="EditUserInfor.aspx" />
     <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\markasread.svg" />
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />
     <Content Include="Images\addAvatar.svg" />

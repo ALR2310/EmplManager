@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="Style/modal.css" />
     <link rel="stylesheet" href="Style/emoji_list.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
-           <script src="Scripts/jquery-3.6.0.min.js"></script>
-        <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -75,8 +75,8 @@
 
                 <div class="chat__search">
                     <asp:Button ID="btnSearchChat" runat="server" Style="display: none" />
-                    <div class="chat__search-box">
-                        <asp:TextBox ID="txtSearchChat" runat="server" onkeypress="handleSearchChat(event)" class="chat__search-box__input" placeholder="Tìm Kiếm" type="text"></asp:TextBox>
+                    <div class="chat__search-box not_loaded">
+                        <input placeholder="Tìm kiếm" id="search-box" class="chat__search-box__input" />
                         <button type="button" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -96,18 +96,24 @@
                 </div>
             </div>
             <div id="UpdatePanel1">
-                <div id="unread_messages">
-                    <p>9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
+                <div id="unread_messages" style="display: none" onclick="markasread(event,true)">
+                    <p class="unread_notif_message">9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
+                    <div style="height: 100%; display: flex; align-items: center;" onclick="markasread(event,false)">
+                        <p>Đánh dấu là dã đọc</p>
+                        <img src="Images/markasread.svg" style="height: 100%; padding: 0 5px;" />
+                    </div>
 
                 </div>
                 <div id="loading_circle"></div>
                 <div class="chat-main">
                     <ul class="chat-main__list">
                     </ul>
+           
                     <div id="chat-template" style="display: none">
                         <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
                             <div class="timer">_timestr_, _datestr_</div>
                         </div>
+                                
                         <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
                             <div class="chat-main__content">
@@ -147,7 +153,7 @@
 
                     </div>
                 </div>
-
+                 <div class="new_messages" id="new_messages_template"><hr /><span>TIN NHẮN MỚI</span></div>
                 <div class="chat-footer">
 
                     <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
@@ -226,42 +232,61 @@
 
         </div>
     </div>
-  
+
     <script src="JS/message.js"></script>
 
 
 
     <script src="JS/modal.js"></script>
     <script>
+        var unread_messages_ele = $("#unread_messages");
         var focused = true;
 
-        window.onfocus = function() {
+        window.onfocus = function () {
             focused = true;
         };
-        window.onblur = function() {
+        window.onblur = function () {
             focused = false;
         };
     </script>
     <script>
-        var lastRenderedMessage = !!localStorage.getItem("lastRenderedMessage") ? localStorage.getItem("lastRenderedMessage") : 0 ;
-        console.log(lastRenderedMessage);
-        const scrollBottom = function () {
+        const new_messages_template = $("#new_messages_template");
+        var lastRenderedMessage = null;
+        var loadedbottom = false;
+        var renderingmessages = true;
+        var is_firsttime_load = true;
 
+        var Users = {};
+
+        const search_box = $("#search-box");
+
+        var latest_message_id =  $.ajax({
+            url: 'Message.aspx/GetTotalMessage',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+
+        });
+  
+
+        const scroll = $(".chat-main__list")[0];
+        const scrollBottom = function () {
+            if (is_firsttime_load) { return; }
             console.log("scrolled bottom");
-            const scroll = $(".chat-main__list")[0];
+
             scroll.scrollTo(0, scroll.scrollHeight);
         }
 
+
         const getScrollPos = function () {
-            const scroll = $(".chat-main__list")[0];
+
             var pos = scroll.scrollHeight - scroll.clientHeight - scroll.scrollTop;
-            console.log(pos);
+
             return pos;
         }
         function clearText() {
             $("#ContentPlaceHolder1_txt_Message").val("");
         }
-        scrollBottom();
 
     </script>
 
@@ -320,6 +345,7 @@
 
         var inputElement = $("#txt_Message");
         document.addEventListener('keydown', function (event) {
+            if (search_box.is(":focus")){ return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -332,28 +358,105 @@
 
         var chat_scroll = $(".chat-main__list");
 
-        last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
+        //last_scroll_pos = !!sessionStorage.getItem("scrollpos") ? Number(sessionStorage.getItem("scrollpos")) : chat_scroll[0].scrollHeight;
 
 
 
-        chat_scroll[0].scroll(0, last_scroll_pos);
+        //chat_scroll[0].scroll(0, last_scroll_pos);
+
+        const mark_new_message = function () {
+
+        }
 
         const scroll_DOM = chat_scroll[0];
-        chat_scroll.on('scroll', async function () {
-            var scrollTop = $(this).scrollTop();
-            if (scrollTop == 0) {
-                var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
+        async function loadFirstMessages() {
 
-                await requestJsonData(last_ele.getAttribute("message_id"));
-            
+            let lastRenderedMessageStr = localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id);
+            console.log(JSON.stringify(lastRenderedMessageStr));
+            lastRenderedMessage = lastRenderedMessageStr != null && isNaN(Number(lastRenderedMessageStr)) == false ? Number(localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id)) : -1;
 
+
+
+            let last_read_message = lastRenderedMessage;
+
+            await requestJsonData(lastRenderedMessage != -1 ? lastRenderedMessage + 1 : -1, false);
+
+            let oldpos = scroll.scrollTop;
+
+
+
+            var returned_bool = await requestJsonData(lastRenderedMessage + 25, false);
+
+
+            console.log(returned_bool);
+            if (!returned_bool || last_read_message == 0) {
+     
+
+                is_firsttime_load = false;
+
+                scrollBottom();
             }
-                if (getScrollPos() < 10){
- 
-                    localStorage.setItem("lastRenderedMessage",lastRenderedMessage);
-                }
-            sessionStorage.setItem("scrollpos", scrollTop.toString());
-        });
+            else {
+               
+        
+                if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
+                latest_message_id = JSON.parse(latest_message_id.d).Id;
+                let new_messages_ever_since = latest_message_id - last_read_message;
+
+
+                setTimeout(function () {
+       
+                    var new_bar = new_messages_template.clone();
+                    new_bar.attr("id", "");
+          
+                    new_bar.insertBefore(Saved_Messages[last_read_message+1].message_element);
+                    scroll.scrollTo(0, Saved_Messages[last_read_message+1].message_element[0].offsetTop - scroll.clientHeight/2);
+
+                }, 0);
+                 unread_messages_ele.css("display", ""); 
+
+
+         
+                let date = FormatFuncs["_timestr_"](Saved_Messages[last_read_message+1]);
+           
+                unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} chưa đọc kể từ ${date}`);
+            }
+            is_firsttime_load = false;
+
+            setTimeout(function () {
+                chat_scroll.on('scroll', async function () {
+                    var scrollTop = $(this).scrollTop();
+                    if (scrollTop == 0) {
+                        var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
+
+                        await requestJsonData(last_ele.getAttribute("message_id"));
+
+
+                    }
+
+                    if (getScrollPos() == 0) {
+
+                        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
+                        unread_messages_ele.css("display", "none"); 
+                        $(".new_messages").remove();
+                        if (!loadedbottom && !renderingmessages) {
+
+                            let oldpos = scroll.scrollTop;
+                            loadedbottom = true;
+
+                            var returned_bool = await requestJsonData(lastRenderedMessage + 25);
+                            console.log(returned_bool);
+                            loadedbottom = !returned_bool;
+
+                            scroll.scrollTo(0, oldpos);
+                           
+                        }
+                    }
+                    sessionStorage.setItem("scrollpos", scrollTop.toString());
+                });
+            }, 500);
+        }
+
 
     </script>
     <script src="JS/emoji.js"></script>

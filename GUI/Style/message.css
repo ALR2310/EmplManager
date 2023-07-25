@@ -1,6 +1,6 @@
-.italic{
-    font-style:italic;
-    opacity:.7;
+.italic {
+    font-style: italic;
+    opacity: .7;
 }
 
 .titles {
@@ -11,8 +11,9 @@
 
 .chat-main__item--right > div > .chat-wrapper > .chat-item__box > .titles {
     flex-direction: row-reverse;
-    justify-content: end;   
+    justify-content: end;
 }
+
     .chat-main__item--right > div > .chat-wrapper > .chat-item__box > .titles > span {
         flex-direction: row-reverse;
         padding: 0 15px 0 0;
@@ -57,8 +58,8 @@
 
 
 .chat-ellips__item {
-  padding: 6px 6px;
-  margin: 0 6px;
+    padding: 6px 6px;
+    margin: 0 6px;
 }
 
     .chat-ellips__item:hover {
@@ -68,16 +69,15 @@
         animation-timing-function: cubic-bezier(.24,1.49,1,.99);
     }
 
-@keyframes emoji_scale{
+@keyframes emoji_scale {
     0% {
         transform: scale(1);
-       
     }
+
     100% {
         padding: 6px 3px;
         margin: 0 9px;
         transform: scale(2) translateY(-10%);
-      
     }
 }
 
@@ -101,13 +101,15 @@
 }
 
 @keyframes loader_show {
-    0%{
+    0% {
         bottom: 125%;
     }
-    100%{
-        bottom:100%;
+
+    100% {
+        bottom: 100%;
     }
 }
+
 @keyframes spin {
     0% {
         transform: translate(-50%,100%) rotate(0deg);
@@ -129,10 +131,46 @@
     z-index: 4;
     border-radius: 0 0 10px 10px;
     cursor: pointer;
-    display:flex;
+    display: flex;
     align-items: center;
-    padding: 5px 15px;
+    padding: 2px 15px;
+    justify-content: space-between;
 }
+
+.new_messages > * {
+    color: red;
+    display: flex;
+}
+
+.new_messages {
+    align-items: center;
+    display: flex;
+    padding: 0 0;
+}
+
+    .new_messages > span {
+        position: absolute;
+        color: white;
+        background-color: red;
+        font-family: 'Roboto', sans-serif;
+        padding: 5px;
+        border-radius: 15px;
+        font-size: .7em;
+        z-index: 2;
+        left:50%;
+        transform:translateX(-50%);
+        white-space: nowrap;
+    }
+
+#new_messages_template {
+    display: none;
+}
+    .new_messages > hr {
+        border-style: solid;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+    }
 
 #unread_messages > * {
     color: white;

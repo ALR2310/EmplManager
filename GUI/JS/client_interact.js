@@ -15,6 +15,7 @@ function getCookie(cname) {
     return "";
 }
 
+
 var lastIndexedTime = new Date();
 function getTimeGap(time) {
 
@@ -35,7 +36,7 @@ const DayStrList = {
     2: "Hôm kia"
 }
 
-var Users = {};
+
 var CurrentTime = new Date();
 const FormatFuncs = {
     '_timegaptostyle_': async function (message) {
@@ -204,11 +205,14 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
         });
 
     if (scroll_to_bottom_again) {
+
         scrollBottom();
     }
 }
 
 async function renderMessage(message) {
+
+    Saved_Messages[message.Id] = message;
 
     if (lastRenderedMessage < message.Id) {
 
@@ -239,11 +243,13 @@ async function renderMessage(message) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
+    message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
 
-    message["message_element"] = message_ele;
-
-    Saved_Messages[message.Id] = message;
+ 
+    if (message.UserId == Users.CLIENT_USER.Id) {
+        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message.Id);
+    }
 
 
     /*setTimeout(function () {
@@ -255,9 +261,21 @@ async function renderMessage(message) {
         return;
     }, 100);*/
 }
-async function loadMessages(messages_data, scrollToBottomAtLoad) {
+async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messages) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
-   
+    var wiped = false;
+    var last_message_id = Number($(".chat-main__list").find(".chat-main__item:last").attr("message_id"));
+    renderingmessages = true;
+
+    if (wipe_old_messages) {
+        console.log(Math.min(...Object.keys(messages_data)));
+        console.log(last_message_id);
+        if (Math.min(...Object.keys(messages_data)) - 1 > last_message_id) {
+            $(".chat-main__list").empty();
+            wiped = true;
+        }
+
+    }
 
     for ([key, message] of Object.entries(messages_data)) {
 
@@ -265,16 +283,20 @@ async function loadMessages(messages_data, scrollToBottomAtLoad) {
   
     }
 
-    if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 100); }
+    if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 0); }
     else {
 
-
+        if (is_firsttime_load) { return; }
         scroll_DOM.scrollTo(0, scroll_DOM.scrollHeight - old_pos);
 
 
 
     }
 
+    if (wiped) {
+        console.log("Wiped old messages due to id gap");
+        return;
+    }
     const $children = $(".chat-main__list").children();
 
 
@@ -288,6 +310,9 @@ async function loadMessages(messages_data, scrollToBottomAtLoad) {
     $children.sort(customSort);
 
     $(".chat-main__list").append($children);
+
+        renderingmessages = false;
+    
 }
 const Saved_Messages = (() => {
     const myDictionary = {
@@ -308,29 +333,35 @@ const Saved_Messages = (() => {
 })();
 
 var loading_circle = $("#loading_circle");
-async function requestJsonData(afterid, scrollToBottomAtLoad) {
-    loading_circle.addClass("loader_show");
-    $.ajax({
-        url: 'Message.aspx/GetMessageJsonData',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ page: afterid }),
-        success: async function (response) {
-   
+function requestJsonData(afterid, scrollToBottomAtLoad) {
+    return new Promise((resolve, reject) => {
+        loading_circle.addClass("loader_show");
+        $.ajax({
+            url: 'Message.aspx/GetMessageJsonData',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({ page: afterid }),
+            success: async function (response) {
                 if (!scrollToBottomAtLoad) {
-
+                    var oldpos = getScrollPos();
                 }
+                let wipe_old_messages = (afterid == -1 && scrollToBottomAtLoad == true);
                 loading_circle.removeClass("loader_show");
-                await loadMessages(JSON.parse(response.d), scrollToBottomAtLoad)
-
-
-
-        },
-        error: function (xhr, status, error) {
-            // Handle any errors
-            console.error(error);
-        }
+                var data = JSON.parse(response.d);
+                await loadMessages(data, scrollToBottomAtLoad,wipe_old_messages);
+              
+                var count = Object.keys(data).length;
+                data = null;
+     
+                resolve(count > 0);
+            },
+            error: function (xhr, status, error) {
+          
+                console.error(error);
+                reject(error); 
+            }
+        });
     });
 }
 const DeleteMessage = function (data) {
@@ -415,6 +446,7 @@ function AssignNewNum(num, emoji_display_ele, key) {
 
 
 
+
 const UpdateMessageReaction = function (data) {
     console.log(data);
     var message_id = data.Message_Id;
@@ -442,10 +474,47 @@ const UpdateMessageReaction = function (data) {
 }
 
 setTimeout(async function () {
-    console.log("A");
     await fetchUser();
-    await requestJsonData(-1, true);
-    console.log("B");
+
+    await loadFirstMessages();
+
 
 }, 0);
-console.log("C");
+
+
+function findLatestMessageId() {
+    return Object.keys(Saved_Messages).reduce((max, current) => {
+
+        const number = parseInt(current, 10);
+
+
+        if (isNaN(number) || number <= max) {
+            return max;
+        }
+
+        return number;
+    }, Number.NEGATIVE_INFINITY);
+
+}
+
+
+function markasread(event, scroll_bottom) {
+    if (event!=null)event.stopPropagation();
+    console.log("Read Click");
+    unread_messages_ele.css("display", "none");
+    $(".new_messages").remove();
+
+    if (scroll_bottom) {
+        if (latest_message_id == findLatestMessageId()) {
+            localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
+            scrollBottom();
+            return;
+        }
+        loading_circle.addClass("loader_show");
+        requestJsonData(-1, true);
+
+    }
+    else {
+        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
+    }
+}
