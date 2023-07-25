@@ -5,10 +5,10 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
     <div class="content">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
 
@@ -106,10 +106,23 @@
                                                 </div>
                                             </div>
                                             <div class="employee-card__body">
-                                                <a class="employee-card__body-avatar" runat="server" title="Xem Thông Tin Chi Tiết"
-                                                    onserverclick="ShowModalInfor_ServerClick" commandargument="1" onclick="showModal()">
+                                                <%--<a class="employee-card__body-avatar" runat="server" title="Xem Thông Tin Chi Tiết"
+                                                    onserverclick="ShowModalInfor_ServerClick" commandargument='<%# Eval("Id")%>' onclick="showModal()">
                                                     <img alt="" src="<%# Eval("Avatar") %>" />
-                                                </a>
+                                                </a>--%>
+
+                                                <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:LinkButton ID="ShowModalInfor" runat="server" OnClick="ShowModalInfor_Click"
+                                                            CommandArgument='<%# Eval("Id")%>' title="Xem Thông Tin Chi Tiết" class="employee-card__body-avatar">
+                                                            <img alt="" src="<%# Eval("Avatar") %>" />
+                                                        </asp:LinkButton>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+
+
+
+
                                                 <div class="employee-card__body-name" onclick="showModal()">
                                                     <h4><%# Eval("DisplayName") %></h4>
                                                     <p><%# Eval("Job") %></p>
@@ -145,7 +158,6 @@
                                 </asp:Repeater>
 
 
-
                             </div>
                         </div>
 
@@ -157,168 +169,180 @@
 
 
 
+
+
     </div>
 
 
     <div class="modal-vertical hide">
         <span class="modal-vertical__overlay"></span>
 
-        <div class="modal-vertical__container">
-            <button type="button" class="modal-vertical__close" onclick="hidenModal(event)">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <ContentTemplate>
 
-            <h2 class="modal-vertical__container-title">Chi Tiết Thông Tin</h2>
-
-            <div class="userInfor">
-                <div class="userInfor-Avatar">
-                    <div class="userInfor__image">
-                        <asp:Image ID="AvatarImg" runat="server" />
-                    </div>
-                    <div class="userInfor__desc">
-                        <p>
-                            <asp:Label ID="lblDisplayName" runat="server" Text="Admin"></asp:Label>
-                            <button type="button" class="employee-card__header-status Active">Active</button>
-                        </p>
-                        <asp:Label ID="lblJob" runat="server" Text="Intern"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="userInfor-SendMail">
-                    <button type="button">
-                        <i class="fa-regular fa-envelope"></i>
-                        Gửi Email
-                                <asp:Button runat="server" ID="btnSendMail" Style="display: none;" />
+                <div class="modal-vertical__container">
+                    <button type="button" class="modal-vertical__close" onclick="hidenModal(event)">
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
+
+                    <h2 class="modal-vertical__container-title">Chi Tiết Thông Tin</h2>
+
+
+                    <div class="userInfor">
+                        <div class="userInfor-Avatar">
+                            <div class="userInfor__image">
+                                <asp:Image ID="AvatarImg" runat="server" />
+                            </div>
+                            <div class="userInfor__desc">
+                                <p>
+                                    <asp:Label ID="lblDisplayName" runat="server" Text="Admin"></asp:Label>
+                                    <button type="button" class="employee-card__header-status Active">Active</button>
+                                </p>
+                                <asp:Label ID="lblJob" runat="server" Text="Intern"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-SendMail">
+                            <button type="button">
+                                <i class="fa-regular fa-envelope"></i>
+                                Gửi Email
+                                <asp:Button runat="server" ID="btnSendMail" Style="display: none;" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="userInfor-Detail">
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Họ Và Tên:</p>
+                                <asp:Label ID="lblDisplayName1" runat="server" Text="Admin"></asp:Label>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Số Điện Thoại:</p>
+                                <asp:Label ID="lblPhoneNumber" runat="server" Text="0123456789"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Trạng Thái Tài Khoản:</p>
+                                <asp:Label ID="lblStatus" runat="server" Text="Active"></asp:Label>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Loại Tài Khoản:</p>
+                                <asp:Label ID="lblUserType" runat="server" Text="Admin"></asp:Label>
+                            </div>
+                        </div>
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Email:</p>
+                                <asp:Label ID="lblEmail" runat="server" Text="admin@gmail.com"></asp:Label>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Ngày Tham Gia:</p>
+                                <asp:Label ID="lblDateJoin" runat="server" Text="24/07/2023"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Vị Trí:</p>
+                                <asp:Label ID="lblJob1" runat="server" Text="Intern"></asp:Label>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Phòng Ban:</p>
+                                <asp:Label ID="lblDepartment" runat="server" Text="Sweetsoft"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Giới Tính:</p>
+                                <asp:Label ID="lblGender" runat="server" Text="Nam"></asp:Label>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Ngày Sinh:</p>
+                                <asp:Label ID="lblDateOfBirth" runat="server" Text="04/03/2004"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Id Tài Khoản:</p>
+                                <span>123</span>
+                            </div>
+
+                            <div class="userInfor-Detail__infor">
+                                <p>Google Id:</p>
+                                <span>123456789</span>
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="userInfor-Detail__infor">
+                                <p>Địa Chỉ:</p>
+                                <span>Phước Lâm - Ninh Xuân - Ninh Hoà - Khánh Hoà</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="userInfor-Detail__title">
+                        Quản Lí Tài Khoản
+                    </div>
+
+                    <div class="userInfor-Detail__action">
+
+                        <div class="userInfor-Detail1">
+                            <div class="UIDetail__action">
+                                <p>Thay Đổi Trạng Thái Tài Khoản:</p>
+                            </div>
+                            <div class="UIDetail__action">
+                                <asp:Button ID="btnEmoloyeeEnable" runat="server" class="btnEnable" Text="Enable" />
+                                <asp:Button ID="btnEmoloyeeDisable" runat="server" class="btnDisable" Text="Disable" />
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="UIDetail__action">
+                                <p>Cấp Quyền Admin:</p>
+                            </div>
+                            <div class="UIDetail__action">
+                                <asp:Button ID="btnGetAdmin" runat="server" class="btnUserType" Text="Cấp Quyền Ngay" />
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1 hide">
+                            <div class="UIDetail__action">
+                                <p>Loại Bỏ Quyền Admin:</p>
+                            </div>
+                            <div class="UIDetail__action">
+                                <asp:Button ID="btnRemoveAdmin" runat="server" class="btnUserType" Text="Loại Bỏ Ngay" />
+                            </div>
+                        </div>
+
+                        <div class="userInfor-Detail1">
+                            <div class="UIDetail__action">
+                                <p>Xoá Tài Khoản Vĩnh Viễn:</p>
+                            </div>
+                            <div class="UIDetail__action">
+                                <button type="button" onclick="showModalDeleteUser()" class="btnDelete">Xoá Tài Khoản Này</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
 
-            <div class="userInfor-Detail">
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Họ Và Tên:</p>
-                        <asp:Label ID="lblDisplayName1" runat="server" Text="Admin"></asp:Label>
-                    </div>
 
-                    <div class="userInfor-Detail__infor">
-                        <p>Số Điện Thoại:</p>
-                        <asp:Label ID="lblPhoneNumber" runat="server" Text="0123456789"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Trạng Thái Tài Khoản:</p>
-                        <asp:Label ID="lblStatus" runat="server" Text="Active"></asp:Label>
-                    </div>
-
-                    <div class="userInfor-Detail__infor">
-                        <p>Loại Tài Khoản:</p>
-                        <asp:Label ID="lblUserType" runat="server" Text="Admin"></asp:Label>
-                    </div>
-                </div>
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Email:</p>
-                        <asp:Label ID="lblEmail" runat="server" Text="admin@gmail.com"></asp:Label>
-                    </div>
-
-                    <div class="userInfor-Detail__infor">
-                        <p>Ngày Tham Gia:</p>
-                        <asp:Label ID="lblDateJoin" runat="server" Text="24/07/2023"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Vị Trí:</p>
-                        <asp:Label ID="lblJob1" runat="server" Text="Intern"></asp:Label>
-                    </div>
-
-                    <div class="userInfor-Detail__infor">
-                        <p>Phòng Ban:</p>
-                        <asp:Label ID="lblDepartment" runat="server" Text="Sweetsoft"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Giới Tính:</p>
-                        <asp:Label ID="lblGender" runat="server" Text="Nam"></asp:Label>
-                    </div>
-
-                    <div class="userInfor-Detail__infor">
-                        <p>Ngày Sinh:</p>
-                        <asp:Label ID="lblDateOfBirth" runat="server" Text="04/03/2004"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Id Tài Khoản:</p>
-                        <span>123</span>
-                    </div>
-
-                    <div class="userInfor-Detail__infor">
-                        <p>Google Id:</p>
-                        <span>123456789</span>
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="userInfor-Detail__infor">
-                        <p>Địa Chỉ:</p>
-                        <span>Phước Lâm - Ninh Xuân - Ninh Hoà - Khánh Hoà</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="userInfor-Detail__title">
-                Quản Lí Tài Khoản
-            </div>
-
-            <div class="userInfor-Detail__action">
-
-                <div class="userInfor-Detail1">
-                    <div class="UIDetail__action">
-                        <p>Thay Đổi Trạng Thái Tài Khoản:</p>
-                    </div>
-                    <div class="UIDetail__action">
-                        <asp:Button ID="btnEmoloyeeEnable" runat="server" class="btnEnable" Text="Enable" />
-                        <asp:Button ID="btnEmoloyeeDisable" runat="server" class="btnDisable" Text="Disable" />
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="UIDetail__action">
-                        <p>Cấp Quyền Admin:</p>
-                    </div>
-                    <div class="UIDetail__action">
-                        <asp:Button ID="btnGetAdmin" runat="server" class="btnUserType" Text="Cấp Quyền Ngay" />
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1 hide">
-                    <div class="UIDetail__action">
-                        <p>Loại Bỏ Quyền Admin:</p>
-                    </div>
-                    <div class="UIDetail__action">
-                        <asp:Button ID="btnRemoveAdmin" runat="server" class="btnUserType" Text="Loại Bỏ Ngay" />
-                    </div>
-                </div>
-
-                <div class="userInfor-Detail1">
-                    <div class="UIDetail__action">
-                        <p>Xoá Tài Khoản Vĩnh Viễn:</p>
-                    </div>
-                    <div class="UIDetail__action">
-                        <button type="button" onclick="showModalDeleteUser()" class="btnDelete">Xoá Tài Khoản Này</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 
     <div class="UIdetail-modal-delete-overlay hide">
@@ -331,6 +355,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script>
