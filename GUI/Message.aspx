@@ -74,14 +74,14 @@
                 </div>
 
                 <div class="chat__search">
-                 
+
                     <div class="chat__search-box not_loaded">
                         <input placeholder="Tìm kiếm" id="search-box" class="chat__search-box__input" />
-                        <button type="button" id="search_open"  class="chat__search-box__btn">    
+                        <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
 
-                         <button type="button" style="display:none" id="search_cancel" class="chat__search-box__btn">    
+                        <button type="button" style="display: none" id="search_cancel" class="chat__search-box__btn">
                             <i class="fa-solid fa-cancel-icon"></i>
                         </button>
                     </div>
@@ -100,26 +100,78 @@
                 </div>
             </div>
             <div id="MessageUpdatePanel">
-                <div id="unread_messages" style="display: none" onclick="markasread(event,true)">
-                    <p class="unread_notif_message">9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
-                    <div style="height: 100%; display: flex; align-items: center;" onclick="markasread(event,false)">
-                        <p>Đánh dấu là dã đọc</p>
-                        <img src="Images/markasread.svg" style="height: 100%; padding: 0 5px;" />
-                    </div>
 
-                </div>
                 <div id="loading_circle"></div>
                 <div class="chat-main">
-                    <div id="chat-search__list"></div>
+                    <div id="popup_layout">
+                        <div id="unread_messages" style="display: none" onclick="markasread(event,true)">
+                            <p class="unread_notif_message">9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
+                            <div style="height: 100%; display: flex; align-items: center;" onclick="markasread(event,false)">
+                                <p>Đánh dấu là đã đọc</p>
+                                <img src="Images/markasread.svg" style="height: 100%; padding: 0 5px;" />
+                            </div>
+
+                        </div>
+                        <div id="chat-search__list">
+                            <div id="search__list_placeholder_layer">
+                                <div id="search_loading_placeholder_template" class="placeholder_chatbox">
+                                    <div class="chat-main__content">
+                                        <div class="chat-main__avatar">
+
+                                            <div class="loading_image layer_hole"></div>
+                                        </div>
+
+                                        <div >
+                                            <div style=" gap:1px;     transform: scale(.85) translate(-6%,15%);" class="time_loading_placeholder placeholder_boxes_holder">
+                                                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                            <div>&nbsp;&nbsp; </div>
+                                                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                 <div>&nbsp;&nbsp; </div>
+                                                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                            </div>
+                                            <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
+
+                                                <div class="titles placeholder_boxes_holder">
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                </div>
+
+                                                <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
+                                                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                   
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                   
+                                                   
+                                                </div>
+                                                <div class="emoji_list">
+                                                </div>
+                                            
+
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="chat-main__list">
                         <div class="messagedecoy"></div>
                     </ul>
-           
+
                     <div id="chat-template" style="display: none">
                         <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
                             <div class="timer">_timestr_, _datestr_</div>
                         </div>
-                                
+
                         <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
                             <div class="chat-main__content">
@@ -159,7 +211,10 @@
 
                     </div>
                 </div>
-                 <div class="new_messages" id="new_messages_template"><hr /><span>TIN NHẮN MỚI</span></div>
+                <div class="new_messages" id="new_messages_template">
+                    <hr />
+                    <span>TIN NHẮN MỚI</span>
+                </div>
                 <div class="chat-footer">
 
                     <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
@@ -187,22 +242,22 @@
                                     <img src="Images/Emojis/thumbsup.svg" id="Emoji_2" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                               <img src="Images/Emojis/joy.svg" id="Emoji_3" class="Emoji">
+                                    <img src="Images/Emojis/joy.svg" id="Emoji_3" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
                                     <img src="Images/Emojis/sweat_smile.svg" id="Emoji_4" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                        <img src="Images/Emojis/party.svg" id="Emoji_5" class="Emoji">
+                                    <img src="Images/Emojis/party.svg" id="Emoji_5" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
                                     <img src="Images/Emojis/eyes.svg" id="Emoji_6" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                <img src="Images/Emojis/OPPENHEIMER.svg" id="Emoji_7" class="Emoji">
+                                    <img src="Images/Emojis/OPPENHEIMER.svg" id="Emoji_7" class="Emoji">
                                 </li>
                                 <li class="chat-ellips__item">
-                                <img src="Images/Emojis/smile_tear.svg" id="Emoji_8" class="Emoji">
+                                    <img src="Images/Emojis/smile_tear.svg" id="Emoji_8" class="Emoji">
                                 </li>
                                 <box class="boxhidentop"></box>
                                 <box class="boxhidenbottom"></box>
@@ -245,21 +300,23 @@
 
     <script src="JS/modal.js"></script>
     <script>
+        for (var i = 1; i <= 10; i++) {
+            $("#search_loading_placeholder_template").clone().insertAfter("#search_loading_placeholder_template");
+        }
+        function findLatestMessageId() {
+            return Object.keys(Saved_Messages).reduce((max, current) => {
 
-function findLatestMessageId() {
-return Object.keys(Saved_Messages).reduce((max, current) => {
-
-    const number = parseInt(current, 10);
+                const number = parseInt(current, 10);
 
 
-    if (isNaN(number) || number <= max) {
-        return max;
-    }
+                if (isNaN(number) || number <= max) {
+                    return max;
+                }
 
-    return number;
-}, Number.NEGATIVE_INFINITY);
+                return number;
+            }, Number.NEGATIVE_INFINITY);
 
-}
+        }
 
 
         var unread_messages_ele = $("#unread_messages");
@@ -284,7 +341,7 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
             if (lastRenderedMessage == null) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
                 return;
-               
+
             }
             if (message_id > lastRenderedMessage) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
@@ -297,14 +354,14 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
 
         const search_box = $("#search-box");
 
-        var latest_message_id =  $.ajax({
+        var latest_message_id = $.ajax({
             url: 'Message.aspx/GetTotalMessage',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
 
         });
-  
+
 
         const scroll = $(".chat-main__list")[0];
         const scrollBottom = function () {
@@ -382,7 +439,7 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
 
         var inputElement = $("#txt_Message");
         document.addEventListener('keydown', function (event) {
-            if (search_box.is(":focus")){ return };
+            if (search_box.is(":focus")) { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -407,7 +464,7 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
 
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
-setTimeout(function () {
+            setTimeout(function () {
                 chat_scroll.on('scroll', async function () {
                     var scrollTop = $(this).scrollTop();
                     if (scrollTop == 0) {
@@ -421,7 +478,7 @@ setTimeout(function () {
                     if (getScrollPos() == 0) {
 
                         localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
-                        unread_messages_ele.css("display", "none"); 
+                        unread_messages_ele.css("display", "none");
                         $(".new_messages").remove();
                         if (!loadedbottom && !renderingmessages) {
 
@@ -433,15 +490,15 @@ setTimeout(function () {
                             loadedbottom = !returned_bool;
 
                             scroll.scrollTo(0, oldpos);
-                           
+
                         }
                     }
                     sessionStorage.setItem("scrollpos", scrollTop.toString());
                 });
             }, 500);
 
-              if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
-                latest_message_id = JSON.parse(latest_message_id.d).Id;
+            if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
+            latest_message_id = JSON.parse(latest_message_id.d).Id;
 
 
             let lastRenderedMessageStr = localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id);
@@ -456,12 +513,12 @@ setTimeout(function () {
 
 
 
-             if (latest_message_id == findLatestMessageId()) {
+            if (latest_message_id == findLatestMessageId()) {
                 console.log("it seems that we loaded the new messages! scrolling bottom...");
                 is_firsttime_load = false;
                 scrollBottom();
                 return;
-             }
+            }
 
 
             var returned_bool = await requestJsonData(lastRenderedMessage + 25, false);
@@ -469,40 +526,40 @@ setTimeout(function () {
 
             console.log(returned_bool);
             if (!returned_bool || last_read_message == 0) {
-     
+
 
                 is_firsttime_load = false;
 
                 scrollBottom();
             }
             else {
-               
-        
-              
+
+
+
                 let new_messages_ever_since = latest_message_id - last_read_message;
-                    
+
                 last_unread_message_id = last_read_message;
                 setTimeout(function () {
-       
+
                     var new_bar = new_messages_template.clone();
-                       new_bar.attr("id", "markasread_active");
+                    new_bar.attr("id", "markasread_active");
 
 
-                    new_bar.insertBefore(Saved_Messages[last_read_message+1].message_element);
-                    scroll.scrollTo(0, Saved_Messages[last_read_message+1].message_element[0].offsetTop - scroll.clientHeight/2);
-                    
+                    new_bar.insertBefore(Saved_Messages[last_read_message + 1].message_element);
+                    scroll.scrollTo(0, Saved_Messages[last_read_message + 1].message_element[0].offsetTop - scroll.clientHeight / 2);
+
                 }, 0);
-                 unread_messages_ele.css("display", ""); 
+                unread_messages_ele.css("display", "");
 
 
-         
-                let date = FormatFuncs["_timestr_"](Saved_Messages[last_read_message+1]);
-           
+
+                let date = FormatFuncs["_timestr_"](Saved_Messages[last_read_message + 1]);
+
                 unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} tin nhắn mới chưa đọc kể từ ${date}`);
             }
             is_firsttime_load = false;
 
-            
+
         }
 
 

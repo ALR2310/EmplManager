@@ -1097,10 +1097,33 @@ html {
     width: 500px;
 }
 
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
     display: none;
+
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f9fbff;
+    margin: 10px 0;
+    border-radius: 25px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 .item-emoji {
     padding: 10px;
     border-radius: 10px;

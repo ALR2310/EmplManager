@@ -4,14 +4,22 @@ let search_cancel_btn = $("#search_cancel");
 
 let search_message_list = $("#chat-search__list");
 
+let searching_thread = null;
 search_bxb.on("input", function () {
-  if (search_bxb.val().trim() != "") {
-    open_btn.css('display', 'none');
-    search_cancel_btn.css('display', 'unset');
-    return;
-  }
-  open_btn.css('display', 'unset');
-  search_cancel_btn.css('display', 'none');
+    if (search_bxb.val().trim() != "") {
+        open_btn.css('display', 'none');
+        search_cancel_btn.css('display', 'unset');
+        search_message_list.css("display", "unset");
+
+        clearTimeout(searching_thread);
+        searching_thread = setTimeout(function () {
+            console.log("Search Query: " + search_bxb.val().trim());
+        }, 250);
+        return;
+    }
+    open_btn.css('display', 'unset');
+    search_cancel_btn.css('display', 'none');
+    search_message_list.css("display", "none");
 })
 
 var btnSearch = document.querySelector('#search_open');
@@ -21,38 +29,50 @@ var counter = 0;
 
 
 let should_focus = false;
+
 search_cancel_btn.on('mousedown touchstart', function (event) {
-  event.stopPropagation();
-  search_bxb.val("");
-  console.log(should_focus);
 
-  open_btn.css('display', 'unset');
-  search_cancel_btn.css('display', 'none');
-  setTimeout(function () {
-    if (should_focus) search_bxb.focus();
+    should_focus = search_bxb.is(":focus");
+    event.stopPropagation();
+    search_bxb.val("");
+    console.log(should_focus);
 
-  }
-    , 0);
+    open_btn.css('display', 'unset');
+    search_cancel_btn.css('display', 'none');
+    setTimeout(function () {
+        if (should_focus) search_bxb.focus();
+
+    }
+        , 0);
 
 
 });
-btnSearch.addEventListener('click', function () {
-  this.parentElement.classList.toggle('open');
-  this.previousElementSibling.focus();
-  this.parentElement.classList.remove("not_loaded");
 
-  if (counter === 0) {
+let clckcd = false;
+btnSearch.addEventListener('mousedown', function () {
+    if (clckcd) return; clckcd = true;
+    setTimeout(function () { clckcd = false; }, 100);
+    this.parentElement.classList.toggle('open');
 
-    search_bxb.focus();
+    this.parentElement.classList.remove("not_loaded");
+
+    if (counter === 0) {
+
+        setTimeout(function () {
+            search_bxb.focus();
+            should_focus = true;
+        }
+            , 0);
 
 
-    counter = 1;
-  } else {
- 
-    search_bxb.blur();
 
-    counter = 0;
-  }
-  should_focus = search_bxb.is(":focus");
+        counter = 1;
+    } else {
+        search_message_list.css("display", "none");
+        search_bxb.blur();
+        this.previousElementSibling.focus();
+        counter = 0;
+    }
+
 })
 
