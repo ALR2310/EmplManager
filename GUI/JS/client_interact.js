@@ -145,8 +145,7 @@ async function fetchUser(id, fromCookie) {
     });
     await FetchingUsers[id];
 }
-
-const emoji_id_to_emoji_txt = [
+const __deprecated = [
     "❤️",
 
     "👍",
@@ -163,6 +162,23 @@ const emoji_id_to_emoji_txt = [
 
     "🥲",
 ];
+const emoji_id_to_emoji_txt = [
+    "Images/Emojis/heart.svg",
+
+    "Images/Emojis/thumbsup.svg",
+
+    "Images/Emojis/joy.svg",
+
+    "Images/Emojis/sweat_smile.svg",
+
+    "Images/Emojis/party.svg",
+
+    "Images/Emojis/eyes.svg",
+
+    "Images/Emojis/OPPENHEIMER.svg",
+
+    "Images/Emojis/smile_tear.svg",
+];
 var last_num_list = {}
 function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     var scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
@@ -178,7 +194,7 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
 
     last_num_list[message_id + '' + emoji_id] = list.length;
 
-    emoji_display.find(".emoji_emoji").text(emoji_id_to_emoji_txt[emoji_id - 1]);
+    emoji_display.find(".emoji_emoji").attr("src",emoji_id_to_emoji_txt[emoji_id - 1]);
 
 
     var contains_own_reaction = list.indexOf(Users.CLIENT_USER.Id) != -1;
@@ -243,12 +259,16 @@ async function renderMessage(message) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
+    if (message_ele.find(".time-gap").css("display") == "none") {
+        message_ele.find(".time-gap").remove();
+    }
     message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
 
  
     if (message.UserId == Users.CLIENT_USER.Id) {
-        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message.Id);
+        setLastRenderedMessageCache(message.Id);
+    
     }
 
 
@@ -493,7 +513,7 @@ function markasread(event, scroll_bottom) {
 
     if (scroll_bottom) {
         if (latest_message_id == findLatestMessageId()) {
-            localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
+            setLastRenderedMessageCache(latest_message_id);
             scrollBottom();
             return;
         }
@@ -502,6 +522,6 @@ function markasread(event, scroll_bottom) {
 
     }
     else {
-        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
+        setLastRenderedMessageCache( latest_message_id);
     }
 }

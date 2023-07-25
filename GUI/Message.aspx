@@ -74,17 +74,21 @@
                 </div>
 
                 <div class="chat__search">
-                    <asp:Button ID="btnSearchChat" runat="server" Style="display: none" />
+                 
                     <div class="chat__search-box not_loaded">
                         <input placeholder="Tìm kiếm" id="search-box" class="chat__search-box__input" />
-                        <button type="button" class="chat__search-box__btn">
+                        <button type="button" id="search_open"  class="chat__search-box__btn">    
                             <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+
+                         <button type="button" style="display:none" id="search_cancel" class="chat__search-box__btn">    
+                            <i class="fa-solid fa-cancel-icon"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <div id="emoji_display_placeholder" style="display: none">
-                <span class="emoji_emoji">🥳<canvas></canvas>
+                <img class="emoji_emoji">
                 </span>
                 <div class="emoji_count">
                     <span class="count">
@@ -95,7 +99,7 @@
 
                 </div>
             </div>
-            <div id="UpdatePanel1">
+            <div id="MessageUpdatePanel">
                 <div id="unread_messages" style="display: none" onclick="markasread(event,true)">
                     <p class="unread_notif_message">9 tin nhắn mới chưa đọc kể từ 10:25AM</p>
                     <div style="height: 100%; display: flex; align-items: center;" onclick="markasread(event,false)">
@@ -106,7 +110,9 @@
                 </div>
                 <div id="loading_circle"></div>
                 <div class="chat-main">
+                    <div id="chat-search__list"></div>
                     <ul class="chat-main__list">
+                        <div class="messagedecoy"></div>
                     </ul>
            
                     <div id="chat-template" style="display: none">
@@ -234,7 +240,7 @@
     </div>
 
     <script src="JS/message.js"></script>
-
+    <script src="JS/search.js"></script>
 
 
     <script src="JS/modal.js"></script>
@@ -273,6 +279,18 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
         var renderingmessages = true;
         var is_firsttime_load = true;
         var last_unread_message_id;
+
+        const setLastRenderedMessageCache = function (message_id) {
+            if (lastRenderedMessage == null) {
+                localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
+                return;
+               
+            }
+            if (message_id > lastRenderedMessage) {
+                localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
+            }
+
+        }
 
 
         var Users = {};
@@ -389,6 +407,39 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
 
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
+setTimeout(function () {
+                chat_scroll.on('scroll', async function () {
+                    var scrollTop = $(this).scrollTop();
+                    if (scrollTop == 0) {
+                        var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
+
+                        await requestJsonData(last_ele.getAttribute("message_id"));
+                        console.log("Loading Message Above");
+
+                    }
+
+                    if (getScrollPos() == 0) {
+
+                        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
+                        unread_messages_ele.css("display", "none"); 
+                        $(".new_messages").remove();
+                        if (!loadedbottom && !renderingmessages) {
+
+                            let oldpos = scroll.scrollTop;
+                            loadedbottom = true;
+
+                            var returned_bool = await requestJsonData(lastRenderedMessage + 25);
+                            console.log(returned_bool);
+                            loadedbottom = !returned_bool;
+
+                            scroll.scrollTo(0, oldpos);
+                           
+                        }
+                    }
+                    sessionStorage.setItem("scrollpos", scrollTop.toString());
+                });
+            }, 500);
+
               if (typeof latest_message_id != 'number') latest_message_id = await latest_message_id;
                 latest_message_id = JSON.parse(latest_message_id.d).Id;
 
@@ -451,38 +502,7 @@ return Object.keys(Saved_Messages).reduce((max, current) => {
             }
             is_firsttime_load = false;
 
-            setTimeout(function () {
-                chat_scroll.on('scroll', async function () {
-                    var scrollTop = $(this).scrollTop();
-                    if (scrollTop == 0) {
-                        var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
-
-                        await requestJsonData(last_ele.getAttribute("message_id"));
-
-
-                    }
-
-                    if (getScrollPos() == 0) {
-
-                        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, latest_message_id);
-                        unread_messages_ele.css("display", "none"); 
-                        $(".new_messages").remove();
-                        if (!loadedbottom && !renderingmessages) {
-
-                            let oldpos = scroll.scrollTop;
-                            loadedbottom = true;
-
-                            var returned_bool = await requestJsonData(lastRenderedMessage + 25);
-                            console.log(returned_bool);
-                            loadedbottom = !returned_bool;
-
-                            scroll.scrollTo(0, oldpos);
-                           
-                        }
-                    }
-                    sessionStorage.setItem("scrollpos", scrollTop.toString());
-                });
-            }, 500);
+            
         }
 
 

@@ -21,25 +21,6 @@ chatInput.addEventListener("keyup", handleInput);
 
 
 //js hiệu ứng mở đống thanh search trong chat-box
-var btnSearch = document.querySelector('.chat__search-box__btn');
-var searchInput = document.querySelector('.chat__search-box__input');
-var counter = 0;
-btnSearch.addEventListener('click', function () {
-    this.parentElement.classList.toggle('open');
-    this.previousElementSibling.focus();
-    this.parentElement.classList.remove("not_loaded");
-    if (counter === 0) {
-        search_box.focus();
-       
-      
-        counter = 1;
-    } else {
-        search_box.blur();
-  
-        counter = 0;
-    }
-})
-
 
 
 //js cho nút dropdown trong ellips chat
