@@ -292,10 +292,13 @@
     height: 40px;
 }
 
+#search_loading_placeholder_template {
+    display: none;
+}
 .placeholder_chatbox {
     background-color: #d6e3ff;
     border-radius: 10px;
-    padding:15px 10px;
+    padding: 15px 10px;
 }
 .placeholder_boxes_holder > * {
     overflow:hidden;
@@ -330,7 +333,7 @@
         height: 220px;
         position: absolute;
         z-index: 1;
-        animation: slide 1.5s infinite .5s ease-out;
+        animation: slide 1.5s infinite 0s ease-out;
         /* 
   CSS Gradient - complete browser support from http://www.colorzilla.com/gradient-editor/ 
   */

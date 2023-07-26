@@ -4,17 +4,60 @@ let search_cancel_btn = $("#search_cancel");
 
 let search_message_list = $("#chat-search__list");
 
-search_message_list.css("display", 'none');
+let placehold_layout = $("#search__list_placeholder_layer");
+
+//search_message_list.css("display", 'none');
 let searching_thread = null;
+
+let require_reload_placehold = true;
+
+
+const phsts = {
+    title:{
+        MIN_WORD_LENGTH: 2,
+        MAX_WORDS: 4,
+        MAX_WORD_LENGTH:27,
+        MAX_FIELD_LENGTH: 27,
+    },
+    content:{
+        MIN_WORD_LENGTH:1,
+        MAX_WORDS:25,
+        MAX_WORD_LENGTH:10,
+        MAX_FIELD_LENGTH:100
+    }
+}
+let search_loading_placeholder_template = $("#search_loading_placeholder_template");
+function createFakeChatBox() {
+    var chatbox = search_loading_placeholder_template.clone();
+    for (let i = 1; i < phsts.title.MAX_WORDS; i++) {
+       
+    }
+    chatbox.insertAfter(search_loading_placeholder_template);
+}
+function showplacehold() {
+    placehold_layout.css("display", "unset");
+    if (require_reload_placehold) { return; }
+    require_reload_placehold = true;
+
+    for (let x = 1; x < 11; x++) {
+
+    
+        createFakeChatBox();
+    }
+}
+
 search_bxb.on("input", function () {
     if (search_bxb.val().trim() != "") {
         open_btn.css('display', 'none');
         search_cancel_btn.css('display', 'unset');
         search_message_list.css("display", "unset");
+        showplacehold();
 
         clearTimeout(searching_thread);
         searching_thread = setTimeout(function () {
+            require_reload_placehold = false;
             let query = search_bxb.val().trim();
+           //placehold_layout.css("display", "none");
             console.log("Search Query: " + search_bxb.val().trim());
             $.ajax({
                 url: 'Message.aspx/SearchMessage',

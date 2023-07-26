@@ -335,13 +335,12 @@
                 return;
 
             }
-            console.log(message_id);
-            console.log(lastRenderedMessage);
+   
             if (message_id >= lastRenderedMessage || message_id == -1) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
                 return;
             }
-            console.log("Set read message rejected :(");
+
         }
 
 
