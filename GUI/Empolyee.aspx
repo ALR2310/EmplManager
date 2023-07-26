@@ -5,7 +5,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
 
     <div class="content">
 
@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="employee-card__body">
                                                 <a class="employee-card__body-avatar" title="Xem Thông Tin Chi Tiết"
-                                                    commandargument='<%# Eval("Id") %>' onclick="showInfor(this)">
+                                                    commandargument='<%# Eval("Id") %>' onclick="getIdforEmpolyee(this)">
                                                     <img alt="" src="<%# Eval("Avatar") %>" />
                                                 </a>
 
@@ -175,18 +175,17 @@
 
                     <h2 class="modal-vertical__container-title">Chi Tiết Thông Tin</h2>
 
-
                     <div class="userInfor">
                         <div class="userInfor-Avatar">
                             <div class="userInfor__image">
-                                <asp:Image ID="AvatarImg" runat="server" />
+                                <img id="AvatarImg" alt="" src="#" />
                             </div>
                             <div class="userInfor__desc">
                                 <p>
-                                    <asp:Label ID="lblDisplayName" runat="server" Text="Admin"></asp:Label>
+                                    <span id="lblDisplayName">Not Infor</span>
                                     <button type="button" class="employee-card__header-status Active">Active</button>
                                 </p>
-                                <asp:Label ID="lblJob" runat="server" Text="Intern"></asp:Label>
+                                <span id="lblJob">Not Infor</span>
                             </div>
                         </div>
 
@@ -204,78 +203,78 @@
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Họ Và Tên:</p>
-                                <asp:Label ID="lblDisplayName1" runat="server" Text="Admin"></asp:Label>
+                                <span id="lblDisplayName1">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Số Điện Thoại:</p>
-                                <asp:Label ID="lblPhoneNumber" runat="server" Text="0123456789"></asp:Label>
+                                <span id="lblPhoneNumber">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Trạng Thái Tài Khoản:</p>
-                                <asp:Label ID="lblStatus" runat="server" Text="Active"></asp:Label>
+                                <span id="lblStatus">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Loại Tài Khoản:</p>
-                                <asp:Label ID="lblUserType" runat="server" Text="Admin"></asp:Label>
+                                <span id="lblUserType">Not Infor</span>
                             </div>
                         </div>
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Email:</p>
-                                <asp:Label ID="lblEmail" runat="server" Text="admin@gmail.com"></asp:Label>
+                                <span id="lblEmail">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Ngày Tham Gia:</p>
-                                <asp:Label ID="lblDateJoin" runat="server" Text="24/07/2023"></asp:Label>
+                                <span id="lblDateJoin">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
-                                <p>Vị Trí:</p>
-                                <asp:Label ID="lblJob1" runat="server" Text="Intern"></asp:Label>
+                                <p>Công Việc:</p>
+                                <span id="lblJob1">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Phòng Ban:</p>
-                                <asp:Label ID="lblDepartment" runat="server" Text="Sweetsoft"></asp:Label>
+                                <span id="lblDepartment">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Giới Tính:</p>
-                                <asp:Label ID="lblGender" runat="server" Text="Nam"></asp:Label>
+                                <span id="lblGender">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Ngày Sinh:</p>
-                                <asp:Label ID="lblDateOfBirth" runat="server" Text="04/03/2004"></asp:Label>
+                                <span id="lblDateOfBirth">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Id Tài Khoản:</p>
-                                <span>123</span>
+                                <span id="IdUser">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Google Id:</p>
-                                <span>123456789</span>
+                                <span id="GoogleId">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Địa Chỉ:</p>
-                                <span>Phước Lâm - Ninh Xuân - Ninh Hoà - Khánh Hoà</span>
+                                <span id="Address">Not Infor</span>
                             </div>
                         </div>
                     </div>
@@ -346,29 +345,43 @@
 
     <script>
 
-
-        function showInfor(element) {
-            var usersId = element.getAttribute("commandargument");
-            console.log(usersId);
-
+        function getIdforEmpolyee(element) {
+            var id = element.getAttribute("commandargument");
+            var UserId = { "UserId": id };
+            console.log(id)
             $.ajax({
-                type: "GET",
-                url: "Empolyee.aspx/GetEmpolyeeData",
-                data: { id: usersId },
+                type: "POST",
+                "url": "empolyee.aspx/GetUserIdByJS",
+                "data": JSON.stringify(UserId),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (data) {
-                    console.log(data);
+                success: function (response) {
+                    console.log("Gửi Id đến CodeBehind thành công" + response);
+                    // Cập nhật dữ liệu từ response vào các control trong div "employeeInfoContainer"
+                    var empolyeeInfo = JSON.parse(response.d); // Parse JSON data from the response
+                    console.log(empolyeeInfo);
+                    if (empolyeeInfo != null) {
+                        $("#AvatarImg").attr("src", empolyeeInfo.Avatar);
+                        $("#lblDisplayName").text(empolyeeInfo.DisplayName);
+                        $("#lblDisplayName1").text(empolyeeInfo.DisplayName);
+                        $("#lblJob").text(empolyeeInfo.Job);
+                        $("#lblJob1").text(empolyeeInfo.Job);
+                        /*$("#lblPhoneNumber").text(empolyeeInfor.PhoneNumber);*/
+                        $("#lblDepartment").text(empolyeeInfo.Department);
+                        $("#lblEmail").text(empolyeeInfo.Email);
+                        $("#lblDateOfBirth").text(empolyeeInfo.DateOfBirth);
+                        console.log("Đã binding dữ liệu");
+                    }
                 },
                 error: function (error) {
-                    console.log(error);
+                    console.log(error)
                 }
-            });
+            })
         }
 
 
-
     </script>
+
 
     <script>
         function handleSearch() {
