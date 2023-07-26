@@ -192,11 +192,10 @@ html {
     display: flex;
 }
 
-    .sidebar-item__link.active > i{
+    .sidebar-item__link.active > i {
         flex: 1;
         text-align: center;
         color: var(--primary-color);
-
     }
 
 
@@ -278,7 +277,7 @@ html {
     flex-grow: 1;
     display: flex;
     height:50%; 
- 
+    margin-top: 20px;
 }
 
 .chat-main__list {
@@ -686,7 +685,7 @@ html {
     flex-direction: column;
     justify-content: flex-end;
     height: calc(100vh - 420px + 225px);
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .chat-footer {
@@ -1584,7 +1583,7 @@ body::-webkit-scrollbar {
 }
 
 .modal-vertical__container {
-    flex: 1;
+    width: 460px;
     background-color: white;
     transition: all 0.3s ease;
     position: relative;
@@ -1616,36 +1615,6 @@ body::-webkit-scrollbar {
         background-color: var(--border-color);
     }
 
-
-@media (max-width: 1400px) {
-    .modal-vertical__container {
-        flex: 1.5;
-    }
-
-    @media (max-width: 1000px) {
-        .modal-vertical__container {
-            flex: 2;
-        }
-
-        @media (max-width: 900px) {
-            .modal-vertical__container {
-                flex: 3;
-            }
-
-            @media (max-width: 800px) {
-                .modal-vertical__container {
-                    flex: 4;
-                }
-
-                @media (max-width: 700px) {
-                    .modal-vertical__container {
-                        flex: 7;
-                    }
-                }
-            }
-        }
-    }
-}
 
 .userInfor {
     margin: 20px;
