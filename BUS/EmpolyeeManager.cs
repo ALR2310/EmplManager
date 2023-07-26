@@ -13,7 +13,7 @@ namespace BUS
         public static List<EmpolyeeInfor> GetAllEmpolyee()
         {
             var query = new InlineQuery();
-            string sqlquery = "SELECT users.Id, users.Avatar, users.Email, users.DisplayName, users.AtCreate, " +
+            string sqlquery = "SELECT users.Id, users.GoogleId, users.Avatar, users.Email, users.DisplayName, users.AtCreate, " +
                 "users.UserType, users.Status, dbo.UserInfor.Job, dbo.UserInfor.PhoneNumber, dbo.UserInfor.Department, " +
                 "dbo.UserInfor.Gender, dbo.UserInfor.DateOfBirth, dbo.UserInfor.Address " +
                 "FROM dbo.Users INNER JOIN dbo.UserInfor ON UserInfor.UserId = Users.Id ";
@@ -24,7 +24,7 @@ namespace BUS
         public static EmpolyeeInfor GetEmpolyeeById(int Id)
         {
             var query = new InlineQuery();
-            string sqlquery = $@"SELECT users.Id, users.Avatar, users.Email, users.DisplayName, users.AtCreate, 
+            string sqlquery = $@"SELECT users.Id, users.GoogleId, users.Avatar, users.Email, users.DisplayName, users.AtCreate, 
                         users.UserType, users.Status, dbo.UserInfor.Job, dbo.UserInfor.PhoneNumber, dbo.UserInfor.Department, 
                         dbo.UserInfor.Gender, dbo.UserInfor.DateOfBirth, dbo.UserInfor.Address 
                         FROM dbo.Users 

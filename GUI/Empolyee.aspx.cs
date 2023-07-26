@@ -38,8 +38,6 @@ namespace GUI
         public static string GetUserIdByJS(string UserId)
         {
             EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(UserId));
-    
-
             return JsonSerializer.Serialize(empolyee);
         }
 

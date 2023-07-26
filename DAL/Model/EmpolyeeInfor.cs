@@ -9,6 +9,7 @@ namespace DAL.Model
     public class EmpolyeeInfor
     {
         public int Id { get; set; }
+        public int GoogleId { get; set; }
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string DisplayName { get; set; }
