@@ -70,6 +70,15 @@ namespace BUS
 
             return null;
         }
+        public static Dictionary<int, SearchingMessage> SearchMessage(string search_str,int page)
+        {
+            InlineQuery query = new InlineQuery();
+            string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
+            Debug.WriteLine(querystr);
+            List<SearchingMessage> list = query.ExecuteTypedList<SearchingMessage>(querystr);
+
+            return list.ToDictionary(item => item.Id, item => item);
+        }
         public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int after_id)
         {
             var query = new InlineQuery();

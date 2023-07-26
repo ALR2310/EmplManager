@@ -277,7 +277,7 @@ html {
     flex-grow: 1;
     display: flex;
     height:50%; 
-    margin-top: 20px;
+ 
 }
 
 .chat-main__list {

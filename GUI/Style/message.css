@@ -248,7 +248,7 @@
     --placeholder-avatar-color: #bbccef;
     --placeholder-box-color: #728abb;
     --placeholder-title-box-color: #c4cddf;
-    --placeholder-content-boxes-color: #e9f0ff;
+    --placeholder-content-boxes-color: #e3ecff;
 }
 .placeholder_boxes_holder {
     display: flex;
@@ -296,4 +296,70 @@
     background-color: #d6e3ff;
     border-radius: 10px;
     padding:15px 10px;
+}
+.placeholder_boxes_holder > * {
+    overflow:hidden;
+}
+
+:root {
+    --slide-color: 235, 241, 255;
+    --placehold_chatboxes-color: 255, 255, 255;
+}
+.placeholder_content_boxes > *::after {
+    background: -moz-linear-gradient(left, rgba(var(--placehold_chatboxes-color),0) 0%, rgba(var(--placehold_chatboxes-color),0.8) 50%, rgba(128,186,232,0) 99%, rgba(125,185,232,0) 100%) !important; /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(var(--placehold_chatboxes-color),0)), color-stop(50%,rgba(var(--placehold_chatboxes-color),0.8)), color-stop(99%,rgba(128,186,232,0)), color-stop(100%,rgba(125,185,232,0))) !important; /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, rgba(var(--placehold_chatboxes-color),0) 0%,rgba(var(--placehold_chatboxes-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%) !important; /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, rgba(var(--placehold_chatboxes-color),0) 0%,rgba(var(--placehold_chatboxes-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%) !important; /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, rgba(var(--placehold_chatboxes-color),0) 0%,rgba(var(--placehold_chatboxes-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%) !important; /* IE10+ */
+    background: linear-gradient(to right, rgba(var(--placehold_chatboxes-color),0) 0%,rgba(var(--placehold_chatboxes-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%) !important; /* W3C */
+    pointer-events: none;
+}
+.layer_hole {
+    overflow: hidden;
+  
+}
+    .layer_hole::after {
+        animation-name: image_slide !important;
+    }
+    .layer_hole::after, .placeholder_boxes_holder > *::after {
+        pointer-events: none;
+        content: '';
+        top: 0;
+        transform: translateX(-200%) translateY(-50%);
+        width: 65%;
+        height: 220px;
+        position: absolute;
+        z-index: 1;
+        animation: slide 1.5s infinite .5s ease-out;
+        /* 
+  CSS Gradient - complete browser support from http://www.colorzilla.com/gradient-editor/ 
+  */
+        background: -moz-linear-gradient(left, rgba(var(--slide-color),0) 0%, rgba(var(--slide-color),0.8) 50%, rgba(128,186,232,0) 99%, rgba(125,185,232,0) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(var(--slide-color),0)), color-stop(50%,rgba(var(--slide-color),0.8)), color-stop(99%,rgba(128,186,232,0)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left, rgba(var(--slide-color),0) 0%,rgba(var(--slide-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left, rgba(var(--slide-color),0) 0%,rgba(var(--slide-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left, rgba(var(--slide-color),0) 0%,rgba(var(--slide-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* IE10+ */
+        background: linear-gradient(to right, rgba(var(--slide-color),0) 0%,rgba(var(--slide-color),0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* W3C */
+    }
+
+/* animation */
+
+@keyframes image_slide {
+    0% {
+        transform: translateX(-150%) translateY(-50%) rotate(-25deg);
+    }
+
+    100% {
+        transform: translateX(200%) translateY(-50%) rotate(25deg);
+    }
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-250%) translateY(-50%) rotate(15deg);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(-50%) rotate(-15deg);
+    }
 }

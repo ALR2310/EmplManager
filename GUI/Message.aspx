@@ -122,7 +122,7 @@
                                         </div>
 
                                         <div >
-                                            <div style=" gap:1px;     transform: scale(.85) translate(-6%,15%);" class="time_loading_placeholder placeholder_boxes_holder">
+                                            <div style=" gap:1px;     transform: scale(.55,.5) translate(-25%,55%);" class="time_loading_placeholder placeholder_boxes_holder">
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                             <div>&nbsp;&nbsp; </div>
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -132,19 +132,13 @@
                                             <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles placeholder_boxes_holder">
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                    <div>&nbsp;</div>
+                                       
                                                 </div>
 
                                                 <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
-                                                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                   
-                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                   
+                                                         <div>&nbsp;</div>
+                                               
                                                    
                                                 </div>
                                                 <div class="emoji_list">
@@ -300,9 +294,7 @@
 
     <script src="JS/modal.js"></script>
     <script>
-        for (var i = 1; i <= 10; i++) {
-            $("#search_loading_placeholder_template").clone().insertAfter("#search_loading_placeholder_template");
-        }
+     
         function findLatestMessageId() {
             return Object.keys(Saved_Messages).reduce((max, current) => {
 
@@ -343,10 +335,13 @@
                 return;
 
             }
-            if (message_id > lastRenderedMessage) {
+            console.log(message_id);
+            console.log(lastRenderedMessage);
+            if (message_id >= lastRenderedMessage || message_id == -1) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
+                return;
             }
-
+            console.log("Set read message rejected :(");
         }
 
 

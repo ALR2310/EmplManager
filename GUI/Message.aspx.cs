@@ -69,7 +69,12 @@ namespace GUI
             return true;
         }
 
-      
+        private static void updateReactions(int Message_Id,int Emoji_Id)
+        {
+            List<int> reactions = MessageManager.GetReactionsByMessageId(Message_Id, Emoji_Id);
+            hubContext.Clients.All.UpdateReaction($"{{\"Message_Id\": {Message_Id},\"Emoji_Id\": {Emoji_Id}, \"Reaction_Ids\": {JsonSerializer.Serialize(reactions)}}}");
+
+        }
         [System.Web.Services.WebMethod]
         public static string ToggleEmoji(int Message_Id, int Emoji_Id)
         {
@@ -77,9 +82,11 @@ namespace GUI
             if (!VerifyUser(context)) { return failed_str; }
             BasicUserData RequestedUser = (BasicUserData)HttpContext.Current.Items["RequestedUser"];
             MessageManager.InsertEmoji(RequestedUser.Id, Message_Id, Emoji_Id);
-            List<int> reactions = MessageManager.GetReactionsByMessageId(Message_Id, Emoji_Id);
-            hubContext.Clients.All.UpdateReaction($"{{\"Message_Id\": {Message_Id},\"Emoji_Id\": {Emoji_Id}, \"Reaction_Ids\": {JsonSerializer.Serialize(reactions)}}}");
-            return success_str;
+
+            Thread t = new Thread(() => updateReactions(Message_Id, Emoji_Id));
+            t.Start();
+
+           return success_str;
         }
 
         [System.Web.Services.WebMethod]
@@ -116,6 +123,15 @@ namespace GUI
                 return JsonSerializer.Serialize(RequestedUser);
             }
             return JsonSerializer.Serialize(UserManager.GetUserBasicDataById(id));
+        }
+
+        [System.Web.Services.WebMethod]
+        public static string SearchMessage(string search_str, int page)
+        {
+   
+            Dictionary<int, SearchingMessage> messages = MessageManager.SearchMessage(search_str,page);
+
+            return JsonSerializer.Serialize(messages);
         }
         [System.Web.Services.WebMethod]
         public static string GetTotalMessage()

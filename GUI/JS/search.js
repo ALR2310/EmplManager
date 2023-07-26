@@ -4,6 +4,7 @@ let search_cancel_btn = $("#search_cancel");
 
 let search_message_list = $("#chat-search__list");
 
+search_message_list.css("display", 'none');
 let searching_thread = null;
 search_bxb.on("input", function () {
     if (search_bxb.val().trim() != "") {
@@ -13,7 +14,23 @@ search_bxb.on("input", function () {
 
         clearTimeout(searching_thread);
         searching_thread = setTimeout(function () {
+            let query = search_bxb.val().trim();
             console.log("Search Query: " + search_bxb.val().trim());
+            $.ajax({
+                url: 'Message.aspx/SearchMessage',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({ search_str: query, page: 1 }),
+                success: function (response) {
+                    console.log(JSON.parse(response.d));
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    console.error(error);
+                }
+             
+            });
         }, 250);
         return;
     }

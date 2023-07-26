@@ -54,6 +54,7 @@
     <Compile Include="MessageController.cs" />
     <Compile Include="Model\BasicUserData.cs" />
     <Compile Include="Model\EmpolyeeInfor.cs" />
+    <Compile Include="Model\SearchingMessage.cs" />
     <Compile Include="Model\Reactions.cs" />
     <Compile Include="Model\LikeJoinUser.cs" />
     <Compile Include="Model\MessageJoinUser.cs" />
