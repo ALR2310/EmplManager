@@ -11,6 +11,8 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Text.Json;
+using System.Data;
+
 namespace GUI
 {
     public partial class Empolyee : System.Web.UI.Page

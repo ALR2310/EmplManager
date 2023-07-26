@@ -7,6 +7,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
 
+    <div class="Toast"></div>
+
     <div class="content">
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -80,7 +82,7 @@
                                             <div class="employee-card__header">
                                                 <input type="checkbox" class="employee-card__header-checkbox">
                                                 <div class="employee-card__header-action">
-                                                    <button type="button" class="employee-card__header-status Active">
+                                                    <button id="btnStatus" type="button" runat="server" class="employee-card__header-status  " commandargument='<%# Eval("Status") %>'>
                                                         Active
                                                     </button>
                                                     <button type="button" onclick="employeeShowEllipsis(event, 'block')"
@@ -124,7 +126,7 @@
 
                                                         <div class="employee-card-desc-infor">
                                                             <h5>Ngày Tham Gia</h5>
-                                                            <p><%# Eval("AtCreate") %></p>
+                                                            <p><%# Eval("AtCreate", "{0:dd/MM/yyyy}") %></p>
                                                         </div>
                                                     </div>
                                                     <div class="employee-card-desc__body">
@@ -340,6 +342,42 @@
     </div>
 
     <script>
+        // Hàm xử lý trạng thái
+        const btnStatus = document.querySelectorAll(".employee-card__header-status");
+
+
+        function handleStatus(status, button) {
+            // Xóa tất cả các class hiện có trên button
+            button.classList.remove("Active", "noActive");
+            button.textContent = "Not Actived";
+
+            // Thêm class tùy thuộc vào giá trị của trường "Status"
+            if (status === "1") {
+                button.textContent = "Actived";
+                button.classList.add("Active");
+                button.classList.remove("noActive");
+            } else if (status === "2") {
+                button.textContent = "Disable";
+                button.classList.add("noActive");
+                button.classList.remove("Active");
+            }
+        }
+
+        // Duyệt qua từng button để xử lý trạng thái
+        btnStatus.forEach((button) => {
+            const status = button.getAttribute("commandargument");
+            handleStatus(status, button);
+        });
+
+        // Hàm định dạng lại ngày thành chuỗi "dd/MM/yyyy"
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
 
         function getIdforEmpolyee(element) {
             var id = element.getAttribute("commandargument");
@@ -368,8 +406,8 @@
                         $("#lblPhoneNumber").text(empolyeeInfo.PhoneNumber);
                         $("#lblDepartment").text(empolyeeInfo.Department);
                         $("#lblEmail").text(empolyeeInfo.Email);
-                        $("#lblDateOfBirth").text(empolyeeInfo.DateOfBirth);
-                        $("#lblDateJoin").text(empolyeeInfo.AtCreate);
+                        $("#lblDateOfBirth").text(formatDate(empolyeeInfo.DateOfBirth));
+                        $("#lblDateJoin").text(formatDate(empolyeeInfo.AtCreate));
                         $("#lblGender").text(empolyeeInfo.Gender);
                         $("#lblAddress").text(empolyeeInfo.Address);
                         $("#lblUserId").text(empolyeeInfo.Id);
