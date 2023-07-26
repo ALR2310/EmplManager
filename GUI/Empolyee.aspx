@@ -183,7 +183,7 @@
                             <div class="userInfor__desc">
                                 <p>
                                     <span id="lblDisplayName">Not Infor</span>
-                                    <button type="button" class="employee-card__header-status Active">Active</button>
+                                    <button id="userIdinfor" type="button" class="employee-card__header-status Active">Active</button>
                                 </p>
                                 <span id="lblJob">Not Infor</span>
                             </div>
@@ -262,19 +262,19 @@
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Id Tài Khoản:</p>
-                                <span id="IdUser">Not Infor</span>
+                                <span id="lblUserId">Not Infor</span>
                             </div>
 
                             <div class="userInfor-Detail__infor">
                                 <p>Google Id:</p>
-                                <span id="GoogleId">Not Infor</span>
+                                <span id="lblGoogleId">Not Infor</span>
                             </div>
                         </div>
 
                         <div class="userInfor-Detail1">
                             <div class="userInfor-Detail__infor">
                                 <p>Địa Chỉ:</p>
-                                <span id="Address">Not Infor</span>
+                                <span id="lblAddress">Not Infor</span>
                             </div>
                         </div>
                     </div>
@@ -360,16 +360,66 @@
                     // Cập nhật dữ liệu từ response vào các control trong div "employeeInfoContainer"
                     var empolyeeInfo = JSON.parse(response.d); // Parse JSON data from the response
                     console.log(empolyeeInfo);
+
                     if (empolyeeInfo != null) {
+                        showModal();
+
                         $("#AvatarImg").attr("src", empolyeeInfo.Avatar);
                         $("#lblDisplayName").text(empolyeeInfo.DisplayName);
                         $("#lblDisplayName1").text(empolyeeInfo.DisplayName);
                         $("#lblJob").text(empolyeeInfo.Job);
                         $("#lblJob1").text(empolyeeInfo.Job);
-                        /*$("#lblPhoneNumber").text(empolyeeInfor.PhoneNumber);*/
+                        $("#lblPhoneNumber").text(empolyeeInfo.PhoneNumber);
                         $("#lblDepartment").text(empolyeeInfo.Department);
                         $("#lblEmail").text(empolyeeInfo.Email);
                         $("#lblDateOfBirth").text(empolyeeInfo.DateOfBirth);
+                        $("#lblDateJoin").text(empolyeeInfo.AtCreate);
+                        $("#lblGender").text(empolyeeInfo.Gender);
+                        $("#lblAddress").text(empolyeeInfo.Address);
+                        $("#lblUserId").text(empolyeeInfo.Id);
+
+                        var googleId = empolyeeInfo.GoogleId;
+                        if (googleId == 0) {
+                            $("#lblGoogleId").text("Không Có Thông Tin");
+                        }
+
+                        var isStatus = document.querySelector("#userIdinfor");
+                        var NoActiveClass = "noActive";
+                        var ActiveClass = "Active";
+
+                        var status = empolyeeInfo.Status;
+                        switch (status) {
+                            case 0:
+                                $("#lblStatus").text("Not Actived");
+                                isStatus.textContent = "Not Actived";
+                                isStatus.classList.remove(ActiveClass);
+                                isStatus.classList.remove(NoActiveClass);
+                                break;
+                            case 1:
+                                $("#lblStatus").text("Actived");
+                                isStatus.textContent = "Actived";
+                                isStatus.classList.add(ActiveClass);
+                                isStatus.classList.remove(NoActiveClass);
+                                break;
+                            case 2:
+                                $("#lblStatus").text("Disable");
+                                isStatus.textContent = "Disable";
+                                isStatus.classList.add(NoActiveClass);
+                                isStatus.classList.remove(ActiveClass);
+                                break;
+                        }
+
+                        var userType = empolyeeInfo.UserType;
+                        switch (userType) {
+                            case 0:
+                                $("#lblUserType").text("Administrator")
+                                break;
+                            case 1:
+                                $("#lblUserType").text("User")
+                                break;
+                        }
+
+
                         console.log("Đã binding dữ liệu");
                     }
                 },
