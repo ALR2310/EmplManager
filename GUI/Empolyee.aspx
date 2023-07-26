@@ -88,7 +88,7 @@
                                                         class="employee-card__header-ellipsis">
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         <ul class="employee-card__ellipsis">
-                                                            <li onclick="showModal()">Xem Thông Tin
+                                                            <li commandargument='<%# Eval("Id") %>' onclick="getIdforEmpolyee(this)">Xem Thông Tin
                                                             </li>
                                                             <li class="subEllipsis-Card">◂Thay Đổi Trạng Thái
                                                         <ul class="employee-card__subEllipsis">
@@ -111,7 +111,7 @@
                                                     <img alt="" src="<%# Eval("Avatar") %>" />
                                                 </a>
 
-                                                <div class="employee-card__body-name" onclick="showModal()">
+                                                <div class="employee-card__body-name">
                                                     <h4><%# Eval("DisplayName") %></h4>
                                                     <p><%# Eval("Job") %></p>
                                                 </div>
@@ -154,10 +154,6 @@
 
             </ContentTemplate>
         </asp:UpdatePanel>
-
-
-
-
 
     </div>
 
