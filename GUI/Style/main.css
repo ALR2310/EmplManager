@@ -276,13 +276,11 @@ html {
 .chat-main {
     flex-grow: 1;
     display: flex;
-<<<<<<< HEAD
+
     height:50%; 
- 
-=======
-    height: 50%;
+
     margin-top: 20px;
->>>>>>> 0ee14f5f582c77bc807d8c93e7e3b52a7a144c9d
+
 }
 
 .chat-main__list {
