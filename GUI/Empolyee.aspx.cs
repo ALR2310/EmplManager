@@ -10,7 +10,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-
+using System.Text.Json;
 namespace GUI
 {
     public partial class Empolyee : System.Web.UI.Page
@@ -38,9 +38,9 @@ namespace GUI
         public static string GetUserIdByJS(string UserId)
         {
             EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(UserId));
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+    
 
-            return serializer.Serialize(empolyee);
+            return JsonSerializer.Serialize(empolyee);
         }
 
     }
