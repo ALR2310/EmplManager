@@ -76,7 +76,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <input placeholder="Tìm kiếm" id="search-box" class="chat__search-box__input" />
+                        <input placeholder="Tìm kiếm" id="search-box"  autocomplete="off" class="chat__search-box__input" />
                         <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -113,7 +113,14 @@
 
                         </div>
                         <div id="chat-search__list">
-                            <div id="search__list_placeholder_layer">
+                            <div id="search_not_found"><img src="Images/magnifying_glass.svg"/>
+                                <p>
+                                    Không tìm thấy tin nhắn nào...
+                                </p>
+                            </div>
+                            <div id="fake_messages" class="innerlist">
+                            </div>
+                            <div id="search__list_placeholder_layer" class="innerlist">
                                 <div id="search_loading_placeholder_template" class="placeholder_chatbox">
                                     <div class="chat-main__content">
                                         <div class="chat-main__avatar">
@@ -122,7 +129,7 @@
                                         </div>
 
                                         <div >
-                                            <div style=" gap:1px;     transform: scale(.55,.5) translate(-25%,55%);" class="time_loading_placeholder placeholder_boxes_holder">
+                                            <div style=" gap:1px;     transform: scale(.7,.6) translate(-18%,30%);" class="time_loading_placeholder placeholder_boxes_holder">
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                             <div>&nbsp;&nbsp; </div>
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -132,12 +139,11 @@
                                             <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles placeholder_boxes_holder">
-                                                    <div>&nbsp;</div>
-                                       
+                                                
                                                 </div>
 
                                                 <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
-                                                         <div>&nbsp;</div>
+                                       
                                                
                                                    
                                                 </div>
@@ -296,17 +302,7 @@
     <script>
      
         function findLatestMessageId() {
-            return Object.keys(Saved_Messages).reduce((max, current) => {
-
-                const number = parseInt(current, 10);
-
-
-                if (isNaN(number) || number <= max) {
-                    return max;
-                }
-
-                return number;
-            }, Number.NEGATIVE_INFINITY);
+            return Number($(".chat-main__list").find(".chat-main__item").last().attr("message_id"));
 
         }
 
@@ -328,8 +324,36 @@
         var renderingmessages = true;
         var is_firsttime_load = true;
         var last_unread_message_id;
+        const setLastReadMessage = function (message_id) {
+            message_id = Number(message_id);
+            if (isNaN(message_id) || message_id == null) {
+                console.log("Rejected storing lastread"); return
+            }    ;
+            let saving = {};
+            saving.Id = message_id;
+            saving.AtCreate = Saved_Messages[message_id].AtCreate;
+       
+            let stored_read = getLastReadMessage();
+            if (stored_read != null)
+                if (stored_read.Id > message_id || (stored_read.Id == message_id && !!stored_read.AtCreate))
+                {
+                    console.log("Rejected storing lastread"); return;
+                }
 
+            console.log(saving);
+            localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving))  ;
+            console.log("Stored lastRead");
+        }
+        const getLastReadMessage = function () {
+            let raw_data = JSON.parse(localStorage.getItem("lastReadMessage" + Users.CLIENT_USER.Id));
+            if (!!raw_data.AtCreate) raw_data.AtCreate = new Date(raw_data.AtCreate);
+            if (raw_data == null) raw_data = { Id: latest_message_id };
+      
+            
+            return raw_data;
+        }
         const setLastRenderedMessageCache = function (message_id) {
+            setLastReadMessage(message_id);
             if (lastRenderedMessage == null) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
                 return;
@@ -463,7 +487,7 @@
                     var scrollTop = $(this).scrollTop();
                     if (scrollTop == 0) {
                         var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
-
+                        console.log(last_ele);
                         await requestJsonData(last_ele.getAttribute("message_id"));
                         console.log("Loading Message Above");
 
@@ -471,18 +495,20 @@
 
                     if (getScrollPos() == 0) {
 
-                        localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
-                        unread_messages_ele.css("display", "none");
+                        //localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
+                        markasread(null, false);
                         $(".new_messages").remove();
+                        console.log(renderingmessages);
+                        console.log(loadedbottom);
                         if (!loadedbottom && !renderingmessages) {
 
                             let oldpos = scroll.scrollTop;
                             loadedbottom = true;
 
                             var returned_bool = await requestJsonData(lastRenderedMessage + 25);
-                            console.log(returned_bool);
+                           
                             loadedbottom = !returned_bool;
-
+                            if (loadedbottom) unread_messages_ele.css("display", "none");
                             scroll.scrollTo(0, oldpos);
 
                         }
@@ -511,6 +537,7 @@
                 console.log("it seems that we loaded the new messages! scrolling bottom...");
                 is_firsttime_load = false;
                 scrollBottom();
+                setLastRenderedMessageCache(latest_message_id);
                 return;
             }
 
@@ -529,8 +556,8 @@
             else {
 
 
-
-                let new_messages_ever_since = latest_message_id - last_read_message;
+                console.log(getLastReadMessage().Id);
+                let new_messages_ever_since = latest_message_id - getLastReadMessage().Id;
 
                 last_unread_message_id = last_read_message;
                 setTimeout(function () {

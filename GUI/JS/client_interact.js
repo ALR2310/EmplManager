@@ -101,7 +101,7 @@ const FormatFuncs = {
     },
     '_deleted_italic_': function (message) {
 
-        return message.Status != 1 ? "italic" : "";
+        return !!message.Status && message.Status != 1 ? "italic" : "";
     },
     '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
@@ -266,9 +266,18 @@ async function renderMessage(message) {
     message_ele.children().appendTo(".chat-main__list")[0];
 
  
-    if (message.UserId == Users.CLIENT_USER.Id) {
-        setLastRenderedMessageCache(message.Id);
-    
+
+
+    if (!!last_unread_message_id) {
+        let old_bar_exists = $("#markasread_active").length > 0;
+        if (old_bar_exists) { return; }
+
+        var insert_before_ele = $(".chat-main__list").find(`.chat-main__item[message_id=${last_unread_message_id}]`);
+
+
+        let new_bar = new_messages_template.clone();
+        new_bar.attr("id", "markasread_active");
+        new_bar.insertBefore(insert_before_ele);
     }
 
 
@@ -287,7 +296,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
     var last_message_id = Number($(".chat-main__list").find(".chat-main__item:last").attr("message_id"));
     renderingmessages = true;
 
-    if (wipe_old_messages) {
+    if (wipe_old_messages == true) {
         console.log(Math.min(...Object.keys(messages_data)));
         console.log(last_message_id);
         if (Math.min(...Object.keys(messages_data)) - 1 > last_message_id) {
@@ -296,7 +305,10 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
         }
 
     }
-
+    if (wipe_old_messages == "1") {
+        console.log("Forced wipe");
+        $(".chat-main__list").empty();
+    }
     for ([key, message] of Object.entries(messages_data)) {
 
         await renderMessage(message);
@@ -353,7 +365,7 @@ const Saved_Messages = (() => {
 })();
 
 var loading_circle = $("#loading_circle");
-function requestJsonData(afterid, scrollToBottomAtLoad) {
+function requestJsonData(afterid, scrollToBottomAtLoad, Wipe_Old_Messages) {
     return new Promise((resolve, reject) => {
         loading_circle.addClass("loader_show");
         $.ajax({
@@ -366,7 +378,7 @@ function requestJsonData(afterid, scrollToBottomAtLoad) {
                 if (!scrollToBottomAtLoad) {
                     var oldpos = getScrollPos();
                 }
-                let wipe_old_messages = (afterid == -1 && scrollToBottomAtLoad == true);
+                let wipe_old_messages = !!Wipe_Old_Messages ? Wipe_Old_Messages : (afterid == -1 && scrollToBottomAtLoad == true);
                 loading_circle.removeClass("loader_show");
                 var data = JSON.parse(response.d);
                 await loadMessages(data, scrollToBottomAtLoad,wipe_old_messages);
@@ -423,7 +435,15 @@ function sendMessage() {
 
     inputElement.val("");
     setTimeout(function () { inputElement.blur(); }, 1);
-    scrollBottom();
+    let canScrollBottom = latest_message_id == findLatestMessageId() + 1;
+    if (canScrollBottom && (getScrollPos() < scroll.clientHeight / 2 && focused)) {
+
+        console.log("Scrolled bottom on new message....");
+        setTimeout(function () {
+            markasread(null, false);
+            scrollBottom();
+        }, 0);
+    }
     $(".chat-footer").css("height", "0px");
     sendCD = false;
 }
@@ -505,16 +525,21 @@ setTimeout(async function () {
 
 
 
-function markasread(event, scroll_bottom) {
+async function markasread(event, scroll_bottom) {
     if (event!=null)event.stopPropagation();
     console.log("Read Click");
     unread_messages_ele.css("display", "none");
     $(".new_messages").remove();
-
+    last_unread_message_id = null;
     if (scroll_bottom) {
         if (latest_message_id == findLatestMessageId()) {
             setLastRenderedMessageCache(latest_message_id);
-            scrollBottom();
+          
+
+            await requestJsonData(Number(id) + 11, false,"1");
+
+            let mess_to_scroll_to = Saved_Messages[id].message_element;
+            scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 2);
             return;
         }
         loading_circle.addClass("loader_show");

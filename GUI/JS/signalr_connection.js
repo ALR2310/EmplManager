@@ -10,47 +10,63 @@ $(function () {
 
         message = JSON.parse(message);
 
+      
         Saved_Messages[message.Id] = message;
 
 
-        let last_read_message = lastRenderedMessage;
+        let last_read_message = getLastReadMessage();
 
         latest_message_id = message.Id;
-        await renderMessage(message);
+    
+        let can_render = latest_message_id == findLatestMessageId() + 1;
+        console.log(can_render);
+        if (can_render) {
+            console.log("Rendering new Message...");
+            await renderMessage(message);
+        }
+        if (message.UserId == Users.CLIENT_USER.Id) {
+            setLastRenderedMessageCache(message.Id);
+        }
+        if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight/2 && focused)) {
 
-
-        if (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight/2 && focused) {
-
-
+            console.log("Scrolled bottom on new message....");
             setTimeout(function () {
                 markasread(null, false);
                 scrollBottom();
             }, 0);
         }
-        else {
+        if (Users.CLIENT_USER.Id != message.UserId ) {
 
 
        
-            let new_messages_ever_since = latest_message_id - last_read_message;
+            let new_messages_ever_since = latest_message_id - last_read_message.Id;
             let old_bar_exists = $("#markasread_active").length > 0;
-            let new_bar = old_bar_exists ? $("#markasread_active") : new_messages_template.clone();
-            if (!old_bar_exists) {
+
+            console.log(last_unread_message_id);
+            if (!last_unread_message_id) {
+                let new_bar = old_bar_exists ? $("#markasread_active") : new_messages_template.clone();
                 new_bar.attr("id", "markasread_active");
 
-                new_bar.insertAfter(Saved_Messages[last_read_message].message_element);
+                var insert_after_ele = $(".chat-main__list").find(`.chat-main__item[message_id=${last_read_message.Id}]`);
+                if (insert_after_ele.length != 0) {
+                    new_bar.insertAfter(insert_after_ele);
 
+                }
+               
                 unread_messages_ele.css("display", "");
-
-                let date = FormatFuncs["_timestr_"](Saved_Messages[last_read_message + 1]);
+                console.log(last_read_message.Id + 1);
+                console.log(last_read_message.AtCreate || Saved_Messages[Number(last_read_message.Id) + 1]);
+                let date = FormatFuncs["_timestr_"](!!last_read_message.AtCreate ? last_read_message : Saved_Messages[Number(last_read_message.Id)+1]);
 
 
             
 
                 unread_messages_ele.find(".unread_notif_message").text(`Bạn có ${new_messages_ever_since} tin nhắn chưa đọc kể từ ${date}`);
 
-                last_unread_message_id = last_read_message;
+                last_unread_message_id = last_read_message.Id;
             }
             else {
+                unread_messages_ele.css("display", "");
                 console.log(latest_message_id - last_unread_message_id)
                 let new_messages_ever_since = latest_message_id - last_unread_message_id;
 

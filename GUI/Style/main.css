@@ -441,7 +441,7 @@ html {
     align-items: center;
 }
 
-.chat-main__item:hover {
+.chat-main__item:not(.fake_chat):hover {
     background: rgb(245 245 245);
 }
 
@@ -1110,9 +1110,7 @@ body::-webkit-scrollbar {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f9fbff;
-    margin: 10px 0;
-    border-radius: 25px;
+
 }
 
 /* Handle */

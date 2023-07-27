@@ -285,6 +285,7 @@
     <Content Include="Images\Emojis\heart.svg" />
     <Content Include="Images\Emojis\smile_tear.svg" />
     <Content Include="Images\Emojis\thumbsup.svg" />
+    <Content Include="Images\magnifying_glass.svg" />
     <Content Include="Images\markasread.svg" />
     <Content Include="Images\avatar-1.jpg" />
     <Content Include="Images\Avatar\defaultAvatar.jpg" />

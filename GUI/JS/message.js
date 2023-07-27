@@ -52,6 +52,7 @@ function toggleEmoji(event, str) {
 
 function outsideClickHandler(event) {
     var dropdownMenus = document.querySelectorAll('.chat-ellips__dropdown__menu');
+
     for (var i = 0; i < dropdownMenus.length; i++) {
         var dropdownMenu = dropdownMenus[i];
         var dropdownToggle = dropdownMenu.parentNode.querySelector('.chat-ellips__dropdown__toggle');
@@ -63,13 +64,7 @@ function outsideClickHandler(event) {
     }
 }
 
-$(document).on("click", function (event) {
-    var ele = $(event.target);
-    if (ele.hasClass("fa-face-smile")) {
-        return;
-    }
-    toggleEmoji(event, 'none');
-})
+
 
 //js gọi sự kiện btnsend khi bấm enter
 function handleKeyPress(event) {
