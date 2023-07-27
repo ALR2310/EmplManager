@@ -162,13 +162,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="scroll_bottom">
-                            <span>bạn đan xem tin nhắn cũ</span>
-                            <span>bấm vào đây để xem tin nhắn hiện tại</span>
+                        <div id="scroll_message_bottom" style="display: none" onclick="forceScrollBottom()">
+                            <span>bạn đang xem tin nhắn cũ</span>
+                            <span>bấm vào đây để xem tin nhắn hiện tại <img src="Images/arrowDown.svg"/></span>
                         </div>
                     </div>
                     <ul class="chat-main__list">
-                        <div class="messagedecoy"></div>
+                       
                     </ul>
 
                     <div id="chat-template" style="display: none">
@@ -176,7 +176,7 @@
                             <div class="timer">_timestr_, _datestr_</div>
                         </div>
 
-                        <li class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
+                        <div class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
                             <div class="chat-main__content">
                                 <div class="chat-main__avatar">
@@ -211,7 +211,7 @@
                                 </div>
                             </div>
 
-                        </li>
+                        </div>
 
                     </div>
                 </div>
@@ -304,7 +304,7 @@
 
     <script src="JS/modal.js"></script>
     <script>
-     
+        let Max_Allowed_Messages = 25 * 5;
         function findLatestMessageId() {
             return Number($(".chat-main__list").find(".chat-main__item").last().attr("message_id"));
 
@@ -350,8 +350,9 @@
         }
         const getLastReadMessage = function () {
             let raw_data = JSON.parse(localStorage.getItem("lastReadMessage" + Users.CLIENT_USER.Id));
-            if (!!raw_data.AtCreate) raw_data.AtCreate = new Date(raw_data.AtCreate);
             if (raw_data == null) raw_data = { Id: latest_message_id };
+            if (!!raw_data.AtCreate) raw_data.AtCreate = new Date(raw_data.AtCreate);
+         
       
             
             return raw_data;
@@ -407,7 +408,47 @@
     </script>
 
     <script>
+        var lastCheckThread = null;
+        let last_dist = getScrollPos();
+        function getClosestChatElementFromWindow() {
+            clearTimeout(lastCheckThread);
+            lastCheckThread = setTimeout(getClosestChatElementFromWindow, 1000); 
+       
 
+            if (getScrollPos() == last_dist) {
+                last_dist = getScrollPos();
+                return;
+            }
+            last_dist = getScrollPos();
+
+
+            let ele = $(".chat-main__list").find(".chat-main__item");
+            let closest = null;
+            let closest_dist = null;
+        
+
+      
+            let scroll_top = scroll.scrollTop + scroll.clientHeight / 2;
+            for (element of ele) {
+                let calculated_dist = Math.abs(scroll_top - element.offsetTop);
+            
+                if (!!closest && closest_dist < calculated_dist) { 
+                    continue;
+                }
+                closest = element;
+                closest_dist = calculated_dist;
+            }
+
+            let message_id_position = latest_message_id - closest.getAttribute("message_id");
+            if (message_id_position > 50) {
+                $("#scroll_message_bottom").css("display", "flex");
+            }
+            else if (message_id_position < 25) {
+                $("#scroll_message_bottom").css("display", "none");
+            }
+        
+      
+        }
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -486,8 +527,11 @@
 
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
+
+        
             setTimeout(function () {
                 chat_scroll.on('scroll', async function () {
+                  
                     var scrollTop = $(this).scrollTop();
                     if (scrollTop == 0) {
                         var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
@@ -500,21 +544,24 @@
                     if (getScrollPos() == 0) {
 
                         //localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
-                        markasread(null, false);
-                        $(".new_messages").remove();
-             
+                       
                         if (!loadedbottom && !renderingmessages) {
 
                             let oldpos = scroll.scrollTop;
                             loadedbottom = true;
 
                             var returned_bool = await requestJsonData(lastRenderedMessage + 25);
-                           
-                            loadedbottom = !returned_bool;
-              
+                         
+                            loadedbottom = Number(latest_message_id) == findLatestMessageId();
+
                             if (loadedbottom) unread_messages_ele.css("display", "none");
                             scroll.scrollTo(0, oldpos);
 
+                        }
+                        else {
+                            markasread(null, false);
+                            $(".new_messages").remove();
+                            $("#scroll_message_bottom").css("display", "none");
                         }
                     }
                     sessionStorage.setItem("scrollpos", scrollTop.toString());
@@ -536,7 +583,10 @@
             await requestJsonData(lastRenderedMessage != -1 ? lastRenderedMessage + 1 : -1, false);
 
             loadedbottom = lastRenderedMessage == latest_message_id;
-  
+
+            getClosestChatElementFromWindow();
+
+
             if (latest_message_id == findLatestMessageId()) {
                 is_firsttime_load = false;
                 scrollBottom();

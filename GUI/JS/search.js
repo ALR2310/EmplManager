@@ -35,7 +35,7 @@ async function renderSearchMessage(id,message) {
     chat_main__item.find(".emoji_list").remove();
     chat_main__item.append("<div class='fc_jump_to'>đi tới tin nhắn</div>");
     chat_main__item.on("click", async function () {
-        console.log(id);
+        
         loading_circle.addClass("loader_show");
         is_firsttime_load = true;
        
@@ -47,11 +47,11 @@ async function renderSearchMessage(id,message) {
         mess_to_scroll_to.removeClass("message_highlight");
         setTimeout(function () {
             mess_to_scroll_to.addClass("message_highlight");
-            console.log("AAH");
+         
             mess_to_scroll_to.on(
                 "webkitAnimationEnd oanimationend msAnimationEnd animationend",
                 function () {
-                    console.log("A");
+               
                     $(this).removeClass("message_highlight").dequeue();
                   
                 }
@@ -66,6 +66,7 @@ async function renderSearchMessage(id,message) {
 
      
         $("#chat-search__list").css("display", "none");
+        getClosestChatElementFromWindow();
     });
     message_ele.find(".time-gap").remove();
     message["message_element"] = message_ele.find(".chat-main__item");

@@ -194,7 +194,7 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
 
     last_num_list[message_id + '' + emoji_id] = list.length;
 
-    emoji_display.find(".emoji_emoji").attr("src",emoji_id_to_emoji_txt[emoji_id - 1]);
+    emoji_display.find(".emoji_emoji").attr("src", emoji_id_to_emoji_txt[emoji_id - 1]);
 
 
     var contains_own_reaction = list.indexOf(Users.CLIENT_USER.Id) != -1;
@@ -265,7 +265,7 @@ async function renderMessage(message) {
     message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
 
- 
+
 
 
     if (!!last_unread_message_id) {
@@ -311,8 +311,10 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
     for ([key, message] of Object.entries(messages_data)) {
 
         await renderMessage(message);
-  
+
     }
+
+    renderingmessages = false;
 
     if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 0); }
     else {
@@ -342,8 +344,6 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
 
     $(".chat-main__list").append($children);
 
-        renderingmessages = false;
-    
 }
 const Saved_Messages = (() => {
     const myDictionary = {
@@ -380,17 +380,17 @@ function requestJsonData(afterid, scrollToBottomAtLoad, Wipe_Old_Messages) {
                 let wipe_old_messages = !!Wipe_Old_Messages ? Wipe_Old_Messages : (afterid == -1 && scrollToBottomAtLoad == true);
                 loading_circle.removeClass("loader_show");
                 var data = JSON.parse(response.d);
-                await loadMessages(data, scrollToBottomAtLoad,wipe_old_messages);
-              
+                await loadMessages(data, scrollToBottomAtLoad, wipe_old_messages);
+
                 var count = Object.keys(data).length;
                 data = null;
-     
+
                 resolve(count > 0);
             },
             error: function (xhr, status, error) {
-          
+
                 console.error(error);
-                reject(error); 
+                reject(error);
             }
         });
     });
@@ -523,7 +523,7 @@ setTimeout(async function () {
 
 
 async function markasread(event, scroll_bottom) {
-    if (event!=null)event.stopPropagation();
+    if (event != null) event.stopPropagation();
 
     unread_messages_ele.css("display", "none");
     $(".new_messages").remove();
@@ -531,9 +531,9 @@ async function markasread(event, scroll_bottom) {
     if (scroll_bottom) {
         if (latest_message_id == findLatestMessageId()) {
             setLastRenderedMessageCache(latest_message_id);
-          
 
-            await requestJsonData(Number(id) + 11, false,"1");
+
+            await requestJsonData(Number(id) + 11, false, "1");
 
             let mess_to_scroll_to = Saved_Messages[id].message_element;
             scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 2);
@@ -544,6 +544,25 @@ async function markasread(event, scroll_bottom) {
 
     }
     else {
-        setLastRenderedMessageCache( latest_message_id);
+        setLastRenderedMessageCache(latest_message_id);
     }
+}
+
+const forceScrollBottom = async function () {
+
+    if (findLatestMessageId() == latest_message_id) {
+        scrollBottom();
+        $("#scroll_message_bottom").css("display", "none");
+        return;
+    }
+    loading_circle.addClass("loader_show");
+
+    await requestJsonData(-1, true, "1");
+    loadedbottom = true;
+    $("#scroll_message_bottom").css("display", "none");
+    scrollBottom();
+    loading_circle.removeClass("loader_show");
+
+
+
 }

@@ -277,6 +277,7 @@
     <Content Include="EditUserInfor.aspx" />
     <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\arrowDown.svg" />
     <Content Include="Images\Emojis\OPPENHEIMER.svg" />
     <Content Include="Images\Emojis\eyes.svg" />
     <Content Include="Images\Emojis\joy.svg" />

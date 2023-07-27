@@ -56,7 +56,9 @@ $(function () {
                 }
                
                 unread_messages_ele.css("display", "");
-                 let date = FormatFuncs["_timestr_"](!!last_read_message.AtCreate ? last_read_message : Saved_Messages[Number(last_read_message.Id)+1]);
+                let n_date = new Date(message.AtCreate);
+     
+                let date = FormatFuncs["_timestr_"]({AtCreate: n_date});
 
 
             
