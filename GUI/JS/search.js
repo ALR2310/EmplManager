@@ -31,7 +31,16 @@ async function renderSearchMessage(id,message) {
     message_ele.html(finalhtml);
     let chat_main__item = message_ele.find(".chat-main__item");
 
-    chat_main__item.addClass("to_delete fake_chat");
+    chat_main__item.addClass("to_delete fake_chat fake_chat_anim");
+    chat_main__item.on(
+        "webkitAnimationEnd oanimationend msAnimationEnd animationend",
+        function () {
+
+            $(this).removeClass("fake_chat_anim");
+
+        }
+    );
+
     chat_main__item.find(".emoji_list").remove();
     chat_main__item.append("<div class='fc_jump_to'>đi tới tin nhắn</div>");
     chat_main__item.on("click", async function () {
@@ -43,7 +52,9 @@ async function renderSearchMessage(id,message) {
         await requestJsonData(Number(id) + 11, false, "1");   
         
         let mess_to_scroll_to = Saved_Messages[id].message_element;
+        loading_scrolling_bottom_cancel = true;
         scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 2);
+  
         mess_to_scroll_to.removeClass("message_highlight");
         setTimeout(function () {
             mess_to_scroll_to.addClass("message_highlight");
@@ -56,12 +67,14 @@ async function renderSearchMessage(id,message) {
                   
                 }
             );
+  
         }, 0);
         loadedbottom = false;
         renderingmessages = false;
         is_firsttime_load = false;
         setTimeout(function () {
             lastRenderedMessage = findLatestMessageId();
+       
         }, 100);
 
      
@@ -287,8 +300,8 @@ $(document).ready(function () {
     }
 
     for (i = 1; i <= 25; i++) {
-        var newRule = `.fake_chat:nth-child(${i}) {
-               animation-delay: ${.25*(i-1)}s !important;
+        var newRule = `.fake_chat_anim:nth-child(${i}) {
+               animation-delay: ${.15*(Math.min(i,5)-1)}s !important;
         } `;
 
      

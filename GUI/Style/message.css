@@ -464,13 +464,17 @@
 .fake_chat {
     pointer-events: auto;
     cursor: auto;
-    transform: translateY(100%);
-    animation: fake_chat_anim .65s;
-    animation-fill-mode: forwards;
+
+ 
 }
 
-.fake_chat {
+.fake_chat_anim {
+    transform: translateY(100%);
+    animation: fake_chat_anim .35s;
+    animation-fill-mode: forwards;
     opacity: 0;
+    pointer-events: none;
+    animation-timing-function: cubic-bezier(0,.45,.38,.99);
 }
 
 .chat-main__item.new_box {
@@ -487,7 +491,7 @@
 
 @keyframes new_chat_box {
     0% {
-        transform: translateY(50%);
+            
     }
 
     100% {

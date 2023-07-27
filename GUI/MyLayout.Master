@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/Style/message.css" />
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
+    <link rel="icon" href="Images/sweetsoft-logo.png">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

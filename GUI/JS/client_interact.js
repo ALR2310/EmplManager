@@ -292,7 +292,7 @@ async function renderMessage(message,isNewMessage) {
     }, 100);*/
 } 
 function reloadTimegaps(id) {
-    console.log("Creating timegap...");
+
     if (!!id) {
         let timegaps = $(".chat-main__list").find(".time-gap");
         for (timegap_ele of timegaps) {
@@ -315,7 +315,7 @@ function reloadTimegaps(id) {
         let message_data = Saved_Messages[message_id];
         if (!!!message_data || !getTimeGap(message_data.AtCreate)) {
 
-            console.log("Time gap creation rejected..."); continue;
+             continue;
         }
 
         let formatted_time = FormatFuncs["_timestr_"](message_data);

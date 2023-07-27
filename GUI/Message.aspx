@@ -76,7 +76,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <input placeholder="Tìm kiếm" id="search-box"  autocomplete="off" class="chat__search-box__input" />
+                        <input placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event)" autocomplete="off" class="chat__search-box__input" />
                         <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -301,6 +301,11 @@
 
     <script src="JS/modal.js"></script>
     <script>
+        function preventDefault(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+            }
+        }
         let Max_Allowed_Messages = 25 * 5;
         function findLatestMessageId() {
             return Number($(".chat-main__list").find(".chat-main__item").last().attr("message_id"));
@@ -523,7 +528,7 @@
         const mark_new_message = function () {
 
         }
-
+        var loading_scrolling_bottom_cancel = false;
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
 
@@ -543,7 +548,7 @@
                     if (getScrollPos() == 0) {
 
                         //localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
-                       
+                        loadedbottom = Number(latest_message_id) == findLatestMessageId();
                         if (!loadedbottom && !renderingmessages) {
 
                             let oldpos = scroll.scrollTop;
@@ -554,7 +559,8 @@
                             loadedbottom = Number(latest_message_id) == findLatestMessageId();
 
                             if (loadedbottom) unread_messages_ele.css("display", "none");
-                            scroll.scrollTo(0, oldpos);
+                            if (!loading_scrolling_bottom_cancel) scroll.scrollTo(0, oldpos);
+                            else loading_scrolling_bottom_cancel = false;
 
                         }
                         else {
