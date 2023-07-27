@@ -112,7 +112,7 @@
                             </div>
 
                         </div>
-                        <div id="chat-search__list">
+                        <div id="chat-search__list" style="display:none">
                             <div id="search_not_found"><img src="Images/magnifying_glass.svg"/>
                                 <p>
                                     Không tìm thấy tin nhắn nào...
@@ -161,6 +161,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="scroll_bottom">
+                            <span>bạn đan xem tin nhắn cũ</span>
+                            <span>bấm vào đây để xem tin nhắn hiện tại</span>
                         </div>
                     </div>
                     <ul class="chat-main__list">
@@ -336,11 +340,11 @@
             let stored_read = getLastReadMessage();
             if (stored_read != null)
                 if (stored_read.Id > message_id || (stored_read.Id == message_id && !!stored_read.AtCreate))
-                {
+                {   
                     console.log("Rejected storing lastread"); return;
                 }
 
-            console.log(saving);
+         
             localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving))  ;
             console.log("Stored lastRead");
         }
@@ -487,7 +491,7 @@
                     var scrollTop = $(this).scrollTop();
                     if (scrollTop == 0) {
                         var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
-                        console.log(last_ele);
+                    
                         await requestJsonData(last_ele.getAttribute("message_id"));
                         console.log("Loading Message Above");
 
@@ -498,8 +502,7 @@
                         //localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, lastRenderedMessage < latest_message_id ? latest_message_id : lastRenderedMessage);
                         markasread(null, false);
                         $(".new_messages").remove();
-                        console.log(renderingmessages);
-                        console.log(loadedbottom);
+             
                         if (!loadedbottom && !renderingmessages) {
 
                             let oldpos = scroll.scrollTop;
@@ -508,6 +511,7 @@
                             var returned_bool = await requestJsonData(lastRenderedMessage + 25);
                            
                             loadedbottom = !returned_bool;
+              
                             if (loadedbottom) unread_messages_ele.css("display", "none");
                             scroll.scrollTo(0, oldpos);
 
@@ -522,7 +526,7 @@
 
 
             let lastRenderedMessageStr = localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id);
-            console.log(JSON.stringify(lastRenderedMessageStr));
+         
             lastRenderedMessage = lastRenderedMessageStr != null && isNaN(Number(lastRenderedMessageStr)) == false ? Number(localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id)) : -1;
 
 
@@ -531,10 +535,9 @@
 
             await requestJsonData(lastRenderedMessage != -1 ? lastRenderedMessage + 1 : -1, false);
 
-
-
+            loadedbottom = lastRenderedMessage == latest_message_id;
+  
             if (latest_message_id == findLatestMessageId()) {
-                console.log("it seems that we loaded the new messages! scrolling bottom...");
                 is_firsttime_load = false;
                 scrollBottom();
                 setLastRenderedMessageCache(latest_message_id);
@@ -545,7 +548,7 @@
             var returned_bool = await requestJsonData(lastRenderedMessage + 25, false);
 
 
-            console.log(returned_bool);
+
             if (!returned_bool || last_read_message == 0) {
 
 
@@ -556,7 +559,7 @@
             else {
 
 
-                console.log(getLastReadMessage().Id);
+     
                 let new_messages_ever_since = latest_message_id - getLastReadMessage().Id;
 
                 last_unread_message_id = last_read_message;

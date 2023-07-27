@@ -477,3 +477,18 @@
     }
 }
 
+#scroll_bottom {
+    position: absolute;
+    bottom: 0;
+    background: #e3eeffeb;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    padding: 5px 15px;
+    color: #8c9db7;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    display: flex;
+    justify-content: space-between;
+}

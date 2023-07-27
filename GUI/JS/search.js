@@ -6,7 +6,7 @@ let search_message_list = $("#chat-search__list");
 
 let placehold_layout = $("#search__list_placeholder_layer");
 
-search_message_list.css("display", 'flex');
+
 let searching_thread = null;
 
 let require_reload_placehold = false;
@@ -194,10 +194,7 @@ search_bxb.on("input", function () {
     search_cancel_btn.css('display', 'none');
     search_message_list.css("display", "none");
 })
-showplacehold();
-setTimeout(function () {
-    perfom_search("hen");
-}, 500);
+
 
 var btnSearch = document.querySelector('#search_open');
 var btnSearchCancel = document.querySelector("#search_cancel");

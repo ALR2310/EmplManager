@@ -297,8 +297,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
     renderingmessages = true;
 
     if (wipe_old_messages == true) {
-        console.log(Math.min(...Object.keys(messages_data)));
-        console.log(last_message_id);
+
         if (Math.min(...Object.keys(messages_data)) - 1 > last_message_id) {
             $(".chat-main__list").empty();
             wiped = true;
@@ -306,7 +305,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
 
     }
     if (wipe_old_messages == "1") {
-        console.log("Forced wipe");
+
         $(".chat-main__list").empty();
     }
     for ([key, message] of Object.entries(messages_data)) {
@@ -457,11 +456,9 @@ function AssignNewNum(num, emoji_display_ele, key) {
     var ogcount = emoji_display_ele.find(".ogcount");
 
     let last_num = last_num_list[key];
-    console.log(last_num_list);
-    console.log(last_num);
-    console.log(num);
+
     var islarger = last_num >= num;
-    console.log(islarger);
+
 
 
     last_num_list[key] = num;
@@ -488,7 +485,7 @@ function AssignNewNum(num, emoji_display_ele, key) {
 
 
 const UpdateMessageReaction = function (data) {
-    console.log(data);
+
     var message_id = data.Message_Id;
     var emoji_id = data.Emoji_Id;
     var emoji_list_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".emoji_list");
@@ -527,7 +524,7 @@ setTimeout(async function () {
 
 async function markasread(event, scroll_bottom) {
     if (event!=null)event.stopPropagation();
-    console.log("Read Click");
+
     unread_messages_ele.css("display", "none");
     $(".new_messages").remove();
     last_unread_message_id = null;

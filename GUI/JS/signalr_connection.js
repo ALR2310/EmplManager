@@ -19,22 +19,24 @@ $(function () {
         latest_message_id = message.Id;
     
         let can_render = latest_message_id == findLatestMessageId() + 1;
-        console.log(can_render);
+ 
         if (can_render) {
             console.log("Rendering new Message...");
+            loadedbottom = true;
             await renderMessage(message);
+        }
+        console.log(getScrollPos()  < scroll.clientHeight / 2);
+        if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight / 2 && focused)) {
+
+            console.log("Scrolled bottom on new message....");
+
+            scrollBottom();
+
         }
         if (message.UserId == Users.CLIENT_USER.Id) {
             setLastRenderedMessageCache(message.Id);
         }
-        if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight/2 && focused)) {
-
-            console.log("Scrolled bottom on new message....");
-            setTimeout(function () {
-                markasread(null, false);
-                scrollBottom();
-            }, 0);
-        }
+ 
         if (Users.CLIENT_USER.Id != message.UserId ) {
 
 
@@ -42,7 +44,7 @@ $(function () {
             let new_messages_ever_since = latest_message_id - last_read_message.Id;
             let old_bar_exists = $("#markasread_active").length > 0;
 
-            console.log(last_unread_message_id);
+    
             if (!last_unread_message_id) {
                 let new_bar = old_bar_exists ? $("#markasread_active") : new_messages_template.clone();
                 new_bar.attr("id", "markasread_active");
@@ -54,9 +56,7 @@ $(function () {
                 }
                
                 unread_messages_ele.css("display", "");
-                console.log(last_read_message.Id + 1);
-                console.log(last_read_message.AtCreate || Saved_Messages[Number(last_read_message.Id) + 1]);
-                let date = FormatFuncs["_timestr_"](!!last_read_message.AtCreate ? last_read_message : Saved_Messages[Number(last_read_message.Id)+1]);
+                 let date = FormatFuncs["_timestr_"](!!last_read_message.AtCreate ? last_read_message : Saved_Messages[Number(last_read_message.Id)+1]);
 
 
             
@@ -67,13 +67,13 @@ $(function () {
             }
             else {
                 unread_messages_ele.css("display", "");
-                console.log(latest_message_id - last_unread_message_id)
+             
                 let new_messages_ever_since = latest_message_id - last_unread_message_id;
 
                 var old_text = unread_messages_ele.find(".unread_notif_message").text();
-                console.log(old_text);
+      
                 var new_str = old_text.replace(/\d+/, new_messages_ever_since);
-                console.log(new_str);
+      
                 unread_messages_ele.find(".unread_notif_message").text(new_str);
 
             }
