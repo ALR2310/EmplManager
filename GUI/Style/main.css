@@ -299,7 +299,9 @@ html {
 
 .chat-main__item {
     border-radius: 15px;
+    overflow-y: hidden;
 }
+
 
     .chat-main__item + .new_messages {
         margin-top: 5px;

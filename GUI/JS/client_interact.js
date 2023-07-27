@@ -226,7 +226,7 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     }
 }
 
-async function renderMessage(message) {
+async function renderMessage(message,isNewMessage) {
 
     Saved_Messages[message.Id] = message;
 
@@ -259,9 +259,12 @@ async function renderMessage(message) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
- 
+    if (isNewMessage) {
+        message_ele.find(".chat-main__item").addClass("new_box")
+    }
     message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
+    
 
 
 

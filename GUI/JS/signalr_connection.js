@@ -23,7 +23,7 @@ $(function () {
         if (can_render) {
             console.log("Rendering new Message...");
             loadedbottom = true;
-            await renderMessage(message);
+            await renderMessage(message,true);
             reloadTimegaps(message.Id);
         }
         console.log(getScrollPos()  < scroll.clientHeight / 2);
