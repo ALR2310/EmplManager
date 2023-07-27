@@ -205,7 +205,7 @@ var counter = 0;
 
 let should_focus = false;
 
-search_cancel_btn.on('mousedown touchstart', function (event) {
+search_cancel_btn.on('onclick', function (event) {
 
     should_focus = search_bxb.is(":focus");
     event.stopPropagation();
@@ -269,3 +269,36 @@ $(document).on("click", function (event) {
     toggleEmoji(event, 'none');
   
 })
+
+$(document).ready(function () {
+
+    let styleSheet = null;
+    let current_href = window.location.hostname;
+    for (const [_, rule] of Object.entries(document.styleSheets)) {
+        let urlObject = new URL(rule.href);
+
+        // Get the hostname
+        let hostname = urlObject.hostname;
+
+        if (hostname == current_href) {
+            styleSheet = rule;
+            break;
+        }
+    }
+
+    for (i = 1; i <= 25; i++) {
+        var newRule = `.fake_chat:nth-child(${i}) {
+               animation-delay: ${.25*(i-1)}s !important;
+        } `;
+
+     
+        if (styleSheet.insertRule) {
+
+            styleSheet.insertRule(newRule, styleSheet.cssRules.length);
+        } else if (styleSheet.addRule) {
+      
+            styleSheet.addRule(newRule, styleSheet.rules.length);
+        }
+    }
+    
+});

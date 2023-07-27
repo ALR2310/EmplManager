@@ -437,7 +437,9 @@
     display: none;
     z-index: 5;
     top: 50%;
-    transform: translatey(-50%);
+    left: 50%;
+    width: 80%;
+    transform: translateY(-50%) translateX(-50%);
 }
 
 
@@ -459,9 +461,27 @@
     left: 50%;  
 }
 
-.fake_chat{
+.fake_chat {
     pointer-events: auto;
     cursor: auto;
+    transform: translateY(100%);
+    animation: fake_chat_anim .65s;
+    animation-fill-mode: forwards;
+}
+
+.fake_chat {
+    opacity: 0;
+}
+
+@keyframes fake_chat_anim{
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }
 
 @keyframes fc_jump_to{

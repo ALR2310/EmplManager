@@ -259,9 +259,7 @@ async function renderMessage(message) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
-    if (message_ele.find(".time-gap").css("display") == "none") {
-        message_ele.find(".time-gap").remove();
-    }
+ 
     message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
 
@@ -289,6 +287,42 @@ async function renderMessage(message) {
         particleAnimate(canvas);
         return;
     }, 100);*/
+} 
+function reloadTimegaps(id) {
+    console.log("Creating timegap...");
+    if (!!id) {
+        let timegaps = $(".chat-main__list").find(".time-gap");
+        for (timegap_ele of timegaps) {
+            timegap_ele = $(timegap_ele);
+            if (!!timegap_ele.attr("message_id") && Number(timegap_ele.attr("message_id")) > id-25) {
+                timegap_ele.remove();
+            }
+        }
+    }
+    else {
+        $(".chat-main__list").find(".time-gap").remove();
+    }
+    let messages = $(".chat-main__list").find(".chat-main__item");
+    lastIndexedTime = !!id ? Saved_Messages[id].AtCreate : new Date();
+    for (message_ele of messages) {
+        message_ele = $(message_ele);
+        let message_id = message_ele.attr("message_id");
+
+        if (!!id && Number(message_id) < id - 25) { continue; }
+        let message_data = Saved_Messages[message_id];
+        if (!!!message_data || !getTimeGap(message_data.AtCreate)) {
+
+            console.log("Time gap creation rejected..."); continue;
+        }
+
+        let formatted_time = FormatFuncs["_timestr_"](message_data);
+        let formatted_date = FormatFuncs["_datestr_"](message_data);
+        let ele = $(`  <div class="time-gap" style="_timegaptostyle_" message_id='${message_id}'>
+                            <div class="timer">${formatted_time}, ${formatted_date}</div>
+                        </div>`);
+        ele.insertBefore(message_ele);
+    }
+   
 }
 async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messages) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
@@ -313,7 +347,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
         await renderMessage(message);
 
     }
-
+    setTimeout(reloadTimegaps,10);
     renderingmessages = false;
 
     if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 0); }
@@ -343,6 +377,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
     $children.sort(customSort);
 
     $(".chat-main__list").append($children);
+
 
 }
 const Saved_Messages = (() => {
@@ -381,7 +416,7 @@ function requestJsonData(afterid, scrollToBottomAtLoad, Wipe_Old_Messages) {
                 loading_circle.removeClass("loader_show");
                 var data = JSON.parse(response.d);
                 await loadMessages(data, scrollToBottomAtLoad, wipe_old_messages);
-
+        
                 var count = Object.keys(data).length;
                 data = null;
 

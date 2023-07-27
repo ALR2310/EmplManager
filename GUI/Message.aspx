@@ -172,10 +172,7 @@
                     </ul>
 
                     <div id="chat-template" style="display: none">
-                        <div class="time-gap" style="_timegaptostyle_" message_id='_messageid_'>
-                            <div class="timer">_timestr_, _datestr_</div>
-                        </div>
-
+                      
                         <div class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
                             <div class="chat-main__content">
@@ -322,6 +319,8 @@
         };
     </script>
     <script>
+        $("#loading_circle").addClass("loader_show");
+
         const new_messages_template = $("#new_messages_template");
         var lastRenderedMessage = null;
         var loadedbottom = false;
@@ -641,5 +640,6 @@
     <script src="JS/emoji.js"></script>
     <script src="JS/client_interact.js"></script>
     <script src="JS/signalr_connection.js"></script>
+
 </asp:Content>
 

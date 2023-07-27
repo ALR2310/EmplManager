@@ -24,6 +24,7 @@ $(function () {
             console.log("Rendering new Message...");
             loadedbottom = true;
             await renderMessage(message);
+            reloadTimegaps(message.Id);
         }
         console.log(getScrollPos()  < scroll.clientHeight / 2);
         if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight / 2 && focused)) {
