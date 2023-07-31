@@ -495,14 +495,8 @@
     animation-timing-function: cubic-bezier(0,.45,.38,.99);
 }
 
-.chat-main__item.new_box {
-    overflow: hidden;
-}
 
-    .chat-main__item.new_box > .chat-main__content {
-        animation: new_chat_box .5s;
-        animation-fill-mode: forwards;
-    }
+
 
 
 @keyframes new_chat_box {

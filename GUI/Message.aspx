@@ -270,11 +270,11 @@
                             <ul class="chat-ellips__dropdown__menu">
 
                                 <li>
-                                    <input type="submit" id="Button2" value="Chỉnh Sửa" onclientclick="return false;" />
+                                    <input type="submit"  onclick="return false;" id="Button2" value="Chỉnh Sửa"  />
                                     <img src="/Images/Icons/mess_edit_icon.svg" />
                                 </li>
-                                <li class="button_red_highlight">
-                                    <input type="submit"  id="btnDelete" value="Xoá, gỡ" onclientclick="mess_delete(); return false;" />
+                                <li onclick="mess_delete();" class="button_red_highlight">
+                                    <input onclick="return false;" type="submit"  id="btnDelete" value="Xoá, gỡ" />
                                     <img src="/Images/Icons/mess_delete_icon.svg" />
                                 </li>
                                 <box class="boxhidentop"></box>

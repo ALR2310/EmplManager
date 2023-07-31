@@ -102,7 +102,7 @@ const FormatFuncs = {
     },
     '_deleted_italic_': function (message) {
 
-        return !!message.Status && message.Status != 1 ? "italic" : "";
+        return message.Status != null && message.Status != 1 ? "italic" : "";
     },
     '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
@@ -240,6 +240,7 @@ async function renderMessage(message,isNewMessage) {
     var finalhtml = message_ele.html();
 
     for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
+   
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
 
@@ -260,9 +261,7 @@ async function renderMessage(message,isNewMessage) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
-    if (isNewMessage) {
-        message_ele.find(".chat-main__item").addClass("new_box")
-    }
+
     message["message_element"] = message_ele.find(".chat-main__item");
     message_ele.children().appendTo(".chat-main__list")[0];
     
