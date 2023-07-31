@@ -276,16 +276,11 @@ html {
 .chat-main {
     flex-grow: 1;
     display: flex;
-<<<<<<< HEAD
 
     height:50%; 
 
-
-
-=======
-    height: 50%;
     margin-top: 20px;
->>>>>>> Done Change Status, Change UserType and Delete Empolyee For Empolyee Page
+
 }
 
 .chat-main__list {
