@@ -76,12 +76,11 @@ modalContent.addEventListener('click', function (event) {
 modalOverlay = document.querySelector('.modal-vertical__overlay');
 
 modalOverlay.addEventListener('click', function () {
-    hidenModal(event);
+    hidenModal();
 });
 
 function hidenModal(event) {
     var modalVertical = document.querySelector('.modal-vertical');
-    console.log(event.target);
 
     setTimeout(function () {
         modalVertical.classList.add('hide');

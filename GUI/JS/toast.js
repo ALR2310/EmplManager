@@ -50,7 +50,7 @@ function showSuccessToast(message) {
         title: 'Thành Công',
         message: message || 'Bạn đã đăng ký tài khoản thành công',
         type: 'success',
-        duration: 10000
+        duration: 4000
     });
 }
 function showInfoToast(message) {
@@ -58,7 +58,7 @@ function showInfoToast(message) {
         title: 'Thông tin',
         message: message || 'Có thông báo mới được gửi đến hộp thư',
         type: 'info',
-        duration: 10000
+        duration: 4000
     });
 }
 function showWarningToast(message) {
@@ -66,7 +66,7 @@ function showWarningToast(message) {
         title: 'Cảnh Báo',
         message: message || 'Các trường dữ liệu không được để trống',
         type: 'warning',
-        duration: 10000
+        duration: 4000
     });
 }
 function showErrorToast(message) {
@@ -74,6 +74,6 @@ function showErrorToast(message) {
         title: 'Thất Bại',
         message: message || 'Có lỗi đã xảy ra trong quá trình đăng ký, vui lòng thử lại',
         type: 'error',
-        duration: 10000
+        duration: 4000
     });
 }
