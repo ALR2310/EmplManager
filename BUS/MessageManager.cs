@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using SubSonic;
 using DAL.Model;
 using System.Diagnostics;
-using System.Web.UI;
-using System.Security.Cryptography;
-using System.Collections;
+
+using System.Text.Json;
+using System.Data;
 
 namespace BUS
 {
@@ -70,14 +70,33 @@ namespace BUS
 
             return null;
         }
-        public static Dictionary<int, SearchingMessage> SearchMessage(string search_str,int page)
+        public static string SearchMessage(string search_str,int page)
         {
             InlineQuery query = new InlineQuery();
+
             string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
             Debug.WriteLine(querystr);
             List<SearchingMessage> list = query.ExecuteTypedList<SearchingMessage>(querystr);
+            Dictionary<int, object> dict = list.ToDictionary(item => item.Id, item => (object)item);
 
-            return list.ToDictionary(item => item.Id, item => item);
+
+
+            IDataReader reader = query.ExecuteReader($"select top 1 Id from Messages where Content LIKE N'%{search_str}%' order by id asc ");
+
+
+
+            if (reader.Read())
+            {
+
+                dict[-1] = Convert.ToString(reader["Id"]);
+            }
+            
+            reader.Close();
+
+       
+
+          
+            return JsonSerializer.Serialize(dict);
         }
         public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int after_id)
         {

@@ -40,6 +40,7 @@
     }
 
 .contains_speech:hover > .speech.left {
+    
     animation: speech_anim .2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
@@ -77,7 +78,7 @@
 }
 
 .left {
-    transform: translatex(calc(50% + 45px));
+    transform: translatex(calc(50% + 35px));
 }
 
 @keyframes speech_anim {
@@ -87,7 +88,7 @@
 
     100% {
         opacity: 1;
-        transform: translatex(calc(50% + 35px));
+        transform: translatex(calc(50% + 25px));
     }
 }
 
@@ -109,7 +110,7 @@
     border-top-color: #111111;
     border-bottom: 0;
     /* (B2-2) POSITION AT BOTTOM */
-    bottom: -20px;
+    bottom: -19px;
     left: 50%;
     margin-left: -20px;
 }
@@ -125,17 +126,19 @@
     left: 50%;
     margin-left: -20px;
 }
-
-/* (C2) LEFT */
-.left.speech::after {
-    /* (C2-1) LEFT TRIANGLE */
-    border-right-color: #111111;
-    border-left: 0;
-    /* (C2-2) POSITION AT LEFT */
-    left: -20px;
-    top: 50%;
-    margin-top: -20px;
+.left.speech {
+   
+    padding: 12px !important;
 }
+/* (C2) LEFT */
+    .left.speech::after {
+        border-right-color: #111111;
+        border-left: 0;
+        left: -12px;
+        border-width: 13px;
+        /* bottom: 16%; */
+        margin-top: -2%;
+    }
 
 /* (C3) RIGHT */
 .right.speech::after {

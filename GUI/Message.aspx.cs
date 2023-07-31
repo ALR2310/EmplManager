@@ -129,9 +129,9 @@ namespace GUI
         public static string SearchMessage(string search_str, int page)
         {
    
-            Dictionary<int, SearchingMessage> messages = MessageManager.SearchMessage(search_str,page);
+     
 
-            return JsonSerializer.Serialize(messages);
+            return MessageManager.SearchMessage(search_str, page);
         }
         [System.Web.Services.WebMethod]
         public static string GetTotalMessage()

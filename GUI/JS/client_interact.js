@@ -44,6 +44,7 @@ const FormatFuncs = {
     },
     '_timestr_': function (message) {
 
+        
         var time = message.AtCreate.toLocaleTimeString("vi-VN");
 
         return `${time}`;
@@ -221,8 +222,8 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
         });
 
     if (scroll_to_bottom_again) {
-
         scrollBottom();
+        setTimeout(scrollBottom,50);
     }
 }
 

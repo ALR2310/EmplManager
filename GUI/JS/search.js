@@ -15,10 +15,12 @@ function getRandomNumberBetween(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-async function renderSearchMessage(id,message) {
+async function renderSearchMessage(id, message) {
+
+    message.AtCreate = new Date(message.AtCreate);
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
-    message.AtCreate = new Date(message.AtCreate);
+  
     
 
     finalhtml = finalhtml.replaceAll("_timestr_", "_timestr_, _datestr_");
@@ -46,9 +48,7 @@ async function renderSearchMessage(id,message) {
     chat_main__item.on("click", async function () {
         
         loading_circle.addClass("loader_show");
-        is_firsttime_load = true;
-       
- 
+    
         await requestJsonData(Number(id) + 11, false, "1");   
         
         let mess_to_scroll_to = Saved_Messages[id].message_element;
@@ -69,9 +69,7 @@ async function renderSearchMessage(id,message) {
             );
   
         }, 0);
-        loadedbottom = false;
-        renderingmessages = false;
-        is_firsttime_load = false;
+
         setTimeout(function () {
             lastRenderedMessage = findLatestMessageId();
        
@@ -153,9 +151,10 @@ function showplacehold() {
     }
     placehold_layout.css("display", "flex");
 }
+let last_search_request = null;
 let perfom_search = function (query) {
-
-    $.ajax({
+    if (!!last_search_request) { last_search_request.abort(); }
+    last_search_request =   $.ajax({
         url: 'Message.aspx/SearchMessage',
         type: 'POST',
         contentType: 'application/json',
@@ -167,11 +166,27 @@ let perfom_search = function (query) {
             if (Object.keys(data).length == 0) {
   
                 placehold_layout.css("display", "none");
+                $("#fake_messages").css("display", "none");
                 $("#search_not_found").css("display", "unset"); return;
             }
-            for (const [id, message] of Object.entries(data)) {
+            $("#fake_messages").css("display", "");
+            let keys = Object.keys(data);
+            console.log(keys.length);
+            
+           
+        
+                $("#search_messages_pages").css("display", Number(keys[keys.length - 2]) - Number(data[keys[keys.length - 1]]) < 10 ? "none" : "");
+           
+            for (const [id, message] of Object.entries(data).reverse()) {
+        
+                if (id == "-1") {
+            
+                    continue;
+                }
+                
                 await renderSearchMessage(id, message);
             };
+            $("#search_messages_pages").appendTo("#fake_messages");
             setTimeout(function () {
                 placehold_layout.css("display", "none");
 
@@ -188,6 +203,7 @@ let perfom_search = function (query) {
 search_bxb.on("input", function () {
     if (search_bxb.val().trim() != "") {
         $("#search_not_found").css("display", ""); 
+   
         $(".to_delete").remove();
         open_btn.css('display', 'none');
         search_cancel_btn.css('display', 'unset');

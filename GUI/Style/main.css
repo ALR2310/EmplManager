@@ -506,7 +506,7 @@ html {
     position: absolute;
     top: -340%;
     min-width: 120px;
-    padding: 8px 0;
+   
     margin: 0;
     list-style: none;
     background-color: #ffffff;
@@ -515,7 +515,7 @@ html {
 }
 
     .chat-ellips__dropdown__menu li {
-        padding: 8px 0;
+   
     }
 
         .chat-ellips__dropdown__menu li input[type=submit],

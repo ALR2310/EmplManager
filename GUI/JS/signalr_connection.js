@@ -30,8 +30,8 @@ $(function () {
         if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight / 2 && focused)) {
 
             console.log("Scrolled bottom on new message....");
-
             scrollBottom();
+            setTimeout(scrollBottom,0);
 
         }
         if (message.UserId == Users.CLIENT_USER.Id) {

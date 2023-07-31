@@ -112,13 +112,15 @@
                             </div>
 
                         </div>
-                        <div id="chat-search__list" style="display:none">
-                            <div id="search_not_found"><img src="Images/magnifying_glass.svg"/>
+                        <div id="chat-search__list" style="display: none">
+                            <div id="search_not_found">
+                                <img src="Images/magnifying_glass.svg" />
                                 <p>
                                     Không tìm thấy tin nhắn nào...
                                 </p>
                             </div>
                             <div id="fake_messages" class="innerlist">
+                                <div id="search_messages_pages">henlo</div>
                             </div>
                             <div id="search__list_placeholder_layer" class="innerlist">
                                 <div id="search_loading_placeholder_template" class="placeholder_chatbox">
@@ -128,28 +130,24 @@
                                             <div class="loading_image layer_hole"></div>
                                         </div>
 
-                                        <div >
-                                            <div style=" gap:1px;     transform: scale(.7,.6) translate(-18%,30%);" class="time_loading_placeholder placeholder_boxes_holder">
+                                        <div>
+                                            <div style="gap: 1px; transform: scale(.7,.6) translate(-18%,30%);" class="time_loading_placeholder placeholder_boxes_holder">
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                            <div>&nbsp;&nbsp; </div>
+                                                <div>&nbsp;&nbsp; </div>
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                                 <div>&nbsp;&nbsp; </div>
+                                                <div>&nbsp;&nbsp; </div>
                                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                             </div>
                                             <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles placeholder_boxes_holder">
-                                                
                                                 </div>
 
                                                 <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
-                                       
-                                               
-                                                   
                                                 </div>
                                                 <div class="emoji_list">
                                                 </div>
-                                            
+
 
 
 
@@ -164,15 +162,15 @@
                         </div>
                         <div id="scroll_message_bottom" style="display: none" onclick="forceScrollBottom()">
                             <span>bạn đang xem tin nhắn cũ</span>
-                            <span>bấm vào đây để xem tin nhắn hiện tại <img src="Images/arrowDown.svg"/></span>
+                            <span>bấm vào đây để xem tin nhắn hiện tại
+                                <img src="Images/arrowDown.svg" /></span>
                         </div>
                     </div>
                     <ul class="chat-main__list">
-                       
                     </ul>
 
                     <div id="chat-template" style="display: none">
-                      
+
                         <div class="chat-main__item" message_id='_messageid_' owner="_isowner_mess_">
 
                             <div class="chat-main__content">
@@ -220,7 +218,7 @@
 
                     <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                     <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
-                        Send
+                        Gửi
                                 <i class="fa-solid fa-paper-plane"></i>
 
                     </button>
@@ -270,12 +268,14 @@
                         <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                             <ul class="chat-ellips__dropdown__menu">
-                               
+
                                 <li>
-                                    <input type="submit" ID="Button2" value="Chỉnh Sửa" OnClientClick="return false;" />
+                                    <input type="submit" id="Button2" value="Chỉnh Sửa" onclientclick="return false;" />
+                                    <img src="/Images/Icons/mess_edit_icon.svg" />
                                 </li>
-                                 <li>
-                                    <input type="submit" class="button_red_highlight" ID="btnDelete" value="Xoá, gỡ" OnClientClick="mess_delete(); return false;" />
+                                <li class="button_red_highlight">
+                                    <input type="submit"  id="btnDelete" value="Xoá, gỡ" onclientclick="mess_delete(); return false;" />
+                                    <img src="/Images/Icons/mess_delete_icon.svg" />
                                 </li>
                                 <box class="boxhidentop"></box>
                                 <box class="boxhidenbottom"></box>
@@ -337,29 +337,28 @@
             message_id = Number(message_id);
             if (isNaN(message_id) || message_id == null) {
                 console.log("Rejected storing lastread"); return
-            }    ;
+            };
             let saving = {};
             saving.Id = message_id;
             saving.AtCreate = Saved_Messages[message_id].AtCreate;
-       
+
             let stored_read = getLastReadMessage();
             if (stored_read != null)
-                if (stored_read.Id > message_id || (stored_read.Id == message_id && !!stored_read.AtCreate))
-                {   
+                if (stored_read.Id > message_id || (stored_read.Id == message_id && !!stored_read.AtCreate)) {
                     console.log("Rejected storing lastread"); return;
                 }
 
-         
-            localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving))  ;
+
+            localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving));
             console.log("Stored lastRead");
         }
         const getLastReadMessage = function () {
             let raw_data = JSON.parse(localStorage.getItem("lastReadMessage" + Users.CLIENT_USER.Id));
             if (raw_data == null) raw_data = { Id: latest_message_id };
             if (!!raw_data.AtCreate) raw_data.AtCreate = new Date(raw_data.AtCreate);
-         
-      
-            
+
+
+
             return raw_data;
         }
         const setLastRenderedMessageCache = function (message_id) {
@@ -369,7 +368,7 @@
                 return;
 
             }
-   
+
             if (message_id >= lastRenderedMessage || message_id == -1) {
                 localStorage.setItem("lastRenderedMessage" + Users.CLIENT_USER.Id, message_id);
                 return;
@@ -417,8 +416,8 @@
         let last_dist = getScrollPos();
         function getClosestChatElementFromWindow() {
             clearTimeout(lastCheckThread);
-            lastCheckThread = setTimeout(getClosestChatElementFromWindow, 1000); 
-       
+            lastCheckThread = setTimeout(getClosestChatElementFromWindow, 1000);
+
 
             if (getScrollPos() == last_dist) {
                 last_dist = getScrollPos();
@@ -430,14 +429,14 @@
             let ele = $(".chat-main__list").find(".chat-main__item");
             let closest = null;
             let closest_dist = null;
-        
 
-      
+
+
             let scroll_top = scroll.scrollTop + scroll.clientHeight / 2;
             for (element of ele) {
                 let calculated_dist = Math.abs(scroll_top - element.offsetTop);
-            
-                if (!!closest && closest_dist < calculated_dist) { 
+
+                if (!!closest && closest_dist < calculated_dist) {
                     continue;
                 }
                 closest = element;
@@ -451,8 +450,8 @@
             else if (message_id_position < 25) {
                 $("#scroll_message_bottom").css("display", "none");
             }
-        
-      
+
+
         }
         function handleKeyPress(event) {
             if (event.keyCode === 13 && !event.shiftKey) {
@@ -507,7 +506,8 @@
 
         var inputElement = $("#txt_Message");
         document.addEventListener('keydown', function (event) {
-            if (search_box.is(":focus")) { return };
+            console.log(event.target.nodeName);
+            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA") { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -533,14 +533,14 @@
         const scroll_DOM = chat_scroll[0];
         async function loadFirstMessages() {
 
-        
+
             setTimeout(function () {
                 chat_scroll.on('scroll', async function () {
-                  
+
                     var scrollTop = $(this).scrollTop();
                     if (scrollTop == 0) {
                         var last_ele = $(".chat-main__list").find(".chat-main__item")[0];
-                    
+
                         await requestJsonData(last_ele.getAttribute("message_id"));
                         console.log("Loading Message Above");
 
@@ -556,7 +556,7 @@
                             loadedbottom = true;
 
                             var returned_bool = await requestJsonData(lastRenderedMessage + 25);
-                         
+
                             loadedbottom = Number(latest_message_id) == findLatestMessageId();
 
                             if (loadedbottom) unread_messages_ele.css("display", "none");
@@ -579,7 +579,7 @@
 
 
             let lastRenderedMessageStr = localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id);
-         
+
             lastRenderedMessage = lastRenderedMessageStr != null && isNaN(Number(lastRenderedMessageStr)) == false ? Number(localStorage.getItem("lastRenderedMessage" + Users.CLIENT_USER.Id)) : -1;
 
 
@@ -595,8 +595,10 @@
 
             if (latest_message_id == findLatestMessageId()) {
                 is_firsttime_load = false;
-                scrollBottom();
+               
                 setLastRenderedMessageCache(latest_message_id);
+                scrollBottom(); 
+                setTimeout(scrollBottom, 100);
                 return;
             }
 
@@ -615,7 +617,7 @@
             else {
 
 
-     
+
                 let new_messages_ever_since = latest_message_id - getLastReadMessage().Id;
 
                 last_unread_message_id = last_read_message;
