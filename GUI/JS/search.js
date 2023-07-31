@@ -80,7 +80,7 @@ async function renderSearchMessage(id, message) {
         getClosestChatElementFromWindow();
     });
     message_ele.find(".time-gap").remove();
-    message["message_element"] = message_ele.find(".chat-main__item");
+
     message_ele.children().appendTo("#fake_messages")[0];
 
 }

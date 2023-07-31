@@ -181,7 +181,9 @@ const emoji_id_to_emoji_txt = [
     "Images/Emojis/smile_tear.svg",
 ];
 var last_num_list = {}
-function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
+var bound_reaction_lists = {};
+async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
+    bound_reaction_lists[message_id] = list;
     var scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
     const emoji_display = $("#emoji_display_placeholder").clone();
     emoji_display.css("display", "unset");
@@ -193,8 +195,17 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     emoji_display.find(".ogcount").text(list.length);
     emoji_display.find(".ncount").text(list.length);
 
+    for (id of list) {
+        if (Users[id] == null) { await fetchUser(id) }
+    }
     emoji_display.on("mouseenter", function () {
-        console.log(list);
+        let final_str = "Cảm xúc được bày tỏ bởi: ";
+        
+        for (id of list) {
+            console.log(id);
+            final_str = final_str + Users[id].DisplayName + "\n";
+        }
+        console.log(final_str);
     })
 
     last_num_list[message_id + '' + emoji_id] = list.length;
@@ -266,7 +277,7 @@ async function renderMessage(message,isNewMessage) {
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
 
-    message["message_element"] = message_ele.find(".chat-main__item");
+ 
     message_ele.children().appendTo(".chat-main__list")[0];
     
 
