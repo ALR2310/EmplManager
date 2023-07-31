@@ -12,6 +12,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Text.Json;
 using System.Data;
+using DAL;
 
 namespace GUI
 {
@@ -43,5 +44,66 @@ namespace GUI
             return JsonSerializer.Serialize(empolyee);
         }
 
+        [WebMethod]
+        public static bool ChangeStatusUser(string StatusId, string UserId)
+        {
+            int statusId = Convert.ToInt32(StatusId);
+            int userId = Convert.ToInt32(UserId);
+            EmpolyeeManager.ChangeStatusUer(statusId, userId);
+            if (statusId == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        [WebMethod]
+        public static bool ChangeUserType(string UserId, string UserType)
+        {
+            int userId = Convert.ToInt32(UserId);
+            int userType = Convert.ToInt32(UserType);
+            EmpolyeeManager.ChangeUserType(userType, userId);
+            if (userType == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        [WebMethod]
+        public static bool DeleteUser(string UserId)
+        {
+            if (EmpolyeeManager.DeleteUser(Convert.ToInt32(UserId)) == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public void EmpolyeeSearch()
+        {
+            string SearchContent = tblSearch.Text;
+            List<EmpolyeeInfor> empolyees = EmpolyeeManager.SearchEmpolyee(SearchContent);
+            if (empolyees.Count > 0)
+            {
+                Repeater1.DataSource = empolyees;
+                Repeater1.DataBind();
+            }
+            else
+            {
+                LoadEmpolyee();
+            }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            //EmpolyeeSearch();
+        }
+
+        protected void tblSearch_TextChanged(object sender, EventArgs e)
+        {
+            EmpolyeeSearch();
+        }
     }
 }

@@ -51,13 +51,13 @@ namespace GUI
         protected global::System.Web.UI.WebControls.DropDownList DrpFilterSelect;
 
         /// <summary>
-        /// btnSearch control.
+        /// tblSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.TextBox tblSearch;
 
         /// <summary>
         /// lblSelectCount control.
@@ -78,15 +78,6 @@ namespace GUI
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
 
         /// <summary>
-        /// UpdatePanel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-
-        /// <summary>
         /// btnSendMail control.
         /// </summary>
         /// <remarks>
@@ -94,50 +85,5 @@ namespace GUI
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSendMail;
-
-        /// <summary>
-        /// btnEmoloyeeEnable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEmoloyeeEnable;
-
-        /// <summary>
-        /// btnEmoloyeeDisable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEmoloyeeDisable;
-
-        /// <summary>
-        /// btnGetAdmin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGetAdmin;
-
-        /// <summary>
-        /// btnRemoveAdmin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemoveAdmin;
-
-        /// <summary>
-        /// btnEmployeeDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEmployeeDelete;
     }
 }
