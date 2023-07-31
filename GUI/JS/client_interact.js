@@ -193,6 +193,10 @@ function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     emoji_display.find(".ogcount").text(list.length);
     emoji_display.find(".ncount").text(list.length);
 
+    emoji_display.on("mouseenter", function () {
+        console.log(list);
+    })
+
     last_num_list[message_id + '' + emoji_id] = list.length;
 
     emoji_display.find(".emoji_emoji").attr("src", emoji_id_to_emoji_txt[emoji_id - 1]);
