@@ -23,7 +23,6 @@ namespace GUI
             if (!IsPostBack)
             {
                 LoadEmpolyee();
-
             }
         }
 
@@ -80,30 +79,31 @@ namespace GUI
             return false;
         }
 
-
         public void EmpolyeeSearch()
         {
             string SearchContent = tblSearch.Text;
             List<EmpolyeeInfor> empolyees = EmpolyeeManager.SearchEmpolyee(SearchContent);
-            if (empolyees.Count > 0)
-            {
-                Repeater1.DataSource = empolyees;
-                Repeater1.DataBind();
-            }
-            else
-            {
-                LoadEmpolyee();
-            }
-        }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            //EmpolyeeSearch();
+            Repeater1.DataSource = empolyees;
+            Repeater1.DataBind();
         }
 
         protected void tblSearch_TextChanged(object sender, EventArgs e)
         {
             EmpolyeeSearch();
+            if (string.IsNullOrEmpty(tblSearch.Text)) { LoadEmpolyee(); }
+        }
+
+        protected void btnSearch_ServerClick(object sender, EventArgs e)
+        {
+            EmpolyeeSearch();
+            if (string.IsNullOrEmpty(tblSearch.Text)) { LoadEmpolyee(); }
+        }
+
+        [WebMethod]
+        public static string GetCountEmpolyee()
+        {
+            return EmpolyeeManager.CountEmpolyee().ToString();
         }
     }
 }

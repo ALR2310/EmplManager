@@ -1324,11 +1324,12 @@ body::-webkit-scrollbar {
         height: 100%;
         width: 100%;
         border: none;
-        padding: 5px 10px;
+        padding: 5px 45px 5px 10px;
         background-color: #f3f3f9;
         border-radius: 5px;
     }
 
+    .employee-header-search a,
     .employee-header-search button {
         outline: none;
         position: absolute;
@@ -1340,8 +1341,14 @@ body::-webkit-scrollbar {
         color: var(--border-color);
         background-color: var(--primary-color);
         transition: all 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        text-decoration: none;
     }
 
+        .employee-header-search a:hover,
         .employee-header-search button:hover {
             opacity: 0.8;
             cursor: pointer;
@@ -1399,6 +1406,19 @@ body::-webkit-scrollbar {
     border-radius: 5px;
     outline: none;
     padding: 2px 7px;
+}
+
+#userIdinfor {
+    position: absolute;
+    bottom: -20%;
+}
+
+#AvatarImg.Active {
+    border: 1px solid green;
+}
+
+#AvatarImg.noActive {
+    border: 1px solid red;
 }
 
 .Active {
@@ -1545,6 +1565,8 @@ body::-webkit-scrollbar {
         font-size: 14px;
         color: var(--text-color);
         font-weight: normal;
+        text-wrap: nowrap;
+        overflow: hidden;
     }
 
         .employee-card-desc__body p + p {
@@ -1632,6 +1654,7 @@ body::-webkit-scrollbar {
     justify-content: center;
     width: 60px;
     height: 60px;
+    position: relative;
 }
 
 .userInfor__desc {
@@ -1661,6 +1684,7 @@ body::-webkit-scrollbar {
 
 .userInfor__image img {
     border-radius: 50% !important;
+    border: 1px solid gray;
     flex-shrink: 1;
 }
 
