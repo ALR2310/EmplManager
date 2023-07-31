@@ -575,3 +575,7 @@
     color: blue;
 
 }
+
+.button_red_highlight {
+    color: red !important;
+}

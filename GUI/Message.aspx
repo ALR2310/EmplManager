@@ -270,11 +270,12 @@
                         <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                             <ul class="chat-ellips__dropdown__menu">
+                               
                                 <li>
-                                    <asp:Button ID="btnDelete" runat="server" Text="Xoá, gỡ" OnClientClick="mess_delete(); return false;" />
+                                    <input type="submit" ID="Button2" value="Chỉnh Sửa" OnClientClick="return false;" />
                                 </li>
-                                <li>
-                                    <asp:Button ID="Button2" runat="server" Text="Chỉnh Sửa" OnClientClick="return false;" />
+                                 <li>
+                                    <input type="submit" class="button_red_highlight" ID="btnDelete" value="Xoá, gỡ" OnClientClick="mess_delete(); return false;" />
                                 </li>
                                 <box class="boxhidentop"></box>
                                 <box class="boxhidenbottom"></box>
