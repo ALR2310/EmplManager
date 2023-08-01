@@ -96,6 +96,10 @@ $(function () {
     hubProxy.on('UpdateReaction', async function (json) {
 
         var data = JSON.parse(json);
+        console.log(data);
+        if (bound_reaction_lists[data.Message_Id]) {
+            bound_reaction_lists[data.Message_Id] = data.Reaction_Ids;
+        }
         UpdateMessageReaction(data);
     });
 

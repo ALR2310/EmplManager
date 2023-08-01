@@ -182,6 +182,7 @@ const emoji_id_to_emoji_txt = [
 ];
 var last_num_list = {}
 var bound_reaction_lists = {};
+const emoji_speech_limit = 1;
 async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     bound_reaction_lists[message_id] = list;
     var scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
@@ -198,14 +199,41 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     for (id of list) {
         if (Users[id] == null) { await fetchUser(id) }
     }
-    emoji_display.on("mouseenter", function () {
+    emoji_display.on("mouseenter", async function () {
         let final_str = "Cảm xúc được bày tỏ bởi: ";
-        
-        for (id of list) {
-            console.log(id);
-            final_str = final_str + Users[id].DisplayName + "\n";
+
+     
+        let index = 0;
+        for (id of bound_reaction_lists[message_id]) {
+            if (index == emoji_speech_limit) {
+                final_str = final_str + "và " + `<a>${bound_reaction_lists[message_id].length - index} nguời khác.</a>`;
+                index = 0;
+                break
+            }
+            index++;
+            if (!!!Users[id]) await fetchUser(id); 
+            if (!!!Users[id]) continue; 
+            final_str = final_str + Users[id].DisplayName + ", ";
         }
-        console.log(final_str);
+        if (index > 0 && index <= emoji_speech_limit) {
+
+            final_str = final_str.slice(0, -2);
+           
+        }
+       
+
+        let emoji_speech = emoji_display.find(".speech.bottom");
+        emoji_speech.css("display", "");
+        if (emoji_speech.length == 0) {
+            let speech = $(`<div class='speech bottom speech_left_side'>awedaw</div >`);
+         
+            speech.appendTo(emoji_display);
+            emoji_display.find(".speech.bottom").html(final_str);
+        }
+        else {
+            emoji_speech.html(final_str);
+        }
+        
     })
 
     last_num_list[message_id + '' + emoji_id] = list.length;
@@ -276,13 +304,13 @@ async function renderMessage(message,isNewMessage) {
 
     message_ele.html(finalhtml);
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
+    message.message_element = message_ele.find(".chat-main__item");
+
 
  
     message_ele.children().appendTo(".chat-main__list")[0];
     
-
-
-
+ 
 
     if (!!last_unread_message_id) {
         let old_bar_exists = $("#markasread_active").length > 0;

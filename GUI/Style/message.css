@@ -221,7 +221,9 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-
+.fa-pen {
+    content: '\270E';
+}
 .innerlist {
     position: absolute;
     width: calc(100% - 20px);
@@ -296,6 +298,7 @@
     }
 
 :root {
+
     --placeholder-avatar-color: #bbccef;
     --placeholder-box-color: #728abb;
     --placeholder-title-box-color: #c4cddf;

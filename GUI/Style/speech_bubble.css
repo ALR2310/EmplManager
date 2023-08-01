@@ -17,6 +17,11 @@
     pointer-events: none;
 }
 
+    .speech > a {
+        color: rgb(var(--owner-mess-color));
+    
+    }
+
 .sidebar:not(.sidebar-close) > .sidebar-list > .sidebar-item {
     width: 100%;
     display: flex;
@@ -40,7 +45,6 @@
     }
 
 .contains_speech:hover > .speech.left {
-    
     animation: speech_anim .2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
@@ -115,6 +119,26 @@
     margin-left: -20px;
 }
 
+.speech_left_side {
+    left: calc(90%) !important;
+    position: absolute;
+    transform: translateX(-90%) translateY(-100%) !important;
+    max-width: 25vw;
+    display: unset !important;
+    top: -100% !important;
+}
+
+@media (max-aspect-ratio: .8/1) {
+    .speech_left_side {
+        max-width: 50vw;
+    }
+}
+
+.speech_left_side::after {
+    left: 90% !important;
+    transform: rotate(-90deg) translateX(25%) translateY(-50%);
+ 
+}
 /* (C) DIFFERENT TAIL POSITIONS */
 /* (C1) TOP */
 .top.speech::after {
@@ -126,11 +150,11 @@
     left: 50%;
     margin-left: -20px;
 }
+
 .left.speech {
-   
     padding: 12px !important;
 }
-/* (C2) LEFT */
+    /* (C2) LEFT */
     .left.speech::after {
         border-right-color: #111111;
         border-left: 0;

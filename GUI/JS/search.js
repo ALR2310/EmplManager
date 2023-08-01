@@ -50,7 +50,7 @@ async function renderSearchMessage(id, message) {
         loading_circle.addClass("loader_show");
     
         await requestJsonData(Number(id) + 11, false, "1");   
-        
+        console.log(Saved_Messages[id]);
         let mess_to_scroll_to = Saved_Messages[id].message_element;
         loading_scrolling_bottom_cancel = true;
         scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 2);

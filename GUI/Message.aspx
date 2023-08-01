@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div id="emoji_display_placeholder" style="display: none">
+            <div id="emoji_display_placeholder" class="contains_speech" style="display: none">
                 <img class="emoji_emoji">
                 </span>
                 <div class="emoji_count">
@@ -269,7 +269,7 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                             <ul class="chat-ellips__dropdown__menu">
 
-                                <li>
+                                <li onclick="mess_edit();">
                                     <input type="submit"  onclick="return false;" id="Button2" value="Chỉnh Sửa"  />
                                     <img src="/Images/Icons/mess_edit_icon.svg" />
                                 </li>
@@ -294,6 +294,16 @@
 
 
         </div>
+             <div id="editTemplate">
+
+                    <textarea id="txt_Edit" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                    <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
+                        Chỉnh Sửa
+                                <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                </div>
     </div>
 
     <script src="JS/message.js"></script>
@@ -480,6 +490,12 @@
         }
 
         var delete_cd = {};
+        function mess_edit() {
+            let editing_id = ellips.attr("Message_Id");
+            let input = 
+            console.log(editing_id);
+            
+        }
         function mess_delete(e) {
 
             if (delete_cd[Number(ellips.attr("Message_Id"))] == true) { return; }
