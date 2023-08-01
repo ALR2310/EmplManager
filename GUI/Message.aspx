@@ -216,7 +216,7 @@
                 </div>
                 <div class="chat-footer">
 
-                    <textarea id="txt_Message" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                    <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                     <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                         Gửi
                                 <i class="fa-solid fa-paper-plane"></i>
@@ -296,7 +296,7 @@
         </div>
         <div id="editTemplate" style="display: none;">
 
-            <textarea rows="1" spellcheck="false" placeholder="" onkeypress="handleKeyPress(event)"></textarea>
+            <p class="mess_content toRemove" contenteditable="true" >rwa</p>
             <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                 Chỉnh Sửa
                                 <i class="fa-solid fa-pen"></i>
@@ -488,23 +488,32 @@
             ellips.attr("Message_Id", parele.attr("message_id"));
             toggleEmoji(e, 'none');
         }
-
+        const mess_edit_template = $('#editTemplate');
         var delete_cd = {};
         function mess_edit() {
+            $(".chat_force_highlight").removeClass("chat_force_highlight");
             let editing_id = ellips.attr("Message_Id");
-      
+            
             let chat_item = $(`.chat-main__item[message_id=${editing_id}]`);
             chat_item.addClass("chat_force_highlight");
             let mess_content = chat_item.find(".mess_content");
-            mess_content.attr("contenteditable", "true");
-            mess_content.focus();
-            mess_content.text(mess_content.text().trim());
-            console.log(mess_content[0].selectionStart);
-            mess_content[0].selectionStart = mess_content.text().trim().length;
+            mess_content.css("display", "none");
+
+            let editing_boxes = mess_edit_template.clone();
+            let editing = editing_boxes.find("p");
+
+            editing.text(mess_content.text().trim());
+         
+            editing.focus();
+          
+            editing_boxes.insertBefore(mess_content);
+            editing_boxes.css("display", "");
+
+
 
             const range = document.createRange();
             const selection = window.getSelection();
-            range.selectNodeContents(mess_content[0]);
+            range.selectNodeContents(editing[0]);
             range.collapse(false); // Collapse the range to the end
             selection.removeAllRanges(); // Remove any existing selection
             selection.addRange(range); // Add the new range with the cursor at the end
@@ -537,7 +546,15 @@
 
         var inputElement = $("#txt_Message");
         document.addEventListener('keydown', function (event) {
-          
+            if (event.target.nodeName == "P") {
+                let closet_ele_target = $(event.target).closest(".chat-main__item");
+
+                if (!!closet_ele_target && closet_ele_target.hasClass("chat_force_highlight")) {
+                    if (closet_ele_target.is(':last-child')) setTimeout(scrollBottom, 0);
+
+                }
+            }
+        
             if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName =="P") { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
