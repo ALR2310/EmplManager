@@ -667,3 +667,23 @@ textarea {
     height: 100%;
     font-size: 15px;
 }
+
+.editingBoxes {
+    display: flex !important;
+    align-items: center;
+    padding: 5px 0;
+    height: auto;
+}
+
+.editingBoxes > textarea{
+    background: none;
+    color: white;
+}
+
+.mess_content[contenteditable=true] {
+    margin: 5px 0;
+    outline: none;
+    background: #d0dfff29;
+    border-radius: 5px;
+    padding: 5px 5px;
+}

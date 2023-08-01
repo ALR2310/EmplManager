@@ -440,7 +440,7 @@ html {
     align-items: center;
 }
 
-.chat-main__item:not(.fake_chat):hover {
+.chat-main__item:not(.fake_chat):hover, .chat_force_highlight {
     background: rgb(245 245 245);
 }
 

@@ -270,11 +270,11 @@
                             <ul class="chat-ellips__dropdown__menu">
 
                                 <li onclick="mess_edit();">
-                                    <input type="submit"  onclick="return false;" id="Button2" value="Chỉnh Sửa"  />
+                                    <input type="submit" onclick="return false;" id="Button2" value="Chỉnh Sửa" />
                                     <img src="/Images/Icons/mess_edit_icon.svg" />
                                 </li>
                                 <li onclick="mess_delete();" class="button_red_highlight">
-                                    <input onclick="return false;" type="submit"  id="btnDelete" value="Xoá, gỡ" />
+                                    <input onclick="return false;" type="submit" id="btnDelete" value="Xoá, gỡ" />
                                     <img src="/Images/Icons/mess_delete_icon.svg" />
                                 </li>
                                 <box class="boxhidentop"></box>
@@ -294,16 +294,16 @@
 
 
         </div>
-             <div id="editTemplate">
+        <div id="editTemplate" style="display: none;">
 
-                    <textarea id="txt_Edit" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
-                    <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
-                        Chỉnh Sửa
+            <textarea rows="1" spellcheck="false" placeholder="" onkeypress="handleKeyPress(event)"></textarea>
+            <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
+                Chỉnh Sửa
                                 <i class="fa-solid fa-pen"></i>
 
-                    </button>
+            </button>
 
-                </div>
+        </div>
     </div>
 
     <script src="JS/message.js"></script>
@@ -492,9 +492,24 @@
         var delete_cd = {};
         function mess_edit() {
             let editing_id = ellips.attr("Message_Id");
-            let input = 
-            console.log(editing_id);
-            
+      
+            let chat_item = $(`.chat-main__item[message_id=${editing_id}]`);
+            chat_item.addClass("chat_force_highlight");
+            let mess_content = chat_item.find(".mess_content");
+            mess_content.attr("contenteditable", "true");
+            mess_content.focus();
+            mess_content.text(mess_content.text().trim());
+            console.log(mess_content[0].selectionStart);
+            mess_content[0].selectionStart = mess_content.text().trim().length;
+
+            const range = document.createRange();
+            const selection = window.getSelection();
+            range.selectNodeContents(mess_content[0]);
+            range.collapse(false); // Collapse the range to the end
+            selection.removeAllRanges(); // Remove any existing selection
+            selection.addRange(range); // Add the new range with the cursor at the end
+
+          
         }
         function mess_delete(e) {
 
@@ -522,8 +537,8 @@
 
         var inputElement = $("#txt_Message");
         document.addEventListener('keydown', function (event) {
-            console.log(event.target.nodeName);
-            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA") { return };
+          
+            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName =="P") { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -611,9 +626,9 @@
 
             if (latest_message_id == findLatestMessageId()) {
                 is_firsttime_load = false;
-               
+
                 setLastRenderedMessageCache(latest_message_id);
-                scrollBottom(); 
+                scrollBottom();
                 setTimeout(scrollBottom, 100);
                 return;
             }
