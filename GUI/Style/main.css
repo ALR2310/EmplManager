@@ -277,7 +277,6 @@ html {
     flex-grow: 1;
     display: flex;
     height: 50%;
-   
 }
 
 .chat-main__list {
@@ -453,7 +452,6 @@ html {
 
 .chat-ellips__dropdown {
     position: relative;
-
 }
 
 .chat-ellips__emoji__toggle,
@@ -504,7 +502,6 @@ html {
     position: absolute;
     top: -340%;
     min-width: 120px;
-   
     margin: 0;
     list-style: none;
     background-color: #ffffff;
@@ -513,7 +510,6 @@ html {
 }
 
     .chat-ellips__dropdown__menu li {
-   
     }
 
         .chat-ellips__dropdown__menu li input[type=submit],
@@ -1410,12 +1406,13 @@ body::-webkit-scrollbar {
     background-color: #e3e3e3;
     border-radius: 5px;
     outline: none;
-    padding: 2px 7px;
+    padding: 2px 5px;
 }
 
 #userIdinfor {
     position: absolute;
     bottom: -20%;
+    width: 110px;
 }
 
 #AvatarImg.Active {
@@ -1608,7 +1605,7 @@ body::-webkit-scrollbar {
 }
 
 .modal-vertical__container {
-    width: 460px;
+    width: 500px;
     background-color: white;
     transition: all 0.3s ease;
     position: relative;
@@ -1652,6 +1649,7 @@ body::-webkit-scrollbar {
 .userInfor-Avatar {
     display: flex;
     align-items: center;
+    margin-left: 25px;
 }
 
 .userInfor__image {
@@ -1721,10 +1719,12 @@ body::-webkit-scrollbar {
 .userInfor-Detail1 {
     display: flex;
     padding: 10px;
+    width: 100%;
 }
 
 .userInfor-Detail__infor {
-    flex: 1;
+    flex: 2;
+    /* width: 300px; */
 }
 
     .userInfor-Detail__infor p {
@@ -1751,6 +1751,7 @@ body::-webkit-scrollbar {
     flex: 1;
 }
 
+.btnDisable,
 .btnEnable {
     background-color: #04a604;
     color: white;
@@ -1760,17 +1761,11 @@ body::-webkit-scrollbar {
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.5s ease;
+    width: 80px;
 }
 
 .btnDisable {
     background-color: gray;
-    color: white;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all 0.5s ease;
 }
 
     .btnUserType:hover,
@@ -1781,7 +1776,7 @@ body::-webkit-scrollbar {
     }
 
 .btnEnable + .btnDisable {
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .btnDelete {
@@ -1793,7 +1788,7 @@ body::-webkit-scrollbar {
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.5s ease;
-    width: 142px;
+    width: 170px;
 }
 
 .btnUserType {
@@ -1805,7 +1800,7 @@ body::-webkit-scrollbar {
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.5s ease;
-    width: 142px;
+    width: 170px;
 }
 
 .userInfor-Detail1.hide {

@@ -36,7 +36,7 @@ namespace BUS
             return result.FirstOrDefault();
         }
 
-        //Lấy dữ liệu người dùng bằng Tên, công việc và Id
+        //Tìm kiếm dữ liệu người dùng bằng DisplayName, Job và Id
         public static List<EmpolyeeInfor> SearchEmpolyee(string SearchContent)
         {
             var query = new InlineQuery();
@@ -50,11 +50,32 @@ namespace BUS
             return result;
         }
 
+        //Lọc dữ liệu người dùng bằng Status
+        public static List<EmpolyeeInfor> FilterEmpolyeeForStatus(int Status)
+        {
+            var query = new InlineQuery();
+            string sqlquery = $@"SELECT users.Id, users.GoogleId, users.Avatar, users.Email, users.DisplayName, users.AtCreate, 
+                        users.UserType, users.Status, dbo.UserInfor.Job, dbo.UserInfor.PhoneNumber, dbo.UserInfor.Department, 
+                        dbo.UserInfor.Gender, dbo.UserInfor.DateOfBirth, dbo.UserInfor.Address 
+                        FROM dbo.Users INNER JOIN dbo.UserInfor ON UserInfor.UserId = Users.Id WHERE users.Status = {Status}";
+            var result = query.ExecuteTypedList<EmpolyeeInfor>(sqlquery);
+            return result;
+        }
+
         //Thay đổi trạng thái tài khoản
         public static void ChangeStatusUer(int Status, int Id)
         {
             var query = new InlineQuery();
             string sqlquery = $"UPDATE dbo.Users SET Status = {Status} WHERE Id = {Id}";
+            query.Execute(sqlquery);
+        }
+
+        //Thay đổi trạng thái tài khoản cho các tài khoản được chọn
+        public static void ChangeStatusAllSelectUser(int Status, int[] userId)
+        {
+            var query = new InlineQuery();
+            string userIds = string.Join(",", userId);
+            string sqlquery = $"UPDATE dbo.Users SET Status = {Status} WHERE Id IN ({userIds})";
             query.Execute(sqlquery);
         }
 

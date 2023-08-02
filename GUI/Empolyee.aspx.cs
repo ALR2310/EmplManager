@@ -105,5 +105,37 @@ namespace GUI
         {
             return EmpolyeeManager.CountEmpolyee().ToString();
         }
+        //protected void DrpFilterSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    List<EmpolyeeInfor> empolyees;
+        //    switch (DrpFilterSelect.SelectedIndex)
+        //    {
+        //        case 0:
+        //            empolyees = EmpolyeeManager.GetAllEmpolyee();
+        //            Repeater1.DataSource = empolyees;
+        //            Repeater1.DataBind();
+        //            break;
+        //        case 1:
+        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(1);
+        //            Repeater1.DataSource = empolyees;
+        //            Repeater1.DataBind();
+        //            break;
+        //        case 2:
+        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(0);
+        //            Repeater1.DataSource = empolyees;
+        //            Repeater1.DataBind();
+        //            break;
+        //        case 3:
+        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(2);
+        //            Repeater1.DataSource = empolyees;
+        //            Repeater1.DataBind();
+        //            break;
+        //        default:
+        //            empolyees = EmpolyeeManager.GetAllEmpolyee();
+        //            Repeater1.DataSource = empolyees;
+        //            Repeater1.DataBind();
+        //            break;
+        //    }
+        //}
     }
 }
