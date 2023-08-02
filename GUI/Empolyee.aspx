@@ -28,12 +28,13 @@
                                 </p>
 
                                 <div class="employee-header-filter">
-                                    <asp:DropDownList ID="DrpFilterSelect" runat="server">
-                                        <asp:ListItem Selected="True" Value="0">Tất Cả Nh&#226;n Vi&#234;n</asp:ListItem>
-                                        <asp:ListItem Value="1">Đ&#227; K&#237;ch Hoạt</asp:ListItem>
-                                        <asp:ListItem Value="2">Chưa K&#237;ch Hoạt</asp:ListItem>
-                                        <asp:ListItem Value="3">Đ&#227; V&#244; Hiệu</asp:ListItem>
-                                    </asp:DropDownList>
+                                    <select id="drplist_filterEmpolyee" onchange="handleFilterEmpolyee()">
+                                        <option value="0">Tất cả nhân viên</option>
+                                        <option value="1">Đã kích hoạt</option>
+                                        <option value="2">Chưa kích hoạt</option>
+                                        <option value="3">Đã vô hiệu</option>
+                                        <option value="4">Quản Trị Viên</option>
+                                    </select>
                                 </div>
 
                                 <div class="employee-header-search">
@@ -82,13 +83,13 @@
                                 <asp:Repeater ID="Repeater1" runat="server">
                                     <ItemTemplate>
 
-                                        <div class="employee-body-card" commandargument='<%# Eval("Id") %>'>
+                                        <div class="employee-body-card" commandargument='<%# Eval("Id") %>' usrtype='<%# Eval("UserType") %>' isdrop='<%# Eval("Status") %>'>
                                             <div class="employee-card__header" commandargument='<%# Eval("Id") %>' onmouseenter="getStatusAndChanges(this)">
                                                 <input type="checkbox" class="employee-card__header-checkbox">
                                                 <div class="employee-card__header-action">
                                                     <button id="btnStatus" type="button" class="employee-card__header-status  "
                                                         commandargument='<%# Eval("Status") %>' empolyeecardid='<%# Eval("Id") %>'>
-                                                        Active
+                                                        Đã Kích Hoạt
                                                     </button>
                                                     <button type="button" onclick="employeeShowEllipsis(event, 'block')"
                                                         onmouseleave="employeeShowEllipsis(event, 'none')"
@@ -222,7 +223,7 @@
                     </div>
 
                     <div class="userInfor-Detail__infor">
-                        <p>Loại Tài Khoản:</p>
+                        <p>Quyền Tài Khoản:</p>
                         <span id="lblUserType">Not Infor</span>
                     </div>
                 </div>
@@ -294,8 +295,8 @@
                         <p>Thay Đổi Trạng Thái Tài Khoản:</p>
                     </div>
                     <div class="UIDetail__action">
-                        <button type="button" class="btnEnable" onclick="handleToggleStatusClick(1)">Enable</button>
-                        <button type="button" class="btnDisable" onclick="handleToggleStatusClick(2)">Disable</button>
+                        <button type="button" class="btnEnable" onclick="handleToggleStatusClick(1)">Kích Hoạt</button>
+                        <button type="button" class="btnDisable" onclick="handleToggleStatusClick(2)">Vô Hiệu</button>
                     </div>
                 </div>
 
@@ -344,6 +345,57 @@
         </div>
     </div>
 
+    <script>
+        function handleFilterEmpolyee() {
+            const drpElement = document.getElementById('drplist_filterEmpolyee');
+
+            if (drpElement.value == 0) {
+                clearfilterEmpolyee();
+            } else if (drpElement.value == 1) {
+                filterEmpolyee(1);
+            } else if (drpElement.value == 2) {
+                filterEmpolyee(0);
+            } else if (drpElement.value == 3) {
+                filterEmpolyee(2);
+            } else if (drpElement.value == 4) {
+                filterEmpolyeeForUserType(0)
+            }
+        }
+        function filterEmpolyeeForUserType(usertype) {
+            var UserCard = document.querySelectorAll(".employee-body-card");
+            UserCard.forEach((UserCardId) => {
+                const id = UserCardId.getAttribute("commandargument");
+                const userTypeId = UserCardId.getAttribute("usrtype");
+                if (userTypeId != usertype) {
+                    UserCardId.classList.add('hide');
+                } else {
+                    if (id <= 9999) { UserCardId.classList.remove('hide'); };
+                }
+            });
+        }
+
+        function filterEmpolyee(status) {
+            var UserCard = document.querySelectorAll(".employee-body-card");
+            UserCard.forEach((UserCardId) => {
+                const id = UserCardId.getAttribute("commandargument");
+                const statusId = UserCardId.getAttribute("isdrop");
+                if (statusId != status) {
+                    UserCardId.classList.add('hide');
+                } else {
+                    if (id <= 9999) { UserCardId.classList.remove('hide'); };
+                }
+            });
+        }
+
+        function clearfilterEmpolyee() {
+            var UserCard = document.querySelectorAll(".employee-body-card");
+            UserCard.forEach((UserCardId) => {
+                const id = UserCardId.getAttribute("commandargument");
+                var statusId = UserCardId.getAttribute("isdrop");
+                if (id <= 9999) { UserCardId.classList.remove('hide'); };
+            });
+        }
+    </script>
 
     <script src="JS/empolyee.js"></script>
     <script src="JS/toast.js"></script>

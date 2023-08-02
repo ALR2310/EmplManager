@@ -161,6 +161,7 @@ function handleHideUserCard() {
 
         if (getId == id) {
             UserCardId.classList.add("hide");
+            UserCardId.setAttribute("commandargument", "-9999")
         }
     });
 }
@@ -193,7 +194,7 @@ function handleDeleteUser() {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
-                        var countEmpolyee = document.querySelector("#ContentPlaceHolder1_lblCountEmpolyee");
+                        var countEmpolyee = document.getElementById('ContentPlaceHolder1_lblCountEmpolyee');
                         countEmpolyee.textContent = response.d;
                     },
                     error: function (err) {
@@ -233,14 +234,14 @@ function handleToggleUserTypeClick(UserTypeId) {
             if (response.d == true) {
                 divAdminAdd.classList.add("hide");
                 divAdminRemove.classList.remove("hide");
-                $("#lblUserType").text("Administrator");
-                showSuccessToast("Đã cấp quyền Administrator cho người dùng này");
+                $("#lblUserType").text("Quản Trị Viên");
+                showSuccessToast("Đã cấp quyền Quản Trị cho người dùng này");
             }
             else {
                 divAdminAdd.classList.remove("hide");
                 divAdminRemove.classList.add("hide");
-                $("#lblUserType").text("User");
-                showSuccessToast("Đã loại bỏ quyền Administrator của người dùng này");
+                $("#lblUserType").text("Người Dùng");
+                showSuccessToast("Đã loại bỏ quyền Quản Trị của người dùng này");
             }
         },
         error: function (error) {
@@ -259,11 +260,11 @@ function checkUserType() {
     var currentUserType = document.getElementById("lblUserType");
 
     switch (currentUserType.textContent) {
-        case "Administrator":
+        case "Quản Trị Viên":
             divAdminAdd.classList.add("hide");
             divAdminRemove.classList.remove("hide");
             break;
-        case "User":
+        case "Người Dùng":
             divAdminAdd.classList.remove("hide");
             divAdminRemove.classList.add("hide");
             break;
@@ -283,7 +284,7 @@ function handleToggleStatusClick(StatusId) {
 
     var checkstatus = $("#lblStatus").text();
     var convertstatustoid;
-    if (checkstatus == "Actived") {
+    if (checkstatus == "Đã Kích Hoạt") {
         convertstatustoid = 1;
     }
     else {
@@ -301,12 +302,14 @@ function handleToggleStatusClick(StatusId) {
                 const CardId = document.querySelectorAll("#btnStatus");
                 var isStatus = document.querySelector("#userIdinfor");
                 var isAvatarImage = document.querySelector("#AvatarImg");
+                var UserCard = document.querySelectorAll(".employee-body-card");
                 var NoActiveClass = "noActive";
                 var ActiveClass = "Active";
 
                 if (response.d == true) {
-                    $("#lblStatus").text("Actived");
-                    isStatus.textContent = "Actived";
+                    $("#lblStatus").text("Đã Kích Hoạt");
+                    /*$("#lblStatus").style.color = "green";*/
+                    isStatus.textContent = "Đã Kích Hoạt";
                     isStatus.classList.add(ActiveClass);
                     isStatus.classList.remove(NoActiveClass);
 
@@ -316,16 +319,25 @@ function handleToggleStatusClick(StatusId) {
 
                     CardId.forEach((usersIdCard) => {
                         const getId = usersIdCard.getAttribute("empolyeecardid");
-
                         if (getId == id) {
                             usersIdCard.setAttribute("commandargument", 1);
                             const statusgetid = usersIdCard.getAttribute("commandargument");
                             handleStatus(statusgetid, usersIdCard);
                         }
                     });
+
+                    UserCard.forEach((UserCardId) => {
+                        const idCard = UserCardId.getAttribute("commandargument");
+
+                        if (id == idCard) {
+                            UserCardId.setAttribute("isdrop", StatusId);
+                        }
+                    });
                 } else {
-                    $("#lblStatus").text("Disable");
-                    isStatus.textContent = "Disable";
+                    $("#lblStatus").text("Vô Hiệu Hoá");
+                    /*$("#lblStatus").style.color = "red";*/
+
+                    isStatus.textContent = "Vô Hiệu Hoá";
                     isStatus.classList.add(NoActiveClass);
                     isStatus.classList.remove(ActiveClass);
 
@@ -340,6 +352,14 @@ function handleToggleStatusClick(StatusId) {
                             usersIdCard.setAttribute("commandargument", 2);
                             const statusgetid = usersIdCard.getAttribute("commandargument");
                             handleStatus(statusgetid, usersIdCard);
+                        }
+                    });
+
+                    UserCard.forEach((UserCardId) => {
+                        const idCard = UserCardId.getAttribute("commandargument");
+
+                        if (id == idCard) {
+                            UserCardId.setAttribute("isdrop", StatusId);
                         }
                     });
                 }
@@ -363,20 +383,20 @@ function handleToggleStatusClick(StatusId) {
 
 
 
-//---------------Hàm xử lý trạng thái
+//---------------function xử lý trạng thái
 const btnStatus = document.querySelectorAll(".employee-card__header-status");
 function handleStatus(status, button) {
     // Xóa tất cả các class hiện có trên button
     button.classList.remove("Active", "noActive");
-    button.textContent = "Not Actived";
+    button.textContent = "Chưa Kích Hoạt";
 
     // Thêm class tùy thuộc vào giá trị của trường "Status"
     if (status === "1") {
-        button.textContent = "Actived";
+        button.textContent = "Đã Kích Hoạt";
         button.classList.add("Active");
         button.classList.remove("noActive");
     } else if (status === "2") {
-        button.textContent = "Disable";
+        button.textContent = "Vô Hiệu Hoá";
         button.classList.add("noActive");
         button.classList.remove("Active");
     }
@@ -416,20 +436,20 @@ function getStatusAndChanges(element) {
 
                     switch (status) {
                         case 0:
-                            $("#lblStatus").text("Not Actived");
-                            isStatus.textContent = "Not Actived";
+                            $("#lblStatus").text("Chưa Kích Hoạt");
+                            isStatus.textContent = "Chưa Kích Hoạt";
                             isStatus.classList.remove(ActiveClass);
                             isStatus.classList.remove(NoActiveClass);
                             break;
                         case 1:
-                            $("#lblStatus").text("Actived");
-                            isStatus.textContent = "Actived";
+                            $("#lblStatus").text("Đã Kích Hoạt");
+                            isStatus.textContent = "Đã Kích Hoạt";
                             isStatus.classList.add(ActiveClass);
                             isStatus.classList.remove(NoActiveClass);
                             break;
                         case 2:
-                            $("#lblStatus").text("Disable");
-                            isStatus.textContent = "Disable";
+                            $("#lblStatus").text("Vô Hiệu Hoá");
+                            isStatus.textContent = "Vô Hiệu Hoá";
                             isStatus.classList.add(NoActiveClass);
                             isStatus.classList.remove(ActiveClass);
                             break;
@@ -489,8 +509,8 @@ function getDataforClickShow(element) {
                 var status = empolyeeInfo.Status;
                 switch (status) {
                     case 0:
-                        $("#lblStatus").text("Not Actived");
-                        isStatus.textContent = "Not Actived";
+                        $("#lblStatus").text("Chưa Kích Hoạt");
+                        isStatus.textContent = "Chưa Kích Hoạt";
                         isStatus.classList.remove(ActiveClass);
                         isStatus.classList.remove(NoActiveClass);
 
@@ -498,8 +518,8 @@ function getDataforClickShow(element) {
                         isAvatarImage.classList.remove(NoActiveClass);
                         break;
                     case 1:
-                        $("#lblStatus").text("Actived");
-                        isStatus.textContent = "Actived";
+                        $("#lblStatus").text("Đã Kích Hoạt");
+                        isStatus.textContent = "Đã Kích Hoạt";
                         isStatus.classList.add(ActiveClass);
                         isStatus.classList.remove(NoActiveClass);
 
@@ -507,8 +527,8 @@ function getDataforClickShow(element) {
                         isAvatarImage.classList.remove(NoActiveClass);
                         break;
                     case 2:
-                        $("#lblStatus").text("Disable");
-                        isStatus.textContent = "Disable";
+                        $("#lblStatus").text("Vô Hiệu Hoá");
+                        isStatus.textContent = "Vô Hiệu Hoá";
                         isStatus.classList.add(NoActiveClass);
                         isStatus.classList.remove(ActiveClass);
 
@@ -520,10 +540,10 @@ function getDataforClickShow(element) {
                 var userType = empolyeeInfo.UserType;
                 switch (userType) {
                     case 0:
-                        $("#lblUserType").text("Administrator")
+                        $("#lblUserType").text("Quản Trị Viên")
                         break;
                     case 1:
-                        $("#lblUserType").text("User")
+                        $("#lblUserType").text("Người Dùng")
                         break;
                 }
 
