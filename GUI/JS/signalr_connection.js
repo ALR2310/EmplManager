@@ -1,11 +1,16 @@
 ﻿
 
 
+const edited_span = "&nbsp;<span  class='italic mess_edited'>(đã chỉnh sửa)</span>";
 
 $(function () {
     var connection = $.hubConnection();
     var hubProxy = connection.createHubProxy('chatHub');
-
+    hubProxy.on('MessageEdited', async function (json_data) {
+        console.log(json_data);
+        json_data = JSON.parse(json_data);
+        $(`.chat-main__item[message_id=${json_data.id}]`).find(".mess_content:not(.toRemove)").html(json_data.new_content + edited_span);
+    });
     hubProxy.on('ReceiveMessage', async function (message) {
 
         message = JSON.parse(message);
@@ -19,7 +24,8 @@ $(function () {
         latest_message_id = message.Id;
     
         let can_render = latest_message_id == findLatestMessageId() + 1;
- 
+        console.log(latest_message_id);
+        console.log(findLatestMessageId());
         if (can_render) {
             console.log("Rendering new Message...");
             loadedbottom = true;
@@ -96,8 +102,9 @@ $(function () {
     hubProxy.on('UpdateReaction', async function (json) {
 
         var data = JSON.parse(json);
-        console.log(data);
+
         if (bound_reaction_lists[data.Message_Id]) {
+            console.log(data.Reaction_Ids);
             bound_reaction_lists[data.Message_Id] = data.Reaction_Ids;
         }
         UpdateMessageReaction(data);

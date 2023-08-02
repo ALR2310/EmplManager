@@ -39,6 +39,10 @@ const DayStrList = {
 
 var CurrentTime = new Date();
 const FormatFuncs = {
+    '_is_admin_or_not_': async function (message) {
+        if (Users[message.UserId] == null) { await fetchUser(message.UserId); }
+        return Users[message.UserId].UserType != 2 ? "display_none" : "";
+    },
     '_timegaptostyle_': async function (message) {
         return getTimeGap(message.AtCreate) == true ? "" : "display:none";
     },
@@ -103,6 +107,10 @@ const FormatFuncs = {
     '_deleted_italic_': function (message) {
 
         return message.Status != null && message.Status != 1 ? "italic" : "";
+    },
+    '_edited_or_not_': function (message) {
+ 
+        return !!message.Edited ? "italic mess_edited" : "display_none";
     },
     '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
@@ -200,10 +208,12 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
         if (Users[id] == null) { await fetchUser(id) }
     }
     emoji_display.on("mouseenter", async function () {
+        if (!bound_reaction_lists[message_id]) { return; }
         let final_str = "Cảm xúc được bày tỏ bởi: ";
 
      
         let index = 0;
+
         for (id of bound_reaction_lists[message_id]) {
             if (index == emoji_speech_limit) {
                 final_str = final_str + "và " + `<a>${bound_reaction_lists[message_id].length - index} nguời khác.</a>`;
@@ -479,15 +489,16 @@ function requestJsonData(afterid, scrollToBottomAtLoad, Wipe_Old_Messages) {
 const DeleteMessage = function (data) {
 
     data = JSON.parse(data);
-    var message_id = data.id;
-    var status = data.status;
+    let message_id = data.id;
+    let status = data.status;
     console.log(message_id);
     console.log(status);
 
-    var deleting_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".mess_content");
-
+    let deleting_ele_par_ele = $(`.chat-main__item[message_id=${message_id}]`);
+    deleting_ele_par_ele.find(".chat-item__box").attr("drop_hidden", "true");
+    let deleting_ele = deleting_ele_par_ele.find(".mess_content");
     deleting_ele.addClass("italic");
-    var deleted_mess =
+    let deleted_mess =
         status == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" : "Tin nhắn đã được thu hồi";
     deleting_ele.text(deleted_mess);
 

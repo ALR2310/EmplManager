@@ -6,13 +6,26 @@
 .titles {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: left;
+    align-items: baseline;
 }
+    .titles > div {
+        padding-right: 5px;
+        height: 15px;
+    }
+        .titles > div > .speech {
+            top: -570%;
+          
+        }
 
-.chat-main__item--right > div > .chat-wrapper > .chat-item__box > .titles {
-    flex-direction: row-reverse;
-    justify-content: end;
+
+.titles > div > img {
+    top: 2px;
 }
+    .chat-main__item--right > div > .chat-wrapper > .chat-item__box > .titles {
+        flex-direction: row-reverse;
+        justify-content: end;
+    }
 
     .chat-main__item--right > div > .chat-wrapper > .chat-item__box > .titles > span {
         flex-direction: row-reverse;
@@ -669,7 +682,7 @@ textarea {
 }
 
 .editingBoxes {
-    display: flex !important;
+
     align-items: center;
     padding: 5px 0;
     height: auto;
@@ -686,4 +699,24 @@ textarea {
     background: #d0dfff29;
     border-radius: 5px;
     padding: 5px 5px;
+}
+.mess_content.toRemove{
+    min-width:30vw;
+}
+
+.message_editing > .chat-main__content > .chat-wrapper > .chat-item__box > #main__ellips {
+    display: none !important;
+}
+
+.display_none{
+    display: none !important;
+}
+
+.mess_edited {
+    font-size: .75em;
+    top: -1px;  
+}
+
+.chat-main__list {
+    overflow-x: hidden;
 }

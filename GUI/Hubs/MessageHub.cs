@@ -19,5 +19,10 @@ namespace SignalRChat.Hubs
         {
             await Clients.All.SendAsync("UpdateReaction",json);
         }
+
+        public async Task MessageEdited(string json)
+        {
+            await Clients.All.SendAsync("MessageEdited", json);
+        }
     }
 }

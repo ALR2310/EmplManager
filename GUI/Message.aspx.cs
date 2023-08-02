@@ -179,7 +179,25 @@ namespace GUI
             return success_str;
         }
         [System.Web.Services.WebMethod]
-   
+        public static string EditMessage(string content,int id)
+        {
+            Debug.WriteLine("Editing Message...");
+            try
+            {
+                InlineQuery query = new InlineQuery();
+                query.Execute($"exec edit_message @content = N'{content}', @mes_id = {id};");
+                hubContext.Clients.All.MessageEdited($"{{ \"id\": {id}, \"new_content\": \"{content}\"}}");
+
+                return success_str;
+            }
+            catch
+            {
+                HttpContext.Current.Response.StatusCode = 500; 
+                return failed_str;
+            }
+        }
+
+        [System.Web.Services.WebMethod]
         public static string DeleteMessage(int id)
         {
             HttpContext context = HttpContext.Current;
@@ -190,7 +208,7 @@ namespace GUI
             DAL.Message DeletingMessage = MessageManager.GetMessageById(id);
 
             if (DeletingMessage == null) { return failed_str; }
-            if (!(RequestedUser.UserType == 0 || DeletingMessage.UserId == RequestedUser.Id)) { return failed_str; }
+            if (!(RequestedUser.UserType == 2 || DeletingMessage.UserId == RequestedUser.Id)) { return failed_str; }
             int deleting_status = DeletingMessage.UserId == RequestedUser.Id ? 0 : -1;
             if (MessageManager.SetMessStatusToDeleted(id, deleting_status))
             {

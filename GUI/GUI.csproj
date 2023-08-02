@@ -269,9 +269,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="UrlRewritingNet.UrlRewriter">
-      <HintPath>..\UrlRewritingNet.UrlRewriter.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Animation\Check\js.js" />
@@ -281,6 +278,7 @@
     <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrowDown.svg" />
+    <Content Include="Images\Icons\attach.svg" />
     <Content Include="Images\Emojis\OPPENHEIMER.svg" />
     <Content Include="Images\Emojis\eyes.svg" />
     <Content Include="Images\Emojis\joy.svg" />
@@ -289,6 +287,7 @@
     <Content Include="Images\Emojis\heart.svg" />
     <Content Include="Images\Emojis\smile_tear.svg" />
     <Content Include="Images\Emojis\thumbsup.svg" />
+    <Content Include="Images\Icons\admin.svg" />
     <Content Include="Images\Icons\mess_delete_icon.svg" />
     <Content Include="Images\Icons\mess_edit_icon.svg" />
     <Content Include="Images\magnifying_glass.svg" />
@@ -302,6 +301,7 @@
     <Content Include="Images\team.png" />
     <Content Include="Images\uploadFile.svg" />
     <Content Include="Images\uploadImage.svg" />
+    <Content Include="JS\image_attach.js" />
     <Content Include="JS\empolyee.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />

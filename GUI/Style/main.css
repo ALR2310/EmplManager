@@ -327,8 +327,10 @@ html {
 .chat-main__ellips {
     z-index: 2;
 }
-
 .chat-item__box[drop_hidden='true'] > #main__ellips {
+    display: none !important;
+}
+.chat-item__box[drop_hidden='true'] > .emoji_list {
     display: none !important;
 }
 
@@ -365,8 +367,7 @@ html {
 
     .chat-main__item[owner='true'] .chat-ellips__dropdown__menu {
         left: auto;
-        right: 20%;
-        top: -340%;
+        right: 25%;
     }
 
 .chat-item__box {
@@ -388,10 +389,12 @@ html {
     position: absolute;
     left: 102%;
     top: 50%;
+    padding-left: 10px;
     transform: translateY(-50%);
 }
 
     .chat-main__ellips button {
+        height: 100%;
         background-color: transparent;
         font-size: 16px;
         width: 25px;
@@ -399,7 +402,12 @@ html {
         border: none;
         cursor: pointer;
         border-radius: 50% !important;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items:center;
+ 
     }
+   
 
         .chat-main__ellips button:hover {
             background-color: #f6f6f9;
@@ -452,6 +460,8 @@ html {
 
 .chat-ellips__dropdown {
     position: relative;
+    display: flex;
+    align-content: center;
 }
 
 .chat-ellips__emoji__toggle,
@@ -500,13 +510,14 @@ html {
 .chat-ellips__dropdown__menu {
     display: none;
     position: absolute;
-    top: -340%;
+    bottom: 100%;
     min-width: 120px;
     margin: 0;
-    list-style: none;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    left: 25%;
+    right: auto;
 }
 
     .chat-ellips__dropdown__menu li {

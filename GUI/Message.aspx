@@ -141,6 +141,7 @@
                                             <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles placeholder_boxes_holder">
+
                                                 </div>
 
                                                 <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
@@ -184,12 +185,17 @@
                                     <div class="chat-item__box" drop_hidden="_drop_hidden_">
 
                                         <div class="titles">
-                                            <a class="mess_display_name" href="#">_display_name_</a>
-
+                                    
+                                            <div class="_is_admin_or_not_">    <img style="height:20px" src="Images/Icons/admin.svg" />
+                                                    <div class="speech bottom">
+                                Quản Trị Viên
+                            </div>
+                                            </div>
+                                                <a class="mess_display_name" href="#">_display_name_</a>
                                         </div>
 
                                         <p class="_deleted_italic_ mess_content">
-                                            _deleted_or_content_
+                                            _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
                                         <div class="emoji_list">
                                         </div>
@@ -215,7 +221,7 @@
                     <span>TIN NHẮN MỚI</span>
                 </div>
                 <div class="chat-footer">
-
+                    <button onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;z"><img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg"/></button>
                     <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                     <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                         Gửi
@@ -264,16 +270,16 @@
                         </button>
 
                     </div>
-                    <div class="chat-ellips__dropdown ">
+                    <div id="option_dropdown" class="chat-ellips__dropdown ">
                         <button type="button" class="chat-ellips__dropdown__toggle" onmouseenter="toggleDropdown(event,'block')" onmouseleave="toggleDropdown(event,'none')" onclick="toggleDropdown(event,'block')">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                             <ul class="chat-ellips__dropdown__menu">
 
-                                <li onclick="mess_edit();">
+                                <li class="edit_button" onclick="mess_edit();">
                                     <input type="submit" onclick="return false;" id="Button2" value="Chỉnh Sửa" />
                                     <img src="/Images/Icons/mess_edit_icon.svg" />
                                 </li>
-                                <li onclick="mess_delete();" class="button_red_highlight">
+                                <li onclick="mess_delete();" class="delete_button button_red_highlight">
                                     <input onclick="return false;" type="submit" id="btnDelete" value="Xoá, gỡ" />
                                     <img src="/Images/Icons/mess_delete_icon.svg" />
                                 </li>
@@ -297,7 +303,7 @@
         <div id="editTemplate" style="display: none;">
 
             <p class="mess_content toRemove" contenteditable="true" >rwa</p>
-            <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
+            <button class="btn btn-chat-footer" onclick="sendEdit(event); return false;">
                 Chỉnh Sửa
                                 <i class="fa-solid fa-pen"></i>
 
@@ -334,6 +340,9 @@
             focused = false;
         };
     </script>
+    <script src="JS/image_attach.js">
+      
+    </script>
     <script>
         $("#loading_circle").addClass("loader_show");
 
@@ -362,6 +371,8 @@
             localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving));
             console.log("Stored lastRead");
         }
+
+
         const getLastReadMessage = function () {
             let raw_data = JSON.parse(localStorage.getItem("lastReadMessage" + Users.CLIENT_USER.Id));
             if (raw_data == null) raw_data = { Id: latest_message_id };
@@ -478,31 +489,77 @@
 
         }
         const ellips = $("#main__ellips");
-        function toggleEllips(e) {
 
+        let edit_button = ellips.find(".edit_button");
+        let delete_button = ellips.find(".delete_button");
+
+        let option_dropdown_ellips = ellips.find("#option_dropdown");
+        function toggleEllips(e) {
+       
             var parele = $(e.target).closest(".chat-main__item");
 
             ellips.appendTo(parele.find(".chat-item__box"));
             ellips.css("display", "flex");
 
             ellips.attr("Message_Id", parele.attr("message_id"));
+
+            let isNOTowner = parele.attr("owner") != 'true';
+
+            let isadmin = Users.CLIENT_USER.UserType == 2;
+         
+            edit_button.toggleClass("display_none", isNOTowner);
+
+            delete_button.toggleClass("display_none", isNOTowner && !isadmin);
+
+            let has_visible_boxes = option_dropdown_ellips.find("li:not(.display_none)").length != 0;
+
+            option_dropdown_ellips.toggleClass("display_none", !has_visible_boxes);
             toggleEmoji(e, 'none');
         }
         const mess_edit_template = $('#editTemplate');
+        mess_edit_template.attr("id", "");
+        mess_edit_template.addClass("editingBoxes");
         var delete_cd = {};
+        function sendEdit(event) {
+            let parent_ele = $(event.target).closest(".chat-main__item.chat_force_highlight.message_editing");
+            let edited_text = parent_ele.find(".mess_content.toRemove").text();
+            let og_text = parent_ele.find(".mess_content:not(.toRemove)").text().trim();
+
+            let toremove = $(".editingBoxes");
+
+            $(toremove.parent()).find("p").css("display", "");
+            console.log(toremove.closest(".chat-main__item"));
+            toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
+            toremove.remove();
+
+
+            if (edited_text == og_text) { return; }
+
+            fetch("Message.aspx/EditMessage", {
+                headers: {
+
+
+                    "content-type": "application/json",
+
+                },
+                method: "POST",
+                body: `{content: '${edited_text}',id: ${parent_ele.attr('message_id')}}`
+            });
+        }
         function mess_edit() {
             $(".chat_force_highlight").removeClass("chat_force_highlight");
             let editing_id = ellips.attr("Message_Id");
             
             let chat_item = $(`.chat-main__item[message_id=${editing_id}]`);
-            chat_item.addClass("chat_force_highlight");
+            chat_item.addClass("chat_force_highlight message_editing");
             let mess_content = chat_item.find(".mess_content");
             mess_content.css("display", "none");
 
             let editing_boxes = mess_edit_template.clone();
             let editing = editing_boxes.find("p");
 
-            editing.text(mess_content.text().trim());
+
+            editing.text(mess_content.text().replaceAll("(đã chỉnh sửa)","").trim());
          
             editing.focus();
           
@@ -520,6 +577,23 @@
 
           
         }
+
+        $(window).on("click", function (event) {
+            let target = $(event.target);
+            let closest = target.closest(".chat-item__box");
+            if (closest.length != 0 && closest.closest(".message_editing").length != 0) {
+
+            }
+            else  {
+                let toremove = $(".editingBoxes");
+         
+                $(toremove.parent()).find("p").css("display", "");
+                console.log(toremove.closest(".chat-main__item"));
+                toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
+                toremove.remove();
+
+            }
+        });
         function mess_delete(e) {
 
             if (delete_cd[Number(ellips.attr("Message_Id"))] == true) { return; }
