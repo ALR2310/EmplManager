@@ -22,10 +22,10 @@
                 <ul class="list-emoji">
 
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                        <ContentTemplate>
+                        <contenttemplate>
 
                             <asp:Repeater ID="ListEmoji_Repeater" runat="server">
-                                <ItemTemplate>
+                                <itemtemplate>
 
                                     <li class="item-emoji">
                                         <a runat="server" id="RemoveEmoji" commandargument='<%# Eval("ID") %>' onserverclick="RemoveEmoji_ServerClick">
@@ -46,10 +46,10 @@
                                         </a>
                                     </li>
 
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:Repeater>
 
-                        </ContentTemplate>
+                        </contenttemplate>
                     </asp:UpdatePanel>
 
 
@@ -141,7 +141,6 @@
                                             <div class="chat-item__box placeholder_loading_chat_box" drop_hidden="_drop_hidden_">
 
                                                 <div class="titles placeholder_boxes_holder">
-
                                                 </div>
 
                                                 <div class="placeholder_boxes_holder placeholder_content_boxes mess_content">
@@ -185,13 +184,14 @@
                                     <div class="chat-item__box" drop_hidden="_drop_hidden_">
 
                                         <div class="titles">
-                                    
-                                            <div class="_is_admin_or_not_">    <img style="height:20px" src="Images/Icons/admin.svg" />
-                                                    <div class="speech bottom">
-                                Quản Trị Viên
-                            </div>
+
+                                            <div class="_is_admin_or_not_">
+                                                <img style="height: 20px" src="Images/Icons/admin.svg" />
+                                                <div class="speech bottom">
+                                                    Quản Trị Viên
+                                                </div>
                                             </div>
-                                                <a class="mess_display_name" href="#">_display_name_</a>
+                                            <a class="mess_display_name" href="#">_display_name_</a>
                                         </div>
 
                                         <p class="_deleted_italic_ mess_content">
@@ -221,17 +221,41 @@
                     <span>TIN NHẮN MỚI</span>
                 </div>
                 <div class="chat-footer">
-                    <input type="file" id="uploadInput" name="uploadInput" multiple style="display:none"/> 
-  
-                    <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;z"><img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg"/></button>
-                    <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
-                    <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
-                        Gửi
+                    <div class="uploadPreviewContainer">
+                    <div id="uploadPreview">
+                      
+                        
+
+                    </div>
+                        </div>
+                    <div class="footer-wrapper">
+                        <input type="file" id="uploadInput" name="uploadInput" multiple style="display: none" />
+
+                        <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none; z">
+                            <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
+                        <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                        <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
+                            Gửi
                                 <i class="fa-solid fa-paper-plane"></i>
 
-                    </button>
-
+                        </button>
+                    </div>
                 </div>
+                 <div id="uploadPreviewTemplate" class="filePreview">
+                             <ul class="filePreviewToolbar">
+                                <li onclick="" class="edit_button">
+                            
+                                    <img src="/Images/Icons/upload_edit.svg"  />
+                                </li>
+                                 <li onclick="" class="delete_button">
+                            
+                                    <img src="/Images/Icons/mess_delete_icon.svg" class="delete_icon" />
+                                </li>
+
+                             </ul>
+                             <img src="Images/Icons/archive.svg"/>
+                            <span>archive.zip</span>
+                        </div>
                 <div id="main__ellips" class="chat-main__ellips">
                     <div class="chat-ellips__dropdown">
                         <button type="button" class="chat-ellips__emoji__toggle"
@@ -304,7 +328,7 @@
         </div>
         <div id="editTemplate" style="display: none;">
 
-            <p class="mess_content toRemove" contenteditable="true" >rwa</p>
+            <p class="mess_content toRemove" contenteditable="true">rwa</p>
             <button class="btn btn-chat-footer" onclick="sendEdit(event); return false;">
                 Chỉnh Sửa
                                 <i class="fa-solid fa-pen"></i>
@@ -497,7 +521,7 @@
 
         let option_dropdown_ellips = ellips.find("#option_dropdown");
         function toggleEllips(e) {
-       
+
             var parele = $(e.target).closest(".chat-main__item");
 
             ellips.appendTo(parele.find(".chat-item__box"));
@@ -508,7 +532,7 @@
             let isNOTowner = parele.attr("owner") != 'true';
 
             let isadmin = Users.CLIENT_USER.UserType == 2;
-         
+
             edit_button.toggleClass("display_none", isNOTowner);
 
             delete_button.toggleClass("display_none", isNOTowner && !isadmin);
@@ -551,7 +575,7 @@
         function mess_edit() {
             $(".chat_force_highlight").removeClass("chat_force_highlight");
             let editing_id = ellips.attr("Message_Id");
-            
+
             let chat_item = $(`.chat-main__item[message_id=${editing_id}]`);
             chat_item.addClass("chat_force_highlight message_editing");
             let mess_content = chat_item.find(".mess_content");
@@ -561,10 +585,10 @@
             let editing = editing_boxes.find("p");
 
 
-            editing.text(mess_content.text().replaceAll("(đã chỉnh sửa)","").trim());
-         
+            editing.text(mess_content.text().replaceAll("(đã chỉnh sửa)", "").trim());
+
             editing.focus();
-          
+
             editing_boxes.insertBefore(mess_content);
             editing_boxes.css("display", "");
 
@@ -577,7 +601,7 @@
             selection.removeAllRanges(); // Remove any existing selection
             selection.addRange(range); // Add the new range with the cursor at the end
 
-          
+
         }
 
         $(window).on("click", function (event) {
@@ -586,9 +610,9 @@
             if (closest.length != 0 && closest.closest(".message_editing").length != 0) {
 
             }
-            else  {
+            else {
                 let toremove = $(".editingBoxes");
-         
+
                 $(toremove.parent()).find("p").css("display", "");
                 console.log(toremove.closest(".chat-main__item"));
                 toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
@@ -630,8 +654,8 @@
 
                 }
             }
-        
-            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName =="P") { return };
+
+            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName == "P") { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 

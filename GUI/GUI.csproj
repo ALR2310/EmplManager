@@ -278,6 +278,7 @@
     <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrowDown.svg" />
+    <Content Include="Images\Icons\archive.svg" />
     <Content Include="Images\Icons\attach.svg" />
     <Content Include="Images\Emojis\OPPENHEIMER.svg" />
     <Content Include="Images\Emojis\eyes.svg" />
@@ -288,8 +289,12 @@
     <Content Include="Images\Emojis\smile_tear.svg" />
     <Content Include="Images\Emojis\thumbsup.svg" />
     <Content Include="Images\Icons\admin.svg" />
+    <Content Include="Images\Icons\blank_file.svg" />
+    <Content Include="Images\Icons\code_file.svg" />
     <Content Include="Images\Icons\mess_delete_icon.svg" />
     <Content Include="Images\Icons\mess_edit_icon.svg" />
+    <Content Include="Images\Icons\text_file.svg" />
+    <Content Include="Images\Icons\upload_edit.svg" />
     <Content Include="Images\magnifying_glass.svg" />
     <Content Include="Images\markasread.svg" />
     <Content Include="Images\avatar-1.jpg" />
