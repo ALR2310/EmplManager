@@ -221,7 +221,9 @@
                     <span>TIN NHẮN MỚI</span>
                 </div>
                 <div class="chat-footer">
-                    <button onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;z"><img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg"/></button>
+                    <input type="file" id="uploadInput" name="uploadInput" multiple style="display:none"/> 
+  
+                    <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;z"><img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg"/></button>
                     <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                     <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                         Gửi

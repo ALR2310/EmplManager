@@ -110,7 +110,7 @@ const FormatFuncs = {
     },
     '_edited_or_not_': function (message) {
  
-        return !!message.Edited ? "italic mess_edited" : "display_none";
+        return !!message.Edited && !message.Status == 1 ? "italic mess_edited" : "display_none";
     },
     '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
