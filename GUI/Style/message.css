@@ -720,7 +720,9 @@ textarea {
 .chat-main__list {
     overflow-x: hidden;
 }
-
+#attachMenuButton {
+    user-select: none; 
+}
 #attachMenuButton > img:hover {
     filter: brightness(1.5) saturate(.9);
 }
