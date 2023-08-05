@@ -221,7 +221,7 @@
                     <span>TIN NHẮN MỚI</span>
                 </div>
                 <div class="chat-footer">
-                    <div class="uploadPreviewContainer">
+                    <div class="uploadPreviewContainer"  style="border-bottom: none;">
                     <div id="uploadPreview">
                       
                         
@@ -253,7 +253,7 @@
                                 </li>
 
                              </ul>
-                             <img src="Images/Icons/archive.svg"/>
+                             <img src="Images/Icons/blank_file.svg"/>
                             <span>archive.zip</span>
                         </div>
                 <div id="main__ellips" class="chat-main__ellips">
