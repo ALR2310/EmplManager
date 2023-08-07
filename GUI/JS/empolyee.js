@@ -88,6 +88,11 @@ function employeeShowEllipsis(event, str) {
 
 
 
+
+
+
+
+
 //-------------Bỏ chọn các Checkbox
 
 // Lấy danh sách tất cả các checkbox
@@ -132,8 +137,12 @@ clearSelect.addEventListener('click', function (event) {
 
         // Đặt lại border-color thành mặc định
         employeeBodyCard.classList.remove('checked');
+
+        $("#lblcountselected").text(0);
+
     });
 });
+
 
 
 
@@ -149,6 +158,7 @@ function formatDate(dateStr) {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
+
 
 
 
@@ -328,6 +338,73 @@ function handleToggleStatusClick(StatusId) {
 
 
 
+//---------function đếm số lượng chekbox được chọn
+function countCheckboxSelection() {
+    const checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+    const countSelectedSpan = document.getElementById('lblcountselected');
+
+    let countSelected = 0;
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            countSelected++;
+        }
+    });
+
+    countSelectedSpan.textContent = countSelected.toString();
+}
+
+
+
+
+
+
+
+
+
+//----------function thay đổi status bằng checkbox
+function handleCheckboxSelection(statusId) {
+    // Khởi tạo một mảng để lưu trữ các giá trị usrid
+    const usridArray = [];
+    const checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            usridArray.push(checkbox.getAttribute('usrid'));
+        }
+    });
+
+    handleChangeStatusSelected(statusId, usridArray);
+
+    var btnStatus = document.querySelectorAll("#btnStatus");
+
+    btnStatus.forEach((btnStatusCard) => {
+        const id = btnStatusCard.getAttribute("empolyeecardid");
+
+        if (usridArray.includes(id)) {
+            if (statusId == 1) {
+                btnStatusCard.textContent = "Đã Kích Hoạt";
+                btnStatusCard.classList.add("Active");
+                btnStatusCard.classList.remove("noActive");
+                btnStatusCard.setAttribute("commandargument", 1);
+                console.log("Đã kích hoạt")
+            } else if (statusId == 2) {
+                btnStatusCard.textContent = "Vô Hiệu Hoá";
+                btnStatusCard.classList.add("noActive");
+                btnStatusCard.classList.remove("Active");
+                btnStatusCard.setAttribute("commandargument", 2);
+                console.log("Vô hiệu hoá");
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
 
 //---------------function xử lý trạng thái
 const btnStatus = document.querySelectorAll(".employee-card__header-status");
@@ -336,7 +413,7 @@ function handleStatus(status, button) {
     button.classList.remove("Active", "noActive");
     button.textContent = "Chưa Kích Hoạt";
 
-    // Thêm class tùy thuộc vào giá trị của trường "Status"
+    // Thêm class tùy thuộc vào giá trị của trường "Status".
     if (status === "1") {
         button.textContent = "Đã Kích Hoạt";
         button.classList.add("Active");

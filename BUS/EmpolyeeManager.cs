@@ -43,8 +43,8 @@ namespace BUS
             string sqlquery = $"SELECT users.Id, users.GoogleId, users.Avatar, users.Email, users.DisplayName, users.AtCreate, users.UserType, " +
                 $"users.Status, dbo.UserInfor.Job, dbo.UserInfor.PhoneNumber, dbo.UserInfor.Department, dbo.UserInfor.Gender, " +
                 $"dbo.UserInfor.DateOfBirth, dbo.UserInfor.Address FROM dbo.Users INNER JOIN dbo.UserInfor ON UserInfor.UserId = Users.Id " +
-                $"WHERE DisplayName LIKE N'%{SearchContent}%' OR Id Like N'%{SearchContent}%' OR Job Like N'%{SearchContent}%'";
-
+                $"WHERE DisplayName LIKE N'%{SearchContent}%' OR Users.Id Like N'%{SearchContent}%' OR Job Like N'%{SearchContent}%' " +
+                $"OR users.Email Like N'%{SearchContent}%' OR UserInfor.PhoneNumber Like N'%{SearchContent}%' OR UserInfor.Department Like N'%{SearchContent}%'";
 
             var result = query.ExecuteTypedList<EmpolyeeInfor>(sqlquery);
             return result;
@@ -79,6 +79,17 @@ namespace BUS
             query.Execute(sqlquery);
         }
 
+        //Xoá tài khoản cho các tài khoản được chọn
+        public static void DeleteAlluserSelect(int[] userId)
+        {
+            var query = new InlineQuery();
+            string userIds = string.Join(",", userId);
+            string sqlquery = $"DELETE FROM UserInfor WHERE UserId IN ({userIds})";
+            query.Execute(sqlquery);
+            sqlquery = $"DELETE FROM Users WHERE Id IN ({userIds})";
+            query.Execute(sqlquery);
+        }
+
         //Thay đổi quyền tài khoản
         public static void ChangeUserType(int UserType, int UserId)
         {
@@ -86,7 +97,6 @@ namespace BUS
             string sqlquery = $"UPDATE dbo.Users SET UserType = {UserType} WHERE Id = {UserId}";
             query.Execute(sqlquery);
         }
-
 
         //Xoá tài khoản
         public static bool DeleteUser(int UserId)
@@ -127,6 +137,8 @@ namespace BUS
             query.Execute(sqlquery);
             return true;
         }
+
+
 
     }
 }

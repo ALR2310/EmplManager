@@ -16,7 +16,7 @@
     <div class="content">
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
+            <contenttemplate>
 
                 <div class="employee-management">
                     <div class="employee">
@@ -39,7 +39,8 @@
 
                                 <div class="employee-header-search">
                                     <asp:TextBox ID="tblSearch" runat="server" TextMode="Search" OnTextChanged="tblSearch_TextChanged"
-                                        AutoCompleteType="DisplayName" placeholder="Tên Nhân Viên"></asp:TextBox>
+                                        AutoCompleteType="DisplayName" placeholder="Tên Nhân Viên">
+                                    </asp:TextBox>
                                     <a runat="server" onserverclick="btnSearch_ServerClick" title="Tìm kiếm theo tên nhân viên, công việc và số Id">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </a>
@@ -49,7 +50,7 @@
                             <div class="employee-header__content">
                                 <p>
                                     Đã Chọn 
-                            <asp:Label ID="lblSelectCount" runat="server" Text="0"></asp:Label>
+                                    <span id="lblcountselected">0</span>
                                 </p>
 
                                 <button type="button" onclick="employeeShowEllipsis(event, 'block')"
@@ -58,16 +59,14 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
 
                                     <ul class="employee-card__ellipsis">
-                                        <li id="clearCheckbox">Bỏ Chọn Tất Cả
-                                        </li>
+                                        <li id="clearCheckbox">Bỏ Chọn Tất Cả</li>
                                         <li class="subEllipsis-Card">◂Thay Đổi Trạng Thái
                                             <ul class="employee-card__subEllipsis">
-                                                <li>Kích Hoạt</li>
-                                                <li>Vô Hiệu</li>
+                                                <li onclick="handleCheckboxSelection(1)">Kích Hoạt</li>
+                                                <li onclick="handleCheckboxSelection(2)">Vô Hiệu</li>
                                             </ul>
                                         </li>
-                                        <li onclick="showModalDeleteUser()">Xoá Tài Khoản
-                                        </li>
+                                        <li onclick="showModalDeleteUser()">Xoá Tài Khoản</li>
 
                                         <box class="boxhidentop"></box>
                                         <box class="boxhidenbottom"></box>
@@ -81,13 +80,13 @@
                             <div class="employee-body-list">
 
                                 <asp:Repeater ID="Repeater1" runat="server">
-                                    <ItemTemplate>
+                                    <itemtemplate>
 
                                         <div class="employee-body-card" commandargument='<%# Eval("Id") %>' usrtype='<%# Eval("UserType") %>' isdrop='<%# Eval("Status") %>'>
                                             <div class="employee-card__header" commandargument='<%# Eval("Id") %>' onmouseenter="getStatusAndChanges(this)">
-                                                <input type="checkbox" class="employee-card__header-checkbox">
+                                                <input type="checkbox" usrid='<%# Eval("Id") %>' onchange="countCheckboxSelection()" class="employee-card__header-checkbox">
                                                 <div class="employee-card__header-action">
-                                                    <button id="btnStatus" type="button" class="employee-card__header-status  "
+                                                    <button id="btnStatus" type="button" class="employee-card__header-status"
                                                         commandargument='<%# Eval("Status") %>' empolyeecardid='<%# Eval("Id") %>'>
                                                         Đã Kích Hoạt
                                                     </button>
@@ -150,7 +149,7 @@
                                             </div>
                                         </div>
 
-                                    </ItemTemplate>
+                                    </itemtemplate>
                                 </asp:Repeater>
 
 
@@ -160,7 +159,7 @@
                     </div>
                 </div>
 
-            </ContentTemplate>
+            </contenttemplate>
         </asp:UpdatePanel>
 
     </div>
@@ -403,6 +402,52 @@
     </div>
 
     <script>
+
+        //Xoá các users được chọn
+        function handleDeleteUserSeleted(usridArray) {
+            var data = { "userIdarr": usridArray}
+
+            $.ajax({
+                type: "POST",
+                "url": "empolyee.aspx/DeleteAllUserSelect",
+                "data": JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+
+                },
+                error: function(err) {
+                    console.log("Đã có lỗi xảy ra: "+ err);
+                }
+            })
+        }
+
+
+        //Thay đổi Status tất cả user được selected
+        function handleChangeStatusSelected(statusid ,usridArray) {
+            var data = {
+                "status": statusid,
+                "userIdarr": usridArray
+            }
+            $.ajax({
+                type: "POST",
+                "url": "empolyee.aspx/ChangeStatusAllSelectUser",
+                "data": JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    if(response.d == 1) {
+                        showSuccessToast("Đã Kích Hoạt Tài Khoản Thành Công");
+                    } else if(response.d == 2) {
+                        showSuccessToast("Đã Vô Hiệu Tài Khoản Thành Công");
+                    }
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            })
+        }
 
 
         //Lấy và đưa dữ liệu lên userinfor 
@@ -648,11 +693,6 @@
                     }
                 });
             }
-
-
-
-
-
         }
     </script>
 

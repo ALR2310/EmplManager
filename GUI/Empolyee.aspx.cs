@@ -24,7 +24,6 @@ namespace GUI
             if (!IsPostBack)
             {
                 LoadEmpolyee();
-
             }
 
         }
@@ -132,6 +131,22 @@ namespace GUI
 
             EmpolyeeManager.UpdateEmpolyee(empolyee);
 
+            return true;
+        }
+
+
+        [WebMethod]
+        public static int ChangeStatusAllSelectUser(string status, int[] userIdarr)
+        {
+            int statusId = Convert.ToInt32(status);
+            EmpolyeeManager.ChangeStatusAllSelectUser(statusId, userIdarr);
+            return statusId;
+        }
+
+        [WebMethod]
+        public static bool DeleteAllUserSelect(int[] userIdarr)
+        {
+            EmpolyeeManager.DeleteAlluserSelect(userIdarr);
             return true;
         }
     }
