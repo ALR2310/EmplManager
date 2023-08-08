@@ -7,23 +7,50 @@ let upload_preview_wrapper = $(".uploadPreviewContainer");
 let upload_preview = $("#uploadPreview");
 let upload_template = $("#uploadPreviewTemplate");
 
-let fileArray = [];
+var fileArray = [];
 function excludeFile(insertedTick) {
     // Filter out the file with the given lastModified value
     fileArray = fileArray.filter(file => file.insertedTick != insertedTick);
+ 
+    upload_preview.find(`.filePreview[insertedTick='${insertedTick}']`).remove();
     reload();
+}
+let icon_url = "Images/Icons/";
+let icons = {
+    code: icon_url + 'code_file.svg',
+    default: icon_url + 'blank_file.svg',
+    archive: icon_url + 'archive.svg',
+    text: icon_url + 'text_file.svg',
+
+}
+let file_format_image = {
+    [icons.code]: ['svg', 'cpp', 'js', 'py', 'lua', 'java'],
+    [icons.archive]: ['7z', 'zip', 'rar'],
+    [icons.text]: ['txt', 'log'],
+    ["local_image"]: ['jpg','png','gif','apng']
+
+
+};
+console.log(file_format_image);
+for (const [url,array] of Object.entries(file_format_image)) {
+    for (format of array) {
+        file_format_image[format] = url;
+    }
+    delete file_format_image[url];
 }
 
 
 let reload = function () {
-    upload_preview.empty();
+ 
     if (fileArray.length == 0) { upload_preview_wrapper.css("border-bottom", "none"); return; }
     upload_preview_wrapper.css("border-bottom", "");
     console.log(fileArray);
 
     for (const [index, file] of Object.entries(fileArray)) {
-        console.log(index);
-        console.log(file);
+
+        if (!!file.insertedTick) { continue ; }
+
+    
         let upload_ele = upload_template.clone();
         upload_ele.attr("id", "");
         upload_ele.appendTo(upload_preview);
@@ -31,9 +58,37 @@ let reload = function () {
 
         let insertedTick = new Date().getTime().toString() + file.lastModified.toString();
         insertedTick = btoa(insertedTick);
-        console.log(insertedTick);
+     
         file.insertedTick = insertedTick;
         upload_ele.find(".delete_button").attr("onclick", `excludeFile('${insertedTick}')`);
+        upload_ele.attr("insertedTick", insertedTick);
+        let extension = file.name.split('.');
+        if (extension.length != 0) {
+
+            extension = extension[extension.length - 1];
+     
+
+            let url = !!file_format_image[extension] ? file_format_image[extension] : icons.default;
+
+            if (url == "local_image") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    url = e.target.result;
+            
+                    upload_ele.find(".preview_image").attr("src", url)
+                    upload_ele.find(".preview_image_wrapper").css("background", "#e4f3fc");
+                };
+
+
+
+
+
+                reader.readAsDataURL(file);
+                continue;
+            }
+            upload_ele.find(".preview_image").attr("src", url)
+        }
+   
     }
 }   
 

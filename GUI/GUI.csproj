@@ -416,6 +416,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Avatar\Uploads\" />
+    <Folder Include="Images\UserUploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUS\BUS.csproj">

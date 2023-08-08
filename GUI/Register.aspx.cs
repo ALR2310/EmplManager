@@ -14,6 +14,7 @@ namespace GUI
     public partial class Register : System.Web.UI.Page
     {
         public static User RegisteringUser;
+        private string SweetSoftDomain = "sweetsoft";
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -38,7 +39,12 @@ namespace GUI
                 return;
 
             }
-
+            if (!txtEmail.Text.ToLower().Contains("@"+ SweetSoftDomain))
+            {
+                ToastManager.WaringToast("Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!");
+                lblError.Text = "Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!";
+                return;
+            }
             int emailExists = UserManager.CheckEmailUser(txtEmail.Text);
             int usernameExists = UserManager.CheckUserName(txtUserName.Text);
 

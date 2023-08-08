@@ -194,8 +194,22 @@ namespace DAL
 						colvarStatus.DefaultSetting = @"((1))";
 				colvarStatus.ForeignKeyTableName = "";
 				schema.Columns.Add(colvarStatus);
-				
-				BaseSchema = schema;
+
+                TableSchema.TableColumn colvarUploaded_Files = new TableSchema.TableColumn(schema);
+                colvarUploaded_Files.ColumnName = "Uploaded_Files";
+                colvarUploaded_Files.DataType = DbType.String;
+                colvarUploaded_Files.MaxLength = -1;
+                colvarUploaded_Files.AutoIncrement = false;
+                colvarUploaded_Files.IsNullable = true;
+                colvarUploaded_Files.IsPrimaryKey = false;
+                colvarUploaded_Files.IsForeignKey = false;
+                colvarUploaded_Files.IsReadOnly = false;
+
+                colvarUploaded_Files.DefaultSetting = @"((''))";
+                colvarUploaded_Files.ForeignKeyTableName = "";
+                schema.Columns.Add(colvarUploaded_Files);
+
+                BaseSchema = schema;
 				//add this schema to the provider
 				//so we can query it later
 				DataService.Providers["MyDAL"].AddSchema("Messages",schema);
@@ -245,11 +259,16 @@ namespace DAL
 			set { SetColumnValue(Columns.Status, value); }
 		}
 		
-		#endregion
-		
-		
-		#region PrimaryKey Methods		
-		
+		public string Uploaded_Files
+		{
+			get { return GetColumnValue<string>(Columns.Uploaded_Files); }
+			set { SetColumnValue(Columns.Uploaded_Files, value); }
+		}
+        #endregion
+
+
+        #region PrimaryKey Methods		
+
         protected override void SetPrimaryKey(object oValue)
         {
             base.SetPrimaryKey(oValue);
@@ -304,6 +323,8 @@ namespace DAL
 			item.AtCreate = varAtCreate;
 			
 			item.Status = varStatus;
+
+
 			
 		
 			if (System.Web.HttpContext.Current != null)
@@ -386,8 +407,10 @@ namespace DAL
 			 public static string Content = @"Content";
 			 public static string AtCreate = @"AtCreate";
 			 public static string Status = @"Status";
-						
-		}
+			 public static string Uploaded_Files = @"Uploaded_Files";
+
+
+        }
 		#endregion
 		
 		#region Update PK Collections

@@ -774,31 +774,28 @@ textarea {
 .filePreview {
     width: 12vw;
     height: 12vw;
-    flex: 0 0 auto;
+         flex: 0 0 auto; 
     background: gray;
     margin: 10px;
     border-radius: 5px;
     background: #d6e6ff;
     display: flex;
-    align-items: end;
-    min-width: 150px;
-    min-height: 150px;
+    /* align-items: end; */
+
     padding: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height:125px;
+    min-width:125px;
 }
-    .filePreview > img {
-        height: 70%;
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        transform: translate(-50%,-50%);
-        z-index: 0;
-        pointer-events: none;
-    }
+
     .filePreview > span {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         color: #6091b7;
+        padding-bottom: 2px;
     }
 
 .filePreviewToolbar {
@@ -807,11 +804,12 @@ textarea {
     bottom: 100%;
     left: 100%;
     transform: translate(-85%,100%);
-    height: 22%;
+    height: 18%;
     display: flex;
     list-style: none;
     border-radius: 5px;
     overflow:hidden;
+    z-index: 2;
 }
     .filePreviewToolbar > * {
         aspect-ratio: 1 / 1;
@@ -819,6 +817,7 @@ textarea {
         padding: 5px;
         background: #7eaadd;
         cursor: pointer;
+        display: flex;
     }
 
     .filePreviewToolbar > *:hover {
@@ -837,3 +836,22 @@ textarea {
 #uploadPreviewTemplate{
     display: none;
 }
+
+.preview_image_wrapper {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-radius: 5px; 
+}
+
+    .preview_image_wrapper > img {
+        height: 90%;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        z-index: 0;
+
+        border-radius: 5px;
+        pointer-events: none;
+    }

@@ -14,6 +14,9 @@ namespace DAL.Model
         public string Content { get; set; }
         public DateTime AtCreate { get; set; }
 
+        public DateTime AtUpdate { get; set; }
+
+        public string Uploaded_Files { get; set; }
     }
 }
     

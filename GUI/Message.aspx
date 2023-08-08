@@ -197,6 +197,15 @@
                                         <p class="_deleted_italic_ mess_content">
                                             _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
+                                        <div class="attached_images">
+                                            <div>
+                                                <img src="Images/avatar-1.jpg"/>
+                                                <div>
+                                                    <span class="file_title"></span>
+                                                      <span class="file_size"></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="emoji_list">
                                         </div>
                                         <button type="button" class="chat-main__like hide">
@@ -253,7 +262,10 @@
                                 </li>
 
                              </ul>
-                             <img src="Images/Icons/blank_file.svg"/>
+                     <div class="preview_image_wrapper">
+                          <img class="preview_image" src="Images/Icons/blank_file.svg"/>
+                     </div>
+                            
                             <span>archive.zip</span>
                         </div>
                 <div id="main__ellips" class="chat-main__ellips">
@@ -344,6 +356,7 @@
 
     <script src="JS/modal.js"></script>
     <script>
+        window.history.pushState('Message', 'Message.aspx', 'Message.aspx');
         function preventDefault(e) {
             if (e.key === "Enter") {
                 e.preventDefault();

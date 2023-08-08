@@ -281,7 +281,9 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
 }
 
 async function renderMessage(message,isNewMessage) {
-
+    if (!!message.Uploaded_Files) {
+        console.log(JSON.parse(message.Uploaded_Files));
+    }
     Saved_Messages[message.Id] = message;
 
     if (lastRenderedMessage < message.Id) {
@@ -506,14 +508,23 @@ const DeleteMessage = function (data) {
 
 var sendCD = false;
 function sendMessage() {
-    if (sendCD || inputElement.val() == "") { return; }
+    if (sendCD || inputElement.val() == "" && fileArray.length == 0) { return; }
     sendCD = true;
+
+    const formData = new FormData();
+    fileArray.forEach((file, index) => {
+        console.log(file);
+        formData.append(`file${index}`, file);
+    })
+    formData.append('content', inputElement.val());
+    console.log(formData.getAll('content'));
     $.ajax({
         url: 'Message.aspx/SendMessage',
         type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ content: inputElement.val() }),
+        processData: false,
+        contentType: false,
+        
+        data: formData,
         success: function (response) {
 
 

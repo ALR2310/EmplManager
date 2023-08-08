@@ -81,6 +81,7 @@ namespace GUI
                     return;
                 }
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "abc", "toggleModal()", true);
+                Debug.WriteLine("Redirected");
                 Response.Redirect("Message.aspx");
                 //string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
                 //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);

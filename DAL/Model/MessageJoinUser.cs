@@ -22,6 +22,8 @@ namespace DAL.Model
 
         public Dictionary<int, List<int>> Reactions { get; set; }
 
-      
+        public string Uploaded_Files { get; set; }  
+
+
     }
 }
