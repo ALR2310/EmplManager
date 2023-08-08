@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using System.Text.Json;
 using System.Data;
 using DAL;
+using SubSonic;
 
 namespace GUI
 {
@@ -24,6 +25,7 @@ namespace GUI
             {
                 LoadEmpolyee();
             }
+
         }
 
         public void LoadEmpolyee()
@@ -105,37 +107,47 @@ namespace GUI
         {
             return EmpolyeeManager.CountEmpolyee().ToString();
         }
-        //protected void DrpFilterSelect_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    List<EmpolyeeInfor> empolyees;
-        //    switch (DrpFilterSelect.SelectedIndex)
-        //    {
-        //        case 0:
-        //            empolyees = EmpolyeeManager.GetAllEmpolyee();
-        //            Repeater1.DataSource = empolyees;
-        //            Repeater1.DataBind();
-        //            break;
-        //        case 1:
-        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(1);
-        //            Repeater1.DataSource = empolyees;
-        //            Repeater1.DataBind();
-        //            break;
-        //        case 2:
-        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(0);
-        //            Repeater1.DataSource = empolyees;
-        //            Repeater1.DataBind();
-        //            break;
-        //        case 3:
-        //            empolyees = EmpolyeeManager.FilterEmpolyeeForStatus(2);
-        //            Repeater1.DataSource = empolyees;
-        //            Repeater1.DataBind();
-        //            break;
-        //        default:
-        //            empolyees = EmpolyeeManager.GetAllEmpolyee();
-        //            Repeater1.DataSource = empolyees;
-        //            Repeater1.DataBind();
-        //            break;
-        //    }
-        //}
+
+        [WebMethod]
+        public static bool UpdateDataEmpolyee(int userid, string displayName, string phoneNumber,
+                                     string email, DateTime dateJoin, string job, string department,
+                                     string gender, DateTime dateOfBirth, string address, int userType, int status)
+        {
+            EmpolyeeInfor empolyee = new EmpolyeeInfor
+            {
+                Id = userid,
+                DisplayName = displayName,
+                PhoneNumber = phoneNumber,
+                Email = email,
+                AtCreate = dateJoin,
+                Job = job,
+                Department = department,
+                Gender = gender,
+                DateOfBirth = dateOfBirth,
+                Address = address,
+                UserType = userType,
+                Status = status
+            };
+
+            EmpolyeeManager.UpdateEmpolyee(empolyee);
+
+            return true;
+        }
+
+
+        [WebMethod]
+        public static int ChangeStatusAllSelectUser(string status, int[] userIdarr)
+        {
+            int statusId = Convert.ToInt32(status);
+            EmpolyeeManager.ChangeStatusAllSelectUser(statusId, userIdarr);
+            return statusId;
+        }
+
+        [WebMethod]
+        public static bool DeleteAllUserSelect(int[] userIdarr)
+        {
+            EmpolyeeManager.DeleteAlluserSelect(userIdarr);
+            return true;
+        }
     }
 }

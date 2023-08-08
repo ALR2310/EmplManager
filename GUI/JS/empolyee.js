@@ -44,10 +44,13 @@ modalOverlay = document.querySelector('.modal-vertical__overlay');
 
 modalOverlay.addEventListener('click', function () {
     hidenModal();
+
 });
 
 function hidenModal(event) {
     var modalVertical = document.querySelector('.modal-vertical');
+
+    handleShowEditorButton(2);    //Reset lại Editor Infor
 
     setTimeout(function () {
         modalVertical.classList.add('hide');
@@ -80,6 +83,11 @@ function employeeShowEllipsis(event, str) {
 
     ellipsis_card.style.display = str;
 }
+
+
+
+
+
 
 
 
@@ -129,8 +137,12 @@ clearSelect.addEventListener('click', function (event) {
 
         // Đặt lại border-color thành mặc định
         employeeBodyCard.classList.remove('checked');
+
+        $("#lblcountselected").text(0);
+
     });
 });
+
 
 
 
@@ -146,6 +158,7 @@ function formatDate(dateStr) {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
+
 
 
 
@@ -213,63 +226,6 @@ function handleDeleteUser() {
 
 
 
-
-//-------------Hàm thực hiện chức năng cấp quyền Admin
-function handleToggleUserTypeClick(UserTypeId) {
-    var id = $("#lblUserId").text();
-    var data = {
-        "UserId": id,
-        "UserType": UserTypeId
-    };
-
-    $.ajax({
-        type: "POST",
-        "url": "empolyee.aspx/ChangeUserType",
-        "data": JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            divAdminAdd = document.getElementById("divAdminAdd");
-            divAdminRemove = document.getElementById("divAdminRemove");
-            if (response.d == true) {
-                divAdminAdd.classList.add("hide");
-                divAdminRemove.classList.remove("hide");
-                $("#lblUserType").text("Quản Trị Viên");
-                showSuccessToast("Đã cấp quyền Quản Trị cho người dùng này");
-            }
-            else {
-                divAdminAdd.classList.remove("hide");
-                divAdminRemove.classList.add("hide");
-                $("#lblUserType").text("Người Dùng");
-                showSuccessToast("Đã loại bỏ quyền Quản Trị của người dùng này");
-            }
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
-
-
-
-//-----------Hàm kiểm tra userType
-function checkUserType() {
-    var divAdminAdd = document.getElementById("divAdminAdd");
-    var divAdminRemove = document.getElementById("divAdminRemove");
-    var currentUserType = document.getElementById("lblUserType");
-
-    switch (currentUserType.textContent) {
-        case "Quản Trị Viên":
-            divAdminAdd.classList.add("hide");
-            divAdminRemove.classList.remove("hide");
-            break;
-        case "Người Dùng":
-            divAdminAdd.classList.remove("hide");
-            divAdminRemove.classList.add("hide");
-            break;
-    }
-}
 
 
 
@@ -382,6 +338,73 @@ function handleToggleStatusClick(StatusId) {
 
 
 
+//---------function đếm số lượng chekbox được chọn
+function countCheckboxSelection() {
+    const checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+    const countSelectedSpan = document.getElementById('lblcountselected');
+
+    let countSelected = 0;
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            countSelected++;
+        }
+    });
+
+    countSelectedSpan.textContent = countSelected.toString();
+}
+
+
+
+
+
+
+
+
+
+//----------function thay đổi status bằng checkbox
+function handleCheckboxSelection(statusId) {
+    // Khởi tạo một mảng để lưu trữ các giá trị usrid
+    const usridArray = [];
+    const checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            usridArray.push(checkbox.getAttribute('usrid'));
+        }
+    });
+
+    handleChangeStatusSelected(statusId, usridArray);
+
+    var btnStatus = document.querySelectorAll("#btnStatus");
+
+    btnStatus.forEach((btnStatusCard) => {
+        const id = btnStatusCard.getAttribute("empolyeecardid");
+
+        if (usridArray.includes(id)) {
+            if (statusId == 1) {
+                btnStatusCard.textContent = "Đã Kích Hoạt";
+                btnStatusCard.classList.add("Active");
+                btnStatusCard.classList.remove("noActive");
+                btnStatusCard.setAttribute("commandargument", 1);
+                console.log("Đã kích hoạt")
+            } else if (statusId == 2) {
+                btnStatusCard.textContent = "Vô Hiệu Hoá";
+                btnStatusCard.classList.add("noActive");
+                btnStatusCard.classList.remove("Active");
+                btnStatusCard.setAttribute("commandargument", 2);
+                console.log("Vô hiệu hoá");
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
 
 //---------------function xử lý trạng thái
 const btnStatus = document.querySelectorAll(".employee-card__header-status");
@@ -390,7 +413,7 @@ function handleStatus(status, button) {
     button.classList.remove("Active", "noActive");
     button.textContent = "Chưa Kích Hoạt";
 
-    // Thêm class tùy thuộc vào giá trị của trường "Status"
+    // Thêm class tùy thuộc vào giá trị của trường "Status".
     if (status === "1") {
         button.textContent = "Đã Kích Hoạt";
         button.classList.add("Active");
@@ -464,6 +487,7 @@ function getStatusAndChanges(element) {
 
 
 }
+
 
 //-------------Hàm thực hiện chức năng binding dữ liệu
 function getDataforClickShow(element) {
@@ -543,11 +567,9 @@ function getDataforClickShow(element) {
                         $("#lblUserType").text("Quản Trị Viên")
                         break;
                     case 1:
-                        $("#lblUserType").text("Người Dùng")
+                        $("#lblUserType").text("Nhân Viên")
                         break;
                 }
-
-                checkUserType();
             }
         },
         error: function (error) {
@@ -556,4 +578,60 @@ function getDataforClickShow(element) {
     })
 }
 
+
+
+
+
+
+
+//----------Function xử lý chức năng lọc nhân viên
+function handleFilterEmpolyee() {
+    const drpElement = document.getElementById('drplist_filterEmpolyee');
+
+    if (drpElement.value == 0) {
+        clearfilterEmpolyee();
+    } else if (drpElement.value == 1) {
+        filterEmpolyee(1);
+    } else if (drpElement.value == 2) {
+        filterEmpolyee(0);
+    } else if (drpElement.value == 3) {
+        filterEmpolyee(2);
+    } else if (drpElement.value == 4) {
+        filterEmpolyeeForUserType(0)
+    }
+}
+function filterEmpolyeeForUserType(usertype) {
+    var UserCard = document.querySelectorAll(".employee-body-card");
+    UserCard.forEach((UserCardId) => {
+        const id = UserCardId.getAttribute("commandargument");
+        const userTypeId = UserCardId.getAttribute("usrtype");
+        if (userTypeId != usertype) {
+            UserCardId.classList.add('hide');
+        } else {
+            if (id <= 9999) { UserCardId.classList.remove('hide'); };
+        }
+    });
+}
+
+function filterEmpolyee(status) {
+    var UserCard = document.querySelectorAll(".employee-body-card");
+    UserCard.forEach((UserCardId) => {
+        const id = UserCardId.getAttribute("commandargument");
+        const statusId = UserCardId.getAttribute("isdrop");
+        if (statusId != status) {
+            UserCardId.classList.add('hide');
+        } else {
+            if (id <= 9999) { UserCardId.classList.remove('hide'); };
+        }
+    });
+}
+
+function clearfilterEmpolyee() {
+    var UserCard = document.querySelectorAll(".employee-body-card");
+    UserCard.forEach((UserCardId) => {
+        const id = UserCardId.getAttribute("commandargument");
+        var statusId = UserCardId.getAttribute("isdrop");
+        if (id <= 9999) { UserCardId.classList.remove('hide'); };
+    });
+}
 

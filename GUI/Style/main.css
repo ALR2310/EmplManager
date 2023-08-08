@@ -327,9 +327,11 @@ html {
 .chat-main__ellips {
     z-index: 2;
 }
+
 .chat-item__box[drop_hidden='true'] > #main__ellips {
     display: none !important;
 }
+
 .chat-item__box[drop_hidden='true'] > .emoji_list {
     display: none !important;
 }
@@ -404,10 +406,9 @@ html {
         border-radius: 50% !important;
         display: flex;
         flex-direction: column-reverse;
-        align-items:center;
- 
+        align-items: center;
     }
-   
+
 
         .chat-main__ellips button:hover {
             background-color: #f6f6f9;
@@ -540,17 +541,17 @@ html {
 
 .boxhidentop {
     width: 100%;
-    height: 20px;
+    height: 50px;
     position: absolute;
-    top: -20px;
+    top: -35px;
     left: 0;
 }
 
 .boxhidenbottom {
     width: 100%;
-    height: 20px;
+    height: 30px;
     position: absolute;
-    bottom: -15px;
+    bottom: -30px;
     left: 0;
     z-index: 10;
 }
@@ -1115,8 +1116,8 @@ body::-webkit-scrollbar {
     /*width: 10px; */
 }
 
-:root{
-    overflow-x:hidden;  
+:root {
+    overflow-x: hidden;
 }
 
 /* Track */
@@ -1598,7 +1599,7 @@ body::-webkit-scrollbar {
     bottom: 0;
     display: flex;
     opacity: 1;
-    visibility: visible;
+    /* visibility: visible; */
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
@@ -1734,8 +1735,7 @@ body::-webkit-scrollbar {
 }
 
 .userInfor-Detail__infor {
-    flex: 2;
-    /* width: 300px; */
+    flex: 1;
 }
 
     .userInfor-Detail__infor p {
@@ -1762,6 +1762,75 @@ body::-webkit-scrollbar {
     flex: 1;
 }
 
+.userInfor-Detail__editor + userInfor-Detail__editor {
+    margin-left: 10px;
+}
+
+.userInfor-Detail__editor {
+    flex: 1;
+    position: relative;
+    height: 38.15px;
+}
+
+    .userInfor-Detail__editor p {
+        position: absolute;
+        top: 0px;
+        background-color: white;
+        color: rgb(118, 118, 118);
+    }
+
+    .userInfor-Detail__editor input {
+        width: 90%;
+        height: 29px;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid var(--border-color);
+        bottom: 0;
+        position: absolute;
+        padding: 0 5px;
+        font-size: 14px;
+        transition: all 0.5s ease;
+    }
+
+        .userInfor-Detail__editor input#tblAddress {
+            width: 95%;
+        }
+
+        .userInfor-Detail__editor input:hover {
+            border-color: var(--primary-color)
+        }
+
+.editor_select {
+    width: 90%;
+    height: 29px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    bottom: 0;
+    position: absolute;
+    padding: 0 5px;
+    font-size: 14px;
+    transition: all 0.5s ease;
+}
+
+#sltStatus option {
+    border-radius: 50px;
+}
+
+    #sltStatus option[value="Actived"] {
+        color: green;
+    }
+
+    #sltStatus option[value="NoActived"] {
+        color: gray;
+    }
+
+    #sltStatus option[value="Disable"] {
+        color: red;
+    }
+
+.btnEdit,
+.btnCancel,
 .btnDisable,
 .btnEnable {
     background-color: #04a604;
@@ -1775,10 +1844,17 @@ body::-webkit-scrollbar {
     width: 80px;
 }
 
+.btnEdit {
+    background-color: var(--primary-color);
+}
+
+.btnCancel,
 .btnDisable {
     background-color: gray;
 }
 
+    .btnEdit:hover,
+    .btnCancel:hover,
     .btnUserType:hover,
     .btnDelete:hover,
     .btnEnable:hover,
@@ -1786,6 +1862,7 @@ body::-webkit-scrollbar {
         opacity: 0.8;
     }
 
+.btnEdit + .btnCancel,
 .btnEnable + .btnDisable {
     margin-left: 10px;
 }
