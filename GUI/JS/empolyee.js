@@ -1,10 +1,20 @@
 ﻿
 
 
+
 //-----------------Ẩn hiện modal delete
 
 var modalDelete = document.querySelector('.UIdetail-modal-delete-overlay');
 var modalContent = document.querySelector('.UIdetail-modal-delete');
+
+handlehideModalDelete();
+
+function handlehideModalDelete() {
+    var btndelapply = document.getElementById('btndelapply');
+    btndelapply.removeEventListener('click', handlecheckboxsDelete);
+    btndelapply.addEventListener('click', handleDeleteUser);
+}
+
 
 function showModalDeleteUser() {
     modalDelete.classList.remove('hide');
@@ -117,33 +127,19 @@ checkboxes.forEach(function (checkbox) {
 });
 
 
-var clearSelect = document.querySelector('#clearCheckbox');
-
-// Thêm sự kiện click vào thẻ <a>
-clearSelect.addEventListener('click', function (event) {
-    // Ngăn chặn hành vi mặc định của thẻ <a>
+function clearCheckboxes(event) {
     event.preventDefault();
-
-    // Lấy danh sách tất cả các checkbox
     var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
-
-    // Lặp qua từng checkbox
     checkboxes.forEach(function (checkbox) {
-        // Đặt thuộc tính checked của checkbox thành false
         checkbox.checked = false;
 
-        // Lấy phần tử cha employee-body-card
         var employeeBodyCard = checkbox.closest('.employee-body-card');
-
-        // Đặt lại border-color thành mặc định
         employeeBodyCard.classList.remove('checked');
 
         $("#lblcountselected").text(0);
 
     });
-});
-
-
+}
 
 
 
@@ -181,7 +177,7 @@ function handleHideUserCard() {
 
 
 
-//------------Hàm thực hiện chức năng xoá tài khoản
+//------------Hàm thực hiện chức năng xoá tài khoản.
 function handleDeleteUser() {
     var id = $("#lblUserId").text();
     var data = {
@@ -357,14 +353,79 @@ function countCheckboxSelection() {
 
 
 
+//------clear click xoá 1 thêm click xoá nhiều
+function handleDelMoreUsr() {
+    var btndelapply = document.getElementById('btndelapply');
+    btndelapply.removeEventListener('click', handleDeleteUser);
+    btndelapply.addEventListener('click', handlecheckboxsDelete)
+}
+
+
+
+
+
+//--------------function xoá tài khoản đã selected
+function handlecheckboxsDelete() {
+    const usridArray = [];
+    const checkboxes = document.querySelectorAll(".employee-card__header-checkbox");
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) { usridArray.push(checkbox.getAttribute('usrid')); }
+    });
+
+    if (usridArray.length != 0) {
+        handleDeleteUserSeleted(usridArray);
+        hideModalDeleteUser();
+        $("#lblcountselected").text(0);
+        clearCheckboxes(event);
+
+        var userCards = document.querySelectorAll(".employee-body-card")
+        userCards.forEach((usercard) => {
+            const getId = usercard.getAttribute("commandargument");
+
+            if (usridArray.includes(getId)) {
+                usercard.classList.add("hide");
+                usercard.setAttribute("commandargument", "-9999");
+            }
+        });
+    } else {
+        showWarningToast("Chưa Có Người Dùng Nào Được Chọn, Vui Lòng Thử Lại")
+    }
+}
+
+
+
+
+
+//------------Xoá các users được chọn
+function handleDeleteUserSeleted(usridArray) {
+    var data = { "userIdarr": usridArray }
+
+    $.ajax({
+        type: "POST",
+        "url": "empolyee.aspx/DeleteAllUserSelect",
+        "data": JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response.d == true) {
+                showSuccessToast("Đã Xoá Tài Khoản Này Thành Công");
+            } else {
+                showErrorToast("Có Lỗi Xảy Ra, Vui Lòng Thử Lại");
+            }
+        },
+        error: function (err) {
+            console.log("Đã có lỗi xảy ra: " + err);
+        }
+    })
+}
 
 
 
 
 
 //----------function thay đổi status bằng checkbox
-function handleCheckboxSelection(statusId) {
-    // Khởi tạo một mảng để lưu trữ các giá trị usrid
+function handleChangeStatusForCheckboxes(statusId) {
     const usridArray = [];
     const checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
 
@@ -374,29 +435,61 @@ function handleCheckboxSelection(statusId) {
         }
     });
 
-    handleChangeStatusSelected(statusId, usridArray);
+    if (usridArray.length != 0) {
+        handleChangeStatusSelected(statusId, usridArray);
 
-    var btnStatus = document.querySelectorAll("#btnStatus");
+        var btnStatus = document.querySelectorAll("#btnStatus");
 
-    btnStatus.forEach((btnStatusCard) => {
-        const id = btnStatusCard.getAttribute("empolyeecardid");
+        btnStatus.forEach((btnStatusCard) => {
+            const id = btnStatusCard.getAttribute("empolyeecardid");
 
-        if (usridArray.includes(id)) {
-            if (statusId == 1) {
-                btnStatusCard.textContent = "Đã Kích Hoạt";
-                btnStatusCard.classList.add("Active");
-                btnStatusCard.classList.remove("noActive");
-                btnStatusCard.setAttribute("commandargument", 1);
-                console.log("Đã kích hoạt")
-            } else if (statusId == 2) {
-                btnStatusCard.textContent = "Vô Hiệu Hoá";
-                btnStatusCard.classList.add("noActive");
-                btnStatusCard.classList.remove("Active");
-                btnStatusCard.setAttribute("commandargument", 2);
-                console.log("Vô hiệu hoá");
+            if (usridArray.includes(id)) {
+                if (statusId == 1) {
+                    btnStatusCard.textContent = "Đã Kích Hoạt";
+                    btnStatusCard.classList.add("Active");
+                    btnStatusCard.classList.remove("noActive");
+                    btnStatusCard.setAttribute("commandargument", 1);
+                } else if (statusId == 2) {
+                    btnStatusCard.textContent = "Vô Hiệu Hoá";
+                    btnStatusCard.classList.add("noActive");
+                    btnStatusCard.classList.remove("Active");
+                    btnStatusCard.setAttribute("commandargument", 2);
+                }
             }
+        });
+    } else {
+        showWarningToast("Chưa Có Người Dùng Nào Được Chọn, Vui Lòng Thử Lại");
+    }
+}
+
+
+
+
+
+//----------Thay đổi Status tất cả user được selected
+function handleChangeStatusSelected(statusid, usridArray) {
+    var data = {
+        "status": statusid,
+        "userIdarr": usridArray
+    }
+    $.ajax({
+        type: "POST",
+        "url": "empolyee.aspx/ChangeStatusAllSelectUser",
+        "data": JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response.d == 1) {
+                showSuccessToast("Đã Kích Hoạt Tài Khoản Thành Công");
+            } else if (response.d == 2) {
+                showSuccessToast("Đã Vô Hiệu Tài Khoản Thành Công");
+            }
+
+        },
+        error: function (err) {
+            console.log(err);
         }
-    });
+    })
 }
 
 
@@ -635,3 +728,272 @@ function clearfilterEmpolyee() {
     });
 }
 
+
+
+
+
+
+//-------------Lấy và đưa dữ liệu lên userinfor 
+function handleBindingDataInfor() {
+    var id = $("#lblUserId").text();
+    var UserId = { "UserId": id };
+
+    $.ajax({
+        type: "POST",
+        "url": "empolyee.aspx/GetUserIdByJS",
+        "data": JSON.stringify(UserId),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            var empolyeeInfo = JSON.parse(response.d);
+
+            if (empolyeeInfo != null) {
+                $("#AvatarImg").attr("src", empolyeeInfo.Avatar);
+                $("#lblDisplayName").text(empolyeeInfo.DisplayName);
+                $("#lblDisplayName1").text(empolyeeInfo.DisplayName);
+                $("#lblJob").text(empolyeeInfo.Job);
+                $("#lblJob1").text(empolyeeInfo.Job);
+                $("#lblPhoneNumber").text(empolyeeInfo.PhoneNumber);
+                $("#lblDepartment").text(empolyeeInfo.Department);
+                $("#lblEmail").text(empolyeeInfo.Email);
+                $("#lblDateOfBirth").text(formatDate(empolyeeInfo.DateOfBirth));
+                $("#lblDateJoin").text(formatDate(empolyeeInfo.AtCreate));
+                $("#lblGender").text(empolyeeInfo.Gender);
+                $("#lblAddress").text(empolyeeInfo.Address);
+                $("#lblUserId").text(empolyeeInfo.Id);
+
+                var googleId = empolyeeInfo.GoogleId;
+                if (googleId == 0) {
+                    $("#lblGoogleId").text("Không Có Thông Tin");
+                }
+
+                var isStatus = document.querySelector("#userIdinfor");
+                var isAvatarImage = document.querySelector("#AvatarImg");
+                var NoActiveClass = "noActive";
+                var ActiveClass = "Active";
+
+                var status = empolyeeInfo.Status;
+                switch (status) {
+                    case 0:
+                        $("#lblStatus").text("Chưa Kích Hoạt");
+                        isStatus.textContent = "Chưa Kích Hoạt";
+                        isStatus.classList.remove(ActiveClass);
+                        isStatus.classList.remove(NoActiveClass);
+
+                        isAvatarImage.classList.remove(ActiveClass);
+                        isAvatarImage.classList.remove(NoActiveClass);
+                        break;
+                    case 1:
+                        $("#lblStatus").text("Đã Kích Hoạt");
+                        isStatus.textContent = "Đã Kích Hoạt";
+                        isStatus.classList.add(ActiveClass);
+                        isStatus.classList.remove(NoActiveClass);
+
+                        isAvatarImage.classList.add(ActiveClass);
+                        isAvatarImage.classList.remove(NoActiveClass);
+                        break;
+                    case 2:
+                        $("#lblStatus").text("Vô Hiệu Hoá");
+                        isStatus.textContent = "Vô Hiệu Hoá";
+                        isStatus.classList.add(NoActiveClass);
+                        isStatus.classList.remove(ActiveClass);
+
+                        isAvatarImage.classList.add(NoActiveClass);
+                        isAvatarImage.classList.remove(ActiveClass);
+                        break;
+                }
+
+                var userType = empolyeeInfo.UserType;
+                switch (userType) {
+                    case 0:
+                        $("#lblUserType").text("Quản Trị Viên")
+                        break;
+                    case 1:
+                        $("#lblUserType").text("Nhân Viên")
+                        break;
+                }
+
+
+                var displayName = document.querySelectorAll(".employee-card__body-name h4");
+                var job = document.querySelectorAll(".employee-card__body-name p");
+                var department = document.querySelectorAll("#department p");
+                var datejoin = document.querySelectorAll("#datejoin p");
+                var email = document.querySelectorAll("#email");
+                var phoneNumber = document.querySelectorAll("#phonenumber");
+
+                displayName.forEach((displayNameCard) => {
+                    var idCard = displayNameCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        displayNameCard.textContent = $("#lblDisplayName1").text();
+                    }
+                });
+
+                job.forEach((jobCard) => {
+                    var idCard = jobCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        jobCard.textContent = $("#lblJob").text();
+                    }
+                });
+
+                department.forEach((departmentCard) => {
+                    var idCard = departmentCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        departmentCard.textContent = $("#lblDepartment").text();
+                    }
+                });
+
+                datejoin.forEach((datejoinCard) => {
+                    var idCard = datejoinCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        datejoinCard.textContent = $("#lblDateJoin").text();
+                    }
+                });
+
+                email.forEach((emailCard) => {
+                    var idCard = emailCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        emailCard.textContent = $("#lblEmail").text();
+                    }
+                });
+
+                phoneNumber.forEach((phoneNumberCard) => {
+                    var idCard = phoneNumberCard.getAttribute("usrid");
+                    if (idCard == id) {
+                        phoneNumberCard.textContent = $("#lblPhoneNumber").text();
+                    }
+                });
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+
+
+
+
+//----------Cập nhật dữ liệu người dùng
+function UpdateInforEmpolyee() {
+    var UserId = $("#lblUserId").text();
+    var data = {
+        userid: UserId,
+        displayName: $("#tblDisplayName").val(),
+        phoneNumber: $("#tblPhoneNumber").val(),
+        email: $("#tblEmail").val(),
+        dateJoin: $("#tblDateJoin").val(),
+        job: $("#tblJob").val(),
+        department: $("#tblDepartment").val(),
+        gender: $("#sltGender").val(),
+        dateOfBirth: $("#tblDateOfBirth").val(),
+        address: $("#tblAddress").val(),
+        userType: $("#sltUserType").val(),
+        status: $("#sltStatus").val()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "empolyee.aspx/UpdateDataEmpolyee",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(data),
+        success: function (response) {
+            showSuccessToast("Đã cập nhật dữ liệu cho người dùng này thành công") //Thông báo
+            handleShowEditorButton(2) //Đóng trang edit
+            handleBindingDataInfor() // binding dữ liệu sau khi cập nhật
+        },
+        error: function (xhr, status, error) {
+            console.log("Có lỗi xảy ra khi cập nhật dữ liệu: " + error);
+            showErrorToast("Có lỗi xảy ra khi cập nhật dữ liệu, vui lòng kiểm tra lại");
+        }
+    });
+}
+
+
+
+
+
+
+
+//------------Đưa dữ liệu từ các lable vào textbox
+function bindingDataUpDivEditor() {
+    $("#tblDisplayName").val($("#lblDisplayName1").text());
+    $("#tblPhoneNumber").val($("#lblPhoneNumber").text());
+    $("#tblEmail").val($("#lblEmail").text());
+    $("#tblDateJoin").val($("#lblDateJoin").text().split("/").reverse().join("-"));
+    $("#tblJob").val($("#lblJob1").text());
+    $("#tblDepartment").val($("#lblDepartment").text());
+    $("#tblDateOfBirth").val($("#lblDateOfBirth").text().split("/").reverse().join("-"));
+    $("#tblAddress").val($("#lblAddress").text());
+    //Gender
+    if ($("#lblGender").text() == "Nam") { $("#sltGender").val("Nam") }
+    else if ($("#lblGender").text() == "Nữ") { $("#sltGender").val("Nữ") }
+    //Status
+    if ($("#lblStatus").text() == "Đã Kích Hoạt") { $("#sltStatus").val(1); }
+    else if ($("#lblStatus").text() == "Chưa Kích Hoạt") { $("#sltStatus").val(0); }
+    else if ($("#lblStatus").text() == "Vô Hiệu Hoá") { $("#sltStatus").val(2); }
+    //UserType
+    if ($("#lblUserType").text() == "Quản Trị Viên") { $("#sltUserType").val(0) }
+    else if ($("#lblUserType").text() == "Nhân Viên") { $("#sltUserType").val(1) }
+}
+
+
+
+
+
+
+//---------ẩn hiện hiển thị các nút chỉnh sửa và cập nhật
+function handleShowEditorButton(action) {
+    const btndivEdit = document.getElementById("divEdit");
+    const btndivSave = document.getElementById("divSave");
+
+    if (action == 1) {
+        btndivSave.classList.remove("hide");
+        btndivEdit.classList.add("hide");
+
+        handleShowDivEditor("show")
+        bindingDataUpDivEditor() //binding dữ liệu
+    } else {
+        btndivSave.classList.add("hide");
+        btndivEdit.classList.remove("hide");
+
+        handleShowDivEditor("hidden")
+    }
+}
+
+
+
+
+
+
+
+//---------ẩn hiện các khối chứa thẻ lable và hiển thị các textbox edit
+function handleShowDivEditor(action) {
+    const divEditor = document.querySelectorAll(".userInfor-Detail__editor")
+    const divInfor = document.querySelectorAll(".userInfor-Detail__infor")
+
+    if (action == "show") {
+        divEditor.forEach((diveditor) => {
+            diveditor.classList.remove("hide");
+        });
+
+        divInfor.forEach((divInforEdit) => {
+            const enbedit = divInforEdit.getAttribute("enbedit");
+            if (enbedit == 1) {
+                divInforEdit.classList.add("hide");
+            }
+        });
+    } else if (action == "hidden") {
+        divEditor.forEach((diveditor) => {
+            diveditor.classList.add("hide");
+        });
+
+        divInfor.forEach((divInforEdit) => {
+            const enbedit = divInforEdit.getAttribute("enbedit");
+            if (enbedit == 1) {
+                divInforEdit.classList.remove("hide");
+            }
+        });
+    }
+}
