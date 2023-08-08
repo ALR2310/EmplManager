@@ -338,7 +338,7 @@
         </div>
         <div id="editTemplate" style="display: none;">
 
-            <p class="mess_content toRemove" contenteditable="true">rwa</p>
+            <p class="mess_content toRemove" onkeypress="handleKeyPress(event)" contenteditable="true"></p>
             <button class="btn btn-chat-footer" onclick="sendEdit(event); return false;">
                 Chỉnh Sửa
                                 <i class="fa-solid fa-pen"></i>
@@ -517,6 +517,12 @@
                 event.preventDefault();
 
                 handleSendMessage(event);
+
+                console.log($(document.activeElement));
+                console.log($(document.activeElement).hasClass("mess_content toRemove"));
+                if ($(document.activeElement) && $(document.activeElement).hasClass("mess_content toRemove")) {
+                    sendEdit(event);
+                }
             }
         }
 
