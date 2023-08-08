@@ -1477,6 +1477,7 @@ body::-webkit-scrollbar {
     background-color: white;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
+    z-index: 1;
 }
 
     .employee-card__ellipsis li {
