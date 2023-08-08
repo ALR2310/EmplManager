@@ -1754,4 +1754,7 @@ textarea {
 .attached_files + .emoji_list {
     padding-top: 5px;
 }
-
+.attached_files {
+    display: grid;
+    gap: 7px;
+}
