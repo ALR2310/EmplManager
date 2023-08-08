@@ -5,7 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html {
 
+}
 :root {
     --primary-color: #5156be;
     --text-color: #333;
@@ -17,6 +19,7 @@
 
 html {
     font-family: 'Roboto', sans-serif;
+
 }
 
 .nav {

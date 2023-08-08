@@ -198,7 +198,7 @@
                                             _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
                                         <div class="attached_files">
-                                            <div>
+                                            <div class="attached_file">
                                                 <img src="Images/avatar-1.jpg"/>
                                                 <div>
                                                     <span class="file_title">avatar-1.jpg</span>

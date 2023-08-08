@@ -71,18 +71,23 @@ let reload = function () {
             let url = !!file_format_image[extension] ? file_format_image[extension] : icons.default;
 
             if (url == "local_image") {
+                let loading_circle = $(`<div class="upload_loader_show"></div>`);
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     url = e.target.result;
-            
+                    upload_ele.find(".preview_image").css("display", "unset");
                     upload_ele.find(".preview_image").attr("src", url)
                     upload_ele.find(".preview_image_wrapper").css("background", "#e4f3fc");
+                    loading_circle.remove();
                 };
 
 
 
 
-
+            
+                upload_ele.find(".preview_image").css("display", "none");
+                console.log(loading_circle);
+                loading_circle.appendTo(upload_ele);
                 reader.readAsDataURL(file);
                 continue;
             }
