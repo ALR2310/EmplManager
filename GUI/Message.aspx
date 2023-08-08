@@ -209,7 +209,7 @@
 
 
                                     </div>
-
+                                    <span class="sending_status">Đang gửi</span>
 
                                 </div>
                             </div>

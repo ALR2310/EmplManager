@@ -16,7 +16,7 @@ function excludeFile(insertedTick) {
     reload_attached_files();
 }
 let icon_url = "Images/Icons/";
-let icons = {
+var icons = {
     code: icon_url + 'code_file.svg',
     default: icon_url + 'blank_file.svg',
     archive: icon_url + 'archive.svg',

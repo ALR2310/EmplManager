@@ -862,10 +862,13 @@ textarea {
     }
 
 .attached_files > .attached_file {
-    display: flex;
+    display: grid;
     border-radius: 5px;
     background: #a9d2f0;
     padding: 5px;
+    grid-template-columns: 75px 1fr;
+    max-width: 40vw;
+    align-items: center;
     border: #72aeda solid;
 }
 .file_title {
@@ -874,6 +877,9 @@ textarea {
     padding: 5px;
     text-decoration: none;
     cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .attached_files > .attached_file > div > .file_size {
     padding: 5px;
@@ -886,6 +892,7 @@ textarea {
     display: flex;
     flex-direction: column;
     padding: 15px;
+    overflow: hidden;
 }
 .italic {
     font-style: italic;
@@ -1733,4 +1740,17 @@ textarea {
 
 #attached_file_template{
     display: none;
+}
+
+.chat-wrapper > .sending_status {
+    display: none;
+
+
+}
+.chat-main__item[owner='true'] > .chat-main__content > .chat-wrapper > .sending_status {
+    justify-content: end;
+}
+
+.attached_files + .emoji_list {
+    padding-top: 5px;
 }

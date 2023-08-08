@@ -290,14 +290,14 @@ function loadAttachments(Uploaded_Files, message_ele) {
     for (file of Uploaded_Files) {
         console.log(Uploaded_Files);
         let extension = file.fileName.split('.');
-        let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : null;
+        let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
-        if (!!image && image == "local_image") {
+        if (image == "local_image") {
             let file_ele = $("<img/>");
-         
+
             file_ele.on("load", function () {
                 console.log("Loaded!!");
-              
+
                 condictionalScrollBottom(this.height);
 
             });

@@ -24,15 +24,14 @@ $(function () {
         latest_message_id = message.Id;
     
         let can_render = latest_message_id == findLatestMessageId() + 1;
-        console.log(latest_message_id);
-        console.log(findLatestMessageId());
+       
         if (can_render) {
-            console.log("Rendering new Message...");
+          
             loadedbottom = true;
             await renderMessage(message,true);
             reloadTimegaps(message.Id);
         }
-        console.log(getScrollPos()  < scroll.clientHeight / 2);
+
         if (can_render && (Users.CLIENT_USER.Id == message.UserId || getScrollPos() < scroll.clientHeight / 2 && focused)) {
 
             console.log("Scrolled bottom on new message....");
