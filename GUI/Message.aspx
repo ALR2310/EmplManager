@@ -195,7 +195,7 @@
                                         </div>
 
                                         <p class="_deleted_italic_ mess_content">
-                                            _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
+                                            _deleted_or_content_<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
                                         <div class="attached_files">
                                         </div>
@@ -449,11 +449,12 @@
 
 
         const scroll = $(".chat-main__list")[0];
-        const scrollBottom = function () {
+        function scrollBottom() {
             if (is_firsttime_load) { return; }
             console.log("scrolled bottom");
-
+    
             scroll.scrollTo(0, scroll.scrollHeight);
+      
         }
 
 
@@ -612,7 +613,8 @@
             selection.removeAllRanges(); // Remove any existing selection
             selection.addRange(range); // Add the new range with the cursor at the end
 
-
+         
+            scroll.scrollTo(0, chat_item[0].offsetTop - scroll.clientHeight/3);
         }
 
         $(window).on("click", function (event) {
@@ -661,7 +663,8 @@
                 let closet_ele_target = $(event.target).closest(".chat-main__item");
 
                 if (!!closet_ele_target && closet_ele_target.hasClass("chat_force_highlight")) {
-                    if (closet_ele_target.is(':last-child')) setTimeout(scrollBottom, 0);
+      
+                    //if (closet_ele_target.is(':last-child')) setTimeout(scrollBottom, 0);
 
                 }
             }

@@ -1758,3 +1758,10 @@ textarea {
     display: grid;
     gap: 7px;
 }
+
+.mess_content:empty {
+    height: 0;
+}
+.mess_content.toRemove{
+    height: unset !important;
+}
