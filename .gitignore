@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /GUI/Web.Debug.config
 /GUI/Web.config
 /GUI/Images/Avatar/Uploads/*
+/GUI/Images/UserUploads/*

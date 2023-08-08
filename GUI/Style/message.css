@@ -794,14 +794,15 @@ textarea {
     min-width:125px;
 }
 
-    .filePreview > span {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        color: #6091b7;
-        padding-bottom: 2px;
-    }
+.attached_files > img {
+    max-width: 100%;
+    border-radius: 10px;
+    max-height: 50vh;
+}
 
+.btn {
+    user-select: none;
+}
 .filePreviewToolbar {
     position: absolute;
     background: #7d808a;
@@ -860,23 +861,26 @@ textarea {
         pointer-events: none;
     }
 
-.attached_files > div {
+.attached_files > .attached_file {
     display: flex;
     border-radius: 5px;
     background: #a9d2f0;
-    padding: 15px;
+    padding: 5px;
     border: #72aeda solid;
 }
 .file_title {
     font-size: 1.1em;
-    color: #509aff;
+    color: #509aff !important;
     padding: 5px;
+    text-decoration: none;
+    cursor: pointer;
 }
 .attached_files > .attached_file > div > .file_size {
     padding: 5px;
 }
 .attached_files > .attached_file > img {
     border-radius: 5px;
+    width: 75px;
 }
 .attached_files > .attached_file > div {
     display: flex;
@@ -1684,6 +1688,8 @@ textarea {
         text-overflow: ellipsis;
         overflow: hidden;
         color: #6091b7;
+        width: 100%;
+        padding-bottom: 2px;
     }
 
 .filePreviewToolbar {
@@ -1724,3 +1730,7 @@ textarea {
 
 }
 
+
+#attached_file_template{
+    display: none;
+}

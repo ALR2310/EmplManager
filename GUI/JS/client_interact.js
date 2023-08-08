@@ -48,7 +48,7 @@ const FormatFuncs = {
     },
     '_timestr_': function (message) {
 
-        
+
         var time = message.AtCreate.toLocaleTimeString("vi-VN");
 
         return `${time}`;
@@ -109,7 +109,7 @@ const FormatFuncs = {
         return message.Status != null && message.Status != 1 ? "italic" : "";
     },
     '_edited_or_not_': function (message) {
- 
+
         return !!message.Edited && !message.Status == 1 ? "italic mess_edited" : "display_none";
     },
     '_deleted_or_content_': async function (message) {
@@ -211,7 +211,7 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
         if (!bound_reaction_lists[message_id]) { return; }
         let final_str = "Cảm xúc được bày tỏ bởi: ";
 
-     
+
         let index = 0;
 
         for (id of bound_reaction_lists[message_id]) {
@@ -221,29 +221,29 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
                 break
             }
             index++;
-            if (!!!Users[id]) await fetchUser(id); 
-            if (!!!Users[id]) continue; 
+            if (!!!Users[id]) await fetchUser(id);
+            if (!!!Users[id]) continue;
             final_str = final_str + Users[id].DisplayName + ", ";
         }
         if (index > 0 && index <= emoji_speech_limit) {
 
             final_str = final_str.slice(0, -2);
-           
+
         }
-       
+
 
         let emoji_speech = emoji_display.find(".speech.bottom");
         emoji_speech.css("display", "");
         if (emoji_speech.length == 0) {
             let speech = $(`<div class='speech bottom speech_left_side'>awedaw</div >`);
-         
+
             speech.appendTo(emoji_display);
             emoji_display.find(".speech.bottom").html(final_str);
         }
         else {
             emoji_speech.html(final_str);
         }
-        
+
     })
 
     last_num_list[message_id + '' + emoji_id] = list.length;
@@ -276,14 +276,55 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
 
     if (scroll_to_bottom_again) {
         scrollBottom();
-        setTimeout(scrollBottom,50);
+        setTimeout(scrollBottom, 50);
     }
 }
+function condictionalScrollBottom(height) {
 
-async function renderMessage(message,isNewMessage) {
-    if (!!message.Uploaded_Files) {
-        console.log(JSON.parse(message.Uploaded_Files));
+    if (!(getScrollPos() < scroll.clientHeight + (height || 0))) return;
+    scrollBottom();
+}
+let file_template = $("#attached_file_template");
+function loadAttachments(Uploaded_Files, message_ele) {
+
+    for (file of Uploaded_Files) {
+        console.log(Uploaded_Files);
+        let extension = file.fileName.split('.');
+        let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : null;
+
+        if (!!image && image == "local_image") {
+            let file_ele = $("<img/>");
+         
+            file_ele.on("load", function () {
+                console.log("Loaded!!");
+              
+                condictionalScrollBottom(this.height);
+
+            });
+
+            condictionalScrollBottom();
+
+            file_ele.attr("src", "/Images/UserUploads/" + file.url);
+
+
+
+            file_ele.appendTo(message_ele.find(".attached_files"));
+            continue;
+        }
+        let file_ele = file_template.clone();
+        console.log(message_ele.find(".attached_files"));
+        file_ele.attr("id", "");
+        file_ele.appendTo(message_ele.find(".attached_files"));
+        file_ele.find("img").attr("src", image);
+        file_ele.find(".file_title").text(file.fileName);
+        file_ele.find(".file_size").text(file.size);
+        file_ele.find(".file_title").attr("href", "/Images/UserUploads/" + file.url);
+        file_ele.find(".file_title").attr("download", file.fileName);
     }
+
+}
+async function renderMessage(message, isNewMessage) {
+
     Saved_Messages[message.Id] = message;
 
     if (lastRenderedMessage < message.Id) {
@@ -295,7 +336,7 @@ async function renderMessage(message,isNewMessage) {
     var finalhtml = message_ele.html();
 
     for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
-   
+
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
 
@@ -318,11 +359,15 @@ async function renderMessage(message,isNewMessage) {
     message_ele.find(".chat-main__item").on("mouseenter", toggleEllips);
     message.message_element = message_ele.find(".chat-main__item");
 
+    if (!!message.Uploaded_Files && message.Status == 1) {
 
- 
+        loadAttachments(JSON.parse(message.Uploaded_Files), message_ele.find(".chat-main__item"));
+
+    }
+
     message_ele.children().appendTo(".chat-main__list")[0];
-    
- 
+
+
 
     if (!!last_unread_message_id) {
         let old_bar_exists = $("#markasread_active").length > 0;
@@ -345,14 +390,14 @@ async function renderMessage(message,isNewMessage) {
         particleAnimate(canvas);
         return;
     }, 100);*/
-} 
+}
 function reloadTimegaps(id) {
 
     if (!!id) {
         let timegaps = $(".chat-main__list").find(".time-gap");
         for (timegap_ele of timegaps) {
             timegap_ele = $(timegap_ele);
-            if (!!timegap_ele.attr("message_id") && Number(timegap_ele.attr("message_id")) > id-25) {
+            if (!!timegap_ele.attr("message_id") && Number(timegap_ele.attr("message_id")) > id - 25) {
                 timegap_ele.remove();
             }
         }
@@ -370,7 +415,7 @@ function reloadTimegaps(id) {
         let message_data = Saved_Messages[message_id];
         if (!!!message_data || !getTimeGap(message_data.AtCreate)) {
 
-             continue;
+            continue;
         }
 
         let formatted_time = FormatFuncs["_timestr_"](message_data);
@@ -380,7 +425,7 @@ function reloadTimegaps(id) {
                         </div>`);
         ele.insertBefore(message_ele);
     }
-   
+
 }
 async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messages) {
     let old_pos = scroll_DOM.scrollHeight - scroll_DOM.scrollTop;
@@ -405,7 +450,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
         await renderMessage(message);
 
     }
-    setTimeout(reloadTimegaps,10);
+    setTimeout(reloadTimegaps, 10);
     renderingmessages = false;
 
     if (scrollToBottomAtLoad == true && focused) { setTimeout(scrollBottom, 0); }
@@ -474,7 +519,7 @@ function requestJsonData(afterid, scrollToBottomAtLoad, Wipe_Old_Messages) {
                 loading_circle.removeClass("loader_show");
                 var data = JSON.parse(response.d);
                 await loadMessages(data, scrollToBottomAtLoad, wipe_old_messages);
-        
+
                 var count = Object.keys(data).length;
                 data = null;
 
@@ -497,6 +542,7 @@ const DeleteMessage = function (data) {
     console.log(status);
 
     let deleting_ele_par_ele = $(`.chat-main__item[message_id=${message_id}]`);
+    deleting_ele_par_ele.find(".attached_files").empty();
     deleting_ele_par_ele.find(".chat-item__box").attr("drop_hidden", "true");
     let deleting_ele = deleting_ele_par_ele.find(".mess_content");
     deleting_ele.addClass("italic");
@@ -523,7 +569,7 @@ function sendMessage() {
         type: 'POST',
         processData: false,
         contentType: false,
-        
+
         data: formData,
         success: function (response) {
 
@@ -536,6 +582,8 @@ function sendMessage() {
     });
 
     inputElement.val("");
+    fileArray = [];
+    $("#uploadPreview").empty();
     setTimeout(function () { inputElement.blur(); }, 1);
     let canScrollBottom = latest_message_id == findLatestMessageId() + 1;
     if (canScrollBottom && (getScrollPos() < scroll.clientHeight / 2 && focused)) {

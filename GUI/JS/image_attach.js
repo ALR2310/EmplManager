@@ -13,7 +13,7 @@ function excludeFile(insertedTick) {
     fileArray = fileArray.filter(file => file.insertedTick != insertedTick);
  
     upload_preview.find(`.filePreview[insertedTick='${insertedTick}']`).remove();
-    reload();
+    reload_attached_files();
 }
 let icon_url = "Images/Icons/";
 let icons = {
@@ -40,12 +40,12 @@ for (const [url,array] of Object.entries(file_format_image)) {
 }
 
 
-let reload = function () {
- 
+var reload_attached_files = function () {
+
     if (fileArray.length == 0) { upload_preview_wrapper.css("border-bottom", "none"); return; }
     upload_preview_wrapper.css("border-bottom", "");
     console.log(fileArray);
-
+    setTimeout(condictionalScrollBottom, 0);
     for (const [index, file] of Object.entries(fileArray)) {
 
         if (!!file.insertedTick) { continue ; }
@@ -94,13 +94,15 @@ let reload = function () {
             upload_ele.find(".preview_image").attr("src", url)
         }
    
+
     }
+
 }   
 
 uploadInput.on('change', function (x) {
     console.log("BRAH");
     console.log(uploadInput[0].value);
     fileArray = fileArray.concat(Array.from(uploadInput[0].files));
-    reload();
+    reload_attached_files();
     uploadInput[0].value = null;
 });

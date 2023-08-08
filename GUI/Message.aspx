@@ -22,10 +22,10 @@
                 <ul class="list-emoji">
 
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                        <contenttemplate>
+                        <ContentTemplate>
 
                             <asp:Repeater ID="ListEmoji_Repeater" runat="server">
-                                <itemtemplate>
+                                <ItemTemplate>
 
                                     <li class="item-emoji">
                                         <a runat="server" id="RemoveEmoji" commandargument='<%# Eval("ID") %>' onserverclick="RemoveEmoji_ServerClick">
@@ -46,10 +46,10 @@
                                         </a>
                                     </li>
 
-                                </itemtemplate>
+                                </ItemTemplate>
                             </asp:Repeater>
 
-                        </contenttemplate>
+                        </ContentTemplate>
                     </asp:UpdatePanel>
 
 
@@ -198,13 +198,6 @@
                                             _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
                                         <div class="attached_files">
-                                            <div class="attached_file">
-                                                <img src="Images/avatar-1.jpg"/>
-                                                <div>
-                                                    <span class="file_title">avatar-1.jpg</span>
-                                                      <span class="file_size">250Kb</span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="emoji_list">
                                         </div>
@@ -225,22 +218,27 @@
 
                     </div>
                 </div>
+                <div id="attached_file_template" class="attached_file">
+                    <img src="Images/avatar-1.jpg" />
+                    <div>
+
+                        <a class="file_title">avatar-1.jpg</a>
+                        <span class="file_size">250Kb</span>
+                    </div>
+                </div>
                 <div class="new_messages" id="new_messages_template">
                     <hr />
                     <span>TIN NHẮN MỚI</span>
                 </div>
                 <div class="chat-footer">
-                    <div class="uploadPreviewContainer"  style="border-bottom: none;">
-                    <div id="uploadPreview">
-                      
-                        
-
-                    </div>
+                    <div class="uploadPreviewContainer" style="border-bottom: none;">
+                        <div id="uploadPreview">
                         </div>
+                    </div>
                     <div class="footer-wrapper">
                         <input type="file" id="uploadInput" name="uploadInput" multiple style="display: none" />
 
-                        <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none; z">
+                        <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;     outline-width: 0;">
                             <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
                         <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                         <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
@@ -250,24 +248,24 @@
                         </button>
                     </div>
                 </div>
-                 <div id="uploadPreviewTemplate" class="filePreview">
-                             <ul class="filePreviewToolbar">
-                                <li onclick="" class="edit_button">
-                            
-                                    <img src="/Images/Icons/upload_edit.svg"  />
-                                </li>
-                                 <li onclick="" class="delete_button">
-                            
-                                    <img src="/Images/Icons/mess_delete_icon.svg" class="delete_icon" />
-                                </li>
+                <div id="uploadPreviewTemplate" class="filePreview">
+                    <ul class="filePreviewToolbar">
+                        <li onclick="" class="edit_button">
 
-                             </ul>
-                     <div class="preview_image_wrapper">
-                          <img class="preview_image" src="Images/Icons/blank_file.svg"/>
-                     </div>
-                            
-                            <span>archive.zip</span>
-                        </div>
+                            <img src="/Images/Icons/upload_edit.svg" />
+                        </li>
+                        <li onclick="" class="delete_button">
+
+                            <img src="/Images/Icons/mess_delete_icon.svg" class="delete_icon" />
+                        </li>
+
+                    </ul>
+                    <div class="preview_image_wrapper">
+                        <img class="preview_image" src="Images/Icons/blank_file.svg" />
+                    </div>
+
+                    <span>archive.zip</span>
+                </div>
                 <div id="main__ellips" class="chat-main__ellips">
                     <div class="chat-ellips__dropdown">
                         <button type="button" class="chat-ellips__emoji__toggle"
