@@ -855,3 +855,20 @@ textarea {
         border-radius: 5px;
         pointer-events: none;
     }
+
+.attached_files > div {
+    display: flex;
+    border-radius: 5px;
+    background: cyan; 
+    padding: 15px;
+}
+.attached_files > div >img {
+  
+    border-radius: 5px;
+
+}
+.attached_files > div > div{
+    display:flex;
+    flex-direction: column;
+    padding:15px;
+}

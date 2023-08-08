@@ -197,12 +197,12 @@
                                         <p class="_deleted_italic_ mess_content">
                                             _deleted_or_content_&nbsp;<span class="_edited_or_not_">(đã chỉnh sửa)</span>
                                         </p>
-                                        <div class="attached_images">
+                                        <div class="attached_files">
                                             <div>
                                                 <img src="Images/avatar-1.jpg"/>
                                                 <div>
-                                                    <span class="file_title"></span>
-                                                      <span class="file_size"></span>
+                                                    <span class="file_title">avatar-1.jpg</span>
+                                                      <span class="file_size">250Kb</span>
                                                 </div>
                                             </div>
                                         </div>
