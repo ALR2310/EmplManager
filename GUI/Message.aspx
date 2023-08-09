@@ -125,7 +125,7 @@
                                         < Trang Trước
                                     </a>
                                        <a>
-                                        < Trang Sau
+                                        Trang Sau >
                                     </a>
                                 </div>
                             </div>

@@ -1766,3 +1766,19 @@ textarea {
 .mess_content.toRemove{
     height: unset !important;
 }
+
+#search_messages_pages { 
+    display: flex;
+    justify-content: space-between;
+    
+}
+#search_messages_pages > a{
+    cursor: pointer;
+    user-select: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+    #search_messages_pages > a:hover {
+        background: #6f7e912b;
+    }
