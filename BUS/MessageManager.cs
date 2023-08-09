@@ -83,7 +83,7 @@ namespace BUS
 
             IDataReader reader = query.ExecuteReader($"select top 1 Id from Messages where Content LIKE N'%{search_str}%' order by id asc ");
 
-
+                
 
             if (reader.Read())
             {

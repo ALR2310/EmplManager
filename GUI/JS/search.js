@@ -152,6 +152,10 @@ function showplacehold() {
     placehold_layout.css("display", "flex");
 }
 let last_search_request = null;
+setTimeout(function () {
+    perfom_search("a");
+    $("#chat-search__list").css("display", "flex");
+}, 500);
 let perfom_search = function (query) {
     if (!!last_search_request) { last_search_request.abort(); }
     last_search_request =   $.ajax({
@@ -174,7 +178,8 @@ let perfom_search = function (query) {
             console.log(keys.length);
             
            
-        
+            console.log(Number(keys[keys.length - 2]));
+            console.log(Number(data[keys[keys.length - 1]]));
                 $("#search_messages_pages").css("display", Number(keys[keys.length - 2]) - Number(data[keys[keys.length - 1]]) < 10 ? "none" : "");
            
             for (const [id, message] of Object.entries(data).reverse()) {
