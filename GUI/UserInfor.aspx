@@ -60,7 +60,7 @@
                         <asp:Label ID="lblAtCreate1" runat="server" Text="0/0/0000"></asp:Label>
                     </p>
                     <p>
-                        <a href="EditUserInfor.aspx">
+                        <a href="chinh-sua-tai-khoan">
                             <i class="fa-solid fa-pen-to-square"></i>
                             Chỉnh sửa/Cập nhật thông tin
                         </a>
