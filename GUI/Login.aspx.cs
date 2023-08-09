@@ -22,7 +22,7 @@ namespace GUI
                 Debug.WriteLine(validcookie);
                 if (validcookie != null)
                 {
-                    string script = "this.location = \"./message.aspx\";";
+                    string script = "this.location = \"./tin-nhan\";";
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
                 }

@@ -5,9 +5,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-html {
 
+html {
 }
+
 :root {
     --primary-color: #5156be;
     --text-color: #333;
@@ -19,7 +20,6 @@ html {
 
 html {
     font-family: 'Roboto', sans-serif;
-
 }
 
 .nav {
@@ -452,7 +452,7 @@ html {
 }
 
 .chat-main__item:not(.fake_chat):hover, .chat_force_highlight {
-    background: rgb(245 245 245);
+    /*background: rgb(245 245 245);*/
 }
 
 .chat-item__box p {

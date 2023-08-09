@@ -19,7 +19,7 @@ namespace GUI
             // Enable SignalR
 
             app.MapSignalR();
-            
+
 
         }
 
@@ -31,7 +31,7 @@ namespace GUI
         protected void Application_Start(object sender, EventArgs e)
         {
             //GlobalHost.HubPipeline.AddModule(new CustomAuthorizationModule());
-            RouteTable.Routes.MapPageRoute("", "", "~/Message.aspx");
+            //RouteTable.Routes.MapPageRoute("", "", "~/Message.aspx");
 
 
         }

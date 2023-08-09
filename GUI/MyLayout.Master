@@ -42,7 +42,7 @@
                                 </button>
                             </div>
                             <div class="dropdown-content">
-                                <a href="UserInfor.aspx">Hồ Sơ</a>
+                                <a href="tai-khoan">Tài Khoản</a>
                                 <a id="linkLogout" onserverclick="linkLogout_ServerClick" runat="server">Đăng Xuất</a>
                             </div>
                         </div>
@@ -65,16 +65,16 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="Message.aspx">
+                            <a class="sidebar-item__link" href="tin-nhan">
                                 <i class="fa-sharp fa-solid fa-comments"></i>
                                 <div class="speech left">
-                                    Chat
+                                    Tin Nhắn
                                 </div>
-                                <span class="sider-bar__span hide">Chat</span>
+                                <span class="sider-bar__span hide">Tin Nhắn</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="Empolyee.aspx">
+                            <a class="sidebar-item__link" href="quan-ly-nhan-vien">
                                 <i class="fa-solid fa-user"></i>
                                 <div class="speech left">
                                     Quản lý Nhân viên
@@ -121,11 +121,11 @@
             </div>
         </main>
     </form>
-      <script src="Scripts/jquery-3.6.0.min.js"></script>
-        <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.3.js"></script>
     <script src="JS/layout.js"></script>
     <script>
 
-    </script>
+</script>
 </body>
 </html>
