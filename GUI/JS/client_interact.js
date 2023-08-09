@@ -110,14 +110,17 @@ const FormatFuncs = {
     },
     '_edited_or_not_': function (message) {
 
-        console.log(message.Edited);
+
         return !!message.Edited && (message.Status == null || message.Status == 1) && message.Edited == true ? "italic mess_edited" : "display_none";
     },
     '_deleted_or_content_': async function (message) {
         var messStatus = message.Status;
-        return messStatus == 0 ? "Tin nhắn đã được thu hồi" :
+        let content =  messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
                 message.Content;
+        console.log(message.Edited);
+    
+        return message.Edited ? content + " " : content;
 
     }
 }

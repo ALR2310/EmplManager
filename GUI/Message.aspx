@@ -120,7 +120,14 @@
                                 </p>
                             </div>
                             <div id="fake_messages" class="innerlist">
-                                <div id="search_messages_pages">henlo</div>
+                                <div id="search_messages_pages">
+                                    <a>
+                                        < Trang Trước
+                                    </a>
+                                       <a>
+                                        < Trang Sau
+                                    </a>
+                                </div>
                             </div>
                             <div id="search__list_placeholder_layer" class="innerlist">
                                 <div id="search_loading_placeholder_template" class="placeholder_chatbox">
