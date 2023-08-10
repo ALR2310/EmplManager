@@ -1769,6 +1769,7 @@ textarea {
 }
 
 .attached_files {
+    padding-top: 3px;
     display: grid;
     gap: 7px;
 }
@@ -1795,7 +1796,7 @@ textarea {
         border-radius: 5px;
     }
 
-    #search_messages_pages > span {
+    #search_messages_pages > span, #numberic_buttons > * {
         padding: 5px;
         border-radius: 50%;
         height: 35px;
@@ -1803,7 +1804,7 @@ textarea {
         justify-content: center;
     }
 
-    #search_messages_pages > * {
+    #search_messages_pages > a, #numberic_buttons > * {
         display: flex;
         align-items: center;
         color: #5889ce;
@@ -1814,7 +1815,7 @@ textarea {
     #search_messages_pages > .highlight {
         background: #cbe1ff !important;
     }
-        #search_messages_pages > *:hover {
+        #search_messages_pages > a:hover, #numberic_buttons > *:hover {
             background: #6f7e912b;
         }
 
@@ -1833,4 +1834,10 @@ textarea {
     transform: translate(-50%,-50%);
     width: 35%;
     z-index: 2;
+}
+
+#numberic_buttons {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
 }

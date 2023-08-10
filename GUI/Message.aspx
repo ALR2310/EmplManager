@@ -121,11 +121,14 @@
                             </div>
                             <div id="fake_messages" class="innerlist">
                                 <div id="search_messages_pages">
-                                    <a>
+                                    <a id="search_previous_button">
                                         < Trang Trước
                                     </a>
-                                    <span class="highlight">1</span><span>2</span><span>3</span>
-                                       <a>
+                                    <div id="numberic_buttons">
+                                        <span class="highlight">1</span><span>2</span><span>3</span>
+                                    </div>
+                                    
+                                       <a id="search_next_button">
                                         Trang Sau >
                                     </a>
                                 </div>
@@ -188,7 +191,7 @@
                                 </div>
 
                                 <div class="chat-wrapper">
-                                    <span>_timestr_</span>
+                                    <span>_date_time_str_</span>
                                     <div class="chat-item__box" drop_hidden="_drop_hidden_">
 
                                         <div class="titles">

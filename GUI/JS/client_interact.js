@@ -49,10 +49,36 @@ const FormatFuncs = {
     },
     '_timestr_': function (message) {
 
+        
+        var time = message.AtCreate.toLocaleTimeString("vi-VN");
+
+        return time;
+    },
+    '_date_time_str_': function (message) {
+        const date1 = CurrentTime;
+        const date2 = message.AtCreate;
+
+        // Get the date components (day, month, and year) of the two Date objects
+        const day1 = date1.getDate();
+        const month1 = date1.getMonth();
+        const year1 = date1.getFullYear();
+
+        const day2 = date2.getDate();
+        const month2 = date2.getMonth();
+        const year2 = date2.getFullYear();
+
 
         var time = message.AtCreate.toLocaleTimeString("vi-VN");
 
-        return `${time}`;
+
+        let dayint = Math.abs(day1 - day2);
+        if (
+            month1 === month2 &&
+            year1 === year2 && dayint <= 2) {
+            return time;
+        }
+        return date2.toLocaleDateString("vi-VN") + " - " + time; 
+
     },
     '_datestr_': function (message) {
         const date1 = CurrentTime;
@@ -71,7 +97,7 @@ const FormatFuncs = {
         if (
             month1 === month2 &&
             year1 === year2 && dayint <= 2) {
-            return DayStrList[dayint];
+            return DayStrList[dayint] + ",";
         }
         return date2.toLocaleDateString("vi-VN");
     },
@@ -285,8 +311,9 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     }
 }
 function condictionalScrollBottom(height) {
+ 
+    if (scroll.scrollTop + scroll.clientHeight - height > scroll.clientHeight) return;
 
-    if (!(getScrollPos() < scroll.clientHeight + (height || 0))) return;
     scrollBottom();
 }
 let file_template = $("#attached_file_template");
@@ -298,18 +325,17 @@ function loadAttachments(Uploaded_Files, message_ele) {
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
         if (image == "local_image" || image == "local_video") {
-            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls/>`);
+            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="metadata"/>`);
 
             file_ele.on("load resize", function () {
          
 
-             
-                    condictionalScrollBottom(this.height)
+                condictionalScrollBottom(message_ele[0].offsetTop);
           
 
             });
 
-            condictionalScrollBottom();
+         
 
             file_ele.attr("src", "/Images/UserUploads/" + file.url);
 
@@ -428,7 +454,7 @@ function reloadTimegaps(id) {
         let formatted_time = FormatFuncs["_timestr_"](message_data);
         let formatted_date = FormatFuncs["_datestr_"](message_data);
         let ele = $(`  <div class="time-gap" style="_timegaptostyle_" message_id='${message_id}'>
-                            <div class="timer">${formatted_time}, ${formatted_date}</div>
+                            <div class="timer">${formatted_date} ${formatted_time} </div>
                         </div>`);
         ele.insertBefore(message_ele);
     }

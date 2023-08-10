@@ -236,7 +236,7 @@ var counter = 0;
 
 let should_focus = false;
 
-search_cancel_btn.on('onclick', function (event) {
+search_cancel_btn.on('mousedown', function (event) {
 
     should_focus = search_bxb.is(":focus");
     event.stopPropagation();
