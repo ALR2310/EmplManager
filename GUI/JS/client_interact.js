@@ -300,10 +300,12 @@ function loadAttachments(Uploaded_Files, message_ele) {
         if (image == "local_image" || image == "local_video") {
             let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls/>`);
 
-            file_ele.on("load", function () {
-                console.log("Loaded!!");
+            file_ele.on("load resize", function () {
+         
 
-                condictionalScrollBottom(this.height);
+             
+                    condictionalScrollBottom(this.height)
+          
 
             });
 

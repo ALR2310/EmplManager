@@ -1826,9 +1826,11 @@ textarea {
     padding: 5px;
 }
 
-.preview_play_button{
+.preview_play_button {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+    width: 35%;
+    z-index: 2;
 }
