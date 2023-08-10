@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/toast.css" />
     <link rel="stylesheet" href="Style/modal-email.css" />
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/balloon/ckeditor.js"></script>
 </asp:Content>
 
 
@@ -406,10 +407,31 @@
         <button id="btnTggleEmail" type="button">
             <i class="fa-solid fa-chevrons-left"></i>
         </button>
+
+        <h2>Soạn Thư</h2>
+
+        <div class="usrdetail-modal-email-Content">
+            <input id="tblEmail_subject" type="email" placeholder="Người Nhận" />
+            <input id="tblEmail_title" placeholder="Tiêu Đề" />
+
+            <div id="tblEmail_content" placeholder="Nội Dung" class="modal-email-Content-ckeditor"></div>
+
+            <div class="modal-email-Content-action">
+                <button>Huỷ Bỏ</button>
+                <button>Gửi Ngay</button>
+            </div>
+        </div>
     </div>
 
-    <script></script>
+    <script>
+        BalloonEditor
+            .create(document.querySelector('#tblEmail_content'))
+            .catch(error => {
+                console.error(error);
+            })
+    </script>
 
+    <script src="Lib/CkEditor5/build/ckeditor.js"></script>
     <script src="JS/empolyee.js"></script>
     <script src="JS/toast.js"></script>
 
