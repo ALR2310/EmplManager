@@ -124,7 +124,7 @@
                                     <a>
                                         < Trang Trước
                                     </a>
-                                    <span>1</span><span>2</span><span>3</span>
+                                    <span class="highlight">1</span><span>2</span><span>3</span>
                                        <a>
                                         Trang Sau >
                                     </a>

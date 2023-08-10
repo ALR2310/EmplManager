@@ -77,20 +77,20 @@ namespace BUS
             string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
             Debug.WriteLine(querystr);
             List<SearchingMessage> list = query.ExecuteTypedList<SearchingMessage>(querystr);
-            Dictionary<int, object> dict = list.ToDictionary(item => item.Id, item => (object)item);
+            Dictionary<object, object> dict = list.ToDictionary(item => (object)item.Id, item => (object)item);
 
 
 
-            IDataReader reader = query.ExecuteReader($"select top 1 Id from Messages where Content LIKE N'%{search_str}%' order by id asc ");
+            IDataReader reader = query.ExecuteReader(querystr + ",@count_only = 1;");
 
                 
 
             if (reader.Read())
             {
-
-                dict[-1] = Convert.ToString(reader["Id"]);
+     
+                dict["Results"] = Convert.ToString(reader[0]);
             }
-            
+                
             reader.Close();
 
        

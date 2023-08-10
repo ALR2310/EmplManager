@@ -152,10 +152,7 @@ function showplacehold() {
     placehold_layout.css("display", "flex");
 }
 let last_search_request = null;
-setTimeout(function () {
-    perfom_search("a");
-    $("#chat-search__list").css("display", "flex");
-}, 500);
+
 let perfom_search = function (query) {
     if (!!last_search_request) { last_search_request.abort(); }
     last_search_request =   $.ajax({
@@ -167,7 +164,7 @@ let perfom_search = function (query) {
         success: async function (response) {
             let data = JSON.parse(response.d);
          
-            if (Object.keys(data).length == 0) {
+            if (data.Results == 0) {
   
                 placehold_layout.css("display", "none");
                 $("#fake_messages").css("display", "none");
@@ -177,19 +174,19 @@ let perfom_search = function (query) {
             let keys = Object.keys(data);
             console.log(keys.length);
             
-           
-            console.log(Number(keys[keys.length - 2]));
-            console.log(Number(data[keys[keys.length - 1]]));
-                $("#search_messages_pages").css("display", Number(keys[keys.length - 2]) - Number(data[keys[keys.length - 1]]) < 10 ? "none" : "");
-           
+
+            $("#search_messages_pages").css("display", data.Results < 10 ? "none" : "");
+
+        
+            $(`<span class='chat-main__item to_delete'>Kết quả: ${data.Results.toString()} Tin Nhắn</span>`).appendTo("#fake_messages");
             for (const [id, message] of Object.entries(data).reverse()) {
         
-                if (id == "-1") {
+                if (isNaN(id)) {
             
                     continue;
                 }
-                
-                await renderSearchMessage(id, message);
+        
+                await renderSearchMessage(Number(id), message);
             };
             $("#search_messages_pages").appendTo("#fake_messages");
             setTimeout(function () {

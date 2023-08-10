@@ -27,8 +27,8 @@ let file_format_image = {
     [icons.code]: ['svg', 'cpp', 'js', 'py', 'lua', 'java'],
     [icons.archive]: ['7z', 'zip', 'rar'],
     [icons.text]: ['txt', 'log'],
-    ["local_image"]: ['jpg','png','gif','apng']
-
+    ["local_image"]: ['jpg','png','gif','apng'],
+    ["local_video"]: ['mp4', 'mov', 'wmv', 'webm', 'avi', 'flv', 'mkv']
 
 };
 console.log(file_format_image);
@@ -70,22 +70,34 @@ var reload_attached_files = function () {
 
             let url = !!file_format_image[extension] ? file_format_image[extension] : icons.default;
 
-            if (url == "local_image") {
+            if (url == "local_image" || url == "local_video") {
                 let loading_circle = $(`<div class="upload_loader_show"></div>`);
                 var reader = new FileReader();
+                let preview_image = upload_ele.find(".preview_image");
+                if (url == "local_video") {
+
+                    preview_image.replaceWith("<video class='preview_image'/>");
+                    preview_image = upload_ele.find(".preview_image");
+                }
+
+            
                 reader.onload = function (e) {
+               
                     url = e.target.result;
-                    upload_ele.find(".preview_image").css("display", "unset");
-                    upload_ele.find(".preview_image").attr("src", url)
-                    upload_ele.find(".preview_image_wrapper").css("background", "#e4f3fc");
-                    loading_circle.remove();
+                 
+                    preview_image.css("display", "unset");
+                    preview_image.attr("src", url)
+                    preview_image.css("background", "#e4f3fc");
+                    console.log(preview_image.text());
+                      loading_circle.remove();
                 };
 
 
 
 
             
-                upload_ele.find(".preview_image").css("display", "none");
+                preview_image.css("display", "none");
+
                 console.log(loading_circle);
                 loading_circle.appendTo(upload_ele);
                 reader.readAsDataURL(file);

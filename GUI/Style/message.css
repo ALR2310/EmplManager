@@ -798,7 +798,7 @@ textarea {
     min-width: 125px;
 }
 
-.attached_files > img {
+.attached_files > img, .attached_files > video {
     max-width: 100%;
     border-radius: 10px;
     max-height: 50vh;
@@ -852,10 +852,11 @@ textarea {
     width: 100%;
     height: 100%;
     background: none;
-    border-radius: 5px;
+    border-radius: 15px;
+    overflow:hidden;
 }
 
-    .preview_image_wrapper > img {
+    .preview_image_wrapper > * {
         height: 90%;
         top: 50%;
         left: 50%;
@@ -1805,9 +1806,22 @@ textarea {
     #search_messages_pages > * {
         display: flex;
         align-items: center;
+        color: #5889ce;
         flex-wrap: wrap;
+        cursor: pointer;
     }
 
+    #search_messages_pages > .highlight {
+        background: #cbe1ff !important;
+    }
         #search_messages_pages > *:hover {
             background: #6f7e912b;
         }
+
+::-webkit-scrollbar {
+    background: none;
+}
+
+#fake_messages > span{
+    padding: 5px;
+}

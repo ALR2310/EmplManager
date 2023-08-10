@@ -41,6 +41,7 @@ var CurrentTime = new Date();
 const FormatFuncs = {
     '_is_admin_or_not_': async function (message) {
         if (Users[message.UserId] == null) { await fetchUser(message.UserId); }
+       
         return Users[message.UserId].UserType != 2 ? "display_none" : "";
     },
     '_timegaptostyle_': async function (message) {
@@ -118,7 +119,7 @@ const FormatFuncs = {
         let content =  messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
                 message.Content;
-        console.log(message.Edited);
+     
     
         return message.Edited ? content + " " : content;
 
@@ -296,8 +297,8 @@ function loadAttachments(Uploaded_Files, message_ele) {
         let extension = file.fileName.split('.');
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
-        if (image == "local_image") {
-            let file_ele = $("<img/>");
+        if (image == "local_image" || image == "local_video") {
+            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls/>`);
 
             file_ele.on("load", function () {
                 console.log("Loaded!!");

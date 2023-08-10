@@ -35,8 +35,7 @@ namespace GUI
     public partial class Message : System.Web.UI.Page
     {
 
-        [NonSerialized]
-        private Dictionary<string, Func<Dictionary<string, object>, bool>> _requestFunctions;
+
 
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
 
