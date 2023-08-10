@@ -19,12 +19,15 @@ namespace GUI
     {
         protected User RegisteringUser;
 
-        private string VerifyCode {
+        private string VerifyCode
+        {
 
             get { return ViewState["VerifyCode"] as string; }
-            set { 
+            set
+            {
                 Debug.WriteLine($"New key: {value}");
-                ViewState["VerifyCode"] = value; }
+                ViewState["VerifyCode"] = value;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -33,19 +36,19 @@ namespace GUI
             RegisteringUser = Register.RegisteringUser;
             if (RegisteringUser == null)
             {
-                Response.Redirect("Register.aspx");
+                Response.Redirect("dang-ky");
                 return;
             }
             lbl_Email.Text = RegisteringUser.Email;
             Debug.WriteLine(RegisteringUser.Email);
-       
+
 
             if (!IsPostBack)
             {
                 SendVerificationCode();
             }
 
-           
+
 
         }
 
@@ -82,7 +85,7 @@ namespace GUI
                 }
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "abc", "toggleModal()", true);
                 Debug.WriteLine("Redirected");
-                Response.Redirect("Message.aspx");
+                Response.Redirect("tin-nhan");
                 //string script = "setTimeout(function(){this.location = \"./message.aspx\"},2000)";
                 //ScriptManager.RegisterStartupScript(this, GetType(), "AlertScript", script, true);
             }
@@ -135,7 +138,7 @@ namespace GUI
             }
             else
             {
-                ToastManager.ErrorToast("Gửi mã xác thực thất bại, vui lòng liên hệ Admin đễ được hỗ trợ");
+                ToastManager.ErrorToast("Gửi mã xác thực thất bại, vui lòng thử lại");
             }
         }
     }

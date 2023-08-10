@@ -339,6 +339,7 @@
     <Content Include="Style\emoji_list.css" />
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
+    <Content Include="Style\modal-email.css" />
     <Content Include="Style\modal.css" />
     <Content Include="Style\speech_bubble.css" />
     <Content Include="Style\toast.css" />

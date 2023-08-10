@@ -20,9 +20,6 @@ namespace GUI
 
         }
 
-
-
-       
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtDisplayName.Text) ||
@@ -39,7 +36,7 @@ namespace GUI
                 return;
 
             }
-            if (!txtEmail.Text.ToLower().Contains("@"+ SweetSoftDomain))
+            if (!txtEmail.Text.ToLower().Contains("@" + SweetSoftDomain))
             {
                 ToastManager.WaringToast("Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!");
                 lblError.Text = "Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!";
@@ -64,7 +61,7 @@ namespace GUI
 
                 lblError.Text = string.Empty;
 
-                Response.Redirect("Authen.aspx");
+                Response.Redirect("xac-thuc-tai-khoan");
             }
 
             if (emailExists != 0)
