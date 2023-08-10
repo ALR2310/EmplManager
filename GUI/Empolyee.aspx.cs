@@ -46,16 +46,12 @@ namespace GUI
         }
 
         [WebMethod]
-        public static bool ChangeStatusUser(string StatusId, string UserId)
+        public static int ChangeStatusUser(string StatusId, string UserId)
         {
             int statusId = Convert.ToInt32(StatusId);
             int userId = Convert.ToInt32(UserId);
             EmpolyeeManager.ChangeStatusUer(statusId, userId);
-            if (statusId == 1)
-            {
-                return true;
-            }
-            return false;
+            return statusId;
         }
 
         [WebMethod]

@@ -225,6 +225,67 @@ function handleDeleteUser() {
 
 
 
+//------------thay đổi status với statusid truyền vào
+function changestatusbystsid(statusid) {
+    var id = $("#lblUserId").text();
+    const CardId = document.querySelectorAll("#btnStatus");
+    var UserCard = document.querySelectorAll(".employee-body-card");
+
+    if (statusid == 0) {
+        $("#lblStatus").text("Chưa Kích Hoạt");
+        CardId.forEach((usersIdCard) => {
+            const getId = usersIdCard.getAttribute("empolyeecardid");
+            if (getId == id) {
+                usersIdCard.setAttribute("commandargument", 0);
+                const statusgetid = usersIdCard.getAttribute("commandargument");
+                handleStatus(statusgetid, usersIdCard);
+            }
+        });
+        UserCard.forEach((UserCardId) => {
+            const idCard = UserCardId.getAttribute("commandargument");
+            if (id == idCard) {
+                UserCardId.setAttribute("isdrop", StatusId);
+            }
+        });
+    } else if (statusid == 1) {
+        $("#lblStatus").text("Đã Kích Hoạt");
+        CardId.forEach((usersIdCard) => {
+            const getId = usersIdCard.getAttribute("empolyeecardid");
+            if (getId == id) {
+                usersIdCard.setAttribute("commandargument", 1);
+                const statusgetid = usersIdCard.getAttribute("commandargument");
+                handleStatus(statusgetid, usersIdCard);
+            }
+        });
+        UserCard.forEach((UserCardId) => {
+            const idCard = UserCardId.getAttribute("commandargument");
+            if (id == idCard) {
+                UserCardId.setAttribute("isdrop", StatusId);
+            }
+        });
+    } else if (statusid == 2) {
+        $("#lblStatus").text("Vô Hiệu Hoá");
+        CardId.forEach((usersIdCard) => {
+            const getId = usersIdCard.getAttribute("empolyeecardid");
+            if (getId == id) {
+                usersIdCard.setAttribute("commandargument", 2);
+                const statusgetid = usersIdCard.getAttribute("commandargument");
+                handleStatus(statusgetid, usersIdCard);
+            }
+        });
+        UserCard.forEach((UserCardId) => {
+            const idCard = UserCardId.getAttribute("commandargument");
+            if (id == idCard) {
+                UserCardId.setAttribute("isdrop", StatusId);
+            }
+        });
+    }
+}
+
+
+
+
+
 
 //------------Hàm thực hiện chức năng thay đổi Status 
 function handleToggleStatusClick(StatusId) {
@@ -238,8 +299,10 @@ function handleToggleStatusClick(StatusId) {
     var convertstatustoid;
     if (checkstatus == "Đã Kích Hoạt") {
         convertstatustoid = 1;
+    } else if (checkstatus == "Chưa Kích Hoạt") {
+        convertstatustoid = 0;
     }
-    else {
+    else if (checkstatus == "Vô Hiệu Hoá") {
         convertstatustoid = 2;
     }
 
@@ -258,7 +321,36 @@ function handleToggleStatusClick(StatusId) {
                 var NoActiveClass = "noActive";
                 var ActiveClass = "Active";
 
-                if (response.d == true) {
+
+                if (response.d == 0) {
+                    $("#lblStatus").text("Chưa Kích Hoạt");
+                    /*$("#lblStatus").style.color = "green";*/
+                    isStatus.textContent = "Chưa Kích Hoạt";
+                    isStatus.classList.remove(ActiveClass);
+                    isStatus.classList.remove(NoActiveClass);
+
+                    isAvatarImage.classList.remove(ActiveClass);
+                    isAvatarImage.classList.remove(NoActiveClass);
+                    showSuccessToast("Đã Huỷ kích hoạt tài khoản thành công!");
+
+                    CardId.forEach((usersIdCard) => {
+                        const getId = usersIdCard.getAttribute("empolyeecardid");
+                        if (getId == id) {
+                            usersIdCard.setAttribute("commandargument", 0);
+                            const statusgetid = usersIdCard.getAttribute("commandargument");
+                            handleStatus(statusgetid, usersIdCard);
+                        }
+                    });
+
+                    UserCard.forEach((UserCardId) => {
+                        const idCard = UserCardId.getAttribute("commandargument");
+
+                        if (id == idCard) {
+                            UserCardId.setAttribute("isdrop", StatusId);
+                        }
+                    });
+
+                } else if (response.d == 1) {
                     $("#lblStatus").text("Đã Kích Hoạt");
                     /*$("#lblStatus").style.color = "green";*/
                     isStatus.textContent = "Đã Kích Hoạt";
@@ -285,7 +377,7 @@ function handleToggleStatusClick(StatusId) {
                             UserCardId.setAttribute("isdrop", StatusId);
                         }
                     });
-                } else {
+                } else if (response.d == 2) {
                     $("#lblStatus").text("Vô Hiệu Hoá");
                     /*$("#lblStatus").style.color = "red";*/
 
@@ -322,10 +414,11 @@ function handleToggleStatusClick(StatusId) {
         })
     }
     else {
-        if (StatusId == 1) {
+        if (StatusId == 0) {
+            showInfoToast("Tài khoản hiện chưa kích hoạt");
+        } else if (StatusId == 1) {
             showInfoToast("Tài khoản hiện đã được kích hoạt");
-        }
-        else {
+        } else if (StatusId == 2) {
             showInfoToast("Tài khoản hiện đã được vô hiệu hoá");
         }
     }
@@ -782,6 +875,7 @@ function handleBindingDataInfor() {
 
                         isAvatarImage.classList.remove(ActiveClass);
                         isAvatarImage.classList.remove(NoActiveClass);
+                        changestatusbystsid(0)
                         break;
                     case 1:
                         $("#lblStatus").text("Đã Kích Hoạt");
@@ -791,6 +885,7 @@ function handleBindingDataInfor() {
 
                         isAvatarImage.classList.add(ActiveClass);
                         isAvatarImage.classList.remove(NoActiveClass);
+                        changestatusbystsid(1)
                         break;
                     case 2:
                         $("#lblStatus").text("Vô Hiệu Hoá");
@@ -800,6 +895,7 @@ function handleBindingDataInfor() {
 
                         isAvatarImage.classList.add(NoActiveClass);
                         isAvatarImage.classList.remove(ActiveClass);
+                        changestatusbystsid(2)
                         break;
                 }
 
@@ -852,14 +948,14 @@ function handleBindingDataInfor() {
                 email.forEach((emailCard) => {
                     var idCard = emailCard.getAttribute("usrid");
                     if (idCard == id) {
-                        emailCard.textContent = $("#lblEmail").text();
+                        emailCard.innerHTML = '<i class="fa-solid fa-envelope"></i> ' + $("#lblEmail").text();
                     }
                 });
 
                 phoneNumber.forEach((phoneNumberCard) => {
                     var idCard = phoneNumberCard.getAttribute("usrid");
                     if (idCard == id) {
-                        phoneNumberCard.textContent = $("#lblPhoneNumber").text();
+                        phoneNumberCard.innerHTML = '<i class="fa-solid fa-phone"></i> ' + $("#lblPhoneNumber").text();
                     }
                 });
             }
@@ -968,7 +1064,7 @@ function handleShowEditorButton(action) {
 
 
 
-//---------ẩn hiện các khối chứa thẻ lable và hiển thị các textbox edit
+//---------ẩn hiện các khối chứa thẻ lablel và hiển thị các textbox edit
 function handleShowDivEditor(action) {
     const divEditor = document.querySelectorAll(".userInfor-Detail__editor")
     const divInfor = document.querySelectorAll(".userInfor-Detail__infor")

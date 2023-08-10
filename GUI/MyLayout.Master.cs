@@ -22,8 +22,8 @@ namespace GUI
 
             int? id_from_validcookie = UserManager.checkValidCookie(Request);
 
-            if (id_from_validcookie == null) { Response.Redirect("login.aspx"); return; }
-      
+            if (id_from_validcookie == null) { Response.Redirect("dang-nhap"); return; }
+
             UserFromCookie = UserManager.GetUsersById((int)id_from_validcookie);
 
 
@@ -52,7 +52,7 @@ namespace GUI
                 cookie.Expires = DateTime.Now.AddDays(-1);
                 Response.Cookies.Add(cookie);
             }
-            Response.Redirect("Login.aspx");
+            Response.Redirect("dang-nhap");
         }
     }
 }

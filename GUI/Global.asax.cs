@@ -31,9 +31,14 @@ namespace GUI
         protected void Application_Start(object sender, EventArgs e)
         {
             //GlobalHost.HubPipeline.AddModule(new CustomAuthorizationModule());
-            //RouteTable.Routes.MapPageRoute("", "", "~/Message.aspx");
+            //RouteTable.Routes.MapPageRoute("TrangChu", "", "~/Dang-Nhap");
 
+            RegisterRouter(RouteTable.Routes);
+        }
 
+        void RegisterRouter(RouteCollection routers)
+        {
+            routers.MapPageRoute("TrangChu", "", "~/Login");
         }
     }
 }

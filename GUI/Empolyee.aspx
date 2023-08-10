@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/toast.css" />
+    <link rel="stylesheet" href="Style/modal-email.css" />
 </asp:Content>
 
 
@@ -401,24 +402,13 @@
         </div>
     </div>
 
-    <script>
+    <div class="usrdetail-modal-email">
+        <button id="btnTggleEmail" type="button">
+            <i class="fa-solid fa-chevrons-left"></i>
+        </button>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
+    <script></script>
 
     <script src="JS/empolyee.js"></script>
     <script src="JS/toast.js"></script>
