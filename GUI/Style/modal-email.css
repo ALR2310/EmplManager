@@ -2,19 +2,18 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    display: flex;
+    display: block;
     width: 600px;
     background-color: white;
-    /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .1); */
     border-right: 1px solid var(--border-color);
 }
 
 #btnTggleEmail {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     position: absolute;
     top: 45%;
-    right: -2%;
+    right: -2.5%;
     background: white;
     border: none;
     font-size: 20px;
@@ -27,3 +26,65 @@
     #btnTggleEmail:hover {
         opacity: 0.7;
     }
+
+.usrdetail-modal-email-Content {
+    margin: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.usrdetail-modal-email h2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#tblEmail_subject,
+#tblEmail_title {
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    font-weight: 500;
+}
+
+.modal-email-Content-ckeditor {
+    height: 546px;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    font-size: 14px;
+}
+
+.modal-email-Content-action {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+    justify-content: space-evenly;
+}
+
+    .modal-email-Content-action button {
+        width: 200px;
+        height: 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        outline: none;
+        transition: all .5s ease;
+        background-color: #c9c9c9;
+    }
+
+        .modal-email-Content-action button:hover {
+            opacity: 0.8;
+        }
+
+        .modal-email-Content-action button:last-child {
+            color: white;
+            background-color: var(--primary-color);
+        }
