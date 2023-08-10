@@ -175,7 +175,8 @@
                             <span>bạn đang xem tin nhắn cũ</span>
                             <span>bấm vào đây để xem tin nhắn hiện tại
                                 <img src="Images/arrowDown.svg" /></span>
-                        </div>
+                        </div>  
+                        <div id="search_option"></div>
                     </div>
                     <ul class="chat-main__list">
                     </ul>

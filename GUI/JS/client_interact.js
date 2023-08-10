@@ -311,7 +311,7 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     }
 }
 function condictionalScrollBottom(height) {
- 
+    height = height || scroll.clientHeight;
     if (scroll.scrollTop + scroll.clientHeight - height > scroll.clientHeight) return;
 
     scrollBottom();
@@ -319,7 +319,7 @@ function condictionalScrollBottom(height) {
 let file_template = $("#attached_file_template");
 function loadAttachments(Uploaded_Files, message_ele) {
 
-    for (file of Uploaded_Files) {
+    for (const file of Uploaded_Files) {
         console.log(Uploaded_Files);
         let extension = file.fileName.split('.');
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
@@ -336,10 +336,12 @@ function loadAttachments(Uploaded_Files, message_ele) {
             });
 
          
+            setTimeout(function () {
+                file_ele.attr("src", "/Images/UserUploads/" + file.url);
 
-            file_ele.attr("src", "/Images/UserUploads/" + file.url);
 
-
+            });
+          
 
             file_ele.appendTo(message_ele.find(".attached_files"));
             continue;

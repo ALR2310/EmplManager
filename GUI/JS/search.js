@@ -153,14 +153,30 @@ function showplacehold() {
 }
 let last_search_request = null;
 
-let perfom_search = function (query) {
+$("#search_previous_button").on("click", function () {
+    if (current_page <= 1) { return; }
+    clearSearchResults();
+    perfom_search(current_query, current_page - 1);
+})
+$("#search_next_button").on("click", function () {
+    if (current_page >= max_page) { return; }
+    clearSearchResults();
+    perfom_search(current_query, current_page + 1);
+})
+var max_page = 0;
+var current_page = 1;
+var current_query;
+let perfom_search = function (query, page) {
+    page = page || 1;
+    current_page = page;
+    current_query = query;
     if (!!last_search_request) { last_search_request.abort(); }
     last_search_request =   $.ajax({
         url: 'Message.aspx/SearchMessage',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ search_str: query, page: 1 }),
+        data: JSON.stringify({ search_str: query, page: page }),
         success: async function (response) {
             let data = JSON.parse(response.d);
          
@@ -172,8 +188,10 @@ let perfom_search = function (query) {
             }
             $("#fake_messages").css("display", "");
             let keys = Object.keys(data);
-            console.log(keys.length);
-            
+  
+            max_page = Math.ceil(data.Results / 10);
+            $("#search_previous_button").toggleClass("button_disabled", current_page <= 1);
+            $("#search_next_button").toggleClass("button_disabled", current_page >= max_page);
 
             $("#search_messages_pages").css("display", data.Results < 10 ? "none" : "");
 
@@ -189,10 +207,23 @@ let perfom_search = function (query) {
                 await renderSearchMessage(Number(id), message);
             };
             $("#search_messages_pages").appendTo("#fake_messages");
+            $("#numberic_buttons").empty();
+            let min_page = Math.max(1, page - 1);
+            for (let cur_page = min_page; cur_page < min_page + 3; cur_page++) {
+                if (cur_page > max_page) break;
+                let span = $(`<span ${cur_page == page ? "class='highlight'" : ""}>${cur_page}</span>`);
+                span.appendTo("#numberic_buttons");
+                if (cur_page == page) continue;
+                span.on("click", function () {
+                    clearSearchResults();
+                    perfom_search(query, cur_page);
+                })
+            }
             setTimeout(function () {
                 placehold_layout.css("display", "none");
 
             }, 100);
+
           
         },
         error: function (xhr, status, error) {
@@ -202,16 +233,19 @@ let perfom_search = function (query) {
 
     });
 }
+function clearSearchResults() {
+    $("#search_not_found").css("display", "");
+
+    $(".to_delete").remove();
+    open_btn.css('display', 'none');
+    search_cancel_btn.css('display', 'unset');
+    search_message_list.css("display", "flex");
+    showplacehold();
+}
 search_bxb.on("input", function () {
     if (search_bxb.val().trim() != "") {
-        $("#search_not_found").css("display", ""); 
-   
-        $(".to_delete").remove();
-        open_btn.css('display', 'none');
-        search_cancel_btn.css('display', 'unset');
-        search_message_list.css("display", "flex");
-        showplacehold();
-
+     
+        clearSearchResults();
         clearTimeout(searching_thread);
         searching_thread = setTimeout(function () {
             require_reload_placehold = false;
