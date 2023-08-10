@@ -309,80 +309,6 @@
     <Content Include="Images\uploadImage.svg" />
     <Content Include="JS\image_attach.js" />
     <Content Include="JS\empolyee.js" />
-    <Content Include="Lib\CkEditor5\build\ckeditor.js" />
-    <Content Include="Lib\CkEditor5\build\translations\af.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ar.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ast.js" />
-    <Content Include="Lib\CkEditor5\build\translations\az.js" />
-    <Content Include="Lib\CkEditor5\build\translations\bg.js" />
-    <Content Include="Lib\CkEditor5\build\translations\bn.js" />
-    <Content Include="Lib\CkEditor5\build\translations\bs.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ca.js" />
-    <Content Include="Lib\CkEditor5\build\translations\cs.js" />
-    <Content Include="Lib\CkEditor5\build\translations\da.js" />
-    <Content Include="Lib\CkEditor5\build\translations\de-ch.js" />
-    <Content Include="Lib\CkEditor5\build\translations\de.js" />
-    <Content Include="Lib\CkEditor5\build\translations\el.js" />
-    <Content Include="Lib\CkEditor5\build\translations\en-au.js" />
-    <Content Include="Lib\CkEditor5\build\translations\en-gb.js" />
-    <Content Include="Lib\CkEditor5\build\translations\en.js" />
-    <Content Include="Lib\CkEditor5\build\translations\eo.js" />
-    <Content Include="Lib\CkEditor5\build\translations\es-co.js" />
-    <Content Include="Lib\CkEditor5\build\translations\es.js" />
-    <Content Include="Lib\CkEditor5\build\translations\et.js" />
-    <Content Include="Lib\CkEditor5\build\translations\eu.js" />
-    <Content Include="Lib\CkEditor5\build\translations\fa.js" />
-    <Content Include="Lib\CkEditor5\build\translations\fi.js" />
-    <Content Include="Lib\CkEditor5\build\translations\fr.js" />
-    <Content Include="Lib\CkEditor5\build\translations\gl.js" />
-    <Content Include="Lib\CkEditor5\build\translations\gu.js" />
-    <Content Include="Lib\CkEditor5\build\translations\he.js" />
-    <Content Include="Lib\CkEditor5\build\translations\hi.js" />
-    <Content Include="Lib\CkEditor5\build\translations\hr.js" />
-    <Content Include="Lib\CkEditor5\build\translations\hu.js" />
-    <Content Include="Lib\CkEditor5\build\translations\id.js" />
-    <Content Include="Lib\CkEditor5\build\translations\it.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ja.js" />
-    <Content Include="Lib\CkEditor5\build\translations\jv.js" />
-    <Content Include="Lib\CkEditor5\build\translations\kk.js" />
-    <Content Include="Lib\CkEditor5\build\translations\km.js" />
-    <Content Include="Lib\CkEditor5\build\translations\kn.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ko.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ku.js" />
-    <Content Include="Lib\CkEditor5\build\translations\lt.js" />
-    <Content Include="Lib\CkEditor5\build\translations\lv.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ms.js" />
-    <Content Include="Lib\CkEditor5\build\translations\nb.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ne.js" />
-    <Content Include="Lib\CkEditor5\build\translations\nl.js" />
-    <Content Include="Lib\CkEditor5\build\translations\no.js" />
-    <Content Include="Lib\CkEditor5\build\translations\oc.js" />
-    <Content Include="Lib\CkEditor5\build\translations\pl.js" />
-    <Content Include="Lib\CkEditor5\build\translations\pt-br.js" />
-    <Content Include="Lib\CkEditor5\build\translations\pt.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ro.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ru.js" />
-    <Content Include="Lib\CkEditor5\build\translations\si.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sk.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sl.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sq.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sr-latn.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sr.js" />
-    <Content Include="Lib\CkEditor5\build\translations\sv.js" />
-    <Content Include="Lib\CkEditor5\build\translations\th.js" />
-    <Content Include="Lib\CkEditor5\build\translations\tk.js" />
-    <Content Include="Lib\CkEditor5\build\translations\tr.js" />
-    <Content Include="Lib\CkEditor5\build\translations\tt.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ug.js" />
-    <Content Include="Lib\CkEditor5\build\translations\uk.js" />
-    <Content Include="Lib\CkEditor5\build\translations\ur.js" />
-    <Content Include="Lib\CkEditor5\build\translations\uz.js" />
-    <Content Include="Lib\CkEditor5\build\translations\zh-cn.js" />
-    <Content Include="Lib\CkEditor5\build\translations\zh.js" />
-    <Content Include="Lib\CkEditor5\sample\index.html" />
-    <Content Include="Lib\CkEditor5\sample\script.js" />
-    <Content Include="Lib\CkEditor5\sample\styles.css" />
-    <Content Include="Lib\CkEditor5\webpack.config.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\signalr.js" />
@@ -408,12 +334,6 @@
     </Compile>
     <Compile Include="Hubs\HubAuthorization.cs" />
     <Content Include="JS\search.js" />
-    <Content Include="Lib\CkEditor5\build\ckeditor.js.map" />
-    <Content Include="Lib\CkEditor5\LICENSE.md" />
-    <Content Include="Lib\CkEditor5\package.json" />
-    <Content Include="Lib\CkEditor5\README.md" />
-    <Content Include="Lib\CkEditor5\tsconfig.json" />
-    <Content Include="Lib\CkEditor5\tsconfig.types.json" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -509,10 +429,6 @@
       <Project>{aad3c82b-a74b-4cd7-a700-1ac563c443dc}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Lib\CkEditor5\build\ckeditor.d.ts" />
-    <TypeScriptCompile Include="Lib\CkEditor5\src\ckeditor.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
