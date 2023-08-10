@@ -1712,12 +1712,13 @@ body::-webkit-scrollbar {
     border-radius: 5px;
     outline: none;
     color: black;
-    background-color: var(--border-color);
+    background-color: var(--primary-color);
     height: 30px;
     padding: 0 10px;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.5s ease;
+    color: white;
 }
 
     .userInfor-SendMail button:hover {

@@ -69,6 +69,7 @@
                                             </ul>
                                         </li>
                                         <li onclick="showModalDeleteUser()" onmouseenter="handleDelMoreUsr()">Xoá Tài Khoản</li>
+                                        <li onclick="activeEmailModal()">Gửi Email</li>
 
                                         <box class="boxhidentop"></box>
                                         <box class="boxhidenbottom"></box>
@@ -192,7 +193,7 @@
                 </div>
 
                 <div class="userInfor-SendMail">
-                    <button type="button">
+                    <button type="button" onclick="activeEmailModal()">
                         <i class="fa-regular fa-envelope"></i>
                         Gửi Email
                                 <asp:Button runat="server" ID="btnSendMail" Style="display: none;" />
@@ -403,35 +404,101 @@
         </div>
     </div>
 
-    <div class="usrdetail-modal-email">
-        <button id="btnTggleEmail" type="button">
+    <div class="usrdetail-modal-email hide">
+        <button id="btnMdEmailshw" type="button" onclick="showEmailModal(this)">
+            <i class="fa-solid fa-chevrons-left fa-rotate-180"></i>
+        </button>
+
+        <button id="btnMdEmailcls" class="hide" type="button" onclick="closeEmailModal(this)">
             <i class="fa-solid fa-chevrons-left"></i>
         </button>
 
         <h2>Soạn Thư</h2>
 
         <div class="usrdetail-modal-email-Content">
-            <input id="tblEmail_subject" type="email" placeholder="Người Nhận" />
-            <input id="tblEmail_title" placeholder="Tiêu Đề" />
+            <input id="tblEmail_recipients" placeholder="Người Nhận" />
+            <input id="tblEmail_subject" placeholder="Tiêu Đề" />
 
             <div id="tblEmail_content" placeholder="Nội Dung" class="modal-email-Content-ckeditor"></div>
 
             <div class="modal-email-Content-action">
-                <button>Huỷ Bỏ</button>
-                <button>Gửi Ngay</button>
+                <button type="button" onclick="disableEmailModal()">Huỷ Bỏ</button>
+                <button type="button" onclick="SendEmail()">Gửi Ngay</button>
             </div>
         </div>
     </div>
 
     <script>
-        BalloonEditor
-            .create(document.querySelector('#tblEmail_content'))
-            .catch(error => {
-                console.error(error);
-            })
+        //---------function gửi Email
+        function SendEmail() {
+            var recipients = $("#tblEmail_recipients").val().split(",");
+
+            var data = {
+                "recipients": recipients,
+                "subject": $("#tblEmail_subject").val(),
+                "content": $("#tblEmail_content p").text(),
+            }
+
+            $.ajax({
+                type: "POST",
+                "url": "empolyee.aspx/SendEmail",
+                "data": JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    showSuccessToast("Đã Gửi Email Thành Công");
+                },
+                error: function (err) {
+                    console.log("Đã có lỗi xảy ra: " + err);
+                }
+            });
+        }
+
+
+
+        //----------Function kích hoạt đóng mở email modal
+        function activeEmailModal() {
+            const emailModal = document.querySelector(".usrdetail-modal-email");
+            emailModal.classList.remove("hide");
+            setTimeout(() => {
+                emailModal.style.transform = "translateX(0%)";
+
+                const btnShwEmail = document.querySelector("#btnMdEmailshw");
+                btnShwEmail.classList.add("hide");
+
+                const btnClsEmail = document.querySelector("#btnMdEmailcls");
+                btnClsEmail.classList.remove("hide");
+            }, 0);
+        }
+        function disableEmailModal() {
+            const emailModal = document.querySelector(".usrdetail-modal-email");
+            emailModal.style.transform = "translateX(-100%)";
+            setTimeout(() => {
+                emailModal.classList.add("hide");
+            }, 450);
+            $("#tblEmail_recipients").val("");
+            $("#tblEmail_subject").val("");
+            $("#tblEmail_content p").text("");
+        }
+        function showEmailModal(event) {
+            const emailModal = document.querySelector(".usrdetail-modal-email");
+            emailModal.style.transform = "translateX(0%)";
+            event.classList.add("hide");
+
+            const btnClsEmail = document.querySelector("#btnMdEmailcls");
+            btnClsEmail.classList.remove("hide");
+        }
+        function closeEmailModal(event) {
+            const emailModal = document.querySelector(".usrdetail-modal-email");
+            emailModal.style.transform = "translateX(-100%)";
+            event.classList.add("hide");
+
+            const btnShwEmail = document.querySelector("#btnMdEmailshw");
+            btnShwEmail.classList.remove("hide");
+        }
     </script>
 
-    <script src="Lib/CkEditor5/build/ckeditor.js"></script>
+
     <script src="JS/empolyee.js"></script>
     <script src="JS/toast.js"></script>
 

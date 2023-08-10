@@ -1093,3 +1093,14 @@ function handleShowDivEditor(action) {
         });
     }
 }
+
+
+
+
+
+//---------CK Editor--------
+BalloonEditor
+    .create(document.querySelector('#tblEmail_content'))
+    .catch(error => {
+        console.error(error);
+    })
