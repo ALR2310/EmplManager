@@ -293,6 +293,7 @@
     <Content Include="Images\Icons\code_file.svg" />
     <Content Include="Images\Icons\mess_delete_icon.svg" />
     <Content Include="Images\Icons\mess_edit_icon.svg" />
+    <Content Include="Images\Icons\play_video.svg" />
     <Content Include="Images\Icons\text_file.svg" />
     <Content Include="Images\Icons\upload_edit.svg" />
     <Content Include="Images\magnifying_glass.svg" />
@@ -339,7 +340,6 @@
     <Content Include="Style\emoji_list.css" />
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
-    <Content Include="Style\modal-email.css" />
     <Content Include="Style\modal.css" />
     <Content Include="Style\speech_bubble.css" />
     <Content Include="Style\toast.css" />

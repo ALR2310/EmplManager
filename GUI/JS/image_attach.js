@@ -77,6 +77,7 @@ var reload_attached_files = function () {
                 if (url == "local_video") {
 
                     preview_image.replaceWith("<video class='preview_image'/>");
+                    upload_ele.find(".preview_play_button").css("visibility", "unset");
                     preview_image = upload_ele.find(".preview_image");
                 }
 

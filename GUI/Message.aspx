@@ -269,6 +269,7 @@
 
                     </ul>
                     <div class="preview_image_wrapper">
+                        <img class="preview_play_button" style="visibility: hidden;"  src="Images/Icons/play_video.svg" />
                         <img class="preview_image" src="Images/Icons/blank_file.svg" />
                     </div>
 
