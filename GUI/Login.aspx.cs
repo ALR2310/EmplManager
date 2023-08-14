@@ -81,12 +81,16 @@ namespace GUI
                             Status = 1
                         };
                         UserManager.InsertUsers(user);
+
                         user.Save();
 
 
 
 
                      
+
+                        Response.Redirect("Tin-Nhan");
+
                     }
                     string authToken = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
 
