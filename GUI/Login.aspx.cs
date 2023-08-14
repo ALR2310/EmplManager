@@ -24,17 +24,17 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    int? validcookie = UserManager.checkValidCookie(Request);
-            //    Debug.WriteLine(validcookie);
-            //    if (validcookie != null)
-            //    {
-            //        string script = "this.location = \"./tin-nhan\";";
+            if (!IsPostBack)
+            {
+                int? validcookie = UserManager.checkValidCookie(Request);
+                Debug.WriteLine(validcookie);
+                if (validcookie != null)
+                {
+                    string script = "this.location = \"./tin-nhan\";";
 
-            //        ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
-            //    }
-            //}
+                    ScriptManager.RegisterStartupScript(this, GetType(), "RedirectScript", script, true);
+                }
+            }
 
             if (!IsPostBack && Request.QueryString["code"] != null)
             {
@@ -70,7 +70,6 @@ namespace GUI
                     Email.Text = googleEmail;
                     Name.Text = googleName;
                     Picture.Text = googlePictureUrl;
-
                 }
             }
         }
@@ -85,25 +84,6 @@ namespace GUI
 
             Response.Redirect(authorizationUrl);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
