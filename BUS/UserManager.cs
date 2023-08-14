@@ -81,6 +81,29 @@ namespace BUS
                 return sb.ToString();
             }
         }
+  
+        public static string getOrSetAuthTokenFromNewGoogleAccount(string googleName, string googleId)
+        {
+            InlineQuery qry = new InlineQuery();
+
+
+    
+            List<User> LoggedUsers = qry.ExecuteTypedList<User>($"Select * From Users Where GoogleId = '{googleId}'");
+
+
+            if (LoggedUsers.Count == 0)
+            {
+                return "_failed_";
+            }
+
+            string query = $"Select authToken From authTokens Where Id = {LoggedUsers[0].Id}";
+
+            List<AuthTokens> LoggedTokens = qry.ExecuteTypedList<AuthTokens>(query);
+
+            if (LoggedTokens.Count == 1) { return LoggedTokens[0].authToken; }
+
+            return generateAndSetToken(LoggedUsers[0].Id, googleName, googleId);
+        }
         public static string Login(string username, string password)
         {
             InlineQuery qry = new InlineQuery();

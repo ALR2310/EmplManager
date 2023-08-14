@@ -67,12 +67,8 @@ namespace GUI
                     string googleName = userInfo.Name;
                     string googlePictureUrl = userInfo.Picture;
 
-                    if (UserManager.GoogleIdIsExists(googleUserId).Count != 0)
-                    {
-                        //Kiểm tra nếu ggId tồn tại trong sql thì tiến hành đăng nhập
-
-                    }
-                    else
+                    if (UserManager.GoogleIdIsExists(googleUserId).Count == 0)
+               
                     {
                         //Nếu ggId chưa tồn tại thì tạo users mới và đăng nhập
                         User user = new User
@@ -85,11 +81,22 @@ namespace GUI
                             Status = 1
                         };
                         UserManager.InsertUsers(user);
+                        user.Save();
+
+
+
+
+                     
                     }
+                    string authToken = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
 
+                    HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+                    authCookie.Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies.Add(authCookie);
 
+                    ToastManager.ErrorToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
 
-
+                    Response.Redirect("Message.aspx");
 
                 }
             }
