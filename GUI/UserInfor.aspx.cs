@@ -19,11 +19,11 @@ namespace GUI
             UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
-            
+
                 LoadUser();
             }
         }
-     
+
         void LoadUser()
         {
             User user = UserManager.GetUsersById(UserFromCookie.Id);
@@ -37,7 +37,7 @@ namespace GUI
                 lblDisplayName.Text = user.DisplayName;
                 lblDisplayName1.Text = user.DisplayName;
                 lblDisplayName2.Text = user.DisplayName;
-                lblGooogleId.Text = user.GoogleId.ToString();
+                lblGooogleId.Text = user.GoogleId;
                 lblEmail.Text = user.Email;
                 lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
 

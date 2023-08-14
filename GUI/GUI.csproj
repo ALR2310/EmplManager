@@ -295,6 +295,9 @@
     <Content Include="Empolyee.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrowDown.svg" />
+    <Content Include="Images\Avatar\Uploads\U_16.png" />
+    <Content Include="Images\Avatar\Uploads\U_18.jpg" />
+    <Content Include="Images\Avatar\Uploads\U_18.png" />
     <Content Include="Images\Icons\archive.svg" />
     <Content Include="Images\Icons\plus.svg" />
     <Content Include="Images\Icons\right_arrow.svg" />
@@ -327,6 +330,34 @@
     <Content Include="Images\team.png" />
     <Content Include="Images\uploadFile.svg" />
     <Content Include="Images\uploadImage.svg" />
+    <Content Include="Images\UserUploads\24\0c05e809-6359-4952-b05c-d4ee4e9f7d86.svg" />
+    <Content Include="Images\UserUploads\24\193a585f-96a0-4b21-984e-57afe4403ccc.svg" />
+    <Content Include="Images\UserUploads\24\2baa4b28-9438-4a47-8054-65d751e6e48f.svg" />
+    <Content Include="Images\UserUploads\24\2e7a68e0-b081-438b-b9e1-11f314d53fe4.svg" />
+    <Content Include="Images\UserUploads\24\3ac25530-1f76-447e-8da4-872f2efd98f7.svg" />
+    <Content Include="Images\UserUploads\24\45277543-0db6-46a3-860f-02ee14deb30f.svg" />
+    <Content Include="Images\UserUploads\24\455aa09d-45b2-493a-a03f-8a3139a8a49b.svg" />
+    <Content Include="Images\UserUploads\24\48cd4161-4bb4-4dde-a22b-fe80cff8d099.svg" />
+    <Content Include="Images\UserUploads\24\5bcecd1e-6bc9-45bb-bc49-10e97fb8c089.svg" />
+    <Content Include="Images\UserUploads\24\6e38e88c-1802-4586-8e0e-40a84b96572a.svg" />
+    <Content Include="Images\UserUploads\24\877c2903-bb37-4e7f-9b25-e6b7dc3c1930.svg" />
+    <Content Include="Images\UserUploads\24\8f358a24-64bc-4f19-ada7-6300b65bca0f.svg" />
+    <Content Include="Images\UserUploads\24\973c2fbc-b558-49ad-b3a9-2997d2552e5a.svg" />
+    <Content Include="Images\UserUploads\24\9e6a9aa4-0c88-49ea-af44-9e85f0279149.svg" />
+    <Content Include="Images\UserUploads\24\a321fc9d-0104-44f1-b9a0-b7cf1ea5121d.svg" />
+    <Content Include="Images\UserUploads\24\b60d813c-fb22-4ee2-9b65-c436094cf14f.svg" />
+    <Content Include="Images\UserUploads\24\b8a81974-580e-4973-81ad-5d883b3e1370.svg" />
+    <Content Include="Images\UserUploads\24\c2f2ecb6-8ebd-4bf2-a46e-854fe814450b.svg" />
+    <Content Include="Images\UserUploads\24\c5cc95ec-f277-4ee2-bb15-282382498523.svg" />
+    <Content Include="Images\UserUploads\24\cef11ff3-17b8-41ac-9642-0d239d007ad9.svg" />
+    <Content Include="Images\UserUploads\24\cf3546fa-9256-4493-bef1-fdcfc89cdcbb.svg" />
+    <Content Include="Images\UserUploads\24\df8cba3c-d1ee-4ad4-aa09-7f03f44d4280.svg" />
+    <Content Include="Images\UserUploads\24\e6ea94a5-a427-4089-98e9-3ba046855a2e.svg" />
+    <Content Include="Images\UserUploads\24\fc95c472-1adc-4299-a6f3-7f763fe29df0.svg" />
+    <Content Include="Images\UserUploads\2759\9dd1872e-ce68-4072-b58d-00aad7ebaa28.svg" />
+    <Content Include="Images\UserUploads\4\b012cb0c-5cd6-4cad-9538-b516f533436a.jpg" />
+    <Content Include="Images\UserUploads\4\b41d17f7-6eeb-492b-b700-73a3612414f2.jar" />
+    <Content Include="Images\UserUploads\4\ffb96a96-ba1e-4b1e-a16a-06cd08951512.jpg" />
     <Content Include="JS\image_attach.js" />
     <Content Include="JS\empolyee.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
@@ -354,6 +385,9 @@
     </Compile>
     <Compile Include="Hubs\HubAuthorization.cs" />
     <Content Include="JS\search.js" />
+    <Content Include="Images\Avatar\Uploads\U_16" />
+    <Content Include="Images\UserUploads\4\944df853-3f0e-46aa-862a-d68833782559.log" />
+    <Content Include="Images\UserUploads\4\d564c08a-481a-49c1-954f-ab92cc8b6875.log" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -434,10 +468,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\Avatar\Uploads\" />
-    <Folder Include="Images\UserUploads\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BUS\BUS.csproj">
       <Project>{4735c057-a82b-4161-946d-af488c1c39e8}</Project>

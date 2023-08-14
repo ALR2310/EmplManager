@@ -430,6 +430,25 @@
 
     <script>
         //-----------chọn các checkbox và gửi Email
+        // Tạo một mảng để lưu trữ thông tin các mục được chọn
+        var emailSelectedboxes = [];
+
+        // Hàm xử lý sự kiện thay đổi của checkbox
+        function handleGetUserNameForCheckboxes() {
+            emailSelectedboxes = []; // Xóa mảng khi có sự thay đổi
+            var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    var usrid = checkbox.getAttribute('usrid');
+                    var displayName = document.querySelector('h4[usrid="' + usrid + '"]').textContent;
+                    emailSelectedboxes.push(displayName);
+                }
+            });
+
+            // In mảng đã chọn ra console.log
+            console.log(emailSelectedboxes);
+        }
 
 
         //---------function gửi Email
