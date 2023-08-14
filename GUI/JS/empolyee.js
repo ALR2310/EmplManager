@@ -441,6 +441,8 @@ function countCheckboxSelection() {
     });
 
     countSelectedSpan.textContent = countSelected.toString();
+
+    handleGetUserNameForCheckboxes();
 }
 
 
