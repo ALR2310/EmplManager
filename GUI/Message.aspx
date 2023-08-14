@@ -62,7 +62,9 @@
             </div>
         </div>
     </div>
-
+             <div id="MediaMenu">
+                <img src="C:\Users\meeh6\Downloads\AstgenneSkinHerAspirationGIFBase.gif"/>
+            </div>
     <div class="content">
         <div class="chat">
             <div class="chat__header">
@@ -99,6 +101,7 @@
 
                 </div>
             </div>
+   
             <div id="MessageUpdatePanel">
 
                 <div id="loading_circle"></div>

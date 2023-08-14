@@ -395,8 +395,8 @@ async function renderMessage(message, isNewMessage) {
     message.message_element = message_ele.find(".chat-main__item");
 
     if (!!message.Uploaded_Files && message.Status == 1) {
-
-        loadAttachments(JSON.parse(message.Uploaded_Files), message_ele.find(".chat-main__item"));
+        message.Uploaded_Files = JSON.parse(message.Uploaded_Files);
+        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"));
 
     }
 

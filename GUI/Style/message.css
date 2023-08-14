@@ -1860,3 +1860,10 @@ textarea {
 .attached_files > img{
     cursor: pointer;
 }
+
+#MediaMenu {
+    width:100%;
+    height:100%;
+    position:absolute;
+    background:black;
+}
