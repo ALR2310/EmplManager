@@ -752,3 +752,5 @@ const forceScrollBottom = async function () {
 
 
 }
+
+$("#MediaMenu").appendTo("body");
