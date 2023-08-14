@@ -429,6 +429,9 @@
     </div>
 
     <script>
+        //-----------chọn các checkbox và gửi Email
+
+
         //---------function gửi Email
         function SendEmail() {
             var recipients = $("#tblEmail_recipients").val().split(",");
