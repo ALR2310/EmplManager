@@ -34,10 +34,12 @@
             <div class="login">
                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-                <asp:TextBox ID="Email" runat="server"></asp:TextBox>
+                <%--<asp:TextBox ID="Email" runat="server"></asp:TextBox>
                 <asp:TextBox ID="Id" runat="server"></asp:TextBox>
                 <asp:TextBox ID="Name" runat="server"></asp:TextBox>
-                <asp:TextBox ID="Picture" runat="server"></asp:TextBox>
+                <asp:TextBox ID="Picture" runat="server"></asp:TextBox>--%>
+
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
 
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>

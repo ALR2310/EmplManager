@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
+using DAL;
 
 namespace GUI
 {
@@ -66,10 +67,30 @@ namespace GUI
                     string googleName = userInfo.Name;
                     string googlePictureUrl = userInfo.Picture;
 
-                    Id.Text = googleUserId;
-                    Email.Text = googleEmail;
-                    Name.Text = googleName;
-                    Picture.Text = googlePictureUrl;
+                    if (UserManager.GoogleIdIsExists(googleUserId).Count != 0)
+                    {
+                        //Kiểm tra nếu ggId tồn tại trong sql thì tiến hành đăng nhập
+
+                    }
+                    else
+                    {
+                        //Nếu ggId chưa tồn tại thì tạo users mới và đăng nhập
+                        User user = new User
+                        {
+                            GoogleId = googleUserId,
+                            Avatar = googlePictureUrl,
+                            Email = googleEmail,
+                            DisplayName = googleName,
+                            UserType = 1,
+                            Status = 1
+                        };
+                        UserManager.InsertUsers(user);
+                    }
+
+
+
+
+
                 }
             }
         }
@@ -111,7 +132,5 @@ namespace GUI
 
             }
         }
-
-
     }
 }

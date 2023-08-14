@@ -1,5 +1,6 @@
 ﻿using BUS;
 using DAL;
+using FluentEmail.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,12 +37,12 @@ namespace GUI
                 return;
 
             }
-            if (!txtEmail.Text.ToLower().Contains("@" + SweetSoftDomain))
-            {
-                ToastManager.WaringToast("Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!");
-                lblError.Text = "Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!";
-                return;
-            }
+            //if (!txtEmail.Text.ToLower().Contains("@" + SweetSoftDomain))
+            //{
+            //    ToastManager.WaringToast("Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!");
+            //    lblError.Text = "Chỉ có email với tên miền \"SweetSoft\" mới được đăng ký!";
+            //    return;
+            //}
             int emailExists = UserManager.CheckEmailUser(txtEmail.Text);
             int usernameExists = UserManager.CheckUserName(txtUserName.Text);
 
