@@ -6,9 +6,16 @@
     width: 600px;
     background-color: white;
     border-right: 1px solid var(--border-color);
+    transition: all 0.5s ease;
+    transform: translateX(-100%);
 }
 
-#btnTggleEmail {
+    .usrdetail-modal-email.hide {
+        display: none;
+    }
+
+#btnMdEmailcls,
+#btnMdEmailshw {
     width: 30px;
     height: 30px;
     position: absolute;
@@ -23,9 +30,9 @@
     border-right: 2px solid var(--border-color);
 }
 
-    #btnTggleEmail:hover {
-        opacity: 0.7;
-    }
+#btnTggleEmail:hover {
+    opacity: 0.7;
+}
 
 .usrdetail-modal-email-Content {
     margin: 20px;
@@ -40,7 +47,7 @@
 }
 
 #tblEmail_subject,
-#tblEmail_title {
+#tblEmail_recipients {
     padding: 10px;
     outline: none;
     border: none;

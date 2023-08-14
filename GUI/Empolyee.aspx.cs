@@ -145,5 +145,11 @@ namespace GUI
             EmpolyeeManager.DeleteAlluserSelect(userIdarr);
             return true;
         }
+
+        [WebMethod]
+        public static void SendEmail(string[] recipients, string subject, string content)
+        {
+            EmpolyeeManager.SendEmail(recipients, subject, content);
+        }
     }
 }

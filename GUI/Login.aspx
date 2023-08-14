@@ -33,6 +33,7 @@
         <div class="container login-page">
             <div class="login">
                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
                         <div class="login__form">
@@ -41,7 +42,7 @@
                             </div>
 
                             <div class="login-form__field">
-                                <a class="login-form__with-google" href="#">
+                                <a runat="server" onserverclick="LoginWithGoogle_ServerClick" class="login-form__with-google">
                                     <img src="/images/google-logo.png" alt="" />
                                     Đăng Nhập Bằng Google
                                 </a>
@@ -61,7 +62,7 @@
                                 <i class="fa-sharp fa-solid fa-key"></i>
                                 <asp:TextBox ID="txtPassword" TextMode="Password" placeholder="Mật Khẩu" runat="server"></asp:TextBox>
                             </div>
-                                      <a href="Register.aspx">Chưa có tài khoản? bấm vào để đăng ký ngay!</a>
+                            <a href="dang-ky">Chưa có tài khoản? bấm vào để đăng ký ngay!</a>
                             <div class="login-form__field error-field">
                                 <asp:Label ID="lblError" runat="server" class="text-error"></asp:Label>
                             </div>

@@ -39,9 +39,9 @@ namespace BUS
         {
             InlineQuery qry = new InlineQuery();
             string query = $"select Id,Avatar,DisplayName,UserType from users where id = '{id}'";
-         
+
             var UserData = qry.ExecuteTypedList<BasicUserData>(query);
-      
+
             return UserData.Count != 0 ? UserData[0] : null;
 
         }
@@ -107,19 +107,21 @@ namespace BUS
             return new UserController().Insert(user);
         }
 
+        public static void InsertUsers(User user)
+        {
+            var sql = new InlineQuery();
+            string query = $"Insert Into dbo.Users(GoogleId, Avatar, Email, DisplayName, UserName, Password, UserType, Status) " +
+                $"Values({user.GoogleId}, N'{user.Avatar}', N'{user.Email}', N'{user.DisplayName}', N'{user.UserName}', N'{user.Password}', {user.UserType}, {user.Status}); " +
+                "SELECT SCOPE_IDENTITY();"; // Lấy Id của bản ghi chèn vào Users
+            int userId = sql.ExecuteScalar<int>(query);
+
+            query = $"Insert Into dbo.UserInfor(UserId) values({userId})";
+            sql.Execute(query);
+        }
+
         public static User UpdateUser(User user)
         {
             return new UserController().Update(user);
-        }
-
-        public static bool DeleteUser(int id)
-        {
-            return new UserController().Delete(id);
-        }
-
-        public static List<User> GetAllUsers()
-        {
-            return new Select().From(User.Schema.TableName).ExecuteTypedList<User>();
         }
 
         public static User GetUsersById(int id)
@@ -149,6 +151,15 @@ namespace BUS
             return count;
         }
 
+        //Check Exists GoogleId For Users
+        public static List<User> GoogleIdIsExists(string GoogleId)
+        {
+            var sql = new InlineQuery();
+            string query = $"SELECT * FROM dbo.Users WHERE GoogleId = '{GoogleId}'";
+
+            List<User> result = sql.ExecuteTypedList<User>(query);
+            return result;
+        }
 
     }
 }

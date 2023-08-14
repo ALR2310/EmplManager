@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Net;
 
 namespace BUS
 {
@@ -138,7 +140,33 @@ namespace BUS
             return true;
         }
 
+        //Gửi Email 
+        public static void SendEmail(string[] recipients, string subject, string content)
+        {
+            // Cấu hình thông tin email
+            string emailFrom = "ansaka147@gmail.com";
+            string password = "bnbzobpxchqtlsty";
+            string smtpHost = "smtp.gmail.com";
+            int smtpPort = 587;
 
+            // Tạo đối tượng MailMessage
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress(emailFrom);
+            foreach (string recipient in recipients)
+            {
+                message.To.Add(new MailAddress(recipient));
+            }
+            message.Subject = subject;
+            message.Body = content;
+
+            // Tạo đối tượng SmtpClient
+            SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);
+            smtpClient.Credentials = new NetworkCredential(emailFrom, password);
+            smtpClient.EnableSsl = true;
+
+            // Gửi email
+            smtpClient.Send(message);
+        }
 
     }
 }
