@@ -85,6 +85,7 @@ namespace GUI
                             Status = 1
                         };
                         UserManager.InsertUsers(user);
+                        Response.Redirect("Tin-Nhan");
                     }
 
 
