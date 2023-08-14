@@ -1,3 +1,4 @@
+"use strict";
 var RenderedMessageReaction = {}
 function getCookie(cname) {
     let name = cname + "=";
@@ -235,7 +236,7 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     emoji_display.find(".ogcount").text(list.length);
     emoji_display.find(".ncount").text(list.length);
 
-    for (id of list) {
+    for (const id of list) {
         if (Users[id] == null) { await fetchUser(id) }
     }
     emoji_display.on("mouseenter", async function () {
@@ -245,7 +246,7 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
 
         let index = 0;
 
-        for (id of bound_reaction_lists[message_id]) {
+        for (const id of bound_reaction_lists[message_id]) {
             if (index == emoji_speech_limit) {
                 final_str = final_str + "và " + `<a>${bound_reaction_lists[message_id].length - index} nguời khác.</a>`;
                 index = 0;
@@ -312,20 +313,46 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
 }
 function condictionalScrollBottom(height) {
     height = height || scroll.clientHeight;
-    if (scroll.scrollTop + scroll.clientHeight - height > scroll.clientHeight) return;
+    if (getScrollPos() > scroll.clientHeight || scroll.scrollTop + scroll.clientHeight - height > scroll.clientHeight) return;
 
     scrollBottom();
 }
 let file_template = $("#attached_file_template");
-function loadAttachments(Uploaded_Files, message_ele) {
 
-    for (const file of Uploaded_Files) {
-        console.log(Uploaded_Files);
+let MediaMenu = $("#MediaMenu");
+const PreviewImage_Element = MediaMenu.find("#ImagePreview").find("img");
+const PreviewImage_Element_Link_Popup = MediaMenu.find("#ImagePreview").find("a");
+let MediaMenuArrows = $("#MediaMenuArrows")[0];
+let CurrentMenuFiles = null;
+let CurrentMenuFileIndex = 0;
+const SwitchImage = function (index_offset) {
+
+    CurrentMenuFileIndex = CurrentMenuFileIndex + index_offset;
+    CurrentMenuFileIndex = CurrentMenuFileIndex == CurrentMenuFiles.length ? 0 : CurrentMenuFileIndex < 0 ? CurrentMenuFiles.length - 1 : CurrentMenuFileIndex;
+    console.log(CurrentMenuFileIndex);
+    console.log(CurrentMenuFiles);
+    PreviewImage_Element.attr("src", "/Images/UserUploads/" + CurrentMenuFiles[CurrentMenuFileIndex].url);
+    PreviewImage_Element_Link_Popup.attr("href", "/Images/UserUploads/" + CurrentMenuFiles[CurrentMenuFileIndex].url);
+
+}
+$(MediaMenuArrows).on("click", function (event) {
+    if (event.target == MediaMenuArrows) {
+        MediaMenu.addClass("fade");
+    }
+    
+
+});
+
+function loadAttachments(Uploaded_Files, message_ele) {
+    let FilteredFiles = [];
+
+    for (const [file_index,file] of Object.entries(Uploaded_Files)) {
+       
         let extension = file.fileName.split('.');
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
         if (image == "local_image" || image == "local_video") {
-            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="metadata"/>`);
+            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="auto"/>`);
 
             file_ele.on("load resize", function () {
          
@@ -339,11 +366,26 @@ function loadAttachments(Uploaded_Files, message_ele) {
             setTimeout(function () {
                 file_ele.attr("src", "/Images/UserUploads/" + file.url);
 
-
+         
             });
           
 
             file_ele.appendTo(message_ele.find(".attached_files"));
+
+            if (image == "local_image") {
+                FilteredFiles.push(file);
+                file_ele.on("click", function () {
+                    PreviewImage_Element.attr("src", "/Images/UserUploads/" + file.url);
+                    PreviewImage_Element_Link_Popup.attr("href", "/Images/UserUploads/" + file.url);
+
+                    MediaMenu.css("display", "unset");
+                    MediaMenu.removeClass("fade");
+            
+                    CurrentMenuFiles = FilteredFiles;
+                    CurrentMenuFileIndex = Number(file_index);
+
+                });
+            }
             continue;
         }
         let file_ele = file_template.clone();
@@ -370,7 +412,7 @@ async function renderMessage(message, isNewMessage) {
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
 
-    for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
+    for (const [replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
 
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
@@ -430,7 +472,7 @@ function reloadTimegaps(id) {
 
     if (!!id) {
         let timegaps = $(".chat-main__list").find(".time-gap");
-        for (timegap_ele of timegaps) {
+        for (let timegap_ele of timegaps) {
             timegap_ele = $(timegap_ele);
             if (!!timegap_ele.attr("message_id") && Number(timegap_ele.attr("message_id")) > id - 25) {
                 timegap_ele.remove();
@@ -442,7 +484,7 @@ function reloadTimegaps(id) {
     }
     let messages = $(".chat-main__list").find(".chat-main__item");
     lastIndexedTime = !!id ? Saved_Messages[id].AtCreate : new Date();
-    for (message_ele of messages) {
+    for (let message_ele of messages) {
         message_ele = $(message_ele);
         let message_id = message_ele.attr("message_id");
 
@@ -480,7 +522,7 @@ async function loadMessages(messages_data, scrollToBottomAtLoad, wipe_old_messag
 
         $(".chat-main__list").empty();
     }
-    for ([key, message] of Object.entries(messages_data)) {
+    for (const [key, message] of Object.entries(messages_data)) {
 
         await renderMessage(message);
 
@@ -753,4 +795,4 @@ const forceScrollBottom = async function () {
 
 }
 
-$("#MediaMenu").appendTo("body");
+$("#MediaMenu").appendTo    ("body");

@@ -242,6 +242,7 @@ function clearSearchResults() {
     search_message_list.css("display", "flex");
     showplacehold();
 }
+const search_option_menu = $("#search_option");
 search_bxb.on("input", function () {
     if (search_bxb.val().trim() != "") {
      
@@ -259,6 +260,7 @@ search_bxb.on("input", function () {
     open_btn.css('display', 'unset');
     search_cancel_btn.css('display', 'none');
     search_message_list.css("display", "none");
+
 })
 
 
@@ -290,14 +292,17 @@ search_cancel_btn.on('mousedown', function (event) {
 
 let clckcd = false;
 btnSearch.addEventListener('mousedown', function () {
+ 
     if (clckcd) return; clckcd = true;
     setTimeout(function () { clckcd = false; }, 100);
     this.parentElement.classList.toggle('open');
 
     this.parentElement.classList.remove("not_loaded");
+    search_option_menu.css("visibility", this.parentElement.classList.contains("open") ? "visible" : "");
+
 
     if (counter === 0) {
-
+       
         setTimeout(function () {
             search_bxb.focus();
             should_focus = true;

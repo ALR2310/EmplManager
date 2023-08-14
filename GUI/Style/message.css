@@ -1860,14 +1860,174 @@ textarea {
 .attached_files > img{
     cursor: pointer;
 }
-
+#MediaMenu.fade {
+    animation: media_menu_fade_out .25s !important;
+    animation-fill-mode: forwards !important;
+    animation-timing-function: cubic-bezier(.23,1.02,.08,.99);
+}
 #MediaMenu {
     width: 100%;
-    height: calc(100% + 2px);
+    height: calc(100% + 1px);
     position: absolute;
-    z-index: 2;
-    background: black;
+
     bottom: 50%;
-    transform: translateY(50%);
-    background: rgba(0,0,0,.5);
+    transform: translateY(calc(50% - 1px));
+    background: rgba(0,0,0,.8);
+    z-index: 16;
+    animation: media_menu_fade_in .35s;
+    animation-timing-function: cubic-bezier(.23,1.02,.08,.99);
+    animation-fill-mode: forwards;
+    display: none;
 }
+
+    #MediaMenu > #ImagePreview {
+        display: flex;
+        position: absolute;
+        height: auto;
+        width: auto;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        left: 50%;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+        #MediaMenu > #ImagePreview > img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #MediaMenu > #ImagePreview > a {
+            color: white;
+            opacity: .65;
+     
+            padding: 5px 1px;
+            text-decoration-color: rgba(255,255,255,0);
+            align-self: flex-start;
+        }
+
+        #MediaMenu > #ImagePreview > a:hover {
+            animation: media_menu_href_glow .15s;
+            animation-fill-mode: forwards;
+    
+        } 
+@keyframes media_menu_fade_in{
+
+    0% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+    100% {
+        opacity: 1;
+        backdrop-filter: blur(2px);
+        
+    }
+
+}
+@keyframes media_menu_fade_out{
+    0%{
+        opacity:1;
+        backdrop-filter: blur(2px);
+
+    }
+    100% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        display: none;
+        pointer-events: none;
+    }
+}
+@keyframes media_menu_href_glow {
+    0% {
+        opacity: .65;
+        text-decoration-color: rgba(255,255,255,0);
+    }
+    50% {
+        text-decoration-color: rgba(255,255,255,.75);
+    }
+    100% {
+        text-decoration-color: rgba(255,255,255,1);
+        opacity: 1;
+    }
+}
+#MediaMenu > * {
+        align-self: center;
+}
+.chat__header{
+    user-select: none;
+}
+#MediaMenuArrows {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+   
+    #MediaMenuArrows > img {
+        aspect-ratio: 1/1;
+        width: 10%;
+        height: 10%;
+        cursor: pointer;
+    }
+
+    #MediaMenuArrows > img:hover{
+        transform:scale(1.1);
+    }
+
+
+#search_option {
+    min-width: 50vw;
+    height: auto;
+    background: #eef4ff;
+    position: absolute;
+    right: 0%;
+    border-radius: 0px 0 0 20px;
+    visibility: hidden;
+}
+
+#search_option {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 15px;
+    border: #eaeaff;
+    border-style: solid;
+    border-top-style: none;
+    border-right: none;
+}
+    #search_option > hr{
+        height: 1px;
+        margin: 5px;
+    }
+
+    #search_option > a, #search_option > span {
+        color: #37628e;
+        padding: 9px;
+        border-radius: 5px;
+        display: flex;
+        align-items:center;
+        user-select: none;
+    }
+        #search_option > a > span {
+            opacity: .7;
+            color: #8da2b4ed;
+            padding: 0 5px;
+        }
+
+
+        #search_option > a:hover {
+            background: rgb(66,156,213);
+            background: linear-gradient(90deg, rgba(66,156,213,0.17) 0%, rgba(66,156,213,0.34) 64%, rgba(66,156,213,0.75) 100%);
+            cursor: pointer;
+        }
+        #search_option > a:hover > img {
+            visibility: visible;
+        }
+        #search_option > a > img {
+            height: 15px;
+            margin-left: auto;
+            visibility: hidden;
+        }

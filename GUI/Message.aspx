@@ -63,7 +63,19 @@
         </div>
     </div>
              <div id="MediaMenu">
-                <img src="C:\Users\meeh6\Downloads\AstgenneSkinHerAspirationGIFBase.gif"/>
+            
+                 <div id="MediaMenuArrows">
+                        <img id="MediaMenuLeftArrow" onclick="SwitchImage(-1)" src="Images/Icons/left_arrow.svg"/>
+                        <img id="MediaMenuRightArrow" onclick="SwitchImage(1)" src="Images/Icons/right_arrow.svg"/>
+                 </div>
+              
+                 <div id="ImagePreview">
+
+
+                    <img src="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png"/>
+                     <a target="_blank" href="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png">Mở trong trình duyệt</a>
+                     </div>
+     
             </div>
     <div class="content">
         <div class="chat">
@@ -179,7 +191,13 @@
                             <span>bấm vào đây để xem tin nhắn hiện tại
                                 <img src="Images/arrowDown.svg" /></span>
                         </div>  
-                        <div id="search_option"></div>
+                        <div id="search_option">
+                            <span>Tùy chọn Tìm Kiếm</span>
+                            <hr />
+                            <a>Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
+                            <a>Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
+                            <a>Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg"/></a>
+                        </div>
                     </div>
                     <ul class="chat-main__list">
                     </ul>

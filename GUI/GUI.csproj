@@ -280,6 +280,9 @@
     <Content Include="Global.asax" />
     <Content Include="Images\arrowDown.svg" />
     <Content Include="Images\Icons\archive.svg" />
+    <Content Include="Images\Icons\plus.svg" />
+    <Content Include="Images\Icons\right_arrow.svg" />
+    <Content Include="Images\Icons\left_arrow.svg" />
     <Content Include="Images\Icons\attach.svg" />
     <Content Include="Images\Emojis\OPPENHEIMER.svg" />
     <Content Include="Images\Emojis\eyes.svg" />
