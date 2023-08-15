@@ -81,7 +81,7 @@ namespace GUI
 
 
                     if (UserManager.GoogleIdIsExists(googleUserId).Count == 0)
-               
+
                     {
 
 
@@ -94,13 +94,13 @@ namespace GUI
 
                             authCookie = new HttpCookie("AuthToken", authTokenStr);
                             authCookie.Expires = DateTime.Now.AddDays(7);
-                        
+
                             Response.Cookies.Add(authCookie);
 
                             ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
 
                             Response.Redirect("Message.aspx");
-                   
+
                             return;
                         }
 
@@ -115,15 +115,15 @@ namespace GUI
                             UserType = 1,
                             Status = 1
                         };
-                 
+
                         user.Save();
 
 
 
 
-                     
 
-                   
+
+
 
                     }
                     authTokenStr = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
@@ -135,7 +135,7 @@ namespace GUI
 
                     ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
 
-                    Response.Redirect("Message.aspx");
+                    Response.Redirect("tin-nhan");
 
                 }
             }
@@ -144,7 +144,7 @@ namespace GUI
         protected void LoginWithGoogle_ServerClick(object sender, EventArgs e)
         {
 
-          
+
             string scope = "email profile";
 
             string authorizationUrl = string.Format("https://accounts.google.com/o/oauth2/auth?client_id={0}&redirect_uri={1}&scope={2}&response_type=code", clientId, redirectUri, scope);

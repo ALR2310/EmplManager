@@ -465,10 +465,8 @@
             var data = {
                 "recipients": recipients,
                 "subject": $("#tblEmail_subject").val(),
-                "content": $("#tblEmail_content p").html(),
+                "content": $("#tblEmail_content").html(),
             }
-
-            console.log($("#tblEmail_content p").html());
 
             $.ajax({
                 type: "POST",
