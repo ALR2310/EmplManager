@@ -158,7 +158,7 @@ namespace BUS
                 message.To.Add(new MailAddress(recipient));
             }
             message.Subject = subject;
-            message.Body = HttpUtility.HtmlEncode(content);
+            message.Body = content;
             message.IsBodyHtml = true;
 
             // Tạo đối tượng SmtpClient
