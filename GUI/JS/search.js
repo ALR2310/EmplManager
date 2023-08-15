@@ -6,6 +6,7 @@ let search_message_list = $("#chat-search__list");
 
 let placehold_layout = $("#search__list_placeholder_layer");
 
+var search_last_span = search_bxb.find("#search_last_span");
 
 let searching_thread = null;
 
@@ -121,7 +122,7 @@ function createFakeChatBox() {
     let word_count = getRandomNumberBetween(phsts.content.MIN_WORD_COUNT, phsts.content.MAX_WORDS);
     let content_ph = chatbox.find(".placeholder_content_boxes.mess_content");
     title_total_word = 0;
-    console.log(word_count);
+
     for (let i = 1; i < word_count; i++) {
 
         let space_count = Math.round(getRandomNumberBetween(phsts.content.MIN_WORD_LENGTH, phsts.content.MAX_WORD_LENGTH));
@@ -246,20 +247,20 @@ function clearSearchResults() {
 const search_option_menu = $("#search_option");
 
 let last_input_txt = null;
+let last_query;
 function search_box_input() {
-    let cur_text = search_bxb.text().trim();
-    console.log(last_input_txt);
-    console.log(cur_text);
-    if (last_input_txt != cur_text && cur_text != "") {
+    let cur_text = search_last_span.text().trim();
+
+    if (last_input_txt != cur_text && cur_text.length > 0) {
         last_input_txt = cur_text;
         search_option_menu.css("visibility", "");
         clearSearchResults();   
         clearTimeout(searching_thread);
         searching_thread = setTimeout(function () {
             require_reload_placehold = false;
-            let query = search_bxb.text().trim();
-
-            console.log("Search Query: " + search_bxb.text().trim());
+            let query = search_last_span.text().trim();
+            last_query = query;
+            console.log("Search Query: " + search_last_span.text().trim());
             perfom_search(query);
         }, 250);
         return;
@@ -336,10 +337,10 @@ btnSearch.addEventListener('mousedown', function () {
 $(document).on("click", function (event) {
     var ele = $(event.target);
 
-    if (ele.attr("id") != "search-box" && ele.closest("#chat-search__list").length == 0) {
+    if (ele.attr("id") != "search-box" && ele.closest("#search-box  ").length == 0) {
         $("#chat-search__list").css("display", "none");
     }
-    else {
+    else if (last_query == last_input_txt) {
         $("#chat-search__list").css("display", "flex");
     }
     if (ele.hasClass("fa-face-smile")) {
@@ -385,7 +386,11 @@ $(document).ready(function () {
 function setEmptyStr(event) {
 
     setTimeout(function () {
-        search_box_input(); 
+   
+        if (search_last_span[0] == document.activeElement)
+            search_box_input(); 
+
+           
         let ele = $(event.target);
         console.log(ele.text().length);
 
@@ -416,26 +421,46 @@ const search_option_text = {
     "mention": "Đề cập:",
     "has": "Có:",
 }
+
+var current_search_options = {
+
+}
+
+
 console.log($("#search_option").find("a"));     
 function a_tag_sort(a, b) {
     return !!a.getAttribute("id") && 1 || !!b.getAttribute("id") && -1;
 }
+
+
+
 $("#search_option").find("a").on("click", function (event) {
     console.log(event.target);  
     let click_event = $(event.target);
     let search_option = click_event.attr("search_option");
     if (!search_option) { return; }
-    let element = $(`<span autocomplete='off' spellcheck='false' autocorrect='off' contenteditable='true'>${search_option_text[search_option]}&nbsp;</span>`)
-    search_box.append(element);
-    let children = search_box.find("span");
-    console.log(children);
-    children.sort(a_tag_sort);
-    console.log(children);
-    search_box.append(children);
+    let str = `<div autocomplete='off' spellcheck='false' autocorrect='off'></div>`;
+    let element = $(str);       
 
-    setTimeout(function () {
-        element.focus();
-        selectLastText(element[0]);
-    }, 0);
+    search_box.append(element);
+
+    element.append(`<span>${search_option_text[search_option]}&nbsp;</span>`);
+    element.append(`<span style="padding-left: 3px;" contenteditable="true"></span>`);
+
+    search_last_span.appendTo(search_box);
+
+    let editable_txt = element.find("span[contenteditable='true']")[0];
+    element.on("click", function (event) {
+
+        if (event.target != editable_txt) {
+            selectLastText(editable_txt);
+        }
+    }
+    );
+    $(editable_txt).on("focus", function (event) {
+        console.log("EDITING");
+    });
+
+    editable_txt.focus();
 });
 

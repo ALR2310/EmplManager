@@ -90,7 +90,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event); setEmptyStr(event);" autocomplete="off" class="chat__search-box__input"><span id="search_last_span" contenteditable = "true"></span></div>
+                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event); setEmptyStr(event);" autocomplete="off" class="chat__search-box__input"><span id="search_last_span" contenteditable = "true" autocomplete='off' spellcheck='false' autocorrect='off'></span></div>
                         <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
