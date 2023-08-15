@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
+using System.Web;
 
 namespace BUS
 {
@@ -157,7 +158,8 @@ namespace BUS
                 message.To.Add(new MailAddress(recipient));
             }
             message.Subject = subject;
-            message.Body = content;
+            message.Body = HttpUtility.HtmlEncode(content);
+            message.IsBodyHtml = true;
 
             // Tạo đối tượng SmtpClient
             SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);

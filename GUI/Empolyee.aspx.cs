@@ -149,7 +149,16 @@ namespace GUI
         [WebMethod]
         public static void SendEmail(string[] recipients, string subject, string content)
         {
-            EmpolyeeManager.SendEmail(recipients, subject, content);
+            try
+            {
+                EmpolyeeManager.SendEmail(recipients, subject, content);
+            }
+            catch (Exception ex)
+            {
+                // Ghi thông điệp lỗi vào bộ ghi nhật ký hoặc hiển thị thông báo lỗi
+                Console.WriteLine("Lỗi xảy ra: " + ex.Message);
+            }
         }
+
     }
 }
