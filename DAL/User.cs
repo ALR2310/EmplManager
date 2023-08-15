@@ -141,7 +141,7 @@ namespace DAL
 
                 TableSchema.TableColumn colvarGoogleId = new TableSchema.TableColumn(schema);
                 colvarGoogleId.ColumnName = "GoogleId";
-                colvarGoogleId.DataType = DbType.Int32;
+                colvarGoogleId.DataType = DbType.String;
                 colvarGoogleId.MaxLength = 0;
                 colvarGoogleId.AutoIncrement = false;
                 colvarGoogleId.IsNullable = true;

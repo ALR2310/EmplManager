@@ -17,15 +17,28 @@ using System.Net.Http.Headers;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using DAL;
+using System.Text.Json;
 
 namespace GUI
 {
     public partial class Login : System.Web.UI.Page
     {
+        /*
+        string clientId = "149515615263-lnn43h5os5lqifcjf9r9m17b1v54v5ah.apps.googleusercontent.com";
+        string clientSecret = "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";
+        string redirectUri = "https://localhost:44369/dang-nhap";
+        */
 
+        string clientId = Environment.GetEnvironmentVariable("googleClientId");
+        string clientSecret = Environment.GetEnvironmentVariable("googleClientSecret");
+        string redirectUri = Environment.GetEnvironmentVariable("googleRedirectUri");
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            Debug.WriteLine(JsonSerializer.Serialize(Environment.GetEnvironmentVariables().Keys));
+            Debug.WriteLine("Client ID: " + clientId);
+            Debug.WriteLine("Client Secret: " + clientSecret);
+            Debug.WriteLine("redirectUri: " + redirectUri);
             {
                 int? validcookie = UserManager.checkValidCookie(Request);
                 Debug.WriteLine(validcookie);
@@ -39,9 +52,8 @@ namespace GUI
 
             if (!IsPostBack && Request.QueryString["code"] != null)
             {
-                string clientId = "719235217594-7e1ebl1qrbnt16k24nsku5m2ccr89dcp.apps.googleusercontent.com";
-                string clientSecret = "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";
-                string redirectUri = "https://projectctysf.com/dang-nhap";
+                HttpCookie authCookie;
+                string authTokenStr;
                 string code = Request.QueryString["code"];
 
                 GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
@@ -67,9 +79,32 @@ namespace GUI
                     string googleName = userInfo.Name;
                     string googlePictureUrl = userInfo.Picture;
 
+
                     if (UserManager.GoogleIdIsExists(googleUserId).Count == 0)
                
                     {
+
+
+                        User ExistUser = UserManager.GetUserByEmail(googleEmail);
+                        if (ExistUser != null)
+                        {
+                            InlineQuery query = new InlineQuery();
+                            query.Execute($"update dbo.Users set GoogleId = '{googleUserId}' where  email = '{googleEmail}'");
+                            authTokenStr = UserManager.Login(ExistUser.UserName, ExistUser.Password);
+
+                            authCookie = new HttpCookie("AuthToken", authTokenStr);
+                            authCookie.Expires = DateTime.Now.AddDays(7);
+                        
+                            Response.Cookies.Add(authCookie);
+
+                            ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
+
+                            Response.Redirect("Message.aspx");
+                   
+                            return;
+                        }
+
+
                         //Nếu ggId chưa tồn tại thì tạo users mới và đăng nhập
                         User user = new User
                         {
@@ -80,8 +115,7 @@ namespace GUI
                             UserType = 1,
                             Status = 1
                         };
-                        UserManager.InsertUsers(user);
-
+                 
                         user.Save();
 
 
@@ -89,16 +123,17 @@ namespace GUI
 
                      
 
-                        Response.Redirect("Tin-Nhan");
+                   
 
                     }
-                    string authToken = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
+                    authTokenStr = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
 
-                    HttpCookie authCookie = new HttpCookie("AuthToken", authToken);
+                    authCookie = new HttpCookie("AuthToken", authTokenStr);
                     authCookie.Expires = DateTime.Now.AddDays(7);
+                    Debug.Write(authCookie);
                     Response.Cookies.Add(authCookie);
 
-                    ToastManager.ErrorToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
+                    ToastManager.SuccessToast("Đăng nhập thành công! Chuẩn bị chuyển hướng trong vài giây...");
 
                     Response.Redirect("Message.aspx");
 
@@ -108,8 +143,8 @@ namespace GUI
 
         protected void LoginWithGoogle_ServerClick(object sender, EventArgs e)
         {
-            string clientId = "719235217594-7e1ebl1qrbnt16k24nsku5m2ccr89dcp.apps.googleusercontent.com";
-            string redirectUri = "https://projectctysf.com/dang-nhap";
+
+          
             string scope = "email profile";
 
             string authorizationUrl = string.Format("https://accounts.google.com/o/oauth2/auth?client_id={0}&redirect_uri={1}&scope={2}&response_type=code", clientId, redirectUri, scope);

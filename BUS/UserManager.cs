@@ -147,6 +147,11 @@ namespace BUS
             return new UserController().Update(user);
         }
 
+        public static User GetUserByEmail(string email)
+        {
+            return new Select().From(User.Schema.TableName).Where(User.Columns.Email).IsEqualTo(email).ExecuteSingle<User>();
+
+        }
         public static User GetUsersById(int id)
         {
             return new Select().From(User.Schema.TableName).Where(User.Columns.Id).IsEqualTo(id).ExecuteSingle<User>();
@@ -180,7 +185,7 @@ namespace BUS
             var sql = new InlineQuery();
             string query = $"SELECT * FROM dbo.Users WHERE GoogleId = '{GoogleId}'";
 
-            List<User> result = sql.ExecuteTypedList<User>(query);
+                List<User> result = sql.ExecuteTypedList<User>(query);
             return result;
         }
 
