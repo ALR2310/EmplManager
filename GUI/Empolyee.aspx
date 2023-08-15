@@ -431,23 +431,29 @@
     <script>
         //-----------chọn các checkbox và gửi Email
         // Tạo một mảng để lưu trữ thông tin các mục được chọn
-        var emailSelectedboxes = [];
+        var selectedEmails = [];
+
 
         // Hàm xử lý sự kiện thay đổi của checkbox
-        function handleGetUserNameForCheckboxes() {
-            emailSelectedboxes = []; // Xóa mảng khi có sự thay đổi
+        function handleGetEmailForCheckboxes() {
+
+            selectedEmails = []; // Xóa mảng khi có sự thay đổi
             var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
 
             checkboxes.forEach(function (checkbox) {
                 if (checkbox.checked) {
                     var usrid = checkbox.getAttribute('usrid');
-                    var displayName = document.querySelector('h4[usrid="' + usrid + '"]').textContent;
-                    emailSelectedboxes.push(displayName);
+                    var emailElement = document.querySelector('p[id="email"][usrid="' + usrid + '"]');
+                    var email = emailElement.textContent.trim(); // Xóa khoảng trắng thừa
+                    selectedEmails.push(email);
                 }
             });
 
             // In mảng đã chọn ra console.log
-            console.log(emailSelectedboxes);
+            console.log(selectedEmails);
+
+            // Cập nhật giá trị của thẻ input
+            $("#tblEmail_recipients").val(selectedEmails.join(', '));
         }
 
 
@@ -455,11 +461,14 @@
         function SendEmail() {
             var recipients = $("#tblEmail_recipients").val().split(",");
 
+
             var data = {
                 "recipients": recipients,
                 "subject": $("#tblEmail_subject").val(),
-                "content": $("#tblEmail_content p").text(),
+                "content": $("#tblEmail_content p").html(),
             }
+
+            console.log($("#tblEmail_content p").html());
 
             $.ajax({
                 type: "POST",

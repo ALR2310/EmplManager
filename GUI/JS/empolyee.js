@@ -442,7 +442,7 @@ function countCheckboxSelection() {
 
     countSelectedSpan.textContent = countSelected.toString();
 
-    handleGetUserNameForCheckboxes();
+    handleGetEmailForCheckboxes();
 }
 
 
