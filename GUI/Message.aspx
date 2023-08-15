@@ -90,7 +90,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <input placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event)" autocomplete="off" class="chat__search-box__input" />
+                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event); setEmptyStr(event);" autocomplete="off" class="chat__search-box__input"><br><span id="search_last_span" contenteditable = "true">lastspan </span></div>
                         <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -194,9 +194,9 @@
                         <div id="search_option">
                             <span>Tùy chọn Tìm Kiếm</span>
                             <hr />
-                            <a>Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
-                            <a>Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
-                            <a>Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg"/></a>
+                            <a search_option="from">Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
+                            <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
+                            <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg"/></a>
                         </div>
                     </div>
                     <ul class="chat-main__list">
@@ -709,7 +709,7 @@
                 }
             }
 
-            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName == "P") { return };
+            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName == "P" || event.target.nodeName == "SPAN") { return };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 

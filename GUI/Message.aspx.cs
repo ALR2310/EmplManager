@@ -281,16 +281,15 @@ namespace GUI
                 string fileExtension = Path.GetExtension(fileName);
 
 
-                string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
 
-
-                string uploadDirectory = Server.MapPath($"~/Images/UserUploads/{UserId}");
+                string guid = Guid.NewGuid().ToString();
+                string uploadDirectory = Server.MapPath($"~/Images/UserUploads/{UserId}/{guid}");
                 string sizeString = getSizeText(file.ContentLength);
                 UploadedFiles.Add(new Dictionary<object, object> {
 
                     {"fileName", Path.GetFileName(file.FileName)},
                     {"size", sizeString},
-                    {"url", UserId+"/"+uniqueFileName}
+                    {"url", UserId+"/"+guid+"/"+fileName}
 
                 });
                 if (!Directory.Exists(uploadDirectory))
@@ -298,7 +297,7 @@ namespace GUI
                     Directory.CreateDirectory(uploadDirectory);
                 }
 
-                string savePath = Path.Combine(uploadDirectory, uniqueFileName);
+                string savePath = Path.Combine(uploadDirectory, fileName);
 
 
                 file.SaveAs(savePath);

@@ -2013,8 +2013,9 @@ textarea {
     }
         #search_option > a > span {
             opacity: .7;
-            color: #8da2b4ed;
+            color: #64788a;
             padding: 0 5px;
+            pointer-events: none;   
         }
 
 
@@ -2031,3 +2032,24 @@ textarea {
             margin-left: auto;
             visibility: hidden;
         }
+
+#search-box {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    transform: translateY(1px);
+    opacity: 0;
+}
+
+    #search-box > span:not(#search_last_span) {
+    background-color: #d4e0ff;
+    border-radius: 5px;
+    padding: 2px 10px;
+}
+#search_last_span{
+    flex-grow: 1;
+
+}
+span {
+    outline-width: 0;
+}
