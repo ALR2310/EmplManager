@@ -396,25 +396,46 @@ function setEmptyStr(event) {
             range.collapse(false); // Collapse the range to the end
             selection.removeAllRanges(); // Remove any existing selection
             selection.addRange(range); // Add the new range with the cursor at the end
-            ele.find("br").remove();
-            ele.append("<br>");
+           
         }
 
     }
         , 0);
 
 }
+function selectLastText(raw_element) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(raw_element);
+    range.collapse(false); // Collapse the range to the end
+    selection.removeAllRanges(); // Remove any existing selection
+    selection.addRange(range); // Add the new range with the cursor at the end
+}
 const search_option_text = {
-    "from": "Từ: ",
-    "mention": "Đề cập: ",
-    "has": "Có: ",
+    "from": "Từ:",
+    "mention": "Đề cập:",
+    "has": "Có:",
 }
 console.log($("#search_option").find("a"));     
+function a_tag_sort(a, b) {
+    return !!a.getAttribute("id") && 1 || !!b.getAttribute("id") && -1;
+}
 $("#search_option").find("a").on("click", function (event) {
     console.log(event.target);  
     let click_event = $(event.target);
     let search_option = click_event.attr("search_option");
     if (!search_option) { return; }
-    search_box.append(`<span contenteditable='true'>${search_option_text[search_option]}</span>`);
+    let element = $(`<span autocomplete='off' spellcheck='false' autocorrect='off' contenteditable='true'>${search_option_text[search_option]}&nbsp;</span>`)
+    search_box.append(element);
+    let children = search_box.find("span");
+    console.log(children);
+    children.sort(a_tag_sort);
+    console.log(children);
+    search_box.append(children);
+
+    setTimeout(function () {
+        element.focus();
+        selectLastText(element[0]);
+    }, 0);
 });
 

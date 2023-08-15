@@ -2037,17 +2037,32 @@ textarea {
     display: flex;
     align-content: center;
     flex-wrap: wrap;
-    transform: translateY(1px);
     opacity: 0;
+    gap: 5px;
+    padding: 2px 25px 2px 10px !important;
+    flex-wrap: nowrap;
+}
+    #search-box::-webkit-scrollbar {
+        display: none;
+   
+    }
+
+#search-box {
+    overflow-x: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    overflow-y: hidden;
 }
 
     #search-box > span:not(#search_last_span) {
-    background-color: #d4e0ff;
-    border-radius: 5px;
-    padding: 2px 10px;
-}
+        background-color: #d4e0ff;
+        border-radius: 5px;
+        padding: 2px 10px;
+    }
 #search_last_span{
     flex-grow: 1;
+    transform: translateY(1px);
+
 
 }
 span {
