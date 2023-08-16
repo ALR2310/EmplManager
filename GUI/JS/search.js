@@ -34,6 +34,14 @@ async function renderSearchMessage(id, message) {
     message_ele.html(finalhtml);
     let chat_main__item = message_ele.find(".chat-main__item");
 
+    
+    if (!!message.Uploaded_Files) {
+        message.Uploaded_Files = JSON.parse(message.Uploaded_Files);
+        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"));
+
+
+    }
+
     chat_main__item.addClass("to_delete fake_chat fake_chat_anim");
     chat_main__item.on(
         "webkitAnimationEnd oanimationend msAnimationEnd animationend",
@@ -44,10 +52,12 @@ async function renderSearchMessage(id, message) {
         }
     );
 
+ 
+
     chat_main__item.find(".emoji_list").remove();
     chat_main__item.append("<div class='fc_jump_to'>đi tới tin nhắn</div>");
-    chat_main__item.on("click", async function () {
-
+    chat_main__item.on("click", async function (event) {
+        if (event.target.tagName.toLowerCase() == "img") return;
         loading_circle.addClass("loader_show");
 
         await requestJsonData(Number(id) + 11, false, "1");
@@ -168,17 +178,34 @@ $("#search_next_button").on("click", function () {
 var max_page = 0;
 var current_page = 1;
 var current_query;
+
+
+function parseSearchOption() {
+    let option = {}
+    for (const [key, values] of Object.entries(searching_options)) {
+        let temp_val = [];
+        for (const [sub_key, num] of Object.entries(values)) {
+            if (num == 0) continue;
+            temp_val.push(sub_key);
+        }
+        if (temp_val.length != 0) option[key] = temp_val;
+    }
+    return option;
+}
 let perfom_search = function (query, page) {
+    console.log("Searching");
     page = page || 1;
     current_page = page;
     current_query = query;
     if (!!last_search_request) { last_search_request.abort(); }
+
+
     last_search_request = $.ajax({
         url: 'Message.aspx/SearchMessage',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ search_str: query, page: page }),
+        data: JSON.stringify({ search_str: query, option: parseSearchOption(), page: page }),
         success: async function (response) {
             let data = JSON.parse(response.d);
 
@@ -251,7 +278,9 @@ let last_query;
 function search_box_input() {
     let cur_text = search_last_span.text().trim();
 
-    if (last_input_txt != cur_text && cur_text.length > 0) {
+    let search_option_length = Object.keys(parseSearchOption()).length != 0;
+    console.log(search_option_length);
+    if (last_input_txt != cur_text && cur_text.length > 0 || search_option_length) {
         last_input_txt = cur_text;
         search_option_menu.css("visibility", "");
         clearSearchResults();   
@@ -265,7 +294,7 @@ function search_box_input() {
         }, 250);
         return;
     }
-    if (cur_text != "") { return; }
+    if (cur_text != "" || search_option_length) { return; }
     last_input_txt = cur_text;
     open_btn.css('display', 'unset');
     search_cancel_btn.css('display', 'none');
@@ -336,11 +365,13 @@ btnSearch.addEventListener('mousedown', function () {
 
 $(document).on("click", function (event) {
     var ele = $(event.target);
-
-    if (ele.attr("id") != "search-box" && ele.closest("#search-box  ").length == 0) {
+ 
+    if (ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
+        ele.attr("id") != "search-box" && ele.closest("#chat-search__list").length == 0) {
+   
         $("#chat-search__list").css("display", "none");
     }
-    else if (last_query == last_input_txt) {
+    else if (last_query != null && last_query == last_input_txt) {
         $("#chat-search__list").css("display", "flex");
     }
     if (ele.hasClass("fa-face-smile")) {
@@ -384,7 +415,12 @@ $(document).ready(function () {
 
 });
 function setEmptyStr(event) {
-
+    const key = event.key;
+    const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
+    console.log(isAlphaNumeric);
+    if (!isAlphaNumeric && key != "Enter") {
+        return;
+    }
     setTimeout(function () {
    
         if (search_last_span[0] == document.activeElement)
@@ -392,7 +428,7 @@ function setEmptyStr(event) {
 
            
         let ele = $(event.target);
-        console.log(ele.text().length);
+ 
 
         if (ele.text().length == 0) {
             const range = document.createRange();
@@ -432,9 +468,57 @@ function a_tag_sort(a, b) {
     return !!a.getAttribute("id") && 1 || !!b.getAttribute("id") && -1;
 }
 
+const specific_option_menu = {
+    "has": $("#has_table"),
+
+}
+var searching_options = {
+    has: {
+        link: 0,
+        image: 0,
+        file: 0,
+        video: 0
+    }
+};
+
+let editingSpan = null;
+for (const [value_name, option_menu] of Object.entries(specific_option_menu)) {
+    for (let child_ele of option_menu.children("a")) {
+ 
+        child_ele = $(child_ele);
+
+        child_ele.on("click", function () {
+            if (!!!editingSpan) return;
 
 
-$("#search_option").find("a").on("click", function (event) {
+
+            editingSpan.textContent = (child_ele.attr("display_value") || child_ele.text());
+            console.log(editingSpan);
+            search_last_span.focus();
+            option_menu.css("visibility", "hidden");
+
+            let search_option_value = value_name + "|||" + child_ele.attr("value");
+            $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
+            editingSpan.setAttribute("sov", search_option_value);
+            searching_options[value_name][child_ele.attr("value")] = 1;
+
+            search_box_input();
+            setTimeout(function () {
+                search_message_list.css("display", "flex");
+            }
+                , 0);
+  
+           
+        });
+    }
+}
+function hide_option_menus() {
+    for (const [_,option_menu] of Object.entries(specific_option_menu)) {
+        option_menu.css("visibility", "hidden");
+    }
+}
+
+search_option_menu.find("a").on("click", function (event) {
     console.log(event.target);  
     let click_event = $(event.target);
     let search_option = click_event.attr("search_option");
@@ -444,22 +528,36 @@ $("#search_option").find("a").on("click", function (event) {
 
     search_box.append(element);
 
-    element.append(`<span>${search_option_text[search_option]}&nbsp;</span>`);
-    element.append(`<span style="padding-left: 3px;" contenteditable="true"></span>`);
+    let title_span = $(`<span>${search_option_text[search_option]}&nbsp;</span>`);
+    element.append(title_span);
+
+    title_span.on("change", function () {
+        element.remove();
+    })
+
+    element.append(`<span style="padding-left: 3px;" class="search_option_edit" contenteditable="true"></span>`);
 
     search_last_span.appendTo(search_box);
 
     let editable_txt = element.find("span[contenteditable='true']")[0];
     element.on("click", function (event) {
 
-        if (event.target != editable_txt) {
-            selectLastText(editable_txt);
+        if (event.target != editable_txt[0]) {
+            selectLastText(editable_txt[0]);
         }
-    }
-    );
-    $(editable_txt).on("focus", function (event) {
-        console.log("EDITING");
     });
+
+    editable_txt = $(editable_txt);
+    editable_txt.on("focus", function (event) {
+        hide_option_menus();
+        specific_option_menu[search_option].css("visibility", "unset");
+        search_option_menu.css("visibility", "hidden");
+        editingSpan = editable_txt[0];
+    });
+
+    editable_txt.on("change", function (event) {
+        console.log(editable_txt.text());
+    })
 
     editable_txt.focus();
 });

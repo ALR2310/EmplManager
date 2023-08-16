@@ -10,11 +10,17 @@ using System.Diagnostics;
 
 using System.Text.Json;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace BUS
 {
     public class MessageManager
     {
+        private static Dictionary<string, string> file_format_to_str = new Dictionary<string, string>()
+        {
+            {"video","%mp4%,%mov%,%wmv%,%webm%,%avi%,%flv%,%mkv%" },
+            {"image","%jpg%,%png%,%gif%,%apng%" }
+        };
         public static Message InsertMessage(Message message)
         {
             return new MessageController().Insert(message);
@@ -40,7 +46,7 @@ namespace BUS
                 Debug.WriteLine(ex);
                 return false;
             }
-         
+
         }
         public static void DeleteMessageById(int id)
         {
@@ -48,7 +54,7 @@ namespace BUS
 
 
         }
-        public static void InsertEmoji(int UID,int MID,int EmojiId)
+        public static void InsertEmoji(int UID, int MID, int EmojiId)
         {
 
             var query = new InlineQuery();
@@ -56,7 +62,7 @@ namespace BUS
             Debug.WriteLine(sqlquery);
             query.Execute(sqlquery);
         }
-        public static List<int> GetReactionsByMessageId(int messageId,int emoji_id)
+        public static List<int> GetReactionsByMessageId(int messageId, int emoji_id)
         {
             var query = new InlineQuery();
             var reactionQuery = $"EXEC get_reaction_id_list_by_emoji_id @MID = ${messageId}, @eid = ${emoji_id}";
@@ -70,11 +76,44 @@ namespace BUS
 
             return null;
         }
-        public static string SearchMessage(string search_str,int page)
+        public static string SearchMessage(Dictionary<string, object> option, string search_str, int page)
         {
+            string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
+
+
+            Debug.WriteLine(option);
             InlineQuery query = new InlineQuery();
 
-            string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
+            if (option.Keys.Contains("has"))
+            {
+                Debug.Write(JsonSerializer.Serialize(option["has"]));
+                object[] object_list = (object[])option["has"];
+                List<string> has_params = object_list.OfType<string>().ToList();
+                if (has_params.Contains("link"))
+                {
+                    querystr = querystr + ", @search_link = 1";
+                    has_params.Remove("link");
+                }
+
+                if (has_params.Count != 0)
+                {
+                    StringBuilder combinedString = new StringBuilder();
+
+                    foreach (string key in has_params)
+                    {
+                        if (file_format_to_str.TryGetValue(key, out string value))
+                        {
+                            combinedString.Append(value);
+                        }
+                    }
+
+                    string result = combinedString.ToString();
+
+                    Console.WriteLine(result);
+                    querystr = querystr + ", @has_file = '" + result + "'";
+                }
+            }
+
             Debug.WriteLine(querystr);
             List<SearchingMessage> list = query.ExecuteTypedList<SearchingMessage>(querystr);
             Dictionary<object, object> dict = list.ToDictionary(item => (object)item.Id, item => (object)item);
@@ -83,19 +122,19 @@ namespace BUS
 
             IDataReader reader = query.ExecuteReader(querystr + ",@count_only = 1;");
 
-                
+
 
             if (reader.Read())
             {
-     
+
                 dict["Results"] = Convert.ToString(reader[0]);
             }
-                
+
             reader.Close();
 
-       
 
-          
+
+
             return JsonSerializer.Serialize(dict);
         }
         public static Dictionary<int, MessageJoinUser> GetListMessageByAtCreate(int after_id)
@@ -109,16 +148,17 @@ namespace BUS
             {
 
                 var reactionQuery = $"EXEC get_message_reactions @MID = ${mess.Id}";
-        
+
                 List<Reactions> reactionlist = query.ExecuteTypedList<Reactions>(reactionQuery);
 
-                if (reactionlist.Count > 0) {
-            
+                if (reactionlist.Count > 0)
+                {
+
                     Dictionary<int, List<int>> reactions = reactionlist.ToDictionary(item => item.Status, item => item.Usernames.Split(',').Select(s => int.Parse(s.Trim())).ToList());
 
                     mess.Reactions = reactions;
                 }
-             
+
             }
 
             return list.ToDictionary(item => item.Id, item => item);

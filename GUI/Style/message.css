@@ -804,6 +804,7 @@ textarea {
     max-width: 100%;
     border-radius: 10px;
     max-height: 50vh;
+    min-width: 10vw;
 }
 
 .btn {
@@ -905,6 +906,7 @@ textarea {
     flex-direction: column;
     padding: 15px;
     overflow: hidden;
+    padding-left: 0;
 }
 
 .italic {
@@ -1869,7 +1871,6 @@ textarea {
     width: 100%;
     height: calc(100% + 1px);
     position: absolute;
-
     bottom: 50%;
     transform: translateY(calc(50% - 1px));
     background: rgba(0,0,0,.8);
@@ -1878,6 +1879,7 @@ textarea {
     animation-timing-function: cubic-bezier(.23,1.02,.08,.99);
     animation-fill-mode: forwards;
     display: none;
+    backdrop-filter: blur(0px);
 }
 
     #MediaMenu > #ImagePreview {
@@ -1978,7 +1980,7 @@ textarea {
     }
 
 
-#search_option {
+.search_option_menu {
     min-width: 50vw;
     height: auto;
     background: #eef4ff;
@@ -1988,7 +1990,7 @@ textarea {
     visibility: hidden;
 }
 
-#search_option {
+.search_option_menu {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -1998,12 +2000,12 @@ textarea {
     border-top-style: none;
     border-right: none;
 }
-    #search_option > hr{
+    .search_option_menu > hr{
         height: 1px;
         margin: 5px;
     }
 
-    #search_option > a, #search_option > span {
+    .search_option_menu > a, .search_option_menu > span {
         color: #37628e;
         padding: 9px;
         border-radius: 5px;
@@ -2011,7 +2013,7 @@ textarea {
         align-items:center;
         user-select: none;
     }
-        #search_option > a > span {
+        .search_option_menu > a > span {
             opacity: .7;
             color: #64788a;
             padding: 0 5px;
@@ -2019,15 +2021,15 @@ textarea {
         }
 
 
-        #search_option > a:hover {
+        .search_option_menu > a:hover {
             background: rgb(66,156,213);
             background: linear-gradient(90deg, rgba(66,156,213,0.17) 0%, rgba(66,156,213,0.34) 64%, rgba(66,156,213,0.75) 100%);
             cursor: pointer;
         }
-        #search_option > a:hover > img {
+        .search_option_menu > a:hover > img {
             visibility: visible;
         }
-        #search_option > a > img {
+        .search_option_menu > a > img {
             height: 15px;
             margin-left: auto;
             visibility: hidden;
@@ -2061,11 +2063,12 @@ textarea {
         border-radius: 5px;
         padding: 2px 6px;
         cursor: pointer;
+        flex: 0 0 auto;
     }
 #search_last_span{
     flex-grow: 1;
     transform: translateY(1px);
-
+    min-width:50px;
 
 }
 span {

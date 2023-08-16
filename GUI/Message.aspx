@@ -62,21 +62,21 @@
             </div>
         </div>
     </div>
-             <div id="MediaMenu">
-            
-                 <div id="MediaMenuArrows">
-                        <img id="MediaMenuLeftArrow" onclick="SwitchImage(-1)" src="Images/Icons/left_arrow.svg"/>
-                        <img id="MediaMenuRightArrow" onclick="SwitchImage(1)" src="Images/Icons/right_arrow.svg"/>
-                 </div>
-              
-                 <div id="ImagePreview">
+    <div id="MediaMenu">
+
+        <div id="MediaMenuArrows">
+            <img id="MediaMenuLeftArrow" onclick="SwitchImage(-1)" src="Images/Icons/left_arrow.svg" />
+            <img id="MediaMenuRightArrow" onclick="SwitchImage(1)" src="Images/Icons/right_arrow.svg" />
+        </div>
+
+        <div id="ImagePreview">
 
 
-                    <img src="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png"/>
-                     <a target="_blank" href="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png">Mở trong trình duyệt</a>
-                     </div>
-     
-            </div>
+            <img src="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png" />
+            <a target="_blank" href="Images/UserUploads/24/bec07f27-e0c1-4430-baef-6a73f643140b.png">Mở trong trình duyệt</a>
+        </div>
+
+    </div>
     <div class="content">
         <div class="chat">
             <div class="chat__header">
@@ -90,7 +90,10 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event); setEmptyStr(event);" autocomplete="off" class="chat__search-box__input"><span id="search_last_span" contenteditable = "true" autocomplete='off' spellcheck='false' autocorrect='off'></span></div>
+                        <div data-placeholder="Tìm kiếm"  id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
+                            <span id="search_last_span" onkeydown="setEmptyStr(event);" contenteditable="true" autocomplete='off' spellcheck='false' autocorrect='off'></span>
+
+                        </div>
                         <button type="button" id="search_open" class="chat__search-box__btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -113,7 +116,7 @@
 
                 </div>
             </div>
-   
+
             <div id="MessageUpdatePanel">
 
                 <div id="loading_circle"></div>
@@ -136,15 +139,13 @@
                             </div>
                             <div id="fake_messages" class="innerlist">
                                 <div id="search_messages_pages">
-                                    <a id="search_previous_button">
-                                        < Trang Trước
+                                    <a id="search_previous_button">< Trang Trước
                                     </a>
                                     <div id="numberic_buttons">
                                         <span class="highlight">1</span><span>2</span><span>3</span>
                                     </div>
-                                    
-                                       <a id="search_next_button">
-                                        Trang Sau >
+
+                                    <a id="search_next_button">Trang Sau >
                                     </a>
                                 </div>
                             </div>
@@ -190,13 +191,24 @@
                             <span>bạn đang xem tin nhắn cũ</span>
                             <span>bấm vào đây để xem tin nhắn hiện tại
                                 <img src="Images/arrowDown.svg" /></span>
-                        </div>  
-                        <div id="search_option">
+                        </div>
+                        <div id="search_option" class="search_option_menu">
                             <span>Tùy chọn Tìm Kiếm</span>
                             <hr />
-                            <a search_option="from">Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
-                            <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg"/></a>
-                            <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg"/></a>
+                            <a search_option="from">Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
+                            <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
+                            <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
+                        </div>
+
+                        <div  id="has_table" class="search_option_menu">
+                            <span>Tin nhắn có chứa:</span>
+                            <hr />
+                            <a value="link">Link<img src="Images\Icons\plus.svg" /></a>
+
+                            <a value="image" >Ảnh<img src="Images\Icons\plus.svg" /></a>
+                            <a value="video">Video<img src="Images\Icons\plus.svg" /></a>
+                            <a value="file">Tệp, File<img src="Images\Icons\plus.svg" /></a>
+
                         </div>
                     </div>
                     <ul class="chat-main__list">
@@ -271,7 +283,7 @@
                     <div class="footer-wrapper">
                         <input type="file" id="uploadInput" name="uploadInput" multiple style="display: none" />
 
-                        <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none;     outline-width: 0;">
+                        <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none; outline-width: 0;">
                             <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
                         <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
                         <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
@@ -294,7 +306,7 @@
 
                     </ul>
                     <div class="preview_image_wrapper">
-                        <img class="preview_play_button" style="visibility: hidden;"  src="Images/Icons/play_video.svg" />
+                        <img class="preview_play_button" style="visibility: hidden;" src="Images/Icons/play_video.svg" />
                         <img class="preview_image" src="Images/Icons/blank_file.svg" />
                     </div>
 
@@ -486,9 +498,9 @@
         function scrollBottom() {
             if (is_firsttime_load) { return; }
             console.log("scrolled bottom");
-    
+
             scroll.scrollTo(0, scroll.scrollHeight);
-      
+
         }
 
 
@@ -606,7 +618,7 @@
             let toremove = $(".editingBoxes");
 
             $(toremove.parent()).find("p").css("display", "");
-            console.log(toremove.closest(".chat-main__item"));
+       
             toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
             toremove.remove();
 
@@ -653,8 +665,8 @@
             selection.removeAllRanges(); // Remove any existing selection
             selection.addRange(range); // Add the new range with the cursor at the end
 
-         
-            scroll.scrollTo(0, chat_item[0].offsetTop - scroll.clientHeight/3);
+
+            scroll.scrollTo(0, chat_item[0].offsetTop - scroll.clientHeight / 3);
         }
 
         $(window).on("click", function (event) {
@@ -703,7 +715,7 @@
                 let closet_ele_target = $(event.target).closest(".chat-main__item");
 
                 if (!!closet_ele_target && closet_ele_target.hasClass("chat_force_highlight")) {
-      
+
                     //if (closet_ele_target.is(':last-child')) setTimeout(scrollBottom, 0);
 
                 }

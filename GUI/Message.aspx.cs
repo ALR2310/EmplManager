@@ -127,12 +127,12 @@ namespace GUI
         }
 
         [System.Web.Services.WebMethod]
-        public static string SearchMessage(string search_str, int page)
+        public static string SearchMessage(Dictionary<string, object> option,string search_str, int page)
         {
 
 
 
-            return MessageManager.SearchMessage(search_str, page);
+            return MessageManager.SearchMessage(option,search_str, page);
         }
         [System.Web.Services.WebMethod]
         public static string GetTotalMessage()

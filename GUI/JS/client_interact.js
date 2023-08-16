@@ -345,14 +345,14 @@ $(MediaMenuArrows).on("click", function (event) {
 
 function loadAttachments(Uploaded_Files, message_ele) {
     let FilteredFiles = [];
-
+    console.log(message_ele.find(".attached_files"));
     for (const [file_index,file] of Object.entries(Uploaded_Files)) {
        
         let extension = file.fileName.split('.');
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
         if (image == "local_image" || image == "local_video") {
-            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="auto"/>`);
+            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="metadata"/>`);
 
             file_ele.on("load resize", function () {
          
@@ -388,8 +388,9 @@ function loadAttachments(Uploaded_Files, message_ele) {
             }
             continue;
         }
+
         let file_ele = file_template.clone();
-        console.log(message_ele.find(".attached_files"));
+
         file_ele.attr("id", "");
         file_ele.appendTo(message_ele.find(".attached_files"));
         file_ele.find("img").attr("src", image);
