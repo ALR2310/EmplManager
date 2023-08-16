@@ -79,12 +79,8 @@ namespace GUI
                     string googleName = userInfo.Name;
                     string googlePictureUrl = userInfo.Picture;
 
-
                     if (UserManager.GoogleIdIsExists(googleUserId).Count == 0)
-
                     {
-
-
                         User ExistUser = UserManager.GetUserByEmail(googleEmail);
                         if (ExistUser != null)
                         {
@@ -115,17 +111,11 @@ namespace GUI
                             UserType = 1,
                             Status = 1
                         };
-
-                        user.Save();
-
-
-
-
-
-
-
-
+                        //save
+                        UserManager.InsertUsers(user);
                     }
+
+
                     authTokenStr = UserManager.getOrSetAuthTokenFromNewGoogleAccount(googleEmail, googleUserId);
 
                     authCookie = new HttpCookie("AuthToken", authTokenStr);

@@ -39,7 +39,7 @@ namespace GUI
         }
 
         [WebMethod]
-        public static string GetUserIdByJS(string UserId)
+        public static string GetDataForEmpolyee(string UserId)
         {
             EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(UserId));
             return JsonSerializer.Serialize(empolyee);
@@ -125,6 +125,7 @@ namespace GUI
                 Status = status
             };
 
+
             EmpolyeeManager.UpdateEmpolyee(empolyee);
 
             return true;
@@ -147,9 +148,9 @@ namespace GUI
         }
 
         [WebMethod]
-        public static void SendEmail(string[] recipients, string subject, string content)
+        public static void SendEmail(string[] recipients, string subject, string content, string[] ccRecipients, string[] bccRecipients)
         {
-            EmpolyeeManager.SendEmail(recipients, subject, content);
+            EmpolyeeManager.SendEmail(recipients, subject, content, ccRecipients, bccRecipients);
         }
 
     }
