@@ -193,10 +193,9 @@
                 </div>
 
                 <div class="userInfor-SendMail">
-                    <button type="button" onclick="activeEmailModal()">
+                    <button type="button" onclick="activeEmailModal()" onmouseenter="getEmailCurrentUserInfor()">
                         <i class="fa-regular fa-envelope"></i>
                         Gửi Email
-                                <asp:Button runat="server" ID="btnSendMail" Style="display: none;" />
                     </button>
                 </div>
             </div>
@@ -416,7 +415,14 @@
         <h2>Soạn Thư</h2>
 
         <div class="usrdetail-modal-email-Content">
-            <input id="tblEmail_recipients" placeholder="Người Nhận" />
+            <div class="email-Content-action">
+                <select id="email_action">
+                    <option value="To">Đến</option>
+                    <option value="CC">CC</option>
+                    <option value="BCC">BCC</option>
+                </select>
+                <input id="tblEmail_recipients" placeholder="Người Nhận" />
+            </div>
             <input id="tblEmail_subject" placeholder="Tiêu Đề" />
 
             <div id="tblEmail_content" placeholder="Nội Dung" class="modal-email-Content-ckeditor"></div>
@@ -427,105 +433,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        //-----------chọn các checkbox và gửi Email
-        // Tạo một mảng để lưu trữ thông tin các mục được chọn
-        var selectedEmails = [];
-
-
-        // Hàm xử lý sự kiện thay đổi của checkbox
-        function handleGetEmailForCheckboxes() {
-
-            selectedEmails = []; // Xóa mảng khi có sự thay đổi
-            var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
-
-            checkboxes.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    var usrid = checkbox.getAttribute('usrid');
-                    var emailElement = document.querySelector('p[id="email"][usrid="' + usrid + '"]');
-                    var email = emailElement.textContent.trim(); // Xóa khoảng trắng thừa
-                    selectedEmails.push(email);
-                }
-            });
-
-            // In mảng đã chọn ra console.log
-            console.log(selectedEmails);
-
-            // Cập nhật giá trị của thẻ input
-            $("#tblEmail_recipients").val(selectedEmails.join(', '));
-        }
-
-
-        //---------function gửi Email
-        function SendEmail() {
-            var recipients = $("#tblEmail_recipients").val().split(",");
-
-
-            var data = {
-                "recipients": recipients,
-                "subject": $("#tblEmail_subject").val(),
-                "content": $("#tblEmail_content").html(),
-            }
-
-            $.ajax({
-                type: "POST",
-                "url": "empolyee.aspx/SendEmail",
-                "data": JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    showSuccessToast("Đã Gửi Email Thành Công");
-                },
-                error: function (err) {
-                    console.log("Đã có lỗi xảy ra: " + err);
-                }
-            });
-        }
-
-
-
-        //----------Function kích hoạt đóng mở email modal
-        function activeEmailModal() {
-            const emailModal = document.querySelector(".usrdetail-modal-email");
-            emailModal.classList.remove("hide");
-            setTimeout(() => {
-                emailModal.style.transform = "translateX(0%)";
-
-                const btnShwEmail = document.querySelector("#btnMdEmailshw");
-                btnShwEmail.classList.add("hide");
-
-                const btnClsEmail = document.querySelector("#btnMdEmailcls");
-                btnClsEmail.classList.remove("hide");
-            }, 0);
-        }
-        function disableEmailModal() {
-            const emailModal = document.querySelector(".usrdetail-modal-email");
-            emailModal.style.transform = "translateX(-100%)";
-            setTimeout(() => {
-                emailModal.classList.add("hide");
-            }, 450);
-            $("#tblEmail_recipients").val("");
-            $("#tblEmail_subject").val("");
-            $("#tblEmail_content p").text("");
-        }
-        function showEmailModal(event) {
-            const emailModal = document.querySelector(".usrdetail-modal-email");
-            emailModal.style.transform = "translateX(0%)";
-            event.classList.add("hide");
-
-            const btnClsEmail = document.querySelector("#btnMdEmailcls");
-            btnClsEmail.classList.remove("hide");
-        }
-        function closeEmailModal(event) {
-            const emailModal = document.querySelector(".usrdetail-modal-email");
-            emailModal.style.transform = "translateX(-100%)";
-            event.classList.add("hide");
-
-            const btnShwEmail = document.querySelector("#btnMdEmailshw");
-            btnShwEmail.classList.remove("hide");
-        }
-    </script>
 
 
     <script src="JS/empolyee.js"></script>

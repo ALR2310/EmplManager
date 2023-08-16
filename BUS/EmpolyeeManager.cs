@@ -142,7 +142,7 @@ namespace BUS
         }
 
         //Gửi Email 
-        public static void SendEmail(string[] recipients, string subject, string content)
+        public static void SendEmail(string[] recipients, string subject, string content, string[] ccRecipients, string[] bccRecipients)
         {
             // Cấu hình thông tin email
             string emailFrom = "ansaka147@gmail.com";
@@ -153,13 +153,34 @@ namespace BUS
             // Tạo đối tượng MailMessage
             MailMessage message = new MailMessage();
             message.From = new MailAddress(emailFrom);
-            foreach (string recipient in recipients)
+            if (recipients != null)
             {
-                message.To.Add(new MailAddress(recipient));
+                foreach (string recipient in recipients)
+                {
+                    message.To.Add(new MailAddress(recipient));
+                }
             }
             message.Subject = subject;
             message.Body = content;
             message.IsBodyHtml = true;
+
+            // Thêm danh sách email vào trường CC nếu có
+            if (ccRecipients != null)
+            {
+                foreach (string ccRecipient in ccRecipients)
+                {
+                    message.CC.Add(new MailAddress(ccRecipient));
+                }
+            }
+
+            // Thêm danh sách email vào trường BCC nếu có
+            if (bccRecipients != null)
+            {
+                foreach (string bccRecipient in bccRecipients)
+                {
+                    message.Bcc.Add(new MailAddress(bccRecipient));
+                }
+            }
 
             // Tạo đối tượng SmtpClient
             SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);

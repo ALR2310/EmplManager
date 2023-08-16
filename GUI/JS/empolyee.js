@@ -1106,3 +1106,143 @@ BalloonEditor
     .catch(error => {
         console.error(error);
     })
+
+
+
+
+
+
+//----------Function kích hoạt đóng mở email modal
+function activeEmailModal() {
+    const emailModal = document.querySelector(".usrdetail-modal-email");
+    emailModal.classList.remove("hide");
+    setTimeout(() => {
+        emailModal.style.transform = "translateX(0%)";
+
+        const btnShwEmail = document.querySelector("#btnMdEmailshw");
+        btnShwEmail.classList.add("hide");
+
+        const btnClsEmail = document.querySelector("#btnMdEmailcls");
+        btnClsEmail.classList.remove("hide");
+    }, 0);
+}
+function disableEmailModal() {
+    const emailModal = document.querySelector(".usrdetail-modal-email");
+    emailModal.style.transform = "translateX(-100%)";
+    setTimeout(() => {
+        emailModal.classList.add("hide");
+    }, 450);
+    $("#tblEmail_recipients").val("");
+    $("#tblEmail_subject").val("");
+    $("#tblEmail_content p").text("");
+}
+function showEmailModal(event) {
+    const emailModal = document.querySelector(".usrdetail-modal-email");
+    emailModal.style.transform = "translateX(0%)";
+    event.classList.add("hide");
+
+    const btnClsEmail = document.querySelector("#btnMdEmailcls");
+    btnClsEmail.classList.remove("hide");
+}
+function closeEmailModal(event) {
+    const emailModal = document.querySelector(".usrdetail-modal-email");
+    emailModal.style.transform = "translateX(-100%)";
+    event.classList.add("hide");
+
+    const btnShwEmail = document.querySelector("#btnMdEmailshw");
+    btnShwEmail.classList.remove("hide");
+}
+
+
+
+
+
+
+//---------function gửi Email
+function SendEmail() {
+    const drpdwnEmailAction = document.getElementById("email_action");
+
+    var recipients;
+    var ccRecipients;
+    var bccRecipients;
+
+    if (drpdwnEmailAction.value == "To") {
+        recipients = $("#tblEmail_recipients").val().split(",");
+        ccRecipients = null
+        bccRecipients = null
+    } else if (drpdwnEmailAction.value == "CC") {
+        ccRecipients = $("#tblEmail_recipients").val().split(",");
+        bccRecipients = null
+        recipients = null
+    } else if (drpdwnEmailAction.value == "BCC") {
+        bccRecipients = $("#tblEmail_recipients").val().split(",");
+        ccRecipients = null
+        recipients = null
+    }
+
+    var data = {
+        "recipients": recipients,
+        "subject": $("#tblEmail_subject").val(),
+        "content": $("#tblEmail_content").html(),
+        "ccRecipients": ccRecipients,
+        "bccRecipients": bccRecipients,
+    }
+
+    $.ajax({
+        type: "POST",
+        "url": "empolyee.aspx/SendEmail",
+        "data": JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            showSuccessToast("Đã Gửi Email Thành Công");
+        },
+        error: function (err) {
+            console.log("Đã có lỗi xảy ra: " + err);
+        }
+    });
+}
+
+
+
+
+
+
+//-----------chọn các checkbox và gửi Email
+// Tạo một mảng để lưu trữ thông tin các mục được chọn
+var selectedEmails = [];
+
+// Hàm xử lý sự kiện thay đổi của checkbox
+function handleGetEmailForCheckboxes() {
+
+    selectedEmails = []; // Xóa mảng khi có sự thay đổi
+    var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
+
+    checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+            var usrid = checkbox.getAttribute('usrid');
+            var emailElement = document.querySelector('p[id="email"][usrid="' + usrid + '"]');
+            var email = emailElement.textContent.trim(); // Xóa khoảng trắng thừa
+            selectedEmails.push(email);
+        }
+    });
+
+    // Cập nhật giá trị của thẻ input
+    $("#tblEmail_recipients").val(selectedEmails.join(', '));
+}
+
+
+
+
+
+
+
+
+//------Lấy email hiện tại của modalinfor
+function getEmailCurrentUserInfor() {
+    var emailSpan = $("#lblEmail").text();
+    var emailInput = $("#tblEmail_recipients").val();
+    if (emailSpan != emailInput) {
+        $("#tblEmail_recipients").val(emailSpan);
+    }
+}

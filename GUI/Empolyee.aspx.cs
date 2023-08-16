@@ -147,9 +147,9 @@ namespace GUI
         }
 
         [WebMethod]
-        public static void SendEmail(string[] recipients, string subject, string content)
+        public static void SendEmail(string[] recipients, string subject, string content, string[] ccRecipients, string[] bccRecipients)
         {
-            EmpolyeeManager.SendEmail(recipients, subject, content);
+            EmpolyeeManager.SendEmail(recipients, subject, content, ccRecipients, bccRecipients);
         }
 
     }
