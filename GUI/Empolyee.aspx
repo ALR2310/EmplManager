@@ -68,8 +68,9 @@
                                                 <li onclick="handleChangeStatusForCheckboxes(2)">Vô Hiệu</li>
                                             </ul>
                                         </li>
-                                        <li onclick="showModalDeleteUser()" onmouseenter="handleDelMoreUsr()">Xoá Tài Khoản</li>
                                         <li onclick="activeEmailModal()">Gửi Email</li>
+                                        <li onclick="showModalDeleteUser()" onmouseenter="handleDelMoreUsr()">Xoá Tài Khoản</li>
+
 
                                         <box class="boxhidentop"></box>
                                         <box class="boxhidenbottom"></box>

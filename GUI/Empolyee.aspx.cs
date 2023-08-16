@@ -39,7 +39,7 @@ namespace GUI
         }
 
         [WebMethod]
-        public static string GetUserIdByJS(string UserId)
+        public static string GetDataForEmpolyee(string UserId)
         {
             EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(UserId));
             return JsonSerializer.Serialize(empolyee);
@@ -124,6 +124,7 @@ namespace GUI
                 UserType = userType,
                 Status = status
             };
+
 
             EmpolyeeManager.UpdateEmpolyee(empolyee);
 

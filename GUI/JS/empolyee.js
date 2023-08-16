@@ -244,7 +244,7 @@ function changestatusbystsid(statusid) {
         UserCard.forEach((UserCardId) => {
             const idCard = UserCardId.getAttribute("commandargument");
             if (id == idCard) {
-                UserCardId.setAttribute("isdrop", StatusId);
+                UserCardId.setAttribute("isdrop", 0);
             }
         });
     } else if (statusid == 1) {
@@ -260,7 +260,7 @@ function changestatusbystsid(statusid) {
         UserCard.forEach((UserCardId) => {
             const idCard = UserCardId.getAttribute("commandargument");
             if (id == idCard) {
-                UserCardId.setAttribute("isdrop", StatusId);
+                UserCardId.setAttribute("isdrop", 1);
             }
         });
     } else if (statusid == 2) {
@@ -276,7 +276,7 @@ function changestatusbystsid(statusid) {
         UserCard.forEach((UserCardId) => {
             const idCard = UserCardId.getAttribute("commandargument");
             if (id == idCard) {
-                UserCardId.setAttribute("isdrop", StatusId);
+                UserCardId.setAttribute("isdrop", 2);
             }
         });
     }
@@ -630,7 +630,7 @@ function getStatusAndChanges(element) {
 
         $.ajax({
             type: "POST",
-            "url": "empolyee.aspx/GetUserIdByJS",
+            "url": "empolyee.aspx/GetDataForEmpolyee",
             "data": JSON.stringify(UserId),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -684,7 +684,7 @@ function getDataforClickShow(element) {
 
     $.ajax({
         type: "POST",
-        "url": "empolyee.aspx/GetUserIdByJS",
+        "url": "empolyee.aspx/GetDataForEmpolyee",
         "data": JSON.stringify(UserId),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -694,6 +694,8 @@ function getDataforClickShow(element) {
             if (empolyeeInfo != null) {
                 showModal();
 
+                $("#lblUserId").text(empolyeeInfo.Id);
+                $("#lblGoogleId").text(empolyeeInfo.GoogleId);
                 $("#AvatarImg").attr("src", empolyeeInfo.Avatar);
                 $("#lblDisplayName").text(empolyeeInfo.DisplayName);
                 $("#lblDisplayName1").text(empolyeeInfo.DisplayName);
@@ -706,12 +708,42 @@ function getDataforClickShow(element) {
                 $("#lblDateJoin").text(formatDate(empolyeeInfo.AtCreate));
                 $("#lblGender").text(empolyeeInfo.Gender);
                 $("#lblAddress").text(empolyeeInfo.Address);
-                $("#lblUserId").text(empolyeeInfo.Id);
 
-                var googleId = empolyeeInfo.GoogleId;
-                if (googleId == 0) {
-                    $("#lblGoogleId").text("Không Có Thông Tin");
-                }
+                console.log(empolyeeInfo)
+
+                //if (empolyeeInfo.PhoneNumber == null || "") { $("#lblPhoneNumber").text("Không có thông tin"); $("#lblPhoneNumber").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblPhoneNumber").css("color", "black") };
+                //if (empolyeeInfo.Job == null || "") { $("#lblJob1").text("Không có thông tin"); $("#lblJob1").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblJob1").css("color", "black") };
+                //if (empolyeeInfo.Department == null || "") { $("#lblDepartment").text("Không có thông tin"); $("#lblDepartment").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblDepartment").css("color", "black") };
+                //if (empolyeeInfo.Gender == null || "") { $("#lblGender").text("Không có thông tin"); $("#lblGender").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblGender").css("color", "black") };
+                //if (empolyeeInfo.DateOfBirth == "0001-01-01T00:00:00") { $("#lblDateOfBirth").text("Không có thông tin"); $("#lblDateOfBirth").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblDateOfBirth").css("color", "black") };
+                //if (empolyeeInfo.Address == null || "") { $("#lblAddress").text("Không có thông tin"); $("#lblAddress").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblAddress").css("color", "black") };
+                //if (empolyeeInfo.GoogleId == null || "") { $("#lblGoogleId").text("Không có thông tin"); $("#lblGoogleId").css("color", "rgb(118, 118, 118)") }
+                //else { $("#lblGoogleId").css("color", "black") };
+
+                const propertiesToCheck = [
+                    { property: empolyeeInfo.PhoneNumber, label: "#lblPhoneNumber" },
+                    { property: empolyeeInfo.Job, label: "#lblJob1" },
+                    { property: empolyeeInfo.Department, label: "#lblDepartment" },
+                    { property: empolyeeInfo.Gender, label: "#lblGender" },
+                    { property: empolyeeInfo.DateOfBirth, label: "#lblDateOfBirth" },
+                    { property: empolyeeInfo.Address, label: "#lblAddress" },
+                    { property: empolyeeInfo.GoogleId, label: "#lblGoogleId" }
+                ];
+
+                propertiesToCheck.forEach(item => {
+                    if (item.property == null || item.property === "") {
+                        $(item.label).text("Không có thông tin").css("color", "rgb(118, 118, 118)");
+                    } else {
+                        $(item.label).css("color", "black");
+                    }
+                });
+
 
                 var isStatus = document.querySelector("#userIdinfor");
                 var isAvatarImage = document.querySelector("#AvatarImg");
@@ -835,7 +867,7 @@ function handleBindingDataInfor() {
 
     $.ajax({
         type: "POST",
-        "url": "empolyee.aspx/GetUserIdByJS",
+        "url": "empolyee.aspx/GetDataForEmpolyee",
         "data": JSON.stringify(UserId),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -975,6 +1007,7 @@ function handleBindingDataInfor() {
 //----------Cập nhật dữ liệu người dùng
 function UpdateInforEmpolyee() {
     var UserId = $("#lblUserId").text();
+
     var data = {
         userid: UserId,
         displayName: $("#tblDisplayName").val(),
@@ -990,6 +1023,8 @@ function UpdateInforEmpolyee() {
         status: $("#sltStatus").val()
     };
 
+    console.log(data)
+
     $.ajax({
         type: "POST",
         url: "empolyee.aspx/UpdateDataEmpolyee",
@@ -997,11 +1032,13 @@ function UpdateInforEmpolyee() {
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {
-            showSuccessToast("Đã cập nhật dữ liệu cho người dùng này thành công") //Thông báo
-            handleShowEditorButton(2) //Đóng trang edit
-            handleBindingDataInfor() // binding dữ liệu sau khi cập nhật
+            if (response.d == true) {
+                showSuccessToast("Đã cập nhật dữ liệu cho người dùng này thành công") //Thông báo
+                handleShowEditorButton(2) //Đóng trang edit
+                handleBindingDataInfor() // binding dữ liệu sau khi cập nhật
+            }
         },
-        error: function (xhr, status, error) {
+        error: function (error) {
             console.log("Có lỗi xảy ra khi cập nhật dữ liệu: " + error);
             showErrorToast("Có lỗi xảy ra khi cập nhật dữ liệu, vui lòng kiểm tra lại");
         }
@@ -1016,26 +1053,40 @@ function UpdateInforEmpolyee() {
 
 //------------Đưa dữ liệu từ các lable vào textbox
 function bindingDataUpDivEditor() {
-    $("#tblDisplayName").val($("#lblDisplayName1").text());
-    $("#tblPhoneNumber").val($("#lblPhoneNumber").text());
-    $("#tblEmail").val($("#lblEmail").text());
-    $("#tblDateJoin").val($("#lblDateJoin").text().split("/").reverse().join("-"));
-    $("#tblJob").val($("#lblJob1").text());
-    $("#tblDepartment").val($("#lblDepartment").text());
-    $("#tblDateOfBirth").val($("#lblDateOfBirth").text().split("/").reverse().join("-"));
-    $("#tblAddress").val($("#lblAddress").text());
+    $("#lblPhoneNumber").text() != "Không có thông tin" ? $("#tblPhoneNumber").val($("#lblPhoneNumber").text()) : null;
+    $("#lblDisplayName1").text() != "Không có thông tin" ? $("#tblDisplayName").val($("#lblDisplayName1").text()) : null;
+    $("#lblEmail").text() != "Không Có thông tin" ? $("#tblEmail").val($("#lblEmail").text()) : null;
+    $("#lblDateJoin").text() != "Không có thông tin" ? $("#tblDateJoin").val($("#lblDateJoin").text().split("/").reverse().join("-")) : null;
+    $("#lblJob1").text() != "Không có thông tin" ? $("#tblJob").val($("#lblJob1").text()) : null;
+    $("#lblDepartment").text() != "Không có thông tin" ? $("#tblDepartment").val($("#lblDepartment").text()) : null;
+    $("#lblDateOfBirth").text() != "Không có thông tin" ? $("#tblDateOfBirth").val($("#lblDateOfBirth").text().split("/").reverse().join("-")) : null;
+    $("#lblAddress").text() != "Không có thông tin" ? $("#tblAddress").val($("#lblAddress").text()) : null;
+
     //Gender
-    if ($("#lblGender").text() == "Nam") { $("#sltGender").val("Nam") }
-    else if ($("#lblGender").text() == "Nữ") { $("#sltGender").val("Nữ") }
+    $("#lblGender").text() == "Nam" ? $("#sltGender").val("Nam") : $("#lblGender").text() == "Nữ" ? $("#sltGender").val("Nữ") : null;
+
     //Status
-    if ($("#lblStatus").text() == "Đã Kích Hoạt") { $("#sltStatus").val(1); }
-    else if ($("#lblStatus").text() == "Chưa Kích Hoạt") { $("#sltStatus").val(0); }
-    else if ($("#lblStatus").text() == "Vô Hiệu Hoá") { $("#sltStatus").val(2); }
+    $("#lblStatus").text() == "Đã Kích Hoạt" ? $("#sltStatus").val(1) : $("#lblStatus").text() == "Chưa Kích Hoạt" ? $("#sltStatus").val(0) : $("#lblStatus").text() == "Vô Hiệu Hoá" ? $("#sltStatus").val(2) : null;
+
     //UserType
-    if ($("#lblUserType").text() == "Quản Trị Viên") { $("#sltUserType").val(0) }
-    else if ($("#lblUserType").text() == "Nhân Viên") { $("#sltUserType").val(1) }
+    $("#lblUserType").text() == "Quản Trị Viên" ? $("#sltUserType").val(0) : $("#lblUserType").text() == "Nhân Viên" ? $("#sltUserType").val(1) : null;
 }
 
+
+
+
+
+//--------Clear input fields usriforedit
+function handleClearInputFileds() {
+    $("#tblPhoneNumber").val('');
+    $("#tblDisplayName").val('');
+    $("#tblEmail").val('');
+    $("#tblDateJoin").val('');
+    $("#tblJob").val('');
+    $("#tblDepartment").val('');
+    $("#tblDateOfBirth").val('');
+    $("#tblAddress").val('');
+}
 
 
 
@@ -1057,6 +1108,7 @@ function handleShowEditorButton(action) {
         btndivEdit.classList.remove("hide");
 
         handleShowDivEditor("hidden")
+        handleClearInputFileds()
     }
 }
 
@@ -1100,12 +1152,14 @@ function handleShowDivEditor(action) {
 
 
 
-//---------CK Editor--------
+//---------CKEditor--------
 BalloonEditor
     .create(document.querySelector('#tblEmail_content'))
     .catch(error => {
         console.error(error);
     })
+
+
 
 
 
