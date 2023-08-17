@@ -16,6 +16,7 @@ namespace GUI
         private void AssignInfos()
         {
             lblUserName.Text = UserFromCookie.DisplayName;
+            ImgAvatar.ImageUrl = UserFromCookie.Avatar;
         }
         protected void Page_Init(object sender, EventArgs e)
         {
