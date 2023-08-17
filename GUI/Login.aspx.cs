@@ -18,22 +18,39 @@ using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using DAL;
 using System.Text.Json;
+using System.Configuration;
 
 namespace GUI
 {
     public partial class Login : System.Web.UI.Page
     {
-        /*
-        string clientId = "149515615263-lnn43h5os5lqifcjf9r9m17b1v54v5ah.apps.googleusercontent.com";
-        string clientSecret = "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";
-        string redirectUri = "https://localhost:44369/dang-nhap";
-        */
+        string clientId = "719235217594-7e1ebl1qrbnt16k24nsku5m2ccr89dcp.apps.googleusercontent.com";
+        string clientSecret = "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";
+        //string redirectUri = "https://projectctysf.com/dang-nhap";
 
-        string clientId = Environment.GetEnvironmentVariable("googleClientId");
-        string clientSecret = Environment.GetEnvironmentVariable("googleClientSecret");
-        string redirectUri = Environment.GetEnvironmentVariable("googleRedirectUri");
+        string redirectUri;
+
+
+        //string clientId = Environment.GetEnvironmentVariable("googleClientId");
+        //string clientSecret = Environment.GetEnvironmentVariable("googleClientSecret");
+        //string redirectUri = Environment.GetEnvironmentVariable("googleRedirectUri");
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (HttpContext.Current.Request.Url.Host == "localhost")
+            {
+                redirectUri = "https://localhost:44369/dang-nhap";
+            }
+            else if (HttpContext.Current.Request.Url.Host == "projectctysf.com")
+            {
+                redirectUri = "https://projectctysf.com/dang-nhap";
+            }
+
+            tblclientId.Text = clientId;
+            tblclientSecret.Text = clientSecret;
+            tblredirectUri.Text = redirectUri;
 
             Debug.WriteLine(JsonSerializer.Serialize(Environment.GetEnvironmentVariables().Keys));
             Debug.WriteLine("Client ID: " + clientId);

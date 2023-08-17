@@ -34,6 +34,10 @@
             <div class="login">
                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
+                <asp:TextBox ID="tblclientId" runat="server"></asp:TextBox>
+                <asp:TextBox ID="tblclientSecret" runat="server"></asp:TextBox>
+                <asp:TextBox ID="tblredirectUri" runat="server"></asp:TextBox>
+
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
                         <div class="login__form">
