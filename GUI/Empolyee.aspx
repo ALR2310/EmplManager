@@ -41,9 +41,9 @@
 
                                 <div class="employee-header-search">
                                     <asp:TextBox ID="tblSearch" runat="server" TextMode="Search" OnTextChanged="tblSearch_TextChanged"
-                                        AutoCompleteType="DisplayName" placeholder="Tên Nhân Viên">
+                                        AutoCompleteType="DisplayName" placeholder="Tìm Kiếm" title="Tìm kiếm theo tên nhân viên, công việc và số Id">
                                     </asp:TextBox>
-                                    <a runat="server" onserverclick="btnSearch_ServerClick" title="Tìm kiếm theo tên nhân viên, công việc và số Id">
+                                    <a runat="server" onserverclick="btnSearch_ServerClick">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </a>
                                 </div>
