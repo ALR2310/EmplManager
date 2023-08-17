@@ -90,7 +90,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <div data-placeholder="Tìm kiếm"  id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
+                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
                             <span id="search_last_span" onkeydown="setEmptyStr(event);" contenteditable="true" autocomplete='off' spellcheck='false' autocorrect='off'></span>
 
                         </div>
@@ -200,12 +200,12 @@
                             <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
                         </div>
 
-                        <div  id="has_table" class="search_option_menu">
+                        <div id="has_table" class="search_option_menu">
                             <span>Tin nhắn có chứa:</span>
                             <hr />
                             <a value="link">Link<img src="Images\Icons\plus.svg" /></a>
 
-                            <a value="image" >Ảnh<img src="Images\Icons\plus.svg" /></a>
+                            <a value="image">Ảnh<img src="Images\Icons\plus.svg" /></a>
                             <a value="video">Video<img src="Images\Icons\plus.svg" /></a>
                             <a value="file">Tệp, File<img src="Images\Icons\plus.svg" /></a>
 
@@ -427,6 +427,32 @@
       
     </script>
     <script>
+
+        let scroll_raw_object = $(".chat-main__list")[0];
+        let scroll_object = $(scroll_raw_object);
+  
+        console.log(scroll_object);
+        let last_scroll_size = scroll_object.prop('scrollHeight');
+        let cd = false;
+
+        function resize() {
+            let cur_size = scroll_object.prop('scrollHeight');
+            if (cur_size == last_scroll_size) {
+                setTimeout(resize, 0); return; }
+
+            let change = cur_size - last_scroll_size;
+            last_scroll_size = cur_size;
+            scroll_raw_object.scrollTop += change;
+            setTimeout(function () {
+                resize();
+           
+            }, 0);
+
+            
+        }
+        resize();
+    </script>
+    <script>
         $("#loading_circle").addClass("loader_show");
 
         const new_messages_template = $("#new_messages_template");
@@ -502,6 +528,7 @@
             scroll.scrollTo(0, scroll.scrollHeight);
 
         }
+
 
 
         const getScrollPos = function () {
@@ -618,7 +645,7 @@
             let toremove = $(".editingBoxes");
 
             $(toremove.parent()).find("p").css("display", "");
-       
+
             toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
             toremove.remove();
 

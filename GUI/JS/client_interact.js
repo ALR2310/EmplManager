@@ -354,13 +354,7 @@ function loadAttachments(Uploaded_Files, message_ele) {
         if (image == "local_image" || image == "local_video") {
             let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="metadata"/>`);
 
-            file_ele.on("load resize", function () {
-         
-
-                condictionalScrollBottom(message_ele[0].offsetTop);
-          
-
-            });
+      
 
          
             setTimeout(function () {
@@ -417,6 +411,8 @@ async function renderMessage(message, isNewMessage) {
 
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
+
+
 
     setTimeout(function () {
         var emoji_list_ele = $(`.chat-main__item[message_id=${message["Id"]}]`).find(".emoji_list");
