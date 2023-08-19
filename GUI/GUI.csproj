@@ -360,6 +360,7 @@
     <Content Include="Images\UserUploads\4\ffb96a96-ba1e-4b1e-a16a-06cd08951512.jpg" />
     <Content Include="JS\image_attach.js" />
     <Content Include="JS\empolyee.js" />
+    <Content Include="JS\userInfor.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\signalr.js" />

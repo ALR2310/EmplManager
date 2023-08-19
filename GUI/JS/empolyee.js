@@ -54,7 +54,7 @@ modalOverlay = document.querySelector('.modal-vertical__overlay');
 
 modalOverlay.addEventListener('click', function () {
     hidenModal();
-
+    closemodalEmail();
 });
 
 function hidenModal(event) {
@@ -1205,6 +1205,17 @@ function closeEmailModal(event) {
 
     const btnShwEmail = document.querySelector("#btnMdEmailshw");
     btnShwEmail.classList.remove("hide");
+}
+
+function closemodalEmail() {
+    const emailModal = document.querySelector(".usrdetail-modal-email");
+    emailModal.style.transform = "translateX(-100%)";
+
+    const btnShwEmail = document.querySelector("#btnMdEmailshw");
+    btnShwEmail.classList.remove("hide");
+
+    const btnClsEmail = document.querySelector("#btnMdEmailcls");
+    btnClsEmail.classList.add("hide");
 }
 
 

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BUS;
 using DAL;
+using DAL.Model;
 
 namespace GUI
 {
@@ -19,62 +22,48 @@ namespace GUI
             UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
+                lblCurrentUserId.Text = UserFromCookie.Id.ToString();
 
-                LoadUser();
+
             }
-        }
 
-        void LoadUser()
-        {
             User user = UserManager.GetUsersById(UserFromCookie.Id);
+            DateTime DateJoin = (DateTime)user.AtCreate;
 
-            if (user != null)
-            {
-                DateTime DateJoin = (DateTime)user.AtCreate;
+            //Đếm số ngày hoạt động của user này
+            DateTime Today = DateTime.Now;
+            lblDateOnl.Text = Today.Subtract(DateJoin).Days.ToString() + " Ngày";
 
-                ImageAvatar.ImageUrl = user.Avatar;
-                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
-                lblDisplayName.Text = user.DisplayName;
-                lblDisplayName1.Text = user.DisplayName;
-                lblDisplayName2.Text = user.DisplayName;
-                lblGooogleId.Text = user.GoogleId;
-                lblEmail.Text = user.Email;
-                lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
-
-                //Đếm số ngày hoạt động của user này
-                DateTime Today = DateTime.Now;
-                lblDayOnline.Text = Today.Subtract(DateJoin).Days.ToString();
-
-                //Đếm số lượng tin nhắn
-                lblChatCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString();
-
-                switch (user.UserType)
-                {
-                    case 0:
-                        lblUserType.Text = "Admin";
-                        break;
-                    case 1:
-                        lblUserType.Text = "User";
-                        break;
-                }
-
-                switch (user.Status)
-                {
-                    case 0:
-                        lblStatus.Text = "Tệ";
-                        lblStatus.Style.Add("Color", "red");
-                        break;
-                    case 1:
-                        lblStatus.Text = "Tốt";
-                        lblStatus.Style.Add("Color", "green");
-                        break;
-                }
-            }
+            //Đếm số lượng tin nhắn
+            lblMessageCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString() + " Tin Nhắn";
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        [WebMethod]
+        public static string ShowUserInforByCurrentId(string Id)
         {
+            EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(Id));
+            return JsonSerializer.Serialize(empolyee);
+        }
 
+        [WebMethod]
+        public static bool UpdateDataUser(int UserId, string DisplayName, string PhoneNumber, string Email, DateTime AtCreate, string Job, string Department, string Gender, DateTime DateOfBirth, string Address)
+        {
+            EmpolyeeInfor empolyee = new EmpolyeeInfor
+            {
+                Id = UserId,
+                DisplayName = DisplayName,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                AtCreate = AtCreate,
+                Job = Job,
+                Department = Department,
+                Gender = Gender,
+                DateOfBirth = DateOfBirth,
+                Address = Address,
+            };
+
+            EmpolyeeManager.UpdateEmpolyee(empolyee);
+            return true;
         }
     }
 }
