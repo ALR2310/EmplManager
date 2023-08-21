@@ -313,6 +313,8 @@ html {
     justify-content: center;
     width: 40px;
     margin-right: 10px;
+    min-height: 40px;
+    min-width: 40px;
 }
 
     .chat-main__avatar img {
@@ -1983,3 +1985,7 @@ body::-webkit-scrollbar {
     .UIdetail-modal-delete div button:hover {
         opacity: 0.8;
     }
+
+#fake_messages > .fake_chat > .chat-main__content > .chat-wrapper > .chat-item__box > p {
+    max-width: calc(40vw - 40px) !important;
+}

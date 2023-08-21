@@ -90,8 +90,8 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
-                            <span id="search_last_span" onkeydown="setEmptyStr(event);" contenteditable="true" autocomplete='off' spellcheck='false' autocorrect='off'></span>
+                        <div  data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
+                            <span id="search_last_span" onkeydown="checkCursorPos(event); setEmptyStr(event);" contenteditable="true" autocomplete='off' spellcheck='false' autocorrect='off'></span>
 
                         </div>
                         <button type="button" id="search_open" class="chat__search-box__btn">
@@ -200,16 +200,7 @@
                             <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
                         </div>
 
-                        <div id="has_table" class="search_option_menu">
-                            <span>Tin nhắn có chứa:</span>
-                            <hr />
-                            <a value="link">Link<img src="Images\Icons\plus.svg" /></a>
-
-                            <a value="image">Ảnh<img src="Images\Icons\plus.svg" /></a>
-                            <a value="video">Video<img src="Images\Icons\plus.svg" /></a>
-                            <a value="file">Tệp, File<img src="Images\Icons\plus.svg" /></a>
-
-                        </div>
+                        
                     </div>
                     <ul class="chat-main__list">
                     </ul>
@@ -232,7 +223,7 @@
 
                                             <div class="_is_admin_or_not_">
                                                 <img style="height: 20px" src="Images/Icons/admin.svg" />
-                                                <div class="speech bottom">
+                                                <div class="speech bottom" >
                                                     Quản Trị Viên
                                                 </div>
                                             </div>
@@ -435,22 +426,15 @@
         let last_scroll_size = scroll_object.prop('scrollHeight');
         let cd = false;
 
-        function resize() {
-            let cur_size = scroll_object.prop('scrollHeight');
-            if (cur_size == last_scroll_size) {
-                setTimeout(resize, 0); return; }
+        function resize(offset) {
 
-            let change = cur_size - last_scroll_size;
-            last_scroll_size = cur_size;
-            scroll_raw_object.scrollTop += change;
-            setTimeout(function () {
-                resize();
-           
-            }, 0);
+            console.log("Image Resizing..")
+            scroll_raw_object.scrollTo(0,scroll_raw_object.scrollTop+offset/20);
+
 
             
         }
-        resize();
+     
     </script>
     <script>
         $("#loading_circle").addClass("loader_show");
@@ -706,7 +690,6 @@
                 let toremove = $(".editingBoxes");
 
                 $(toremove.parent()).find("p").css("display", "");
-                console.log(toremove.closest(".chat-main__item"));
                 toremove.closest(".chat-main__item").removeClass("chat_force_highlight message_editing");
                 toremove.remove();
 
@@ -748,7 +731,12 @@
                 }
             }
 
-            if (search_box.is(":focus") || event.target.nodeName == "TEXTAREA" || event.target.nodeName == "P" || event.target.nodeName == "SPAN") { return };
+            let node_name = event.target.nodeName;
+
+            if (search_box.is(":focus") || node_name == "DIV" || node_name == "TEXTAREA" || node_name == "P" || node_name == "SPAN") {
+
+                return
+            };
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -803,7 +791,7 @@
                             if (loadedbottom) unread_messages_ele.css("display", "none");
                             if (!loading_scrolling_bottom_cancel) scroll.scrollTo(0, oldpos);
                             else loading_scrolling_bottom_cancel = false;
-
+                            is_firsttime_load = returned_bool;
                         }
                         else {
                             markasread(null, false);

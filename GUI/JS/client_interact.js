@@ -239,6 +239,8 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     for (const id of list) {
         if (Users[id] == null) { await fetchUser(id) }
     }
+
+
     emoji_display.on("mouseenter", async function () {
         if (!bound_reaction_lists[message_id]) { return; }
         let final_str = "Cảm xúc được bày tỏ bởi: ";
@@ -267,7 +269,8 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
         let emoji_speech = emoji_display.find(".speech.bottom");
         emoji_speech.css("display", "");
         if (emoji_speech.length == 0) {
-            let speech = $(`<div class='speech bottom speech_left_side'>awedaw</div >`);
+            let side_class = emoji_display.closest(`.chat-main__item[message_id=${message_id}]`).attr("owner") ? "speech_left_side" : "speech_right_side";
+            let speech = $(`<div class='speech bottom ${side_class}'></div >`);
 
             speech.appendTo(emoji_display);
             emoji_display.find(".speech.bottom").html(final_str);
@@ -326,11 +329,16 @@ let MediaMenuArrows = $("#MediaMenuArrows")[0];
 let CurrentMenuFiles = null;
 let CurrentMenuFileIndex = 0;
 const SwitchImage = function (index_offset) {
-
+    const last_index = CurrentMenuFileIndex;
     CurrentMenuFileIndex = CurrentMenuFileIndex + index_offset;
     CurrentMenuFileIndex = CurrentMenuFileIndex == CurrentMenuFiles.length ? 0 : CurrentMenuFileIndex < 0 ? CurrentMenuFiles.length - 1 : CurrentMenuFileIndex;
+
+    console.log(last_index);
     console.log(CurrentMenuFileIndex);
+
+
     console.log(CurrentMenuFiles);
+    if (CurrentMenuFileIndex == last_index) return;
     PreviewImage_Element.attr("src", "/Images/UserUploads/" + CurrentMenuFiles[CurrentMenuFileIndex].url);
     PreviewImage_Element_Link_Popup.attr("href", "/Images/UserUploads/" + CurrentMenuFiles[CurrentMenuFileIndex].url);
 
@@ -342,22 +350,41 @@ $(MediaMenuArrows).on("click", function (event) {
     
 
 });
+function handleMediaResize(file_ele) {
 
+    let old_height = file_ele.prop('offsetHeight');
+   
+    file_ele.on("load resize", function () {
+
+        resize(this.offsetHeight - old_height);
+        console.log(`${old_height} -> ${this.offsetHeight}`);
+        old_height = this.offsetHeight;
+
+
+    });
+}
 function loadAttachments(Uploaded_Files, message_ele) {
     let FilteredFiles = [];
-    console.log(message_ele.find(".attached_files"));
-    for (const [file_index,file] of Object.entries(Uploaded_Files)) {
+
+    for (const [_,file] of Object.entries(Uploaded_Files)) {
        
         let extension = file.fileName.split('.');
         let image = extension.length > 1 && !!file_format_image[extension[extension.length - 1]] ? file_format_image[extension[extension.length - 1]] : icons.default;
 
         if (image == "local_image" || image == "local_video") {
-            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="metadata"/>`);
+            let file_ele = $(`<${image == "local_image" ? 'img' : 'video'} controls  preload="auto"/>`);
 
       
+     
 
-         
+                handleMediaResize(file_ele);
+
+
+           
+               
+      
             setTimeout(function () {
+
                 file_ele.attr("src", "/Images/UserUploads/" + file.url);
 
          
@@ -367,7 +394,10 @@ function loadAttachments(Uploaded_Files, message_ele) {
             file_ele.appendTo(message_ele.find(".attached_files"));
 
             if (image == "local_image") {
+                const file_index = FilteredFiles.length;
                 FilteredFiles.push(file);
+
+         
                 file_ele.on("click", function () {
                     PreviewImage_Element.attr("src", "/Images/UserUploads/" + file.url);
                     PreviewImage_Element_Link_Popup.attr("href", "/Images/UserUploads/" + file.url);
@@ -376,7 +406,7 @@ function loadAttachments(Uploaded_Files, message_ele) {
                     MediaMenu.removeClass("fade");
             
                     CurrentMenuFiles = FilteredFiles;
-                    CurrentMenuFileIndex = Number(file_index);
+                    CurrentMenuFileIndex = file_index;
 
                 });
             }

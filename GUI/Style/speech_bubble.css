@@ -118,7 +118,18 @@
     left: 50%;
     margin-left: -20px;
 }
-
+.speech_right_side {
+    left: 15% !important;
+    position: absolute;
+    transform: translateX(-10%) translateY(-100%) !important;
+    max-width: 25vw;
+    display: unset !important;
+    top: -100% !important;
+}
+.speech_right_side::after {
+    left: 10% !important;
+    transform: rotate(90deg) translateX(-25%) translateY(-50%);
+}
 .speech_left_side {
     left: calc(90%) !important;
     position: absolute;
@@ -129,7 +140,7 @@
 }
 
 @media (max-aspect-ratio: .8/1) {
-    .speech_left_side {
+    .speech_left_side,.speech_right_side {
         max-width: 50vw;
     }
 }

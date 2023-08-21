@@ -79,20 +79,25 @@ var reload_attached_files = function () {
                     preview_image.replaceWith("<video class='preview_image'/>");
            
                     preview_image = upload_ele.find(".preview_image");
+   
                 }
 
             
                 reader.onload = function (e) {
                
-                    url = e.target.result;
-                    if (url == "local_video") {
-                        upload_ele.find(".preview_play_button").css("visibility", "unset");
-                    }
+                    let src_url = e.target.result;
+                    preview_image.attr("src", src_url)
+               
                     preview_image.css("display", "unset");
-                    preview_image.attr("src", url)
+
                     preview_image.css("background", "#e4f3fc");
-                    console.log(preview_image.text());
-                      loading_circle.remove();
+                    preview_image.on("load resize", function () {
+                        if (url == "local_video") {
+                            upload_ele.find(".preview_play_button").css("visibility", "unset");
+                        }
+                        loading_circle.remove();
+                    });
+                     
                 };
 
 
