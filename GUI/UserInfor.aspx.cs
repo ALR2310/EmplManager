@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Services;
 using BUS;
 using DAL;
+using DAL.Model;
+using SubSonic;
 
 namespace GUI
 {
@@ -16,65 +22,100 @@ namespace GUI
         private User UserFromCookie;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Files.Count > 0)
+            {
+                UpLoadImage();
+            }
+
             UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
+                lblCurrentUserId.Text = UserFromCookie.Id.ToString();
 
-                LoadUser();
+
             }
-        }
 
-        void LoadUser()
-        {
             User user = UserManager.GetUsersById(UserFromCookie.Id);
+            DateTime DateJoin = (DateTime)user.AtCreate;
 
-            if (user != null)
+            //Đếm số ngày hoạt động của user này
+            DateTime Today = DateTime.Now;
+            lblDateOnl.Text = Today.Subtract(DateJoin).Days.ToString() + " Ngày";
+
+            //Đếm số lượng tin nhắn
+            lblMessageCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString() + " Tin Nhắn";
+        }
+
+        [WebMethod]
+        public static string ShowUserInforByCurrentId(string Id)
+        {
+            EmpolyeeInfor empolyee = EmpolyeeManager.GetEmpolyeeById(Convert.ToInt32(Id));
+            return JsonSerializer.Serialize(empolyee);
+        }
+
+        [WebMethod]
+        public static bool UpdateDataUser(int UserId, string DisplayName, string PhoneNumber, string Email, DateTime AtCreate, string Job, string Department, string Gender, DateTime DateOfBirth, string Address)
+        {
+            EmpolyeeInfor empolyee = new EmpolyeeInfor
             {
-                DateTime DateJoin = (DateTime)user.AtCreate;
+                Id = UserId,
+                DisplayName = DisplayName,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                AtCreate = AtCreate,
+                Job = Job,
+                Department = Department,
+                Gender = Gender,
+                DateOfBirth = DateOfBirth,
+                Address = Address,
+            };
 
-                ImageAvatar.ImageUrl = user.Avatar;
-                lblAtCreate.Text = DateJoin.ToString("dd/MM/yyyy");
-                lblDisplayName.Text = user.DisplayName;
-                lblDisplayName1.Text = user.DisplayName;
-                lblDisplayName2.Text = user.DisplayName;
-                lblGooogleId.Text = user.GoogleId;
-                lblEmail.Text = user.Email;
-                lblAtCreate1.Text = DateJoin.ToString("dd/MM/yyyy");
+            UserManager.UpdateUsers(empolyee);
+            return true;
+        }
 
-                //Đếm số ngày hoạt động của user này
-                DateTime Today = DateTime.Now;
-                lblDayOnline.Text = Today.Subtract(DateJoin).Days.ToString();
-
-                //Đếm số lượng tin nhắn
-                lblChatCount.Text = UserManager.CountDayUserOnline(UserFromCookie.Id).ToString();
-
-                switch (user.UserType)
+        protected void UpLoadImage()
+        {
+            if (Request.Files.Count > 0)
+            {
+                HttpPostedFile uploadedFile = Request.Files[0];
+                if (uploadedFile != null && uploadedFile.ContentLength > 0)
                 {
-                    case 0:
-                        lblUserType.Text = "Admin";
-                        break;
-                    case 1:
-                        lblUserType.Text = "User";
-                        break;
-                }
+                    string uploadFolderPath = Server.MapPath("~/Images/Avatar/Uploads/");
+                    string fileName = Path.GetFileName(uploadedFile.FileName);
 
-                switch (user.Status)
-                {
-                    case 0:
-                        lblStatus.Text = "Tệ";
-                        lblStatus.Style.Add("Color", "red");
-                        break;
-                    case 1:
-                        lblStatus.Text = "Tốt";
-                        lblStatus.Style.Add("Color", "green");
-                        break;
+                    // Đổi tên tập tin nếu tên đã tồn tại trong thư mục
+                    int counter = 1;
+                    string newFileName = fileName;
+
+                    while (File.Exists(Path.Combine(uploadFolderPath, newFileName)))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                        string fileExtension = Path.GetExtension(fileName);
+
+                        newFileName = $"{fileNameWithoutExtension}_{counter}{fileExtension}";
+                        counter++;
+                    }
+
+                    string filePath = Path.Combine(uploadFolderPath, newFileName);
+
+                    uploadedFile.SaveAs(filePath);
+
+                    string userId = Request.Form["userId"];
+                    string AvatarPath = "/Images/Avatar/Uploads/" + newFileName;
+
+                    UserManager.UpdateAvatarUrl(AvatarPath, Convert.ToInt32(userId));
                 }
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
 
-        }
+
+
+
+
+
+
+
     }
 }

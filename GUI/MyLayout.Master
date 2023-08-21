@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
     <link rel="icon" href="Images/sweetsoft-logo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

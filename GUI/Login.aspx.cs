@@ -48,9 +48,9 @@ namespace GUI
                 redirectUri = "https://projectctysf.com/dang-nhap";
             }
 
-            tblclientId.Text = clientId;
-            tblclientSecret.Text = clientSecret;
-            tblredirectUri.Text = redirectUri;
+            //tblclientId.Text = clientId;
+            //tblclientSecret.Text = clientSecret;
+            //tblredirectUri.Text = redirectUri;
 
             Debug.WriteLine(JsonSerializer.Serialize(Environment.GetEnvironmentVariables().Keys));
             Debug.WriteLine("Client ID: " + clientId);
