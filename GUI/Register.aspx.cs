@@ -15,7 +15,7 @@ namespace GUI
     public partial class Register : System.Web.UI.Page
     {
         public static User RegisteringUser;
-        private string SweetSoftDomain = "sweetsoft";
+        //private string SweetSoftDomain = "sweetsoft";
         protected void Page_Load(object sender, EventArgs e)
         {
 

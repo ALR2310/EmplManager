@@ -61,7 +61,7 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
 
                                     <ul class="employee-card__ellipsis">
-                                        <li id="clearCheckbox" onclick="clearCheckboxes(event)">Bỏ Chọn Tất Cả</li>
+                                        <li id="clearCheckbox" onclick="clearCheckboxes()">Bỏ Chọn Tất Cả</li>
                                         <li class="subEllipsis-Card">◂Thay Đổi Trạng Thái
                                             <ul class="employee-card__subEllipsis">
                                                 <li onclick="handleChangeStatusForCheckboxes(1)">Kích Hoạt</li>
@@ -434,6 +434,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script src="JS/empolyee.js"></script>

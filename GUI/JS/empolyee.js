@@ -127,8 +127,8 @@ checkboxes.forEach(function (checkbox) {
 });
 
 
-function clearCheckboxes(event) {
-    event.preventDefault();
+function clearCheckboxes() {
+    /*event.preventDefault();*/
     var checkboxes = document.querySelectorAll('.employee-card__header-checkbox');
     checkboxes.forEach(function (checkbox) {
         checkbox.checked = false;
@@ -472,7 +472,7 @@ function handlecheckboxsDelete() {
         handleDeleteUserSeleted(usridArray);
         hideModalDeleteUser();
         $("#lblcountselected").text(0);
-        clearCheckboxes(event);
+        clearCheckboxes();
 
         var userCards = document.querySelectorAll(".employee-body-card")
         userCards.forEach((usercard) => {
@@ -693,7 +693,6 @@ function getDataforClickShow(element) {
 
             if (empolyeeInfo != null) {
                 showModal();
-
                 $("#lblUserId").text(empolyeeInfo.Id);
                 $("#lblGoogleId").text(empolyeeInfo.GoogleId);
                 $("#AvatarImg").attr("src", empolyeeInfo.Avatar);
@@ -1311,3 +1310,24 @@ function getEmailCurrentUserInfor() {
         $("#tblEmail_recipients").val(emailSpan);
     }
 }
+
+
+
+
+
+
+
+
+//--------kiểm tra job trên usercard
+function checkJobInUserCard() {
+    var lblJobs = document.querySelectorAll(".employee-card__body-name p");
+
+    lblJobs.forEach((job) => {
+        if (job.textContent == null || job.textContent == "") {
+            job.textContent = "Chưa Phân Công";
+            console.log("đã thay thế")
+        }
+    });
+}
+
+checkJobInUserCard();

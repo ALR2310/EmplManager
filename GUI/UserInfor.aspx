@@ -10,7 +10,7 @@
     <div id="toast"></div>
 
     <div class="content">
-
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
         <div class="userInfo">
             <asp:Label ID="lblCurrentUserId" runat="server" Style="display: none"></asp:Label>
             <div class="userInfor-header">
@@ -28,13 +28,15 @@
                                 <span id="ifStatus">Tốt</span>
                     </p>
                 </div>
+
                 <div id="divUploadImg" class="userInfor-header-desc hide">
                     <label for="file-upload" class="custom-file-upload">
                         <i class="fa fa-cloud-upload"></i>
                         Tải Lênh Avatar
                     </label>
-                    <input id="file-upload" type="file" />
+                    <input id="file-upload" onchange="previewImageFile(event)" type="file" accept="image/*" />
                 </div>
+                <%--<button type="button" onclick="uploadFile()">Tải Lên hình ảnh</button>--%>
             </div>
 
             <div class="userInfor-body">
@@ -139,6 +141,64 @@
     </div>
 
     <script>
+        //Upload Avatar
+        function uploadFile() {
+            var fileInput = document.getElementById('file-upload');
+            var file = fileInput.files[0];
+
+            if (file) {
+                var userId = $("#ContentPlaceHolder1_lblCurrentUserId").text(); console.log(userId);
+                var formData = new FormData();
+                formData.append('file', file);
+                formData.append('userId', userId);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'UserInfor.aspx', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log("Upload avatar success");
+                    }
+                };
+                xhr.send(formData);
+            }
+        }
+
+        //Xem trước hình ảnh
+        function previewImageFile(event) {
+            var imgElement = document.getElementById('ifAvatar');
+
+            var selectedFile = event.target.files[0];
+
+            if (selectedFile) {
+                var reader = new FileReader();
+
+                // Đọc tập tin và cập nhật thuộc tính src của thẻ img
+                reader.onload = function (e) {
+                    imgElement.src = e.target.result;
+                }
+
+                // Đọc dữ liệu tập tin như URL dạng base64
+                reader.readAsDataURL(selectedFile);
+            };
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // function cập nhật dữ liệu
         function handleUpdateData() {
             var Gender;
@@ -174,8 +234,9 @@
                 success: function (response) {
                     if (response.d == true) {
                         showSuccessToast("Đã cập nhật thông tin thành công") //Thông báo
-                        ShowUserInforByCurrentId();
-                        handleHideEditUser();
+
+                        ShowUserInforByCurrentId(); //hiển thị lại dữ liệu sau khi cập nhật
+                        handleHideEditUser(); //ẩn cặp thẻ edit
                     }
                 },
                 error: function (error) {
@@ -183,6 +244,8 @@
                     showErrorToast("Có lỗi xảy ra khi cập nhật dữ liệu, vui lòng kiểm tra lại");
                 }
             });
+
+            uploadFile() // Cập nhật hình ảnh
         }
 
 

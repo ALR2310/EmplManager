@@ -81,13 +81,13 @@ namespace BUS
                 return sb.ToString();
             }
         }
-  
+
         public static string getOrSetAuthTokenFromNewGoogleAccount(string googleName, string googleId)
         {
             InlineQuery qry = new InlineQuery();
 
 
-    
+
             List<User> LoggedUsers = qry.ExecuteTypedList<User>($"Select * From Users Where GoogleId = '{googleId}'");
 
 
@@ -185,8 +185,31 @@ namespace BUS
             var sql = new InlineQuery();
             string query = $"SELECT * FROM dbo.Users WHERE GoogleId = '{GoogleId}'";
 
-                List<User> result = sql.ExecuteTypedList<User>(query);
+            List<User> result = sql.ExecuteTypedList<User>(query);
             return result;
+        }
+
+        //Update Avatar Url
+        public static void UpdateAvatarUrl(string avatarPath, int id)
+        {
+            var sql = new InlineQuery();
+            var query = $"UPDATE Users SET Avatar = N'{avatarPath}' WHERE Id = {id}";
+            sql.Execute(query);
+        }
+
+        //Update User And UserInfor
+        public static bool UpdateUsers(EmpolyeeInfor empolyee)
+        {
+            var query = new InlineQuery();
+            string sqlquery = $"UPDATE dbo.Users SET DisplayName = N'{empolyee.DisplayName}', Email = N'{empolyee.Email}', " +
+                $"AtCreate = '{empolyee.AtCreate.ToString("yyyy-MM-dd HH:mm:ss")}' WHERE Id = {empolyee.Id}";
+            query.Execute(sqlquery);
+
+            sqlquery = $"UPDATE dbo.UserInfor SET PhoneNumber = '{empolyee.PhoneNumber}', Job = N'{empolyee.Job}', " +
+                $"Department = N'{empolyee.Department}', Gender = N'{empolyee.Gender}', DateOfBirth = '{empolyee.DateOfBirth.ToString("yyyy-MM-dd")}', " +
+                $"Address = N'{empolyee.Address}' WHERE UserId = {empolyee.Id}";
+            query.Execute(sqlquery);
+            return true;
         }
 
     }

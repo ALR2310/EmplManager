@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Services;
 using BUS;
 using DAL;
 using DAL.Model;
+using SubSonic;
 
 namespace GUI
 {
@@ -19,6 +22,11 @@ namespace GUI
         private User UserFromCookie;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Files.Count > 0)
+            {
+                UpLoadImage();
+            }
+
             UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
@@ -62,8 +70,52 @@ namespace GUI
                 Address = Address,
             };
 
-            EmpolyeeManager.UpdateEmpolyee(empolyee);
+            UserManager.UpdateUsers(empolyee);
             return true;
         }
+
+        protected void UpLoadImage()
+        {
+            if (Request.Files.Count > 0)
+            {
+                HttpPostedFile uploadedFile = Request.Files[0];
+                if (uploadedFile != null && uploadedFile.ContentLength > 0)
+                {
+                    string uploadFolderPath = Server.MapPath("~/Images/Avatar/Uploads/");
+                    string fileName = Path.GetFileName(uploadedFile.FileName);
+
+                    // Đổi tên tập tin nếu tên đã tồn tại trong thư mục
+                    int counter = 1;
+                    string newFileName = fileName;
+
+                    while (File.Exists(Path.Combine(uploadFolderPath, newFileName)))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                        string fileExtension = Path.GetExtension(fileName);
+
+                        newFileName = $"{fileNameWithoutExtension}_{counter}{fileExtension}";
+                        counter++;
+                    }
+
+                    string filePath = Path.Combine(uploadFolderPath, newFileName);
+
+                    uploadedFile.SaveAs(filePath);
+
+                    string userId = Request.Form["userId"];
+                    string AvatarPath = "/Images/Avatar/Uploads/" + newFileName;
+
+                    UserManager.UpdateAvatarUrl(AvatarPath, Convert.ToInt32(userId));
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }
