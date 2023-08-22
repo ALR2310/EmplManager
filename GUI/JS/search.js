@@ -1,4 +1,6 @@
-﻿let search_bxb = $("#search-box");
+﻿const SEARCH_USER_NAME_COOLDOWN = 60;
+
+let search_bxb = $("#search-box");
 let open_btn = $("#search_open");
 let search_cancel_btn = $("#search_cancel");
 
@@ -537,9 +539,60 @@ for (const [value_name, sub_values] of Object.entries(display_values)) {
     div.appendTo("#popup_layout");
 }
 
+let from_user_options = $("#from_table");
+let search_option_user_template = $(` <a id="search_option_user_template" value="random_id">
+                                <div>
+                                    <img class="search_avatar_image" src="/Images/Avatar/Uploads/U_25562.svg"/>
+                                    <span>Nguyễn Trường Sơn</span></div>
+                                <img src="Images/Icons/plus.svg"></a>`);
+
+
+function display_fetched_users(parentEle,searchingName) {
+    let filtered_keys = Object.keys(Users).filter(key => Users[key].DisplayName.includes(searchingName));
+    parentEle.children("a").remove();
+    for (const id of filtered_keys) {
+        if (id == "CLIENT_USER") continue;
+
+        const user = Users[id];
+        let cloned_field = search_option_user_template.clone();
+
+        let div = cloned_field.find("div");
+        div.find("img").attr("src", Users[id].Avatar);
+        div.find("span").text(Users[id].DisplayName);
+
+        cloned_field.attr("id", "");
+        cloned_field.appendTo(parentEle);
+
+        cloned_field.on("click", function () {
+            let search_option = editingSpan.getAttribute("option_name");
+            console.log(search_option);
+            if (!(search_option == "from" || search_option == "mention")) return;
+            editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + user.DisplayName;
+            applySOV(editingSpan,search_option,null,id);
+
+            $(editingSpan).next().focus();
+            search_box_input();
+        });
+  
+    }
+
+}
+
+
+const text_change_function = {
+    "from": async function (text) {
+        console.log("Called");
+        display_fetched_users(from_user_options, text);
+        if(fetched_name[text] == null || tick() - fetched_name[text]  > SEARCH_USER_NAME_COOLDOWN ){
+            await fetchMissingUsers(text);
+            display_fetched_users(from_user_options, text);
+        }
+       
+    }
+}
 const specific_option_menu = {
     "has": $("#has_table"),
-    "from": $("from_table"),
+    "from": $("#from_table"),
 }
 const __default_searching_options = {
     has: {
@@ -547,6 +600,9 @@ const __default_searching_options = {
         image: 0,
         file: 0,
         video: 0
+    },
+    from: {
+
     }
 };
 var searching_options = {
@@ -555,6 +611,9 @@ var searching_options = {
         image: 0,
         file: 0,
         video: 0
+    },
+    from: {
+
     }
 };
 
@@ -672,6 +731,30 @@ $("#search_last_span").on("focus click", function () {
 
 
 });
+function applySOV(editingSpan, search_option, new_text, rv) {
+    let real_value = rv || display_values[search_option][new_text];
+
+    if (real_value != null) {
+
+        if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+            console.log("Deleted old Searching option value");
+            const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
+            console.log(old_option);
+            console.log(old_val);
+            searching_options[old_option][old_val] = 0;
+    
+        }
+
+        let search_option_value = search_option + "|||" + real_value;
+        $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
+        editingSpan.setAttribute("sov", search_option_value);
+        console.log(  searching_options[search_option]);
+        console.log(real_value);
+        searching_options[search_option][real_value] = 1;
+    }
+
+
+}
 search_option_menu.find("a").on("click", function (event) {
     console.log(event.target);
     let click_event = $(event.target);
@@ -699,27 +782,16 @@ search_option_menu.find("a").on("click", function (event) {
 
     const min_length = search_option_text[search_option].length;
     const observer = new MutationObserver(_ => {
-
+    
         let new_text = editing_span.text().toLowerCase();
         new_text = new_text.replace(display_txt_lower, "");
+        console.log(new_text);
+        (text_change_function[search_option] && text_change_function[search_option](new_text));
 
-        let real_value = display_values[search_option][new_text];
-    
-        if (searching_options[search_option][real_value] != null) {
-            let search_option_value = search_option + "|||" + real_value;
-            $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
-            editingSpan.setAttribute("sov", search_option_value);
-            searching_options[search_option][real_value] = 1;
+        if (display_values[search_option] != null) {
+            applySOV(element[0],search_option,new_text);
         }
-
-        if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
-            console.log("Deleted old Searching option value");
-            const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
-            console.log(old_option);
-            console.log(old_val);
-            searching_options[old_option][old_val] = 0;
-
-        }
+       
         
         if (element.text().length < min_length + 1) {
     
@@ -745,14 +817,16 @@ search_option_menu.find("a").on("click", function (event) {
 
     });
 
+    (text_change_function[search_option] && text_change_function[search_option](""));
 
     editing_span = $(editing_span);
 
     observer.observe(editing_span[0], { characterData: true, attributes: false, childList: false, subtree: true });
 
-
+    element.attr("option_name",search_option);
     element.on("focus click change select", function (event) {
         hide_option_menus();
+        console.log(specific_option_menu);
         specific_option_menu[search_option].css("visibility", "unset");
         search_option_menu.css("visibility", "hidden");
         editingSpan = element[0];
@@ -780,4 +854,36 @@ function closeSearchOption_Main(event) {
     console.log("Brah");
     search_option_menu.css("visibility", "hidden");
    
+}
+function tick() {
+    return Date.now()/1000;
+}
+const fetched_name = {};
+const fetchMissingUsers = async function (search_name) {
+  
+    if (!!fetched_name[search_name] && tick() - fetched_name[search_name] < SEARCH_USER_NAME_COOLDOWN) {
+        return;
+    }
+    fetched_name[search_name] = tick();
+    const response = await fetch("Message.aspx/SearchUsers", {
+        "headers": {
+            "accept": "application/json, text/javascript, */*; q=0.01",
+            "content-type": "application/json",
+
+        },
+
+
+        "body": JSON.stringify({name: search_name}),
+        "method": "POST",
+        "mode": "cors",
+        "credentials": "include"
+    })
+    var data = await response.json();
+    for (user of data.d) {
+   
+        if (!Users[user.Id]) {
+            Users[user.Id] = user;
+        }
+    }
+    return data;
 }

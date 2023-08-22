@@ -204,12 +204,10 @@
                             <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
                             <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
                         </div>
-                        <div id="from_table" class="search_option_menu search_user_table" style="visibility: unset;">
+                        <div id="from_table" class="search_option_menu search_user_table">
                             <span>Tin nhắn đến từ người dùng: </span>
                             <hr>
-                            <a id="search_option_user_template" value="random_id">
-                                <div><img class="search_avatar_image" src="/Images/Avatar/Uploads/U_25562.svg"/>Nguyễn Trường Sơn</div>
-                                <img src="Images/Icons/plus.svg"></a>
+                           
                         </div>
                         
                     </div>

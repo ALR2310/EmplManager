@@ -2071,3 +2071,7 @@ div, span {
 #has_table{
     z-index:11;
 }
+
+#search_option_user_template{
+    display: none;
+}

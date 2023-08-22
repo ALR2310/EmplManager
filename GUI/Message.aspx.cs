@@ -77,6 +77,14 @@ namespace GUI
 
         }
         [System.Web.Services.WebMethod]
+        public static List<BasicUserData> SearchUsers(string name) {
+
+
+            return
+                    new InlineQuery().ExecuteTypedList<BasicUserData>
+                    ($"select TOP 10 Id,Avatar,DisplayName,UserType from users where DisplayName like '%{name}%'");
+        }
+        [System.Web.Services.WebMethod]
         public static string ToggleEmoji(int Message_Id, int Emoji_Id)
         {
             HttpContext context = HttpContext.Current;
