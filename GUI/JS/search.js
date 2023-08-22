@@ -276,14 +276,14 @@ const search_option_menu = $("#search_option");
 let last_input_txt = null;
 let last_query;
 function search_box_input() {
-    console.log("Bruh");
+  
     let cur_text = search_last_span.text().trim();
 
     let search_option_length = Object.keys(parseSearchOption()).length != 0;
     console.log(search_option_length);
     if (last_input_txt != cur_text && cur_text.length > 0 || search_option_length) {
         last_input_txt = cur_text;
-        search_option_menu.css("visibility", "");
+      
         clearSearchResults();
         clearTimeout(searching_thread);
         searching_thread = setTimeout(function () {
@@ -371,7 +371,7 @@ $(document).on("click", function (event) {
 
     if (ele.closest("#MediaMenu").length != 0) return;
     if (ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
-        ele.closest("#chat-search__list").length == 0) {
+        ele.closest("#chat-search__list").length == 0 && ele.closest(".search_option_menu").length == 0) {
 
         $("#chat-search__list").css("display", "none");
     }
@@ -421,7 +421,7 @@ $(document).ready(function () {
 var search_last_span = $("#search_last_span");
 let last_input = null;
 function setEmptyStr(event) {
-
+    search_option_menu.css("visibility", "unset");
     const key = event.key;
     const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
@@ -539,7 +539,7 @@ for (const [value_name, sub_values] of Object.entries(display_values)) {
 
 const specific_option_menu = {
     "has": $("#has_table"),
-
+    "from": $("from_table"),
 }
 const __default_searching_options = {
     has: {
@@ -573,7 +573,8 @@ for (const [value_name, option_menu] of Object.entries(specific_option_menu)) {
             console.log(editingSpan);
 
             option_menu.css("visibility", "hidden");
-            if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != ""){
+            if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+                console.log("Deleted old Searching option value");
                 const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
                 console.log(old_option);
                 console.log(old_val);
@@ -592,7 +593,7 @@ for (const [value_name, option_menu] of Object.entries(specific_option_menu)) {
             }
                 , 0);
             $(editingSpan).next().focus();
-
+            search_box_input();
         });
     }
 }
@@ -648,7 +649,7 @@ const checkCursorPos = function (event) {
 let observer = new MutationObserver(_ => {
 
 
-    $(".search_option_menu").css("visibility", "hidden");
+
     if (search_last_span.text().length == 0) {
         search_option_menu.css("visibility", "unset");
         return;
@@ -662,13 +663,13 @@ function hide_option_menus() {
         option_menu.css("visibility", "hidden");
     }
 }
-$("#search_last_span").on("focus", function () {
+$("#search_last_span").on("focus click", function () {
 
     $(".search_option_menu").css("visibility", "hidden");
     if (search_last_span.text().length == 0) {
         search_option_menu.css("visibility", "unset");
     }
-    search_box_input();
+
 
 });
 search_option_menu.find("a").on("click", function (event) {
@@ -690,14 +691,14 @@ search_option_menu.find("a").on("click", function (event) {
     search_last_span.appendTo(search_box);
 
     element.on("click", function (event) {
-
-        if (event.target != editing_span[0]) {
-            selectLastText(editing_span[0]);
+        console.log("a");
+        if (event.target != element[0]) {
+            selectLastText(element[0]);
         }
     });
 
     const min_length = search_option_text[search_option].length;
-    let observer = new MutationObserver(_ => {
+    const observer = new MutationObserver(_ => {
 
         let new_text = editing_span.text().toLowerCase();
         new_text = new_text.replace(display_txt_lower, "");
@@ -711,7 +712,14 @@ search_option_menu.find("a").on("click", function (event) {
             searching_options[search_option][real_value] = 1;
         }
 
+        if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+            console.log("Deleted old Searching option value");
+            const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
+            console.log(old_option);
+            console.log(old_val);
+            searching_options[old_option][old_val] = 0;
 
+        }
         
         if (element.text().length < min_length + 1) {
     
@@ -762,4 +770,14 @@ search_option_menu.find("a").on("click", function (event) {
     selectLastText(element[0]);
     element.click();
 });
-
+open_btn.on("click", function () {
+    search_last_span.focus();
+    search_last_span.click();
+});
+function closeSearchOption_Main(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log("Brah");
+    search_option_menu.css("visibility", "hidden");
+   
+}

@@ -356,13 +356,13 @@ function handleMediaResize(file_ele) {
 
     file_ele.resize(function () {
 
-        if (scroll.scrollTop < file_ele[0].offsetTop) {
+        if (scroll.scrollTop < file_ele[0].closest(".chat-main__item").offsetTop) {
             old_height = this.offsetHeight;
             return;
         }
         resize(this.offsetHeight - old_height);
         console.log(`${old_height} -> ${this.offsetHeight}`);
-        console.log(`scroll pos: ${scroll.scrollTop} - chat element pos: ${file_ele[0].offsetTop}`)
+        console.log(`scroll pos: ${scroll.scrollTop} - chat element pos: ${file_ele[0].closest(".chat-main__item").offsetTop}`)
         old_height = this.offsetHeight;
 
 

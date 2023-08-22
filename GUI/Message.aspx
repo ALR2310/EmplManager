@@ -193,13 +193,24 @@
                                 <img src="Images/arrowDown.svg" /></span>
                         </div>
                         <div id="search_option" class="search_option_menu">
-                            <span>Tùy chọn Tìm Kiếm</span>
+                            <span>Tùy chọn Tìm Kiếm
+
+                                <button type="button" style="" onClick="closeSearchOption_Main(event)" class="chat__search-box__btn">
+                            <i class="fa-solid fa-cancel-icon"></i>
+                        </button>
+                            </span>
                             <hr />
                             <a search_option="from">Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
                             <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
                             <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
                         </div>
-
+                        <div id="from_table" class="search_option_menu search_user_table" style="visibility: unset;">
+                            <span>Tin nhắn đến từ người dùng: </span>
+                            <hr>
+                            <a id="search_option_user_template" value="random_id">
+                                <div><img class="search_avatar_image" src="/Images/Avatar/Uploads/U_25562.svg"/>Nguyễn Trường Sơn</div>
+                                <img src="Images/Icons/plus.svg"></a>
+                        </div>
                         
                     </div>
                     <ul class="chat-main__list">

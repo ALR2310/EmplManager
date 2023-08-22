@@ -1993,8 +1993,9 @@ textarea {
         padding: 9px;
         border-radius: 5px;
         display: flex;
-        align-items:center;
+        align-items: center;
         user-select: none;
+        justify-content: space-between;
     }
         .search_option_menu > a > span {
             opacity: .7;

@@ -594,9 +594,11 @@ html {
 .chat__search-box__btn {
     position: absolute;
     right: 0;
-    top: 0;
+
+    top: 50%;
     width: 30px;
     height: 30px;
+    transform: translateY(-50%);
     background-color: transparent;
     font-size: 16px;
     border: none;
@@ -1919,4 +1921,17 @@ body::-webkit-scrollbar {
 
 #fake_messages > .fake_chat > .chat-main__content > .chat-wrapper > .chat-item__box > p {
     max-width: calc(40vw - 40px) !important;
+}
+
+.search_avatar_image{
+    border-radius:50%;
+    height: 25px;
+
+}
+
+.search_user_table > a > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #00428c;
 }
