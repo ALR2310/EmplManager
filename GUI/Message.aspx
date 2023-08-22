@@ -428,8 +428,8 @@
 
         function resize(offset) {
 
-            console.log("Image Resizing..")
-            scroll_raw_object.scrollTo(0,scroll_raw_object.scrollTop+offset/20);
+        
+            scroll_raw_object.scrollTo(0,scroll_raw_object.scrollTop+offset);
 
 
             

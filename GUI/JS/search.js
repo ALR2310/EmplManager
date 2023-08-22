@@ -37,7 +37,7 @@ async function renderSearchMessage(id, message) {
 
     if (!!message.Uploaded_Files) {
         message.Uploaded_Files = JSON.parse(message.Uploaded_Files);
-        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"));
+        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"),true);
 
 
     }

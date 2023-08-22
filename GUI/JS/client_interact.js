@@ -353,17 +353,22 @@ $(MediaMenuArrows).on("click", function (event) {
 function handleMediaResize(file_ele) {
 
     let old_height = file_ele.prop('offsetHeight');
-   
-    file_ele.on("load resize", function () {
 
+    file_ele.resize(function () {
+
+        if (scroll.scrollTop < file_ele[0].offsetTop) {
+            old_height = this.offsetHeight;
+            return;
+        }
         resize(this.offsetHeight - old_height);
         console.log(`${old_height} -> ${this.offsetHeight}`);
+        console.log(`scroll pos: ${scroll.scrollTop} - chat element pos: ${file_ele[0].offsetTop}`)
         old_height = this.offsetHeight;
 
 
     });
 }
-function loadAttachments(Uploaded_Files, message_ele) {
+function loadAttachments(Uploaded_Files, message_ele,ignore_resize) {
     let FilteredFiles = [];
 
     for (const [_,file] of Object.entries(Uploaded_Files)) {
@@ -376,8 +381,12 @@ function loadAttachments(Uploaded_Files, message_ele) {
 
       
      
-
-                handleMediaResize(file_ele);
+            if (!ignore_resize)
+                setTimeout(function () {
+                    console.log(file_ele);
+                    handleMediaResize(file_ele);
+                }, 0);
+             
 
 
            
