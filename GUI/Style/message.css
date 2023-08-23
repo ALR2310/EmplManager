@@ -1878,8 +1878,10 @@ textarea {
     }
 
         #MediaMenu > #ImagePreview > img {
-            max-height: 75vh;
+            max-height: 80vh;
             max-width: 100%;
+            min-height: 50vh;
+            min-width: 35vh;
         }
         #MediaMenu > #ImagePreview > a {
             color: white;
