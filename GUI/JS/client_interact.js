@@ -677,6 +677,8 @@ function sendMessage() {
     })
     formData.append('content', inputElement.val());
     console.log(formData.getAll('content'));
+
+
     $.ajax({
         url: 'Message.aspx/SendMessage',
         type: 'POST',

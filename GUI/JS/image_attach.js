@@ -27,7 +27,7 @@ let file_format_image = {
     [icons.code]: ['svg', 'cpp', 'js', 'py', 'lua', 'java'],
     [icons.archive]: ['7z', 'zip', 'rar'],
     [icons.text]: ['txt', 'log'],
-    ["local_image"]: ['jpg','png','gif','apng'],
+    ["local_image"]: ['jpg','png','gif','apng','jfif','jpeg'],
     ["local_video"]: ['mp4', 'mov', 'wmv', 'webm', 'avi', 'flv', 'mkv']
 
 };

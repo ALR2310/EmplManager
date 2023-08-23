@@ -19,7 +19,7 @@ namespace BUS
         private static Dictionary<string, string> file_format_to_str = new Dictionary<string, string>()
         {
             {"video","%mp4%,%mov%,%wmv%,%webm%,%avi%,%flv%,%mkv%" },
-            {"image","%jpg%,%png%,%gif%,%apng%" }
+            {"image","%jpg%,%png%,%gif%,%apng%,%jfif%,%jpeg%" }
         };
         public static Message InsertMessage(Message message)
         {
