@@ -1,0 +1,64 @@
+﻿.ModalCheckUser {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .ModalCheckUser.hide {
+        display: none;
+    }
+
+.ModalCheckUser_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 15%;
+}
+
+    .ModalCheckUser_content h3 {
+        color: #3785f2;
+        line-height: 1.5rem;
+    }
+
+    .ModalCheckUser_content p {
+        color: #ff2828;
+        line-height: 1.5rem;
+    }
+
+    .ModalCheckUser_content button {
+        border: none;
+        outline: none;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 5px 10px;
+        color: gray;
+        transition: all 0.5s ease;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+        .ModalCheckUser_content button:hover {
+            opacity: 0.8;
+        }
+
+.ModalCheckUser_content_image {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .ModalCheckUser_content_image img {
+        width: 100%;
+        flex-shrink: 1;
+    }

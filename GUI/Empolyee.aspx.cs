@@ -19,11 +19,14 @@ namespace GUI
 {
     public partial class Empolyee : System.Web.UI.Page
     {
+        private User UserFromCookie;
         protected void Page_Load(object sender, EventArgs e)
         {
+            UserFromCookie = ((MyLayout)Master).UserFromCookie;
             if (!IsPostBack)
             {
                 LoadEmpolyee();
+                lblCurrentId.Text = UserFromCookie.Id.ToString();
             }
 
         }
@@ -152,6 +155,24 @@ namespace GUI
         {
             EmpolyeeManager.SendEmail(recipients, subject, content, ccRecipients, bccRecipients);
         }
+
+        [WebMethod]
+        public static bool CheckCurrentUserType(string Id)
+        {
+            User user = new User
+            {
+                Id = Convert.ToInt32(Id),
+                UserType = 1,
+            };
+            List<User> result = EmpolyeeManager.CheckCurrentUserType(user);
+
+            if (result.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
 
     }
 }

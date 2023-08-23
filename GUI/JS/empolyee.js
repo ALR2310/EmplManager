@@ -1299,9 +1299,6 @@ function handleGetEmailForCheckboxes() {
 
 
 
-
-
-
 //------Lấy email hiện tại của modalinfor
 function getEmailCurrentUserInfor() {
     var emailSpan = $("#lblEmail").text();
@@ -1310,9 +1307,6 @@ function getEmailCurrentUserInfor() {
         $("#tblEmail_recipients").val(emailSpan);
     }
 }
-
-
-
 
 
 
@@ -1331,3 +1325,43 @@ function checkJobInUserCard() {
 }
 
 checkJobInUserCard();
+
+
+
+
+//---------Quay lại trang trước đó
+function goBack() {
+    window.history.back();
+}
+
+
+
+
+//--------Function kiểm tra quyền của người dùng
+function checkCurrentUserType() {
+    var data = {
+        Id: $("#ContentPlaceHolder1_lblCurrentId").text(),
+    }
+
+    $.ajax({
+        type: "POST",
+        "url": "empolyee.aspx/CheckCurrentUserType",
+        "data": JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            var ModalCheckUser = document.querySelector(".ModalCheckUser");
+            if (response.d == true) {
+                console.log("Tài khoản này có quyền");
+                ModalCheckUser.classList.add("hide");
+            } else {
+                console.log("Tài khoản này không có quyền")
+                ModalCheckUser.classList.remove("hide");
+            }
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+checkCurrentUserType()
