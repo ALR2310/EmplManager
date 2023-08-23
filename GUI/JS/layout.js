@@ -32,3 +32,9 @@ const parts = window.location.href.split('/');
 var page = parts[parts.length - 1];
 var elem = $(`.sidebar-item__link[href='${page}']`);
 elem.addClass("active");
+
+console.log(page == "tin-nhan");
+if (page == "tin-nhan") {
+    console.log($("#Message_Notif").css("visiblity", "hidden"));
+    $("#Message_Notif").css("visibility", "hidden");
+}

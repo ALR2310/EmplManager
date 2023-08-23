@@ -400,7 +400,7 @@
 
     <script src="JS/modal.js"></script>
     <script>
-        window.history.pushState('Message', 'Message.aspx', 'Message.aspx');
+        window.history.pushState('Tin nhắn', 'tin-nhan', 'tin-nhan');
         function preventDefault(e) {
             if (e.key === "Enter") {
                 e.preventDefault();

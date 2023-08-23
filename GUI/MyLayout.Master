@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html>  
 <head runat="server">
     <title>Thông Báo Ra Vào Cty</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,7 +71,9 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="tin-nhan">
-                                <i class="fa-sharp fa-solid fa-comments"></i>
+                                <i class="fa-sharp fa-solid fa-comments">
+                                    <span id="Message_Notif"><span></span>&nbsp</span>
+                                </i>
                                 <div class="speech left">
                                     Tin Nhắn
                                 </div>

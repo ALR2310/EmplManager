@@ -278,7 +278,7 @@ const search_option_menu = $("#search_option");
 let last_input_txt = null;
 let last_query;
 function search_box_input() {
-  
+    closed_main_option_menu = false;
     let cur_text = search_last_span.text().trim();
 
     let search_option_length = Object.keys(parseSearchOption()).length != 0;
@@ -303,7 +303,7 @@ function search_box_input() {
     search_cancel_btn.css('display', 'none');
     search_message_list.css("display", "none");
     search_option_menu.css("visibility", "visible");
-
+    console.log("Showing Search Option Menu");
 }
 
 
@@ -374,8 +374,12 @@ $(document).on("click", function (event) {
     if (ele.closest("#MediaMenu").length != 0) return;
     if (ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
         ele.closest("#chat-search__list").length == 0 && ele.closest(".search_option_menu").length == 0) {
-
-        $("#chat-search__list").css("display", "none");
+        if (search_option_menu.css("visibility") != "hidden") {
+            search_option_menu.css("visibility", "hidden");
+        }
+        else {
+            $("#chat-search__list").css("display", "none");
+        }
     }
     else if (last_query != null && last_query == last_input_txt) {
         $("#chat-search__list").css("display", "flex");
@@ -578,6 +582,7 @@ function display_fetched_users(parentEle,searchingName) {
 
 }
 
+var closed_main_option_menu = false;
 
 const text_change_function = {
     "from": async function (text) {
@@ -722,10 +727,13 @@ function hide_option_menus() {
         option_menu.css("visibility", "hidden");
     }
 }
+    
 $("#search_last_span").on("focus click", function () {
-
-    $(".search_option_menu").css("visibility", "hidden");
-    if (search_last_span.text().length == 0) {
+    if (!closed_main_option_menu) {
+        search_option_menu.css("visibility", "hidden");
+    }
+   
+    if (search_last_span.text().length == 0 ) {
         search_option_menu.css("visibility", "unset");
     }
 
@@ -849,6 +857,7 @@ open_btn.on("click", function () {
     search_last_span.click();
 });
 function closeSearchOption_Main(event) {
+    closed_main_option_menu = true;
     event.preventDefault();
     event.stopPropagation();
     console.log("Brah");

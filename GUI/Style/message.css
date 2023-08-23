@@ -1,4 +1,4 @@
-
+﻿
 .italic {
     font-style: italic;
     opacity: .7;
@@ -787,7 +787,7 @@ textarea {
     border-radius: 10px;
     max-height: 50vh;
     min-width: 10vw;
-    border-radius: 3%;
+    border-radius: 15px;
 }
 
 .btn {
@@ -2073,5 +2073,24 @@ div, span {
 }
 
 #search_option_user_template{
+    display: none;
+}
+
+#search_last_span:empty::before{
+    content: 'Tìm kiếm tin nhắn';
+    display: block;
+    opacity: .6;
+}
+#search_last_span:empty:focus::before {
+    content: 'Nhập nội dung cần tìm';
+
+}
+
+#search-box > div + #search_last_span {
+    opacity: 0;
+}
+
+#search_last_span::-webkit-scrollbar {
+    
     display: none;
 }

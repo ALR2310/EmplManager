@@ -83,7 +83,19 @@ namespace BUS
 
             Debug.WriteLine(option);
             InlineQuery query = new InlineQuery();
+            if (option.Keys.Contains("from"))
+            {
 
+                List<string> from_params = ((object[])option["from"]).OfType<string>().ToList();
+                StringBuilder combinedString = new StringBuilder();
+                foreach (string id in from_params)
+                {
+                    combinedString.Append(id);
+                }
+                querystr = querystr + ", @id_list = '" + combinedString.ToString() + "'";
+                Debug.WriteLine(querystr);
+            }
+         
             if (option.Keys.Contains("has"))
             {
                 Debug.Write(JsonSerializer.Serialize(option["has"]));
