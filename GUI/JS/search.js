@@ -729,10 +729,11 @@ function hide_option_menus() {
 }
     
 $("#search_last_span").on("focus click", function () {
-    if (!closed_main_option_menu) {
+    console.log(closed_main_option_menu);
+    if (closed_main_option_menu) {
+      
         search_option_menu.css("visibility", "hidden");
     }
-   
     if (search_last_span.text().length == 0 ) {
         search_option_menu.css("visibility", "unset");
     }
@@ -836,6 +837,7 @@ search_option_menu.find("a").on("click", function (event) {
         hide_option_menus();
         console.log(specific_option_menu);
         specific_option_menu[search_option].css("visibility", "unset");
+   
         search_option_menu.css("visibility", "hidden");
         editingSpan = element[0];
     });

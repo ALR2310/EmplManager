@@ -1923,10 +1923,10 @@ body::-webkit-scrollbar {
     max-width: calc(40vw - 40px) !important;
 }
 
-.search_avatar_image{
-    border-radius:50%;
+.search_avatar_image {
+    border-radius: 50%;
     height: 25px;
-
+    width: 25px;
 }
 
 .search_user_table > a > div {
