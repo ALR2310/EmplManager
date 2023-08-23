@@ -435,6 +435,12 @@
         </div>
     </div>
 
+    <div class="ModalCheckUser hide">
+        <div class="ModalCheckUser_content">
+            <p>Bạn Không Có Quyền Truy Cập Trang Web Này</p>
+            <button>Quay Lại Trang Trước</button>
+        </div>
+    </div>
 
 
     <script src="JS/empolyee.js"></script>
