@@ -189,26 +189,26 @@
 
 #Message_Notif {
     background-color: red;
-
     border-radius: 50%;
     position: absolute;
     /* right: 0; */
     width: 12px;
     height: 12px;
     transform: translate(-50%,-25%);
+    visibility: hidden;
 }
 
-#Message_Notif > span {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: red;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-}
+    #Message_Notif > span {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: red;
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+  
+    }
 
 #Message_Notif > .alert {
     animation: notif_loop 2s;

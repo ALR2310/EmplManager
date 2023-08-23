@@ -152,40 +152,8 @@ const FormatFuncs = {
 
     }
 }
-var FetchingUsers = {}
 
-async function fetchUser(id, fromCookie) {
-    if (id == null) fromCookie = true;
-    if (FetchingUsers[id]) {
-        console.log("Found cached requets... canceling....");
-        await FetchingUsers[id];
-        return;
-    }
-    FetchingUsers[id] = $.ajax({
-        url: 'Message.aspx/GetUser',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ id: (!!id ? id : 0), fromCookie: !!fromCookie ? fromCookie : false }),
-        success: function (response) {
-            var user = JSON.parse(response.d);
 
-            if (fromCookie) {
-                Users["CLIENT_USER"] = user;
-
-            }
-            Users[user.Id] = user;
-        },
-        error: function (xhr, status, error) {
-            // Handle any errors
-            console.error(error);
-        },
-        complete: function () {
-            FetchingUsers[id] = null;
-        }
-    });
-    await FetchingUsers[id];
-}
 const __deprecated = [
     "❤️",
 

@@ -470,20 +470,13 @@
                 }
 
 
+            console.log(saving);
             localStorage.setItem("lastReadMessage" + Users.CLIENT_USER.Id, JSON.stringify(saving));
             console.log("Stored lastRead");
         }
 
 
-        const getLastReadMessage = function () {
-            let raw_data = JSON.parse(localStorage.getItem("lastReadMessage" + Users.CLIENT_USER.Id));
-            if (raw_data == null) raw_data = { Id: latest_message_id };
-            if (!!raw_data.AtCreate) raw_data.AtCreate = new Date(raw_data.AtCreate);
-
-
-
-            return raw_data;
-        }
+     
         const setLastRenderedMessageCache = function (message_id) {
             setLastReadMessage(message_id);
             if (lastRenderedMessage == null) {
@@ -500,7 +493,7 @@
         }
 
 
-        var Users = {};
+      
 
         const search_box = $("#search-box");
 
@@ -885,8 +878,8 @@
 
     </script>
     <script src="JS/emoji.js"></script>
-    <script src="JS/client_interact.js"></script>
+  
     <script src="JS/signalr_connection.js"></script>
-
+      <script src="JS/client_interact.js"></script>
 </asp:Content>
 

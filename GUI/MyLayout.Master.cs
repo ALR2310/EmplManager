@@ -13,6 +13,7 @@ namespace GUI
     {
         public User UserFromCookie;
 
+
         private void AssignInfos()
         {
             lblUserName.Text = UserFromCookie.DisplayName;
@@ -26,7 +27,7 @@ namespace GUI
             if (id_from_validcookie == null) { Response.Redirect("dang-nhap"); return; }
 
             UserFromCookie = UserManager.GetUsersById((int)id_from_validcookie);
-
+            ViewState["UserFromCookie"] = UserFromCookie;
 
 
             Debug.WriteLine("Loaded User");

@@ -4,8 +4,7 @@
 const edited_span = "&nbsp;<span  class='italic mess_edited'>(đã chỉnh sửa)</span>";
 
 $(function () {
-    var connection = $.hubConnection();
-    var hubProxy = connection.createHubProxy('chatHub');
+
     hubProxy.on('MessageEdited', async function (json_data) {
         console.log(json_data);
         json_data = JSON.parse(json_data);

@@ -20,6 +20,42 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <script>
+        const FetchingUsers = {}
+        const Users = {};
+        const fetchUser = async function (id, fromCookie) {
+            if (id == null) fromCookie = true;
+            if (FetchingUsers[id]) {
+                console.log("Found cached requets... canceling....");
+                await FetchingUsers[id];
+                return;
+            }
+            FetchingUsers[id] = $.ajax({
+                url: 'Message.aspx/GetUser',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({ id: (!!id ? id : 0), fromCookie: !!fromCookie ? fromCookie : false }),
+                success: function (response) {
+                    var user = JSON.parse(response.d);
+
+                    if (fromCookie) {
+                        Users["CLIENT_USER"] = user;
+
+                    }
+                    Users[user.Id] = user;
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    console.error(error);
+                },
+                complete: function () {
+                    FetchingUsers[id] = null;
+                }
+            });
+            await FetchingUsers[id];
+        }
+    </script>
     <form id="form1" runat="server">
         <header>
             <nav class="nav">
@@ -128,9 +164,15 @@
             </div>
         </main>
     </form>
+
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+        <script>
+            const connection = $.hubConnection();
+            const hubProxy = connection.createHubProxy('chatHub');
+        </script>
     <script src="JS/layout.js"></script>
+
     <script>
 
 </script>
