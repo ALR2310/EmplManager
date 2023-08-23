@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="Style/toast.css" />
     <link rel="stylesheet" href="Style/modal-email.css" />
+    <link rel="stylesheet" href="Style/empolyee.css" />
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/balloon/ckeditor.js"></script>
 </asp:Content>
 
@@ -19,7 +20,7 @@
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-
+                <asp:Label ID="lblCurrentId" runat="server" Style="display: none"></asp:Label>
                 <div class="employee-management">
                     <div class="employee">
                         <div class="employee-header">
@@ -437,11 +438,27 @@
 
     <div class="ModalCheckUser hide">
         <div class="ModalCheckUser_content">
-            <p>Bạn Không Có Quyền Truy Cập Trang Web Này</p>
-            <button>Quay Lại Trang Trước</button>
+            <div class="ModalCheckUser_content_image">
+                <img src="Images/images1.png" />
+            </div>
+
+            <h3>Xin Lỗi, Bạn Không Có Quyền Truy Cập Trang Web Này</h3>
+            <p>Tài khoản bạn không có quyền truy cập trang này, để truy cập trang này vui lòng liên hệ với Administrator</p>
+            <button type="button" onclick="goBack()">Quay Lại Trang Trước</button>
         </div>
     </div>
 
+
+    <style>
+        
+    </style>
+
+    <script>
+
+
+
+
+</script>
 
     <script src="JS/empolyee.js"></script>
     <script src="JS/toast.js"></script>

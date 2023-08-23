@@ -191,5 +191,13 @@ namespace BUS
             smtpClient.Send(message);
         }
 
+        //Kiểm tra loại tài khoản người dùng hiện tại
+        public static List<User> CheckCurrentUserType(User user)
+        {
+            var sql = new InlineQuery();
+            string query = $"SELECT * FROM dbo.Users WHERE Id = {user.Id} And UserType = {user.UserType}";
+            List<User> users = sql.ExecuteTypedList<User>(query);
+            return users;
+        }
     }
 }

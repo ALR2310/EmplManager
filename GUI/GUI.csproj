@@ -319,6 +319,7 @@
     <Content Include="Images\Icons\play_video.svg" />
     <Content Include="Images\Icons\text_file.svg" />
     <Content Include="Images\Icons\upload_edit.svg" />
+    <Content Include="Images\images1.png" />
     <Content Include="Images\magnifying_glass.svg" />
     <Content Include="Images\markasread.svg" />
     <Content Include="Images\avatar-1.jpg" />
@@ -393,6 +394,7 @@
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Style\emoji_list.css" />
+    <Content Include="Style\empolyee.css" />
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
     <Content Include="Style\modal-email.css" />

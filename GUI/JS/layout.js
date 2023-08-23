@@ -17,7 +17,7 @@ btnMenuLeft.addEventListener("click", function () {
             for (var i = 0; i < spanSidebarList.length; i++) {
                 spanSidebarList[i].classList.remove("hide");
             }
-        }, 500);
+        }, 200);
     } else {
         for (var i = 0; i < spanSidebarList.length; i++) {
             spanSidebarList[i].classList.add("hide");
