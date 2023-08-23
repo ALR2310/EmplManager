@@ -1,0 +1,66 @@
+.modalSetting {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+}
+
+    .modalSetting.hide {
+        display: none;
+    }
+
+.modalSetting_overlay {
+    flex: 1;
+    background-color: rgba(0,0,0,0.1);
+    transition: all 0.5s ease;
+    transform: translateX(150%);
+}
+
+.modalSetting_content {
+    width: 300px;
+    background-color: white;
+    transition: all 0.5s ease;
+    transform: translateX(100%);
+}
+
+    .modalSetting_content h2 {
+        text-align: center;
+        margin-top: 20px;
+        padding-bottom: 10.5px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+.modalSetting_content_radioGroup {
+    padding: 20px;
+}
+
+    .modalSetting_content_radioGroup h6 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        margin-top: 30px;
+    }
+
+
+
+.radioGroup_Container {
+    display: flex;
+}
+
+    .radioGroup_Container + .radioGroup_Container {
+        border-top: 1px solid var(--border-color);
+    }
+
+.MdradioGroup {
+    margin-right: 30px;
+}
+
+    .MdradioGroup label {
+        font-size: 14px;
+    }
+
+    .MdradioGroup input[type="radio"] {
+        outline: none;
+    }
