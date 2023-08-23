@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html>  
+<html>
 <head runat="server">
     <title>Thông Báo Ra Vào Cty</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/Style/message.css" />
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
+    <link rel="stylesheet" href="Style/layout.css" />
     <link rel="icon" href="Images/sweetsoft-logo.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -122,7 +123,7 @@
                                 <div class="speech left">
                                     Quản lý Nhân viên
                                 </div>
-                                <span class="sider-bar__span hide">Quản lý Nhân viên</span>
+                                <span class="sider-bar__span hide">QL Nhân viên</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -138,7 +139,7 @@
 
                     <ul class="sidebar-list">
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="#">
+                            <a class="sidebar-item__link" onclick="ToggleModalSettings()">
                                 <i class="fa-solid fa-gear"></i>
                                 <span class="sider-bar__span hide">Setting</span>
                                 <div class="speech left">
@@ -161,6 +162,71 @@
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     <%-- Content --%>
                 </asp:ContentPlaceHolder>
+
+                <div class="modalSetting hide">
+                    <div class="modalSetting_overlay" onclick="ToggleModalSettings()"></div>
+
+                    <div class="modalSetting_content">
+                        <h2>Cài Đặt</h2>
+
+                        <div class="modalSetting_content_radioGroup">
+                            <h6>Bố Cục</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stVertical" type="radio" name="stLayout" checked="checked" />
+                                    <label for="stVertical">Chiều Dọc</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stHorizontal" type="radio" name="stLayout" />
+                                    <label for="stHorizontal">Chiều Ngang</label>
+                                </div>
+                            </div>
+
+                            <h6>Chế độ bố cục</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stLight" type="radio" name="stLayoutMode" checked="checked" />
+                                    <label for="stLight">Sáng</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stDark" type="radio" name="stLayoutMode" />
+                                    <label for="stDark">Tối</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <script>
+                    var clickCount = 0;
+                    function ToggleModalSettings() {
+                        var MdSetting = document.querySelector(".modalSetting");
+                        var MdOverlay = document.querySelector(".modalSetting_overlay");
+                        var MdContent = document.querySelector(".modalSetting_content");
+
+                        clickCount++;
+
+                        if (clickCount % 2 === 1) {
+
+                            MdSetting.classList.remove("hide");
+                            setTimeout(function () {
+                                MdOverlay.style.transform = "translateX(0)";
+                                MdContent.style.transform = "translateX(0)";
+                            }, 100);
+                        } else {
+                            MdOverlay.style.transform = "translateX(150%)";
+                            MdContent.style.transform = "translateX(100%)";
+                            setTimeout(function () {
+                                MdSetting.classList.add("hide");
+                            }, 400);
+                        }
+                    }
+                </script>
+
+
+
             </div>
         </main>
     </form>
