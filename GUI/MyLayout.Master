@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
     <link rel="stylesheet" href="Style/layout.css" />
+    <link rel="stylesheet" href="Style/settings.css" />
     <link rel="icon" href="Images/sweetsoft-logo.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -59,7 +60,7 @@
     </script>
     <form id="form1" runat="server">
         <header>
-            <nav class="nav">
+            <nav class="nav ">
                 <div class="nav__menu">
                     <div class="nav-menu__left">
                         <button type="button" class="btn-menuleft">
@@ -95,7 +96,7 @@
 
         <main>
             <div class="container">
-                <div class="sidebar sidebar-close">
+                <div class="sidebar sidebar-close ">
                     <ul class="sidebar-list">
                         <li class="sidebar-item">
                             <a class="sidebar-item__link" href="trang-chu">
@@ -203,6 +204,10 @@
                                 <div class="MdradioGroup">
                                     <input id="stTopbarDark" type="radio" name="stTopbar" />
                                     <label for="stDark">Tối</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarBrand" type="radio" name="stTopbar" />
+                                    <label for="stBrand">Thương Hiệu</label>
                                 </div>
                             </div>
 
