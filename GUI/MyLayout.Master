@@ -98,7 +98,7 @@
                 <div class="sidebar sidebar-close">
                     <ul class="sidebar-list">
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="#">
+                            <a class="sidebar-item__link" href="trang-chu">
                                 <i class="fa-solid fa-house"></i>
                                 <div class="speech left">
                                     Trang Chủ
@@ -182,14 +182,38 @@
                                 </div>
                             </div>
 
-                            <h6>Chế độ bố cục</h6>
+                            <h6 class="mrgn">Chế độ bố cục</h6>
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
-                                    <input id="stLight" type="radio" name="stLayoutMode" checked="checked" />
+                                    <input id="stLayoutLight" type="radio" name="stLayoutMode" checked="checked" />
                                     <label for="stLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
-                                    <input id="stDark" type="radio" name="stLayoutMode" />
+                                    <input id="stLayoutDark" type="radio" name="stLayoutMode" />
+                                    <label for="stDark">Tối</label>
+                                </div>
+                            </div>
+
+                            <h6 class="mrgn">Màu thanh trên</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarLight" type="radio" name="stTopbar" checked="checked" />
+                                    <label for="stLight">Sáng</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarDark" type="radio" name="stTopbar" />
+                                    <label for="stDark">Tối</label>
+                                </div>
+                            </div>
+
+                            <h6 class="mrgn">Màu thanh bên</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stSideBarLight" type="radio" name="stSideBar" checked="checked" />
+                                    <label for="stLight">Sáng</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stSideBarDark" type="radio" name="stSideBar" />
                                     <label for="stDark">Tối</label>
                                 </div>
                             </div>
@@ -233,10 +257,10 @@
 
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
-        <script>
-            const connection = $.hubConnection();
-            const hubProxy = connection.createHubProxy('chatHub');
-        </script>
+    <script>
+        const connection = $.hubConnection();
+        const hubProxy = connection.createHubProxy('chatHub');
+    </script>
     <script src="JS/layout.js"></script>
 
     <script>

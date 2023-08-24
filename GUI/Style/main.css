@@ -163,7 +163,7 @@ html {
 }
 
 .sidebar {
-    width: 200px;
+    width: 160px;
     background-color: #fbfaff;
     transition: all 0.5s ease;
     border-right: 1px solid var(--border-color);
@@ -594,7 +594,6 @@ html {
 .chat__search-box__btn {
     position: absolute;
     right: 0;
-
     top: 50%;
     width: 30px;
     height: 30px;
@@ -1639,6 +1638,8 @@ body::-webkit-scrollbar {
     border-radius: 50% !important;
     border: 1px solid gray;
     flex-shrink: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .userInfor-SendMail button {
@@ -1926,7 +1927,6 @@ body::-webkit-scrollbar {
 .search_avatar_image {
     border-radius: 50%;
     height: 25px;
-    width: 25px;
 }
 
 .search_user_table > a > div {

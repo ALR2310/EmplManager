@@ -37,11 +37,21 @@
                     <input id="file-upload" onchange="previewImageFile(event)" type="file" accept="image/*" />
                 </div>
                 <%--<button type="button" onclick="uploadFile()">Tải Lên hình ảnh</button>--%>
+
+                <%--<asp:Label ID="Label1" runat="server" Text="Đây là Label"></asp:Label>
+                <button type="button" onclick="test1()">Code Test 1</button>
+                <button type="button" onclick="test2()">Code Test 2</button>--%>
             </div>
+
+
 
             <div class="userInfor-body">
                 <div class="userInfor-body-title">
+
                     <h3>Thông Tin Tài Khoản</h3>
+
+
+
                     <button type="button" id="btnEdit" onclick="handleShowEditUser(this)">Chỉnh Sửa</button>
                     <div class="userInfor-body-title-action hide">
                         <button type="button" id="btnSave" onclick="handleUpdateData()">Lưu Lại</button>
@@ -141,6 +151,13 @@
     </div>
 
     <script>
+
+
+
+
+
+
+
         //Upload Avatar
         function uploadFile() {
             var fileInput = document.getElementById('file-upload');
