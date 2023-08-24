@@ -14,13 +14,11 @@ const handleInput = () => {
     }
     else {
         chatInput.parentNode.style.height = "auto";
-        chatInput.parentNode.style.height = `${chatInput.scrollHeight+29}px`;
+        chatInput.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
     }
 }
 chatInput.addEventListener("keyup", handleInput);
 
-
-//js hiệu ứng mở đống thanh search trong chat-box
 
 
 //js cho nút dropdown trong ellips chat
@@ -36,7 +34,7 @@ function toggleDropdown(event, str) {
 
     emojiShowMenu.style.display = "none";
     dropdownMenu.style.display = str;
- 
+
 }
 
 function toggleEmoji(event, str) {
@@ -61,7 +59,7 @@ function outsideClickHandler(event) {
             dropdownMenu.style.display = 'none';
 
         }
-   
+
     }
 }
 

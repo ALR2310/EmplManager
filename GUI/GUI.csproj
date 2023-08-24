@@ -298,6 +298,8 @@
     <Content Include="Images\Avatar\Uploads\U_16.png" />
     <Content Include="Images\Avatar\Uploads\U_18.jpg" />
     <Content Include="Images\Avatar\Uploads\U_18.png" />
+    <Content Include="Images\Flags\us.jpg" />
+    <Content Include="Images\Flags\vi.png" />
     <Content Include="Images\Icons\archive.svg" />
     <Content Include="Images\Icons\plus.svg" />
     <Content Include="Images\Icons\right_arrow.svg" />

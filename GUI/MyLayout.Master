@@ -75,6 +75,45 @@
                         </div>
                     </div>
                     <div class="nav-menu__right">
+
+                        <div class="language" onclick="toggleLanguageShow(event, 'block')" onmouseleave="toggleLanguageShow(event, 'none')">
+                            <div class="language_image">
+                                <img id="imgLguae" src="Images/Flags/vi.png" />
+                            </div>
+                            <div class="language_content">
+                                <a onclick="selectLanguage('vi')">
+                                    <img src="Images/Flags/vi.png" />
+                                    <p>Tiếng Việt</p>
+                                </a>
+
+                                <a onclick="selectLanguage('us')">
+                                    <img src="Images/Flags/us.jpg" />
+                                    <p>Tiếng Anh</p>
+                                </a>
+                                <box class="boxhidentop"></box>
+                                <box class="boxhidenbottom"></box>
+                            </div>
+                        </div>
+
+                        <script>
+                            function selectLanguage(language) {
+                                if(language == "vi") {
+                                    $("#imgLguae").attr("src", "Images/Flags/vi.png");
+                                } else if(language == "us") {
+                                    $("#imgLguae").attr("src", "Images/Flags/us.jpg");
+                                }
+                            }
+
+                            function toggleLanguageShow(event, str) {
+                                var language_content = event.currentTarget.querySelector('.language_content');
+
+                                if(!language_content) { return;}
+
+                                language_content.style.display = str;
+                            }
+                        </script>
+
+
                         <div class="dropdown">
                             <div class="dropdownuser">
                                 <div class="dropimg">
@@ -270,6 +309,6 @@
 
     <script>
 
-</script>
+    </script>
 </body>
 </html>
