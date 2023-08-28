@@ -114,7 +114,7 @@
                             <div class="Notification-container hide">
                                 <div class="Notification-header">
                                     <p>Thông báo</p>
-                                    <a href="#">Chưa đọc (3)</a>
+                                    <a href="thong-bao">Chưa đọc (3)</a>
                                 </div>
 
                                 <div class="Notification-content">
@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="Notification-footer">
-                                    <a href="#">
+                                    <a href="thong-bao">
                                         <i class="fa-solid fa-circle-arrow-right"></i>
                                         Xem thêm...
                                     </a>
@@ -199,7 +199,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="#">
+                            <a class="sidebar-item__link" href="thong-bao">
                                 <i class="fa-solid fa-envelope"></i>
                                 <div class="speech left">
                                     Thông báo
