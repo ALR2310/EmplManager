@@ -146,30 +146,6 @@
                             </div>
                         </div>
 
-                        <script>
-                            // Lấy phần tử Notification-icon và Notification-container
-                            var notificationIcon = document.querySelector('.Notification-icon');
-                            var notificationContainer = document.querySelector('.Notification-container');
-
-                            // Thêm sự kiện click vào Notification-icon
-                            notificationIcon.addEventListener('click', function () {
-                                notificationContainer.classList.toggle('hide');
-                                limitText(document.querySelector('.Noti-desc p'), 60);
-                            });
-
-                            // Thêm sự kiện click chuột ra ngoài phạm vi của Notification
-                            document.addEventListener('click', function (event) {
-                                var isClickInsideNotification = notificationContainer.contains(event.target) || notificationIcon.contains(event.target);
-                                if (!isClickInsideNotification) {
-                                    notificationContainer.classList.add('hide');
-                                }
-                            });
-                        </script>
-
-
-
-
-
                         <div class="dropdown">
                             <div class="dropdownuser">
                                 <div class="dropimg">

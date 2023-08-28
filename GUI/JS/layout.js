@@ -149,9 +149,6 @@ function limitText(element, limit) {
     }
 }
 
-// Gọi limitText Giới hạn đến 60 ký tự
-/*limitText(document.querySelector('.Noti-desc p'), 60);*/
-
 
 //function chuyển đổi darkmode
 function toggleDarkmode(action) {
@@ -166,3 +163,24 @@ function toggleDarkmode(action) {
         divLight.classList.add("hide");
     }
 }
+
+
+
+
+// Lấy phần tử Notification-icon và Notification-container
+var notificationIcon = document.querySelector('.Notification-icon');
+var notificationContainer = document.querySelector('.Notification-container');
+
+// Thêm sự kiện click vào Notification-icon
+notificationIcon.addEventListener('click', function () {
+    notificationContainer.classList.toggle('hide');
+    limitText(document.querySelector('.Noti-desc p'), 60);
+});
+
+// Thêm sự kiện click chuột ra ngoài phạm vi của Notification
+document.addEventListener('click', function (event) {
+    var isClickInsideNotification = notificationContainer.contains(event.target) || notificationIcon.contains(event.target);
+    if (!isClickInsideNotification) {
+        notificationContainer.classList.add('hide');
+    }
+});
