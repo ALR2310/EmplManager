@@ -1852,7 +1852,7 @@ textarea {
 }
 #MediaMenu {
     width: 100%;
-    height: calc(100% + 1px);
+    height: calc(100% + 2px);
     position: absolute;
     bottom: 50%;
     transform: translateY(calc(50% - 1px));
@@ -1862,7 +1862,7 @@ textarea {
     animation-timing-function: cubic-bezier(.23,1.02,.08,.99);
     animation-fill-mode: forwards;
     display: none;
-    backdrop-filter: blur(0px);
+    backdrop-filter: blur(2px);
 }
 
     #MediaMenu > #ImagePreview {
@@ -1880,7 +1880,7 @@ textarea {
         #MediaMenu > #ImagePreview > img {
             max-height: 80vh;
             max-width: 100%;
-          
+            min-height: 50vh;
         }
         #MediaMenu > #ImagePreview > a {
             color: white;
@@ -1900,11 +1900,11 @@ textarea {
 
     0% {
         opacity: 0;
-        backdrop-filter: blur(0px);
+
     }
     100% {
         opacity: 1;
-        backdrop-filter: blur(2px);
+ 
         
     }
 
@@ -1950,18 +1950,65 @@ textarea {
     justify-content: space-between;
     align-items: center;
     user-select: none;
+    
 }
-   
+
     #MediaMenuArrows > img {
         aspect-ratio: 1/1;
         width: 10%;
-        height: 10%;
+        height: 100%;
         cursor: pointer;
+        opacity: .15;
+        animation-delay: .1s;
+        animation-timing-function: cubic-bezier(.47,.77,.62,.97);
+        animation-duration: .15s;
+        animation-direction: reverse;
+        animation-fill-mode: backwards;
+
     }
 
-    #MediaMenuArrows > img:hover{
-        transform:scale(1.1);
+        #MediaMenuArrows > img:hover {
+            animation-direction: normal !important;
+            animation-fill-mode: forwards !important;
+            animation-delay: 0s !important;
+            animation-name: MenuArrows_Anim2 !important;
+        }
+
+.arrow_activating {
+    animation-name: MenuArrows_Anim_Active !important;
+    animation-duration: .5s !important;
+    animation-fill-mode: forwards !important;
+    animation-delay: 0 !important;
+}
+@keyframes MenuArrows_Anim_Active{
+ 
+    50% {
+        opacity: .95;
+        transform: scale(1.35) translateY(1%);
     }
+    100% {
+        opacity: .95;
+        transform: scale(1.5) translateY(0%);
+    }
+}
+@keyframes MenuArrows_Anim2 {
+    0% {
+
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: .95;
+    }
+}
+
+@keyframes MenuArrows_Anim{
+ 
+    100% {
+        transform: scale(1.5);
+        opacity: .95;
+    }
+}
 
 
 .search_option_menu {
@@ -2094,4 +2141,48 @@ div, span {
 #search_last_span::-webkit-scrollbar {
     
     display: none;
+}
+
+.mess_content > a {
+    color: #a2d3ff;
+}   
+.mess_content > a:hover{
+    text-decoration: revert;
+}
+
+.time-gap{
+    user-select:none;
+    cursor: auto;
+}
+.titles > div > img{
+    user-select: none;
+}
+.footer-wrapper{
+    max-height: 200px;
+}
+#txt_Message {
+    height: 100%;
+    padding: 10px;
+}
+#txt_Message_wrapper {
+    min-height: 100%;
+    max-height: 100%;
+    width: 0px; /* hacky fix, ngl*/
+}
+
+#txt_Message > a {
+    color: #0093ff;
+    text-decoration: none;
+}
+
+#txt_Message > a:hover {
+
+    text-decoration: auto;
+}
+
+
+#txt_Message:empty::before {
+    content: "Nhập nội dung tin nhắn";
+    display: block;
+    opacity: .6;
 }

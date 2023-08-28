@@ -8,7 +8,7 @@ $(function () {
     hubProxy.on('MessageEdited', async function (json_data) {
         console.log(json_data);
         json_data = JSON.parse(json_data);
-        $(`.chat-main__item[message_id=${json_data.id}]`).find(".mess_content:not(.toRemove)").html(json_data.new_content + edited_span);
+        $(`.chat-main__item[message_id=${json_data.id}]`).find(".mess_content:not(.toRemove)").html(wrapLinksIntoAnchorTags(json_data.new_content) + edited_span);
     });
     hubProxy.on('ReceiveMessage', async function (message) {
 

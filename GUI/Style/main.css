@@ -721,23 +721,26 @@ html {
     height: 85px;
 }
 
+.footer-wrapper > div::-webkit-scrollbar {
+    display: none;
+}
+.footer-wrapper > div {
+    font-family: 'Roboto', sans-serif;
+    resize: none;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    outline: none;
 
-    .chat-footer textarea {
-        font-family: 'Roboto', sans-serif;
-        flex: 1;
-        min-height: 40px;
-        resize: none;
-        overflow: hidden;
-        border-radius: 5px;
-        border: 1px solid var(--border-color);
-        outline: none;
-        padding: 10px;
-        margin-right: 10px;
-        background-color: #f6f6f9;
-        box-sizing: border-box; /* Add this line */
-        height: 100%;
-        font-size: 15px;
-    }
+    margin-right: 10px;
+    background-color: #f6f6f9;
+    box-sizing: border-box;
+    font-size: 15px;
+    overflow-y: hidden;
+    word-wrap: break-word;
+    height: 100%;
+    flex: 1 0 50%;
+}
 
 .btn-chat-footer {
     width: 100px;

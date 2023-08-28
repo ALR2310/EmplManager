@@ -36,6 +36,10 @@ const DayStrList = {
     1: "Hôm qua",
     2: "Hôm kia"
 }
+const wrapLinksIntoAnchorTags = function (text) {
+    const regex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(regex, '<a href="$&" target="_blank">$&</a>');
+}
 
 
 var CurrentTime = new Date();
@@ -145,8 +149,8 @@ const FormatFuncs = {
         var messStatus = message.Status;
         let content =  messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
-                message.Content;
-     
+                wrapLinksIntoAnchorTags(message.Content);
+        
     
         return message.Edited ? content + " " : content;
 
@@ -635,7 +639,7 @@ const DeleteMessage = function (data) {
 
 var sendCD = false;
 function sendMessage() {
-    if (sendCD || inputElement.val() == "" && fileArray.length == 0) { return; }
+    if (sendCD || inputElement.text() == "" && fileArray.length == 0) { return; }
     sendCD = true;
 
     const formData = new FormData();
@@ -643,7 +647,7 @@ function sendMessage() {
         console.log(file);
         formData.append(`file${index}`, file);
     })
-    formData.append('content', inputElement.val());
+    formData.append('content', inputElement.text());
     console.log(formData.getAll('content'));
 
 
@@ -663,8 +667,9 @@ function sendMessage() {
             console.error(error);
         }
     });
-
-    inputElement.val("");
+        
+    inputElement.text("");
+    inputElement.parent().css("height","40px");
     fileArray = [];
     $("#uploadPreview").empty();
     setTimeout(function () { inputElement.blur(); }, 1);

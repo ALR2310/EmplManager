@@ -65,8 +65,8 @@
     <div id="MediaMenu">
 
         <div id="MediaMenuArrows">
-            <img id="MediaMenuLeftArrow" onclick="SwitchImage(-1)" src="Images/Icons/left_arrow.svg" />
-            <img id="MediaMenuRightArrow" onclick="SwitchImage(1)" src="Images/Icons/right_arrow.svg" />
+            <img id="MediaMenuLeftArrow" onmouseenter="addArrowAnimName(event);" onclick="SwitchImage(-1)" src="Images/Icons/left_arrow.svg" />
+            <img id="MediaMenuRightArrow" onmouseenter="addArrowAnimName(event);" onclick="SwitchImage(1)" src="Images/Icons/right_arrow.svg" />
         </div>
 
         <div id="ImagePreview">
@@ -285,7 +285,10 @@
 
                         <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none; outline-width: 0;">
                             <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
-                        <textarea id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></textarea>
+                        <div id="txt_Message_wrapper">
+                            <div contenteditable="true" id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></div>
+                        
+                        </div>
                         <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                             Gửi
                                 <i class="fa-solid fa-paper-plane"></i>
@@ -571,7 +574,12 @@
 
 
         }
+        let placehold_div = $("<div>");
         function handleKeyPress(event) {
+            let element = $(event.target);
+   
+           
+
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
 
@@ -742,7 +750,8 @@
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
-            if (isAlphaNumeric || key == "Enter" && document.activeElement != inputElement[0]) {
+          
+            if (isAlphaNumeric && !event.ctrlKey || key == "Enter" && document.activeElement != inputElement[0]) {
                 inputElement.focus();
             }
         });
