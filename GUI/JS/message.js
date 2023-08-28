@@ -16,6 +16,7 @@ function applyRange(absolute_position,target_container) {
     console.log(absolute_position);
     let focusing_element = null;
     for (let element of target_container.contents().toArray()) {
+        if (element.textContent == null) { continue; }
         const text_length = element.textContent.length
 
         if (absolute_position <= text_length) {
@@ -45,16 +46,19 @@ function applyRange(absolute_position,target_container) {
 }
 
 
-chatInput.addEventListener('input', function (event) {
-
+ function onMessageEdit(event) {
+     const jqr_Input = $(event.target);
     selection = document.getSelection();
     const old_range = document.getSelection().getRangeAt(0);
     const old_start = old_range.startOffset;
     const old_end = old_range.endOffset;
     const old_ele = old_range.startContainer;
+     console.log(document.getSelection().anchorNode.parentElement);
 
+     if (old_ele == event.target) { return; }
+  
 
-    let array = chatInput_jqr.contents().toArray();
+    let array = jqr_Input.contents().toArray();
     const pos = array.indexOf(old_ele);
 
     
@@ -70,24 +74,35 @@ chatInput.addEventListener('input', function (event) {
     absolute_position += old_start;
 
     setTimeout(function () {
+   
+
+        if ($(old_ele).find("br").length != 0) {
+            return;
+        }
+        let raw_text = convertHtmlToRawText(jqr_Input.html());
+
+        console.log(raw_text);
 
 
-        let raw_text = chatInput_jqr.text();
+        let converted = wrapLinksIntoAnchorTags(raw_text,true);
+
+        jqr_Input.html(converted);
 
 
+        if (jqr_Input.contents().length == 0) { return; }
+        applyRange(absolute_position, jqr_Input);
 
-        let converted = wrapLinksIntoAnchorTags(raw_text);
-
-        chatInput_jqr.html(converted);
-
-
-        if (chatInput_jqr.contents().length == 0) { return; }
-        applyRange(absolute_position, chatInput_jqr);
     }, 0);
 
 
 
-    if (chatInput.textContent.trim() === "")    {
+  
+ 
+
+}
+chatInput_jqr.on('input', onMessageEdit);
+chatInput.addEventListener('input', function () {
+    if (chatInput.textContent.trim() === "") {
         chatInput.parentNode.style.height = "40px";
         chatInput.parentNode.parentNode.style.height = "40px";
     }
@@ -97,11 +112,18 @@ chatInput.addEventListener('input', function (event) {
         chatInput.parentNode.style.height = `${chatInput.scrollHeight}px`;
         chatInput.parentNode.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
     }
- 
-
 });
 
+const replaceLastOccurrence = function(inputString, oldSubstring, newSubstring) {
+    const lastIndexOfSubstring = inputString.lastIndexOf(oldSubstring);
 
+    if (lastIndexOfSubstring === -1) {
+        return inputString; // Substring not found
+    }
+
+    const newString = inputString.substring(0, lastIndexOfSubstring) + newSubstring + inputString.substring(lastIndexOfSubstring + oldSubstring.length);
+    return newString;
+}
 
 //js hiệu ứng mở đống thanh search trong chat-box
 
@@ -175,4 +197,28 @@ function addArrowAnimName(e) {
     $(e.target).css("animation-name", "MenuArrows_Anim");
   
 
+}
+
+
+function convertHtmlToRawText(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const textNodes = [];
+
+    function traverse(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            textNodes.push(node.nodeValue);
+        } else if (node.nodeName === 'BR') {
+            textNodes.push('<br>');
+        } else {
+            for (const childNode of node.childNodes) {
+                traverse(childNode);
+            }
+        }
+    }
+
+    traverse(doc.body);
+
+    return textNodes.join('');
 }

@@ -36,9 +36,9 @@ const DayStrList = {
     1: "Hôm qua",
     2: "Hôm kia"
 }
-const wrapLinksIntoAnchorTags = function (text) {
+const wrapLinksIntoAnchorTags = function (text,editable) {
     const regex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(regex, '<a href="$&" target="_blank">$&</a>');
+    return text.replace(regex, `<a href="$&" target="_blank" contenteditable=${editable ? "true" : "false"}>$&</a>`);
 }
 
 

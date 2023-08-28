@@ -187,18 +187,19 @@ namespace GUI
         [System.Web.Services.WebMethod]
         public static string EditMessage(string content, int id)
         {
+
+
             Debug.WriteLine("Editing Message...");
             try
             {
                 InlineQuery query = new InlineQuery();
-                query.Execute($"exec edit_message @content = N'{content}', @mes_id = {id};");
+                query.Execute($"exec edit_message @content = N'{content.Replace("'", "''")}', @mes_id = {id};");
                 hubContext.Clients.All.MessageEdited($"{{ \"id\": {id}, \"new_content\": \"{content}\"}}");
 
                 return success_str;
             }
-            catch (Exception e)
+            catch 
             {
-                Debug.WriteLine(e);
                 HttpContext.Current.Response.StatusCode = 500;
                 return failed_str;
             }

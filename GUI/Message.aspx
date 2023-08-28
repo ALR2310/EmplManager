@@ -628,6 +628,7 @@
             toggleEmoji(e, 'none');
         }
         const mess_edit_template = $('#editTemplate');
+
         mess_edit_template.attr("id", "");
         mess_edit_template.addClass("editingBoxes");
         var delete_cd = {};
@@ -669,8 +670,10 @@
             let editing_boxes = mess_edit_template.clone();
             let editing = editing_boxes.find("p");
 
-
-            editing.text(mess_content.text().replaceAll("(đã chỉnh sửa)", "").trim());
+            editing.on('input', onMessageEdit);
+           
+            const editing_str_content = replaceLastOccurrence(mess_content.text().trim(),"(đã chỉnh sửa)","");
+            editing.html(wrapLinksIntoAnchorTags(editing_str_content));
 
             editing.focus();
 
