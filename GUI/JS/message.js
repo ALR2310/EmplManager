@@ -10,32 +10,42 @@ var chatInput = document.querySelector("#txt_Message")
 
 var chatInput_jqr = $(chatInput);
 
-let selection = null;
-let old_content_pos = 0;
-function applyRange(old_start, old_end) {
-    console.log(old_content_pos);
-    let old_container = chatInput_jqr.contents()[old_content_pos];
-    console.log(old_container.nodeName);
-    if (old_container.nodeName != "#text") {
-        old_container = $(old_container).contents()[0];
+
+function applyRange(absolute_position,target_container) {
+
+    console.log(absolute_position);
+    let focusing_element = null;
+    for (let element of target_container.contents().toArray()) {
+        const text_length = element.textContent.length
+
+        if (absolute_position <= text_length) {
+
+            focusing_element = element;
+            break;
+        }
+        absolute_position -= text_length;
     }
-
+    if (focusing_element.nodeName != "#text") {
+        focusing_element = $(focusing_element).contents()[0];
+    }
     let new_range = document.createRange();
-    new_range.selectNodeContents(old_container);
+
+        new_range.selectNodeContents(focusing_element);
+
+    console.log(absolute_position);
+        new_range.setStart(focusing_element, absolute_position);
+        new_range.setEnd(focusing_element, absolute_position);
 
 
-    console.log(old_start);
-    console.log(old_end)
-    new_range.setStart(old_container, old_start);
-    new_range.setEnd(old_container, old_end);
 
+        selection.removeAllRanges();
+        selection.addRange(new_range);
 
-
-    selection.removeAllRanges();
-    selection.addRange(new_range);
+  
 }
-let old_text_length = 0;
-chatInput.addEventListener('input', function () {
+
+
+chatInput.addEventListener('input', function (event) {
 
     selection = document.getSelection();
     const old_range = document.getSelection().getRangeAt(0);
@@ -43,8 +53,21 @@ chatInput.addEventListener('input', function () {
     const old_end = old_range.endOffset;
     const old_ele = old_range.startContainer;
 
-    old_content_pos = chatInput_jqr.contents().toArray().indexOf(old_ele);
 
+    let array = chatInput_jqr.contents().toArray();
+    const pos = array.indexOf(old_ele);
+
+    
+    const new_array = array.slice(0, pos);
+
+    array = null;
+ 
+    let absolute_position = 0;
+    for (ele of new_array) {
+        absolute_position += ele.textContent.length;
+    }
+
+    absolute_position += old_start;
 
     setTimeout(function () {
 
@@ -58,8 +81,8 @@ chatInput.addEventListener('input', function () {
         chatInput_jqr.html(converted);
 
 
-
-        applyRange(old_start, old_end);
+        if (chatInput_jqr.contents().length == 0) { return; }
+        applyRange(absolute_position, chatInput_jqr);
     }, 0);
 
 

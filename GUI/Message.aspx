@@ -385,7 +385,7 @@
 
 
         </div>
-        <div id="editTemplate" style="display: none;">
+        <div id="editTemplate" spellcheck="false"  style="display: none;">
 
             <p class="mess_content toRemove" onkeypress="handleKeyPress(event)" contenteditable="true"></p>
             <button class="btn btn-chat-footer" onclick="sendEdit(event); return false;">
@@ -654,7 +654,7 @@
 
                 },
                 method: "POST",
-                body: `{content: '${edited_text}',id: ${parent_ele.attr('message_id')}}`
+                body: JSON.stringify({ content: edited_text, id: parent_ele.attr('message_id') })
             });
         }
         function mess_edit() {

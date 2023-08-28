@@ -196,8 +196,9 @@ namespace GUI
 
                 return success_str;
             }
-            catch
+            catch (Exception e)
             {
+                Debug.WriteLine(e);
                 HttpContext.Current.Response.StatusCode = 500;
                 return failed_str;
             }
