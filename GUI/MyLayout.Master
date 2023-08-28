@@ -95,23 +95,79 @@
                             </div>
                         </div>
 
+                        <div class="darkmode">
+                            <div id="darkmode-moon" onclick="toggleDarkmode('dark')">
+                                <i class="fa-regular fa-moon-stars"></i>
+                            </div>
+
+                            <div id="darkmode-sun" class="hide" onclick="toggleDarkmode()">
+                                <i class="fa-regular fa-sun-cloud"></i>
+                            </div>
+                        </div>
+
+                        <div class="Notification">
+                            <div class="Notification-icon">
+                                <i class="fa-regular fa-bell"></i>
+                                <span>5</span>
+                            </div>
+
+                            <div class="Notification-container hide">
+                                <div class="Notification-header">
+                                    <p>Thông báo</p>
+                                    <a href="#">Chưa đọc (3)</a>
+                                </div>
+
+                                <div class="Notification-content">
+                                    <a href="#" class="Noti-Item">
+                                        <div class="Noti-userAvatar">
+                                            <img src="Images/avatar-1.jpg" />
+                                        </div>
+
+                                        <div class="Noti-desc">
+                                            <h5>Lê Thanh An</h5>
+                                            <p>
+                                                Nó sẽ có vẻ giống như tiếng Anh đơn giản. Là một người bạn Cambridge hoài nghi của tôi, người phương Tây.
+                                            </p>
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                1 giờ trước
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="Notification-footer">
+                                    <a href="#">
+                                        <i class="fa-solid fa-circle-arrow-right"></i>
+                                        Xem thêm...
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <script>
-                            function selectLanguage(language) {
-                                if(language == "vi") {
-                                    $("#imgLguae").attr("src", "Images/Flags/vi.png");
-                                } else if(language == "us") {
-                                    $("#imgLguae").attr("src", "Images/Flags/us.jpg");
+                            // Lấy phần tử Notification-icon và Notification-container
+                            var notificationIcon = document.querySelector('.Notification-icon');
+                            var notificationContainer = document.querySelector('.Notification-container');
+
+                            // Thêm sự kiện click vào Notification-icon
+                            notificationIcon.addEventListener('click', function () {
+                                notificationContainer.classList.toggle('hide');
+                                limitText(document.querySelector('.Noti-desc p'), 60);
+                            });
+
+                            // Thêm sự kiện click chuột ra ngoài phạm vi của Notification
+                            document.addEventListener('click', function (event) {
+                                var isClickInsideNotification = notificationContainer.contains(event.target) || notificationIcon.contains(event.target);
+                                if (!isClickInsideNotification) {
+                                    notificationContainer.classList.add('hide');
                                 }
-                            }
-
-                            function toggleLanguageShow(event, str) {
-                                var language_content = event.currentTarget.querySelector('.language_content');
-
-                                if(!language_content) { return;}
-
-                                language_content.style.display = str;
-                            }
+                            });
                         </script>
+
+
+
 
 
                         <div class="dropdown">
@@ -208,7 +264,6 @@
 
                     <div class="modalSetting_content">
                         <h2>Cài Đặt</h2>
-
                         <div class="modalSetting_content_radioGroup">
                             <h6>Bố Cục</h6>
                             <div class="radioGroup_Container">
@@ -261,40 +316,9 @@
                                     <label for="stDark">Tối</label>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
-
-                <script>
-                    var clickCount = 0;
-                    function ToggleModalSettings() {
-                        var MdSetting = document.querySelector(".modalSetting");
-                        var MdOverlay = document.querySelector(".modalSetting_overlay");
-                        var MdContent = document.querySelector(".modalSetting_content");
-
-                        clickCount++;
-
-                        if (clickCount % 2 === 1) {
-
-                            MdSetting.classList.remove("hide");
-                            setTimeout(function () {
-                                MdOverlay.style.transform = "translateX(0)";
-                                MdContent.style.transform = "translateX(0)";
-                            }, 100);
-                        } else {
-                            MdOverlay.style.transform = "translateX(150%)";
-                            MdContent.style.transform = "translateX(100%)";
-                            setTimeout(function () {
-                                MdSetting.classList.add("hide");
-                            }, 400);
-                        }
-                    }
-                </script>
-
-
-
             </div>
         </main>
     </form>
@@ -306,9 +330,5 @@
         const hubProxy = connection.createHubProxy('chatHub');
     </script>
     <script src="JS/layout.js"></script>
-
-    <script>
-
-    </script>
 </body>
 </html>

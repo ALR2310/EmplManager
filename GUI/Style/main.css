@@ -15,6 +15,8 @@ html {
     --border-color: #ddd;
     --owner-mess-color: 89, 144, 206;
     --primary-color-component: 81, 86, 190;
+    --light-hover-color: #f8f9fa;
+    --text-gray-color: #74788d;
 }
 
 
@@ -57,16 +59,17 @@ html {
 }
 
 .language {
-    margin-right: 15px;
     position: relative;
+    padding: 0 10px;
 }
 
 .language_image {
-    width: 40px;
-    height: 20px;
+    width: 30px;
+    height: 17px;
     display: flex;
     justify-items: center;
-    justify-content: center
+    justify-content: center;
+    cursor: pointer;
 }
 
     .language_image img {
@@ -77,8 +80,8 @@ html {
 
 .language_content {
     position: absolute;
-    top: 126%;
-    right: 2px;
+    top: 135%;
+    right: 16%;
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 10px;
@@ -110,13 +113,159 @@ html {
         }
 
         .language_content a img {
-            width: 30px;
+            width: 25px;
             height: 15px;
         }
 
         .language_content a p {
             margin-left: 5px;
         }
+
+.darkmode {
+    padding: 0 10px;
+}
+
+    .darkmode div {
+        font-size: 20px;
+        width: 25px;
+    }
+
+.Notification {
+    padding: 0 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.Notification-icon {
+    position: relative;
+}
+
+    .Notification-icon span {
+        position: absolute;
+        background-color: #fd625e;
+        border-radius: 45%;
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        color: white;
+        font-size: 13px;
+        bottom: 90%;
+        left: 70%;
+    }
+
+    .Notification-icon i {
+        font-size: 20px;
+    }
+
+.Notification-container {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 5%;
+    top: 125%;
+    border-radius: 10px;
+    width: 330px;
+    z-index: 10;
+    cursor: auto;
+}
+
+.Noti-Item,
+.Notification-header,
+.Notification-footer {
+    padding: 15px;
+}
+
+.Notification-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .Notification-header p {
+        font-size: 14px;
+    }
+
+    .Notification-header a {
+        cursor: pointer;
+        font-size: 12px;
+        color: gray;
+        text-decoration: underline;
+    }
+
+.Notification-content {
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+    .Notification-content::-webkit-scrollbar {
+        width: 5px;
+    }
+
+.Noti-Item {
+    display: flex;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .Noti-Item:hover {
+        background-color: #f8f9fa;
+    }
+
+.Noti-userAvatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+    .Noti-userAvatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        flex-shrink: 1;
+    }
+
+.Noti-desc {
+    flex: 1;
+}
+
+    .Noti-desc h5 {
+        font-size: 14px;
+        font-weight: 500;
+        color: black;
+        font-family: 'Sedgwick Ave Display', cursive;
+    }
+
+    .Noti-desc p {
+        color: #74788d;
+        font-size: 13px;
+        font-weight: 300
+    }
+
+    .Noti-desc span {
+        color: #74788d;
+        font-size: 12px;
+    }
+
+.Notification-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+}
+
+    .Notification-footer a {
+        cursor: pointer;
+        color: var(--primary-color);
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+        .Notification-footer a:hover {
+            opacity: 0.8;
+        }
+
+
 
 .search-box {
     width: 230px;
@@ -156,6 +305,7 @@ html {
 
 .dropdown {
     position: relative;
+    padding: 0 0 0 10px;
 }
 
 .dropbtn {
@@ -1378,6 +1528,10 @@ body::-webkit-scrollbar {
     height: 100%;
 }
 
+    .employee-body-list::-webkit-scrollbar {
+        width: 7px;
+    }
+
 .employee-body-card {
     background-color: #f7f8f9;
     width: 240px;
@@ -1580,7 +1734,7 @@ body::-webkit-scrollbar {
         font-size: 14px;
         color: var(--text-color);
         font-weight: normal;
-        text-wrap: nowrap;
+        white-space: nowrap;
         overflow: hidden;
     }
 
