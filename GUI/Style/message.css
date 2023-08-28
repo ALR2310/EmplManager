@@ -2170,15 +2170,14 @@ div, span {
     width: 0px; /* hacky fix, ngl*/
 }
 
-#txt_Message > a {
+#txt_Message > a, .link_highlight {
     color: #0093ff;
     text-decoration: none;
 }
 
-#txt_Message > a:hover {
-
-    text-decoration: auto;
-}
+    #txt_Message > a:hover, .link_highlight:hover {
+        text-decoration: auto;
+    }
 
 
 #txt_Message:empty::before {

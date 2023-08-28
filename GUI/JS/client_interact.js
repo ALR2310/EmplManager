@@ -37,8 +37,13 @@ const DayStrList = {
     2: "Hôm kia"
 }
 const wrapLinksIntoAnchorTags = function (text,editable) {
-    const regex = /(https?:\/\/[^\s]+)/g;
+    const regex = /(https?:\/\/(?!<br>)[^\s]+)/g;
     return text.replace(regex, `<a href="$&" target="_blank" contenteditable=${editable ? "true" : "false"}>$&</a>`);
+}
+
+const wrapLinksIntoHighlightTags = function (text, editable) {
+    const regex = /(https?:\/\/(?!<br>)[^\s]+)/g;
+    return text.replace(regex, `<span class="link_highlight">$&</span>`);
 }
 
 

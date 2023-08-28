@@ -11,7 +11,7 @@ var chatInput = document.querySelector("#txt_Message")
 var chatInput_jqr = $(chatInput);
 
 
-function applyRange(absolute_position, target_container) {
+function applyRange(absolute_position,target_container) {
     console.log(target_container);
     console.log(absolute_position);
     let focusing_element = null;
@@ -31,64 +31,48 @@ function applyRange(absolute_position, target_container) {
         focusing_element = $(focusing_element).contents()[0];
     }
 
-
+    
     let new_range = document.createRange();
 
-    new_range.selectNodeContents(focusing_element);
+        new_range.selectNodeContents(focusing_element);
 
     console.log(focusing_element.textContent.length);
     console.log(absolute_position);
 
-    new_range.setStart(focusing_element, absolute_position);
-    new_range.setEnd(focusing_element, absolute_position);
+        new_range.setStart(focusing_element, absolute_position);
+        new_range.setEnd(focusing_element, absolute_position);
 
 
 
-    selection.removeAllRanges();
-    selection.addRange(new_range);
+        selection.removeAllRanges();
+        selection.addRange(new_range);
 
-
+  
 }
 
-function moveBreaks(jqr_Input) {
-    let found_br = false;
-    for (anchor of jqr_Input.children("a")) {
-        if ($(anchor).find("br").length != 0 && $(anchor).contents().length > 2) {
 
-            let array = $(anchor).contents().toArray()
-            array = array.slice(1, array.length);
-            $(array).insertAfter(anchor);
-            $(array[0]).focus();
-            found_br = true;
-        }
-    }
-    return found_br;
-}
-
-async function onMessageEdit(event) {
+function onMessageEdit(event) {
 
     const jqr_Input = $(event.target);
-    const old_breaks = jqr_Input.children("br").length;
-
     selection = document.getSelection();
     const old_range = document.getSelection().getRangeAt(0);
     const old_start = old_range.startOffset;
     const old_end = old_range.endOffset;
     const old_ele = old_range.startContainer;
 
-    if (moveBreaks(jqr_Input)) return;
 
-    if (old_ele == event.target) { return; }
 
+     if (old_ele == event.target) { return; }
+  
 
     let array = jqr_Input.contents().toArray();
     const pos = array.indexOf(old_ele);
 
-
+    
     const new_array = array.slice(0, pos);
 
     array = null;
-
+ 
     let absolute_position = 0;
     for (ele of new_array) {
         absolute_position += ele.textContent.length;
@@ -97,39 +81,32 @@ async function onMessageEdit(event) {
     absolute_position += old_start;
 
 
-    const new_breaks = jqr_Input.children("br").length;
-    if (new_breaks != old_breaks) { return; }
-    if ($(old_ele).find("br").length != 0) {
-        return;
-    }
-    let raw_text = convertHtmlToRawText(jqr_Input.html());
+
+        if ($(old_ele).find("br").length != 0) {
+            return;
+        }
+        let raw_text = convertHtmlToRawText(jqr_Input.html());
+     
+     
+        console.log(raw_text);
+
+
+        let converted = wrapLinksIntoAnchorTags(raw_text,true);
+
+        jqr_Input.html(converted);
+    applyRange(absolute_position, jqr_Input);
+
+        if (jqr_Input.contents().length == 0) { return; }
+        setTimeout(function () {
+            applyRange(absolute_position, jqr_Input);
+        },0);
+
+
+
+
 
   
-
-
-    if (jqr_Input.contents().length == 0) { console.log("returned"); return; }
-    applyRange(absolute_position, jqr_Input);
-
-    console.log(raw_text);
-    let converted = wrapLinksIntoAnchorTags(raw_text, true);
-    jqr_Input.html(converted);
-    moveBreaks(jqr_Input);
-    applyRange(absolute_position, jqr_Input);
-    setTimeout(function () {
-        moveBreaks(jqr_Input);
-        applyRange(absolute_position, jqr_Input);
-    }, 0);
  
-
-    
-
-
-
-
-
-
-
-
 
 }
 chatInput_jqr.on('input', onMessageEdit);
@@ -146,7 +123,7 @@ chatInput.addEventListener('input', function () {
     }
 });
 
-const replaceLastOccurrence = function (inputString, oldSubstring, newSubstring) {
+const replaceLastOccurrence = function(inputString, oldSubstring, newSubstring) {
     const lastIndexOfSubstring = inputString.lastIndexOf(oldSubstring);
 
     if (lastIndexOfSubstring === -1) {
@@ -173,7 +150,7 @@ function toggleDropdown(event, str) {
 
     emojiShowMenu.style.display = "none";
     dropdownMenu.style.display = str;
-
+ 
 }
 
 function toggleEmoji(event, str) {
@@ -198,7 +175,7 @@ function outsideClickHandler(event) {
             dropdownMenu.style.display = 'none';
 
         }
-
+   
     }
 }
 
@@ -227,7 +204,7 @@ function handleSearchChat(event) {
 
 function addArrowAnimName(e) {
     $(e.target).css("animation-name", "MenuArrows_Anim");
-
+  
 
 }
 
