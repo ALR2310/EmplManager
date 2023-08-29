@@ -10,106 +10,109 @@ var chatInput = document.querySelector("#txt_Message")
 
 var chatInput_jqr = $(chatInput);
 
+function applyRange(container, absolute_pos) {
+    let range = document.createRange();
+    let elements = container.contents();
 
-function applyRange(absolute_position,target_container) {
-    console.log(target_container);
-    console.log(absolute_position);
-    let focusing_element = null;
-    console.log(target_container.contents().toArray());
-    for (let element of target_container.contents().toArray()) {
-        if (element.textContent == null) { continue; }
-        const text_length = element.textContent.length
 
-        if (absolute_position <= text_length) {
+    for (ele of elements) {
 
-            focusing_element = element;
-            break;
+        if (ele.textContent == null) { continue; }
+
+
+        if (ele.textContent.length < absolute_pos) {
+            absolute_pos -= ele.textContent.length;
+            console.log(absolute_pos);
+            continue;
         }
-        absolute_position -= text_length;
-    }
-    if (focusing_element.nodeName != "#text") {
-        focusing_element = $(focusing_element).contents()[0];
-    }
+        console.log(absolute_pos);
+        if (ele.nodeName == "BR") { return; }
+        if (ele.nodeName != "#text") { ele = ele.firstChild; }
 
-    
-    let new_range = document.createRange();
+        range.setStart(ele, absolute_pos);
 
-        new_range.selectNodeContents(focusing_element);
-
-    console.log(focusing_element.textContent.length);
-    console.log(absolute_position);
-
-        new_range.setStart(focusing_element, absolute_position);
-        new_range.setEnd(focusing_element, absolute_position);
-
-
-
+        let selection = document.getSelection();
         selection.removeAllRanges();
-        selection.addRange(new_range);
+        selection.addRange(range);
 
-  
+        return;
+
+
+
+    }
+
+
 }
+function focusOnBr(br) {
+
+    let range = document.createRange();
+    range.setStart(br[0], 0);
+
+    let select = document.getSelection();
+    select.removeAllRanges();
+    select.addRange(range);
+}
+function cleanBr(chatInput_jqr) {
+    for (ele of chatInput_jqr.children("span")) {
+        ele = $(ele);
+        if (ele.find("br").length > 1) {
+            ele.find("br")[1].remove();
+            focusOnBr($("<br>").insertAfter(ele));
+
+            return true;
+        }
+    }
+    return false;
+}
+
 
 
 function onMessageEdit(event) {
 
-    const jqr_Input = $(event.target);
-    selection = document.getSelection();
-    const old_range = document.getSelection().getRangeAt(0);
-    const old_start = old_range.startOffset;
-    const old_end = old_range.endOffset;
-    const old_ele = old_range.startContainer;
+
+
+    let chatInput_jqr = $(event.target);
+    if (cleanBr(chatInput_jqr)) { return; };
+    let old_range = document.getSelection().getRangeAt(0);
+
+    if (old_range.startContainer == event.target) { return; }
+    let old_start = old_range.startOffset;
+    let old_ele = old_range.startContainer;
 
 
 
-     if (old_ele == event.target) { return; }
-  
+    let array = chatInput_jqr.contents().toArray().filter(function () { return this.nodeName != "br" });
 
-    let array = jqr_Input.contents().toArray();
-    const pos = array.indexOf(old_ele);
+    let absolute_pos = 0;
 
-    
-    const new_array = array.slice(0, pos);
 
-    array = null;
- 
-    let absolute_position = 0;
-    for (ele of new_array) {
-        absolute_position += ele.textContent.length;
+    for (ele of array) {
+        if (!ele.textContent) { continue; }
+
+        if (ele === old_ele || $(ele).find(old_ele).length != 0) { break; }
+        absolute_pos = absolute_pos + ele.textContent.length;
+
     }
 
-    absolute_position += old_start;
+    absolute_pos = absolute_pos + old_start;
+
+
+    let converted = wrapLinksIntoHighlightTags(chatInput_jqr.html().replaceAll("<span>", "").replaceAll("</span> ", ""));
 
 
 
-        if ($(old_ele).find("br").length != 0) {
-            return;
-        }
-        let raw_text = convertHtmlToRawText(jqr_Input.html());
-     
-     
-        console.log(raw_text);
+    chatInput_jqr.html(converted);
 
 
-    let converted = wrapLinksIntoHighlightTags(raw_text,true);
-
-        jqr_Input.html(converted);
-    applyRange(absolute_position, jqr_Input);
-
-        if (jqr_Input.contents().length == 0) { return; }
-        setTimeout(function () {
-            applyRange(absolute_position, jqr_Input);
-        },0);
+    applyRange(chatInput_jqr, absolute_pos);
 
 
 
-
-
-  
- 
 
 }
-chatInput_jqr.on('input', onMessageEdit);
+
+
+//chatInput_jqr.on('input', onMessageEdit);
 chatInput.addEventListener('input', function () {
     if (chatInput.textContent.trim() === "") {
         chatInput.parentNode.style.height = "40px";
@@ -119,15 +122,14 @@ chatInput.addEventListener('input', function () {
 
 
         chatInput.parentNode.parentNode.style.height = "auto";
-    
+
         chatInput.parentNode.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
 
-        chatInput.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
 
     }
 });
 
-const replaceLastOccurrence = function(inputString, oldSubstring, newSubstring) {
+const replaceLastOccurrence = function (inputString, oldSubstring, newSubstring) {
     const lastIndexOfSubstring = inputString.lastIndexOf(oldSubstring);
 
     if (lastIndexOfSubstring === -1) {
@@ -206,7 +208,7 @@ function handleSearchChat(event) {
 
 function addArrowAnimName(e) {
     $(e.target).css("animation-name", "MenuArrows_Anim");
-  
+
 
 }
 

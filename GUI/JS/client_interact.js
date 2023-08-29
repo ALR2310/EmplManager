@@ -41,9 +41,9 @@ const wrapLinksIntoAnchorTags = function (text,editable) {
     return text.replace(regex, `<a href="$&" target="_blank" contenteditable=${editable ? "true" : "false"}>$&</a>`);
 }
 
-const wrapLinksIntoHighlightTags = function (text, editable) {
-    const regex = /(https?:\/\/(?!<br>)[^\s]+)/g;
-    return text.replace(regex, `<span class="link_highlight">$&</span>`);
+const wrapLinksIntoHighlightTags = function (text) {
+    const pattern = /(https?:\/\/(?!<br>)[^\s]+)/g;
+    return text.replace(pattern, `<span>$&</span>`);
 }
 
 
@@ -331,7 +331,7 @@ function handleMediaResize(file_ele) {
 
     let old_height = file_ele.prop('offsetHeight');
 
-    file_ele.resize(function () {
+    file_ele.on("load resize",function () {
 
         if (scroll.scrollTop < file_ele[0].closest(".chat-main__item").offsetTop) {
             old_height = this.offsetHeight;
@@ -653,7 +653,8 @@ function sendMessage() {
         formData.append(`file${index}`, file);
     })
     formData.append('content', inputElement.text());
-    console.log(formData.getAll('content'));
+    console.log(inputElement.text());
+
 
 
     $.ajax({

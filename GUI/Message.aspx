@@ -673,7 +673,7 @@
             editing.on('input', onMessageEdit);
            
             const editing_str_content = replaceLastOccurrence(mess_content.text().trim(),"(đã chỉnh sửa)","");
-            editing.html(wrapLinksIntoAnchorTags(editing_str_content));
+            editing.html(editing_str_content);
 
             editing.focus();
 

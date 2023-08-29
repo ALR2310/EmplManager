@@ -343,7 +343,7 @@ btnSearch.addEventListener('mousedown', function () {
     this.parentElement.classList.toggle('open');
 
     this.parentElement.classList.remove("not_loaded");
-    search_option_menu.css("visibility", this.parentElement.classList.contains("open") ? "visible" : "");
+    search_option_menu.css("visibility", this.parentElement.classList.contains("open") ? "" : "");
 
 
     if (counter === 0) {
@@ -569,7 +569,7 @@ function display_fetched_users(parentEle,searchingName) {
 
         cloned_field.on("click", function () {
             let search_option = editingSpan.getAttribute("option_name");
-            console.log(search_option);
+            specific_option_menu["from"].css("visibility", "hidden");
             if (!(search_option == "from" || search_option == "mention")) return;
             editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + user.DisplayName;
             applySOV(editingSpan,search_option,null,id);
@@ -734,7 +734,7 @@ $("#search_last_span").on("focus click", function () {
       
         search_option_menu.css("visibility", "hidden");
     }
-    if (search_last_span.text().length == 0 ) {
+    if (search_last_span.text().length && Object.keys(parseSearchOption()).length ==     0) {
         search_option_menu.css("visibility", "unset");
     }
 

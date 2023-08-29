@@ -1346,6 +1346,7 @@ textarea {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    z-index: 0;
 }
 
 .fake_chat:hover {
@@ -2134,7 +2135,7 @@ div, span {
 
 }
 
-#search-box > div + #search_last_span {
+#search-box > div + #search_last_span::before {
     opacity: 0;
 }
 
@@ -2163,6 +2164,8 @@ div, span {
 #txt_Message {
     height: 100%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 #txt_Message_wrapper {
     min-height: 100%;
@@ -2170,12 +2173,12 @@ div, span {
     width: 0px; /* hacky fix, ngl*/
 }
 
-#txt_Message > a, .link_highlight {
+#txt_Message > a, #txt_Message > span {
     color: #0093ff;
     text-decoration: none;
 }
 
-    #txt_Message > a:hover, .link_highlight:hover {
+    #txt_Message > a:hover, #txt_Message > span:hover {
         text-decoration: auto;
     }
 
