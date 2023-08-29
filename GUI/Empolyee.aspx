@@ -442,7 +442,7 @@
                 <img src="Images/images1.png" />
             </div>
 
-            <h3>Xin Lỗi, Bạn Không Có Quyền Truy Cập Trang Web Này</h3>
+            <h3>Xin Lỗi, Bạn Không Có Quyền Truy Cập Trang Này</h3>
             <p>Tài khoản bạn không có quyền truy cập trang này, để truy cập trang này vui lòng liên hệ với Administrator</p>
             <button type="button" onclick="goBack()">Quay Lại Trang Trước</button>
         </div>

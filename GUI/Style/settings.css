@@ -1,0 +1,98 @@
+:root {
+    /*dark color*/
+    --dark0-color: #212129;
+    --dark1-color: #323949;
+    --dark2-color: #3d3e51;
+    --dark3-color: #40445a;
+    --dark4-color: #4c5265;
+    --dark5-color: #2b2c32;
+    /*brand color*/
+    --brand0-color: #5156be;
+    --brand1-color: #000e52;
+    --brand2-color: #5370b4;
+}
+
+/*Genaral*/
+.modalSetting_content {
+    width: 320px
+}
+
+.darkmode .modalSetting_content {
+    background-color: var(--dark5-color);
+}
+
+    .darkmode .modalSetting_content h2 {
+        color: var(--primary-color);
+    }
+
+
+.darkmode .modalSetting_content_radioGroup h6,
+.darkmode .MdradioGroup label {
+    color: white;
+}
+
+
+/*Dark NavBar*/
+.topbar-dark.nav {
+    background-color: var(--dark0-color);
+}
+
+.topbar-dark #lblUserName {
+    color: white;
+}
+
+.topbar-dark .btn-menuleft {
+    color: white;
+}
+
+.topbar-dark .dropdown-content {
+    background-color: var(--dark4-color);
+}
+
+    .topbar-dark .dropdown-content a {
+        color: white;
+    }
+
+        .topbar-dark .dropdown-content a:hover {
+            background-color: var(--dark2-color);
+        }
+
+/*Brand NavBar*/
+.topbar-brand.nav {
+    background-color: var(--brand0-color);
+}
+
+.topbar-brand .search-box__btn {
+    background-color: var(--brand1-color);
+}
+
+.topbar-brand #lblUserName {
+    color: white;
+}
+
+.topbar-brand .btn-menuleft {
+    color: white;
+}
+
+
+/*Dark SideBar*/
+.sidebar-dark.sidebar {
+    background: var(--dark5-color);
+}
+
+.sidebar-dark .sidebar-item__link {
+    color: white;
+}
+
+/*Brand SideBar*/
+.sidebar-brand.sidebar {
+    background-color: var(--brand2-color);
+}
+
+.sidebar-brand .sidebar-item__link {
+    color: var(--brand1-color);
+}
+
+    .sidebar-brand .sidebar-item__link.active > i {
+        color: white;
+    }

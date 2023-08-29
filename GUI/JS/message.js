@@ -91,7 +91,7 @@ function onMessageEdit(event) {
         console.log(raw_text);
 
 
-        let converted = wrapLinksIntoAnchorTags(raw_text,true);
+    let converted = wrapLinksIntoHighlightTags(raw_text,true);
 
         jqr_Input.html(converted);
     applyRange(absolute_position, jqr_Input);
@@ -116,10 +116,14 @@ chatInput.addEventListener('input', function () {
         chatInput.parentNode.parentNode.style.height = "40px";
     }
     else {
-        chatInput.parentNode.style.height = "auto";
+
+
         chatInput.parentNode.parentNode.style.height = "auto";
-        chatInput.parentNode.style.height = `${chatInput.scrollHeight}px`;
+    
         chatInput.parentNode.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
+
+        chatInput.parentNode.style.height = `${chatInput.scrollHeight + 29}px`;
+
     }
 });
 
@@ -133,8 +137,6 @@ const replaceLastOccurrence = function(inputString, oldSubstring, newSubstring) 
     const newString = inputString.substring(0, lastIndexOfSubstring) + newSubstring + inputString.substring(lastIndexOfSubstring + oldSubstring.length);
     return newString;
 }
-
-//js hiệu ứng mở đống thanh search trong chat-box
 
 
 //js cho nút dropdown trong ellips chat
@@ -150,7 +152,7 @@ function toggleDropdown(event, str) {
 
     emojiShowMenu.style.display = "none";
     dropdownMenu.style.display = str;
- 
+
 }
 
 function toggleEmoji(event, str) {
@@ -175,7 +177,7 @@ function outsideClickHandler(event) {
             dropdownMenu.style.display = 'none';
 
         }
-   
+
     }
 }
 

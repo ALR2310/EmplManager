@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
     <link rel="stylesheet" href="Style/layout.css" />
+    <link rel="stylesheet" href="Style/settings.css" />
     <link rel="icon" href="Images/sweetsoft-logo.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -59,7 +60,7 @@
     </script>
     <form id="form1" runat="server">
         <header>
-            <nav class="nav">
+            <nav class="nav ">
                 <div class="nav__menu">
                     <div class="nav-menu__left">
                         <button type="button" class="btn-menuleft">
@@ -74,6 +75,77 @@
                         </div>
                     </div>
                     <div class="nav-menu__right">
+
+                        <div class="language" onclick="toggleLanguageShow(event, 'block')" onmouseleave="toggleLanguageShow(event, 'none')">
+                            <div class="language_image">
+                                <img id="imgLguae" src="Images/Flags/vi.png" />
+                            </div>
+                            <div class="language_content">
+                                <a onclick="selectLanguage('vi')">
+                                    <img src="Images/Flags/vi.png" />
+                                    <p>Tiếng Việt</p>
+                                </a>
+
+                                <a onclick="selectLanguage('us')">
+                                    <img src="Images/Flags/us.jpg" />
+                                    <p>Tiếng Anh</p>
+                                </a>
+                                <box class="boxhidentop"></box>
+                                <box class="boxhidenbottom"></box>
+                            </div>
+                        </div>
+
+                        <div class="darkmode">
+                            <div id="darkmode-moon" onclick="toggleDarkmode('dark')">
+                                <i class="fa-regular fa-moon-stars"></i>
+                            </div>
+
+                            <div id="darkmode-sun" class="hide" onclick="toggleDarkmode()">
+                                <i class="fa-regular fa-sun-cloud"></i>
+                            </div>
+                        </div>
+
+                        <div class="Notification">
+                            <div class="Notification-icon">
+                                <i class="fa-regular fa-bell"></i>
+                                <span>5</span>
+                            </div>
+
+                            <div class="Notification-container hide">
+                                <div class="Notification-header">
+                                    <p>Thông báo</p>
+                                    <a href="thong-bao">Chưa đọc (3)</a>
+                                </div>
+
+                                <div class="Notification-content">
+                                    <a href="#" class="Noti-Item">
+                                        <div class="Noti-userAvatar">
+                                            <img src="Images/avatar-1.jpg" />
+                                        </div>
+
+                                        <div class="Noti-desc">
+                                            <h5>Lê Thanh An</h5>
+                                            <p>
+                                                Nó sẽ có vẻ giống như tiếng Anh đơn giản. Là một người bạn Cambridge hoài nghi của tôi, người phương Tây.
+                                            </p>
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                1 giờ trước
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="Notification-footer">
+                                    <a href="thong-bao">
+                                        <i class="fa-solid fa-circle-arrow-right"></i>
+                                        Xem thêm...
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <div class="dropdown">
                             <div class="dropdownuser">
                                 <div class="dropimg">
@@ -95,10 +167,10 @@
 
         <main>
             <div class="container">
-                <div class="sidebar sidebar-close">
+                <div class="sidebar sidebar-close ">
                     <ul class="sidebar-list">
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="#">
+                            <a class="sidebar-item__link" href="trang-chu">
                                 <i class="fa-solid fa-house"></i>
                                 <div class="speech left">
                                     Trang Chủ
@@ -127,7 +199,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-item__link" href="#">
+                            <a class="sidebar-item__link" href="thong-bao">
                                 <i class="fa-solid fa-envelope"></i>
                                 <div class="speech left">
                                     Thông báo
@@ -168,7 +240,6 @@
 
                     <div class="modalSetting_content">
                         <h2>Cài Đặt</h2>
-
                         <div class="modalSetting_content_radioGroup">
                             <h6>Bố Cục</h6>
                             <div class="radioGroup_Container">
@@ -182,65 +253,58 @@
                                 </div>
                             </div>
 
-                            <h6>Chế độ bố cục</h6>
+                            <h6 class="mrgn">Chế độ bố cục</h6>
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
-                                    <input id="stLight" type="radio" name="stLayoutMode" checked="checked" />
+                                    <input id="stLayoutLight" type="radio" name="stLayoutMode" checked="checked" />
                                     <label for="stLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
-                                    <input id="stDark" type="radio" name="stLayoutMode" />
+                                    <input id="stLayoutDark" type="radio" name="stLayoutMode" />
                                     <label for="stDark">Tối</label>
                                 </div>
                             </div>
 
+                            <h6 class="mrgn">Màu thanh trên</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarLight" type="radio" name="stTopbar" checked="checked" />
+                                    <label for="stLight">Sáng</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarDark" type="radio" name="stTopbar" />
+                                    <label for="stDark">Tối</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stTopbarBrand" type="radio" name="stTopbar" />
+                                    <label for="stBrand">Thương Hiệu</label>
+                                </div>
+                            </div>
+
+                            <h6 class="mrgn">Màu thanh bên</h6>
+                            <div class="radioGroup_Container">
+                                <div class="MdradioGroup">
+                                    <input id="stSideBarLight" type="radio" name="stSideBar" checked="checked" />
+                                    <label for="stLight">Sáng</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stSideBarDark" type="radio" name="stSideBar" />
+                                    <label for="stDark">Tối</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-
-                <script>
-                    var clickCount = 0;
-                    function ToggleModalSettings() {
-                        var MdSetting = document.querySelector(".modalSetting");
-                        var MdOverlay = document.querySelector(".modalSetting_overlay");
-                        var MdContent = document.querySelector(".modalSetting_content");
-
-                        clickCount++;
-
-                        if (clickCount % 2 === 1) {
-
-                            MdSetting.classList.remove("hide");
-                            setTimeout(function () {
-                                MdOverlay.style.transform = "translateX(0)";
-                                MdContent.style.transform = "translateX(0)";
-                            }, 100);
-                        } else {
-                            MdOverlay.style.transform = "translateX(150%)";
-                            MdContent.style.transform = "translateX(100%)";
-                            setTimeout(function () {
-                                MdSetting.classList.add("hide");
-                            }, 400);
-                        }
-                    }
-                </script>
-
-
-
             </div>
         </main>
     </form>
 
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
-        <script>
-            const connection = $.hubConnection();
-            const hubProxy = connection.createHubProxy('chatHub');
-        </script>
-    <script src="JS/layout.js"></script>
-
     <script>
-
-</script>
+        const connection = $.hubConnection();
+        const hubProxy = connection.createHubProxy('chatHub');
+    </script>
+    <script src="JS/layout.js"></script>
 </body>
 </html>

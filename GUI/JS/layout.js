@@ -41,35 +41,35 @@ var latest_message_id
 $(async function () {
 
     if (page != "tin-nhan") {
-    await fetchUser(0, true); 
-    console.log("Outside message page detected, setting up notification connection..");
+        await fetchUser(0, true);
+        console.log("Outside message page detected, setting up notification connection..");
 
-    hubProxy.on('ReceiveMessage', async function (message) {
-        console.log("Recieved new message");
-        $("#Message_Notif").css("visibility", "unset");
-    });
-    function connect() {
-        connection.start()
-            .done(function () {
-                console.log('SignalR connection started.');
-            })
-            .fail(function (error) {
+        hubProxy.on('ReceiveMessage', async function (message) {
+            console.log("Recieved new message");
+            $("#Message_Notif").css("visibility", "unset");
+        });
+        function connect() {
+            connection.start()
+                .done(function () {
+                    console.log('SignalR connection started.');
+                })
+                .fail(function (error) {
 
-                console.log('Error starting SignalR connection:', error);
-                setTimeout(connect, 1000);
-            });
+                    console.log('Error starting SignalR connection:', error);
+                    setTimeout(connect, 1000);
+                });
 
 
-    }
-    connect();
-    latest_message_id = await $.ajax({
-        url: 'Message.aspx/GetTotalMessage',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
+        }
+        connect();
+        latest_message_id = await $.ajax({
+            url: 'Message.aspx/GetTotalMessage',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
 
-    });
-       
+        });
+
         latest_message_id = JSON.parse(latest_message_id.d).Id;
 
 
@@ -77,7 +77,7 @@ $(async function () {
         if (latest_message_id > getLastReadMessage().Id)
             $("#Message_Notif").css("visibility", "unset");
 
-}
+    }
 
 })
 
@@ -92,3 +92,95 @@ const getLastReadMessage = function () {
 
     return raw_data;
 }
+
+
+
+
+
+
+
+//function đóng mở modal setting
+var clickCount = 0;
+function ToggleModalSettings() {
+    var MdSetting = document.querySelector(".modalSetting");
+    var MdOverlay = document.querySelector(".modalSetting_overlay");
+    var MdContent = document.querySelector(".modalSetting_content");
+
+    clickCount++;
+
+    if (clickCount % 2 === 1) {
+
+        MdSetting.classList.remove("hide");
+        setTimeout(function () {
+            MdOverlay.style.transform = "translateX(0)";
+            MdContent.style.transform = "translateX(0)";
+        }, 100);
+    } else {
+        MdOverlay.style.transform = "translateX(150%)";
+        MdContent.style.transform = "translateX(100%)";
+        setTimeout(function () {
+            MdSetting.classList.add("hide");
+        }, 400);
+    }
+}
+
+
+//function chọn ngôn ngữ
+function selectLanguage(language) {
+    if (language == "vi") {
+        $("#imgLguae").attr("src", "Images/Flags/vi.png");
+    } else if (language == "us") {
+        $("#imgLguae").attr("src", "Images/Flags/us.jpg");
+    }
+}
+function toggleLanguageShow(event, str) {
+    var language_content = event.currentTarget.querySelector('.language_content');
+
+    if (!language_content) { return; }
+
+    language_content.style.display = str;
+}
+
+//function giới hạn văn bản hiển thị
+function limitText(element, limit) {
+    var text = element.innerText;
+    if (text.length > limit) {
+        element.innerText = text.slice(0, limit) + '...';
+    }
+}
+
+
+//function chuyển đổi darkmode
+function toggleDarkmode(action) {
+    divDark = document.getElementById("darkmode-moon");
+    divLight = document.getElementById("darkmode-sun");
+
+    if (action == "dark") {
+        divDark.classList.add("hide");
+        divLight.classList.remove("hide");
+    } else {
+        divDark.classList.remove("hide");
+        divLight.classList.add("hide");
+    }
+}
+
+
+
+
+// Lấy phần tử Notification-icon và Notification-container
+var notificationIcon = document.querySelector('.Notification-icon');
+var notificationContainer = document.querySelector('.Notification-container');
+
+// Thêm sự kiện click vào Notification-icon
+notificationIcon.addEventListener('click', function () {
+    notificationContainer.classList.toggle('hide');
+    limitText(document.querySelector('.Noti-desc p'), 60);
+});
+
+// Thêm sự kiện click chuột ra ngoài phạm vi của Notification
+document.addEventListener('click', function (event) {
+    var isClickInsideNotification = notificationContainer.contains(event.target) || notificationIcon.contains(event.target);
+    if (!isClickInsideNotification) {
+        notificationContainer.classList.add('hide');
+    }
+});

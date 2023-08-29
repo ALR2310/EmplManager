@@ -1352,10 +1352,8 @@ function checkCurrentUserType() {
         success: function (response) {
             var ModalCheckUser = document.querySelector(".ModalCheckUser");
             if (response.d == true) {
-                console.log("Tài khoản này có quyền");
                 ModalCheckUser.classList.add("hide");
             } else {
-                console.log("Tài khoản này không có quyền")
                 ModalCheckUser.classList.remove("hide");
             }
         },
