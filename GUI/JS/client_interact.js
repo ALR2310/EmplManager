@@ -151,10 +151,12 @@ const FormatFuncs = {
         return !!message.Edited && (message.Status == null || message.Status == 1) && message.Edited == true ? "italic mess_edited" : "display_none";
     },
     '_deleted_or_content_': async function (message) {
+
+        console.log(message.Content.replaceAll("\n","<br>"));
         var messStatus = message.Status;
         let content =  messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
-                wrapLinksIntoAnchorTags(message.Content);
+                wrapLinksIntoAnchorTags(message.Content.replaceAll("\n", "<br>"));
         
     
         return message.Edited ? content + " " : content;
@@ -423,6 +425,7 @@ async function renderMessage(message, isNewMessage) {
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
 
+    
     for (const [replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
 
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
@@ -644,7 +647,7 @@ const DeleteMessage = function (data) {
 
 var sendCD = false;
 function sendMessage() {
-    if (sendCD || inputElement.text() == "" && fileArray.length == 0) { return; }
+    if (sendCD || inputElement.html() == "" && fileArray.length == 0) { return; }
     sendCD = true;
 
     const formData = new FormData();
@@ -652,7 +655,7 @@ function sendMessage() {
         console.log(file);
         formData.append(`file${index}`, file);
     })
-    formData.append('content', inputElement.text());
+    formData.append('content', inputElement.html().replaceAll("<br>","\n"));
     console.log(inputElement.text());
 
 
