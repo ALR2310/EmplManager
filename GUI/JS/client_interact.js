@@ -333,7 +333,7 @@ function handleMediaResize(file_ele) {
 
     let old_height = file_ele.prop('offsetHeight');
 
-    file_ele.on("load resize",function () {
+    file_ele.on("resize",function () {
 
         if (scroll.scrollTop < file_ele[0].closest(".chat-main__item").offsetTop) {
             old_height = this.offsetHeight;

@@ -4,6 +4,58 @@
     opacity: .7;
 }
 
+#datepicker {
+    background: #84b4e7;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 50px .2fr 1fr 10fr;
+}
+#datepicker > grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+    #datepicker > grid > span {
+        text-align: center;
+        padding: 5px;
+        color:white;
+    }
+.date_title {
+    color: gray;
+    color: #c9ebff !important;
+}
+#datepicker > hr {
+    height: 1px;
+    /* margin: 5px; */
+    border-color: #aacefb;
+    border-style: solid;
+}
+#month_changer {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 1.35em;
+}
+#month_year {
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%,45%);
+    position: absolute;
+}
+#before_table::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+
 .titles {
     display: flex;
     align-items: center;

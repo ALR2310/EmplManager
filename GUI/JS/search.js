@@ -39,7 +39,7 @@ async function renderSearchMessage(id, message) {
 
     if (!!message.Uploaded_Files) {
         message.Uploaded_Files = JSON.parse(message.Uploaded_Files);
-        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"),true);
+        loadAttachments(message.Uploaded_Files, message_ele.find(".chat-main__item"), true);
 
 
     }
@@ -59,7 +59,9 @@ async function renderSearchMessage(id, message) {
     chat_main__item.find(".emoji_list").remove();
     chat_main__item.append("<div class='fc_jump_to'>đi tới tin nhắn</div>");
     chat_main__item.on("click", async function (event) {
-        if (event.target.tagName.toLowerCase() == "img") return;
+
+        let tag_name = event.target.tagName.toLowerCase();
+        if (tag_name == "img" || tag_name == "video") return;
         loading_circle.addClass("loader_show");
 
         await requestJsonData(Number(id) + 11, false, "1");
@@ -302,7 +304,7 @@ function search_box_input() {
     open_btn.css('display', 'unset');
     search_cancel_btn.css('display', 'none');
     search_message_list.css("display", "none");
-    search_option_menu.css("visibility", "visible");
+   
     console.log("Showing Search Option Menu");
 }
 
@@ -317,6 +319,8 @@ let should_focus = false;
 
 search_cancel_btn.on('mousedown', function (event) {
 
+    last_input_txt = null;
+    last_query = null;
     searching_options = __default_searching_options;
     search_bxb.children("div").remove();
     should_focus = search_bxb.is(":focus");
@@ -341,9 +345,9 @@ btnSearch.addEventListener('mousedown', function () {
     if (clckcd) return; clckcd = true;
     setTimeout(function () { clckcd = false; }, 100);
     this.parentElement.classList.toggle('open');
-
+    console.log("open bar");
     this.parentElement.classList.remove("not_loaded");
-    search_option_menu.css("visibility", this.parentElement.classList.contains("open") ? "" : "");
+    search_option_menu.css("visibility", this.parentElement.classList.contains("open") ? "visible" : "");
 
 
     if (counter === 0) {
@@ -372,9 +376,12 @@ $(document).on("click", function (event) {
     var ele = $(event.target);
 
     if (ele.closest("#MediaMenu").length != 0) return;
-    if (ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
+
+    console.log(ele.closest(".chat__search-box"))
+    if (
+        ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
         ele.closest("#chat-search__list").length == 0 && ele.closest(".search_option_menu").length == 0) {
-        if (search_option_menu.css("visibility") != "hidden") {
+        if (search_option_menu.css("visibility") != "hidden" && ele.closest(".chat__search-box").length == 0 ) {
             search_option_menu.css("visibility", "hidden");
         }
         else {
@@ -506,6 +513,8 @@ const search_option_text = {
     "from": "Từ:",
     "mention": "Đề cập:",
     "has": "Có:",
+    "before": "Trước ngày:",
+    "after": "Sau ngày:"
 }
 
 var current_search_options = {
@@ -598,7 +607,9 @@ const text_change_function = {
 const specific_option_menu = {
     "has": $("#has_table"),
     "from": $("#from_table"),
+    "before": $("#before_table")
 }
+
 const __default_searching_options = {
     has: {
         link: 0,
@@ -729,11 +740,7 @@ function hide_option_menus() {
 }
     
 $("#search_last_span").on("focus click", function () {
-    console.log(closed_main_option_menu);
-    if (closed_main_option_menu) {
-      
-        search_option_menu.css("visibility", "hidden");
-    }
+   
     if (search_last_span.text().length && Object.keys(parseSearchOption()).length ==     0) {
         search_option_menu.css("visibility", "unset");
     }
@@ -765,6 +772,7 @@ function applySOV(editingSpan, search_option, new_text, rv) {
 
 }
 search_option_menu.find("a").on("click", function (event) {
+    search_last_span.text("");
     console.log(event.target);
     let click_event = $(event.target);
     const search_option = click_event.attr("search_option");
@@ -855,14 +863,21 @@ search_option_menu.find("a").on("click", function (event) {
     element.click();
 });
 open_btn.on("click", function () {
+
     search_last_span.focus();
     search_last_span.click();
 });
+var last_span_focused = false;
+search_last_span.on("focus blur", function () {
+    last_span_focused = document.activeElement.nodeName != "BUTTON" || document.activeElement == search_last_span[0];
+})
 function closeSearchOption_Main(event) {
     closed_main_option_menu = true;
     event.preventDefault();
     event.stopPropagation();
-    console.log("Brah");
+    if (last_span_focused) {
+        search_last_span.focus();
+    }
     search_option_menu.css("visibility", "hidden");
    
 }

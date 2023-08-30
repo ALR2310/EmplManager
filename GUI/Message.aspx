@@ -22,10 +22,10 @@
                 <ul class="list-emoji">
 
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                        <ContentTemplate>
+                        <contenttemplate>
 
                             <asp:Repeater ID="ListEmoji_Repeater" runat="server">
-                                <ItemTemplate>
+                                <itemtemplate>
 
                                     <li class="item-emoji">
                                         <a runat="server" id="RemoveEmoji" commandargument='<%# Eval("ID") %>' onserverclick="RemoveEmoji_ServerClick">
@@ -46,10 +46,10 @@
                                         </a>
                                     </li>
 
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:Repeater>
 
-                        </ContentTemplate>
+                        </contenttemplate>
                     </asp:UpdatePanel>
 
 
@@ -90,7 +90,7 @@
                 <div class="chat__search">
 
                     <div class="chat__search-box not_loaded">
-                        <div  data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
+                        <div data-placeholder="Tìm kiếm" id="search-box" onkeydown="preventDefault(event);" autocomplete="off" class="chat__search-box__input">
                             <span id="search_last_span" onkeydown="checkCursorPos(event); setEmptyStr(event);" contenteditable="true" autocomplete='off' spellcheck='false' autocorrect='off'></span>
 
                         </div>
@@ -195,21 +195,43 @@
                         <div id="search_option" class="search_option_menu">
                             <span>Tùy chọn Tìm Kiếm
 
-                                <button type="button" style="" onClick="closeSearchOption_Main(event)" class="chat__search-box__btn">
-                            <i class="fa-solid fa-cancel-icon"></i>
-                        </button>
+                                <button type="button" style="" onclick="closeSearchOption_Main(event)" class="chat__search-box__btn">
+                                    <i class="fa-solid fa-cancel-icon"></i>
+                                </button>
                             </span>
                             <hr />
                             <a search_option="from">Từ: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
-                            <a search_option="mention">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
+                            <a search_option="mention" style="display: none;">Đề cập: <span>Người Dùng</span><img src="Images\Icons\plus.svg" /></a>
                             <a search_option="has">Có: <span>Tệp, Link, Video, Hình Ảnh</span><img src="Images\Icons\plus.svg" /></a>
+                            <a search_option="before">Trước ngày: <span>Được gửi trước Ngày/Tháng/Năm</span><img src="Images\Icons\plus.svg" /></a>
+                            <a search_option="after">Sau ngày: <span>Được gửi sau Ngày/Tháng/Năm</span><img src="Images\Icons\plus.svg" /></a>
+
                         </div>
                         <div id="from_table" class="search_option_menu search_user_table">
                             <span>Tin nhắn đến từ người dùng: </span>
                             <hr>
-                           
                         </div>
-                        
+                        <div style="visibility: unset;" id="before_table" class="search_option_menu search_user_table">
+                            <span>Tin nhắn được gửi trước ngày: </span>
+                   
+                            <div id="datepicker">
+                                <div id="month_changer">
+                                    <span id="month_year">Tháng 8 Năm 2023</span>
+                                </div>
+                                         <hr>
+                                <grid>
+                                    <span class="date_title">Hai</span>
+                                    <span class="date_title">Ba</span>
+                                    <span class="date_title">Tư</span>
+                                    <span class="date_title">Năm</span>
+                                    <span class="date_title">Sáu</span>
+                                    <span class="date_title">Bảy</span>
+                                    <span class="date_title">CN</span>
+
+                                </grid>
+                                 
+                            </div>
+                        </div>
                     </div>
                     <ul class="chat-main__list">
                     </ul>
@@ -232,7 +254,7 @@
 
                                             <div class="_is_admin_or_not_">
                                                 <img style="height: 20px" src="Images/Icons/admin.svg" />
-                                                <div class="speech bottom" >
+                                                <div class="speech bottom">
                                                     Quản Trị Viên
                                                 </div>
                                             </div>
@@ -287,7 +309,7 @@
                             <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
                         <div id="txt_Message_wrapper">
                             <div contenteditable="true" id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></div>
-                        
+
                         </div>
                         <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">
                             Gửi
@@ -385,7 +407,7 @@
 
 
         </div>
-        <div id="editTemplate" spellcheck="false"  style="display: none;">
+        <div id="editTemplate" spellcheck="false" style="display: none;">
 
             <p class="mess_content toRemove" onkeypress="handleKeyPress(event)" contenteditable="true"></p>
             <button class="btn btn-chat-footer" onclick="sendEdit(event); return false;">
@@ -433,20 +455,20 @@
 
         let scroll_raw_object = $(".chat-main__list")[0];
         let scroll_object = $(scroll_raw_object);
-  
+
         console.log(scroll_object);
         let last_scroll_size = scroll_object.prop('scrollHeight');
         let cd = false;
 
         function resize(offset) {
 
-        
-            scroll_raw_object.scrollTo(0,scroll_raw_object.scrollTop+offset);
+
+            scroll_raw_object.scrollTo(0, scroll_raw_object.scrollTop + offset);
 
 
-            
+
         }
-     
+
     </script>
     <script>
         $("#loading_circle").addClass("loader_show");
@@ -479,7 +501,7 @@
         }
 
 
-     
+
         const setLastRenderedMessageCache = function (message_id) {
             setLastReadMessage(message_id);
             if (lastRenderedMessage == null) {
@@ -496,7 +518,7 @@
         }
 
 
-      
+
 
         const search_box = $("#search-box");
 
@@ -577,8 +599,8 @@
         let placehold_div = $("<div>");
         function handleKeyPress(event) {
             let element = $(event.target);
-   
-           
+
+
 
             if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
@@ -671,8 +693,8 @@
             let editing = editing_boxes.find("p");
 
             editing.on('input', onMessageEdit);
-           
-            const editing_str_content = replaceLastOccurrence(mess_content.text().trim(),"(đã chỉnh sửa)","");
+
+            const editing_str_content = replaceLastOccurrence(mess_content.text().trim(), "(đã chỉnh sửa)", "");
             editing.html(editing_str_content);
 
             editing.focus();
@@ -753,7 +775,7 @@
             const key = event.key;
             const isAlphaNumeric = /^[a-zA-Z0-9!@#$%^&*()_+~":<>?|}{\[\]=]$/i.test(key);
 
-          
+
             if (isAlphaNumeric && !event.ctrlKey || key == "Enter" && document.activeElement != inputElement[0]) {
                 inputElement.focus();
             }
@@ -890,8 +912,8 @@
 
     </script>
     <script src="JS/emoji.js"></script>
-  
+
     <script src="JS/signalr_connection.js"></script>
-      <script src="JS/client_interact.js"></script>
+    <script src="JS/client_interact.js"></script>
 </asp:Content>
 
