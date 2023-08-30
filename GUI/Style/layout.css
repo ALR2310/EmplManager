@@ -5,6 +5,7 @@
     left: 0;
     right: 0;
     display: flex;
+    z-index: 3;
 }
 
     .modalSetting.hide {
@@ -53,6 +54,11 @@
     .radioGroup_Container + .radioGroup_Container {
         border-top: 1px solid var(--border-color);
     }
+
+.MdradioGroup input,
+.MdradioGroup label {
+    cursor: pointer;
+}
 
 .MdradioGroup {
     margin-right: 30px;

@@ -108,7 +108,7 @@
                         <div class="Notification">
                             <div class="Notification-icon">
                                 <i class="fa-regular fa-bell"></i>
-                                <span>5</span>
+                                <span class="hide">5</span>
                             </div>
 
                             <div class="Notification-container hide">
@@ -257,11 +257,15 @@
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
                                     <input id="stLayoutLight" type="radio" name="stLayoutMode" checked="checked" />
-                                    <label for="stLight">Sáng</label>
+                                    <label for="stLayoutLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
                                     <input id="stLayoutDark" type="radio" name="stLayoutMode" />
-                                    <label for="stDark">Tối</label>
+                                    <label for="stLayoutDark">Tối</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stLayoutBrand" type="radio" name="stLayoutMode" />
+                                    <label for="stLayoutBrand">Thương Hiệu</label>
                                 </div>
                             </div>
 
@@ -269,15 +273,15 @@
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
                                     <input id="stTopbarLight" type="radio" name="stTopbar" checked="checked" />
-                                    <label for="stLight">Sáng</label>
+                                    <label for="stTopbarLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
                                     <input id="stTopbarDark" type="radio" name="stTopbar" />
-                                    <label for="stDark">Tối</label>
+                                    <label for="stTopbarDark">Tối</label>
                                 </div>
                                 <div class="MdradioGroup">
                                     <input id="stTopbarBrand" type="radio" name="stTopbar" />
-                                    <label for="stBrand">Thương Hiệu</label>
+                                    <label for="stTopbarBrand">Thương Hiệu</label>
                                 </div>
                             </div>
 
@@ -285,11 +289,15 @@
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
                                     <input id="stSideBarLight" type="radio" name="stSideBar" checked="checked" />
-                                    <label for="stLight">Sáng</label>
+                                    <label for="stSideBarLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
                                     <input id="stSideBarDark" type="radio" name="stSideBar" />
-                                    <label for="stDark">Tối</label>
+                                    <label for="stSideBarDark">Tối</label>
+                                </div>
+                                <div class="MdradioGroup">
+                                    <input id="stSidebarBrand" type="radio" name="stSideBar" />
+                                    <label for="stSidebarBrand">Thương Hiệu</label>
                                 </div>
                             </div>
                         </div>

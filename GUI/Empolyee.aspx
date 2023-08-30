@@ -63,13 +63,13 @@
 
                                     <ul class="employee-card__ellipsis">
                                         <li id="clearCheckbox" onclick="clearCheckboxes()">Bỏ Chọn Tất Cả</li>
+                                        <li onclick="activeEmailModal()">Gửi Email</li>
                                         <li class="subEllipsis-Card">◂Thay Đổi Trạng Thái
                                             <ul class="employee-card__subEllipsis">
                                                 <li onclick="handleChangeStatusForCheckboxes(1)">Kích Hoạt</li>
                                                 <li onclick="handleChangeStatusForCheckboxes(2)">Vô Hiệu</li>
                                             </ul>
                                         </li>
-                                        <li onclick="activeEmailModal()">Gửi Email</li>
                                         <li onclick="showModalDeleteUser()" onmouseenter="handleDelMoreUsr()">Xoá Tài Khoản</li>
 
 
@@ -423,9 +423,9 @@
                     <option value="CC">CC</option>
                     <option value="BCC">BCC</option>
                 </select>
-                <input id="tblEmail_recipients" placeholder="Người Nhận" />
+                <input id="tblEmail_recipients" placeholder="Người Nhận" autocomplete="off" />
             </div>
-            <input id="tblEmail_subject" placeholder="Tiêu Đề" />
+            <input id="tblEmail_subject" placeholder="Tiêu Đề" autocomplete="off" />
 
             <div id="tblEmail_content" placeholder="Nội Dung" class="modal-email-Content-ckeditor"></div>
 

@@ -27,6 +27,7 @@ html {
 .nav {
     padding: 10px 0;
     border-bottom: 1px solid var(--border-color);
+    transition: all 0.5s;
 }
 
 .nav__menu {
@@ -123,6 +124,7 @@ html {
 
 .darkmode {
     padding: 0 10px;
+    cursor: pointer;
 }
 
     .darkmode div {
@@ -234,7 +236,7 @@ html {
         font-size: 14px;
         font-weight: 500;
         color: black;
-        font-family: 'Sedgwick Ave Display', cursive;
+        /* font-family: 'Sedgwick Ave Display', cursive; */
     }
 
     .Noti-desc p {
@@ -499,14 +501,17 @@ html {
 }
 
 .chat-main__list {
-    overflow-x: visible;
     list-style: none;
     margin-left: 10px;
     width: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     margin-left: 10px;
     padding: 20px 0;
 }
+
+    .chat-main__list::-webkit-scrollbar {
+        width: 8px;
+    }
 
 .chat-main__content {
     align-items: stretch;
@@ -1476,6 +1481,10 @@ body::-webkit-scrollbar {
     padding: 0 5px;
 }
 
+drplist_filterEmpolyee option:checked {
+    background-color: red;
+}
+
 .employee-header-search {
     position: relative;
     height: 35px;
@@ -1492,14 +1501,15 @@ body::-webkit-scrollbar {
         padding: 5px 45px 5px 10px;
         background-color: #f3f3f9;
         border-radius: 5px;
+        font-size: 16px;
     }
 
     .employee-header-search a,
     .employee-header-search button {
         outline: none;
         position: absolute;
-        height: 100%;
-        width: 35px;
+        height: 104%;
+        width: 36px;
         border: none;
         right: 0;
         border-radius: 0px 5px 5px 0;
@@ -1509,7 +1519,8 @@ body::-webkit-scrollbar {
         display: flex;
         justify-content: center;
         align-items: center;
-        top: 0;
+        top: -1px;
+        right: -2px;
         text-decoration: none;
     }
 
