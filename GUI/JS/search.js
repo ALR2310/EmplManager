@@ -60,8 +60,11 @@ async function renderSearchMessage(id, message) {
     chat_main__item.append("<div class='fc_jump_to'>đi tới tin nhắn</div>");
     chat_main__item.on("click", async function (event) {
 
+
+        event.stopPropagation();
+
         let tag_name = event.target.tagName.toLowerCase();
-        if (tag_name == "img" || tag_name == "video") return;
+        if ($(event.target).closest(".attached_files").length != 0) return;
         loading_circle.addClass("loader_show");
 
         await requestJsonData(Number(id) + 11, false, "1");
