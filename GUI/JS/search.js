@@ -612,7 +612,7 @@ var closed_main_option_menu = false;
 
 const text_change_function = {
     "from": async function (text) {
-        console.log("Called");
+   
         display_fetched_users(from_user_options, text);
         if(fetched_name[text] == null || tick() - fetched_name[text]  > SEARCH_USER_NAME_COOLDOWN ){
             await fetchMissingUsers(text);
@@ -780,29 +780,29 @@ $("#search_last_span").on("focus click", function () {
 
 });
 function applySOV(editingSpan, search_option, new_text, rv) {
-    let real_value = rv || display_values[search_option][new_text];
+    let real_value = rv || (!!display_values[search_option] && display_values[search_option][new_text] || null);
 
+
+    if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+        console.log("Deleted old Searching option value");
+        const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
+
+        searching_options[old_option][old_val] = 0;
+
+
+    }
     if (real_value != null) {
 
-        if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
-            console.log("Deleted old Searching option value");
-            const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
-            console.log(old_option);
-            console.log(old_val);
-            searching_options[old_option][old_val] = 0;
-    
-        }
 
         let search_option_value = typeof searching_options[search_option] == 'object' ?
             search_option + "|||" + real_value : search_option;
 
 
         console.log($(`.search_option_edit[sov='${search_option_value}']`));
-        $(`.search_option_edit[sov='${search_option_value}']`).remove();
+        $(`.search_option_edit[sov='${search_option_value}']`).not(editingSpan).remove();
         editingSpan.setAttribute("sov", search_option_value);
-        console.log(  searching_options[search_option]);
-        console.log(real_value);
         searching_options[search_option][real_value] = 1;
+        return;
     }
 
 
@@ -841,10 +841,7 @@ search_option_menu.find("a").on("click", function (event) {
         console.log(new_text);
         (text_change_function[search_option] && text_change_function[search_option](new_text));
 
-        if (display_values[search_option] != null) {
-            applySOV(element[0],search_option,new_text);
-        }
-       
+        applySOV(element[0], search_option, new_text);
         
         if (element.text().length < min_length + 1) {
     
