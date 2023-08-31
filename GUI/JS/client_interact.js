@@ -823,4 +823,5 @@ const forceScrollBottom = async function () {
 
 }
 
-$("#MediaMenu").appendTo    ("body");
+$("#MediaMenu").appendTo("body");
+

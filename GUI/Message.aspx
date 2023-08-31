@@ -62,6 +62,9 @@
             </div>
         </div>
     </div>
+    <div id="DragDropMenu">
+
+    </div>
     <div id="MediaMenu">
 
         <div id="MediaMenuArrows">
@@ -316,7 +319,7 @@
                         <button id="attachMenuButton" onclick="openAttachMenu(event)" style="background: none; padding-right: 15px; border: none; outline-width: 0;">
                             <img style="width: 35px; cursor: pointer;" src="Images/Icons/attach.svg" /></button>
                         <div id="txt_Message_wrapper">
-                            <div ondrop="return false;" contenteditable="true" id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></div>
+                            <div contenteditable="true" id="txt_Message" maxlength="500" rows="2" spellcheck="false" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)"></div>
 
                         </div>
                         <button class="btn btn-chat-footer" onclick="handleSendMessage(event)">

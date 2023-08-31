@@ -121,8 +121,36 @@ var reload_attached_files = function () {
 
 uploadInput.on('change', function (x) {
     console.log("BRAH");
-    console.log(uploadInput[0].value);
+    console.log(uploadInput[0].files);
     fileArray = fileArray.concat(Array.from(uploadInput[0].files));
     reload_attached_files();
     uploadInput[0].value = null;
 });
+
+let DragDropMenu = $("#DragDropMenu").appendTo("body");
+
+
+
+
+let hide_timeout;
+$(document).on('dragover', (event) => {
+    event.preventDefault();
+    console.log("bro is trying to drop lol, lmao");
+    DragDropMenu.css('visibility', 'visible');
+    if (!!hide_timeout) {
+        clearTimeout(hide_timeout);
+    }
+    hide_timeout = setTimeout(function () {
+        DragDropMenu.css('visibility', '');
+    }, 150);
+   
+});
+
+
+$(document).on('drop', (e) => {
+
+    fileArray = fileArray.concat(Array.from(e.originalEvent.dataTransfer.files));
+    reload_attached_files();
+    e.preventDefault();
+});
+
