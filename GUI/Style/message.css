@@ -1975,8 +1975,8 @@ textarea {
 
         #MediaMenu > #ImagePreview > img {
             max-height: 80vh;
-            max-width: 100%;
-            min-height: 50vh;
+       
+            max-width: 70vw;
         }
         #MediaMenu > #ImagePreview > a {
             color: white;
