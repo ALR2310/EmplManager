@@ -28,8 +28,9 @@ function navigateDate(input_date) {
 
 
 
-    let day_offset = 7 - (7 - fulldate.getDay() + 1) ;
-    day_offset = day_offset >= 0 ? day_offset : 0;
+    let day_offset = 6 - (7 - fulldate.getDay());
+    console.log(day_offset);
+    day_offset = day_offset >= 0 ? day_offset : 6;
     fulldate.setDate(fulldate.getDate() - day_offset);
 
     var darken = day_offset > 0;
@@ -90,6 +91,6 @@ let datepick_observer = new MutationObserver(function (mutations) {
     });
 });
 
-
+navigateDate(new Date());
 var target = $("#datepick_table")[0];
 datepick_observer.observe(target, { attributes: true, attributeFilter: ['style'] });

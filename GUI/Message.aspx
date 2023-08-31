@@ -211,7 +211,7 @@
                             <span>Tin nhắn đến từ người dùng: </span>
                             <hr>
                         </div>
-                        <div  id="datepick_table" class="search_option_menu search_user_table">
+                        <div  id="datepick_table" style="visibility: visible;" class="search_option_menu search_user_table">
                             <span>Tin nhắn được gửi trước ngày: </span>
                    
                             <div id="datepicker">
