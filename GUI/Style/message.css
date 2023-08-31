@@ -1,4 +1,4 @@
-﻿
+
 .italic {
     font-style: italic;
     opacity: .7;
@@ -808,7 +808,6 @@ textarea {
 }
 
 .chat-main__list {
-    overflow-x: hidden;
 }
 
 #attachMenuButton {
@@ -1712,7 +1711,6 @@ textarea {
 }
 
 .chat-main__list {
-    overflow-x: hidden;
 }
 
 #attachMenuButton {

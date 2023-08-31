@@ -6,15 +6,19 @@
     --dark3-color: #40445a;
     --dark4-color: #4c5265;
     --dark5-color: #2b2c32;
+    --dark6-color: #353a46;
     /*brand color*/
     --brand0-color: #5156be;
     --brand1-color: #000e52;
     --brand2-color: #5370b4;
+    /**/
+    --primary-blue-color: #1f7cc3;
+    --gray-bland-color: #d4d4d4;
 }
 
 /*Genaral*/
 .modalSetting_content {
-    width: 320px
+    width: 320px;
 }
 
 .darkmode .modalSetting_content {
@@ -29,6 +33,10 @@
 .darkmode .modalSetting_content_radioGroup h6,
 .darkmode .MdradioGroup label {
     color: white;
+}
+
+.content {
+    transition: all 0.5s
 }
 
 
@@ -57,6 +65,16 @@
             background-color: var(--dark2-color);
         }
 
+.topbar-dark .darkmode div {
+    color: white;
+}
+
+
+.topbar-dark .Notification-icon {
+    color: white;
+}
+
+
 /*Brand NavBar*/
 .topbar-brand.nav {
     background-color: var(--brand0-color);
@@ -71,6 +89,15 @@
 }
 
 .topbar-brand .btn-menuleft {
+    color: white;
+}
+
+.topbar-brand .darkmode div {
+    color: white;
+}
+
+
+.topbar-brand .Notification-icon {
     color: white;
 }
 
@@ -94,5 +121,177 @@
 }
 
     .sidebar-brand .sidebar-item__link.active > i {
+        color: white;
+    }
+
+
+/*Layout Dark*/
+.layout-dark.content {
+    background-color: var(--dark6-color);
+}
+
+.layout-dark .employee-body-card {
+    background-color: #666666;
+}
+
+.layout-dark .employee-card__body-name {
+    color: white;
+}
+
+    .layout-dark .employee-card__body-name p {
+        color: #aeb7e4;
+    }
+
+.layout-dark .employee-card__header-ellipsis {
+    color: white;
+}
+
+.layout-dark .employee-card__ellipsis,
+.layout-dark .employee-card__subEllipsis {
+    background-color: #e6e6e6;
+}
+
+.layout-dark .employee-header-title {
+    color: white;
+}
+
+    .layout-dark .employee-header-title span {
+        color: var(--primary-blue-color);
+    }
+
+.layout-dark .employee-header__ellipsis {
+    background-color: #1f7cc3;
+}
+
+.layout-dark .employee-header__content p {
+    color: white;
+}
+
+    .layout-dark .employee-header__content p span {
+        color: var(--primary-blue-color);
+    }
+
+.layout-dark .employee-header-search input[type="search"] {
+    background-color: var(--gray-bland-color);
+    color: black;
+}
+
+.layout-dark .employee-header-search a {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark #drplist_filterEmpolyee {
+    background-color: var(--gray-bland-color);
+}
+
+.layout-dark * {
+    border-color: #878787;
+}
+
+.layout-dark.modal-vertical__container { /*---------------------*/
+    background-color: var(--dark4-color);
+}
+
+.layout-dark .modal-vertical__container-title {
+    color: white;
+}
+
+.layout-dark .userInfor__desc p span {
+    color: white;
+}
+
+.layout-dark .userInfor__desc span {
+    color: #e1e1e1;
+}
+
+.layout-dark .userInfor-SendMail button {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .userInfor-Detail__infor p {
+    color: #dcf3ff;
+}
+
+.layout-dark .userInfor-Detail__infor span {
+    color: white;
+}
+
+.layout-dark .modal-vertical__close {
+    color: white;
+}
+
+    .layout-dark .modal-vertical__close:hover {
+        color: black;
+    }
+
+.layout-dark .userInfor-Detail__title {
+    color: white;
+}
+
+.layout-dark .UIDetail__action p {
+    color: white;
+}
+
+.layout-dark .userInfor-Detail__editor select,
+.layout-dark .userInfor-Detail__editor input {
+    background-color: transparent;
+    color: white;
+}
+
+.layout-dark .userInfor-Detail__editor p {
+    background-color: var(--dark4-color);
+    color: white;
+}
+
+.layout-dark #sltGender option,
+.layout-dark #sltUserType option,
+.layout-dark #sltStatus option {
+    color: white;
+    background-color: gray;
+}
+
+    .layout-dark #sltStatus option:hover {
+        background-color: red;
+    }
+
+.layout-dark.UIdetail-modal-delete {
+    background-color: var(--dark5-color);
+}
+
+    .layout-dark.UIdetail-modal-delete h3 {
+        color: white;
+    }
+
+    .layout-dark.UIdetail-modal-delete p {
+        color: var(--gray-bland-color);
+    }
+
+.layout-dark.usrdetail-modal-email {
+    background-color: var(--dark4-color);
+}
+
+    .layout-dark.usrdetail-modal-email h2 {
+        color: white;
+    }
+
+.layout-dark #email_action {
+    background-color: transparent;
+    color: white;
+}
+
+    .layout-dark #email_action option {
+        background-color: var(--gray-bland-color);
+        color: black;
+    }
+
+.layout-dark #tblEmail_subject,
+.layout-dark #tblEmail_recipients {
+    background-color: transparent;
+    color: white;
+}
+
+    .layout-dark #tblEmail_content,
+    .layout-dark #tblEmail_subject::placeholder,
+    .layout-dark #tblEmail_recipients::placeholder {
         color: white;
     }

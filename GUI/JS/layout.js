@@ -150,19 +150,7 @@ function limitText(element, limit) {
 }
 
 
-//function chuyển đổi darkmode
-function toggleDarkmode(action) {
-    divDark = document.getElementById("darkmode-moon");
-    divLight = document.getElementById("darkmode-sun");
 
-    if (action == "dark") {
-        divDark.classList.add("hide");
-        divLight.classList.remove("hide");
-    } else {
-        divDark.classList.remove("hide");
-        divLight.classList.add("hide");
-    }
-}
 
 
 
@@ -184,3 +172,158 @@ document.addEventListener('click', function (event) {
         notificationContainer.classList.add('hide');
     }
 });
+
+
+
+
+//function chuyển đổi darkmode
+function toggleDarkmode(action) {
+    divDark = document.getElementById("darkmode-moon");
+    divLight = document.getElementById("darkmode-sun");
+
+    if (action == "dark") {
+        divDark.classList.add("hide");
+        divLight.classList.remove("hide");
+
+        localStorage.setItem('navbarTheme', 'dark');
+        localStorage.setItem('sidebarTheme', 'dark');
+        localStorage.setItem('layoutTheme', 'dark');
+    } else {
+        divDark.classList.remove("hide");
+        divLight.classList.add("hide");
+
+        localStorage.removeItem('navbarTheme');
+        localStorage.removeItem('sidebarTheme');
+        localStorage.removeItem('layoutTheme');
+    }
+    handleLayoutTheme();
+    handleNavbarTheme();
+    handleSidebarTheme();
+}
+
+//function thay đổi màu layout
+function handleLayoutTheme() {
+    const theme = localStorage.getItem('layoutTheme');
+    const elements = [
+        ".content",
+        ".modal-vertical__container",
+        ".UIdetail-modal-delete",
+        ".usrdetail-modal-email"
+    ];
+
+    elements.forEach(element => {
+        const el = document.querySelector(element);
+        if (theme === 'dark') {
+            el.classList.add("layout-dark");
+        } else {
+            el.classList.remove("layout-dark");
+        }
+    });
+}
+handleLayoutTheme();
+
+//function thay đổi màu navbar
+function handleNavbarTheme() {
+    var theme = localStorage.getItem('navbarTheme');
+    if (theme == 'dark') {
+        document.querySelector(".nav").classList.add("topbar-dark");
+        document.querySelector(".nav").classList.remove("topbar-brand");
+    } else if (theme == 'brand') {
+        document.querySelector(".nav").classList.add("topbar-brand");
+        document.querySelector(".nav").classList.remove("topbar-dark");
+    } else {
+        document.querySelector(".nav").classList.remove("topbar-brand");
+        document.querySelector(".nav").classList.remove("topbar-dark");
+    }
+}
+handleNavbarTheme();
+
+//function thay đổi màu sidebar
+function handleSidebarTheme() {
+    var theme = localStorage.getItem('sidebarTheme');
+    if (theme == 'dark') {
+        document.querySelector('.sidebar').classList.add('sidebar-dark');
+        document.querySelector('.sidebar').classList.remove('sidebar-brand');
+    } else if (theme == 'brand') {
+        document.querySelector('.sidebar').classList.remove('sidebar-dark');
+        document.querySelector('.sidebar').classList.add('sidebar-brand');
+    } else {
+        document.querySelector('.sidebar').classList.remove('sidebar-dark');
+        document.querySelector('.sidebar').classList.remove('sidebar-brand');
+    }
+}
+handleSidebarTheme();
+
+
+//function cho phần setting:
+
+$('input[name="stTopbar"]').change(function () {
+    if ($(this).is(':checked')) {
+        var selectedValue = $(this).attr('id');
+
+        if (selectedValue === 'stTopbarDark') {
+            localStorage.setItem('navbarTheme', 'dark');
+            handleNavbarTheme();
+            console.log("change dark theme")
+        } else if (selectedValue === 'stTopbarBrand') {
+            localStorage.setItem('navbarTheme', 'brand');
+            handleNavbarTheme();
+            console.log("change brand theme")
+        } else if (selectedValue === 'stTopbarLight') {
+            localStorage.removeItem('navbarTheme');
+            handleNavbarTheme();
+            console.log("change default theme")
+        }
+    }
+});
+
+
+$('input[name="stSideBar"').change(function () {
+    if ($(this).is(':checked')) {
+        var selectedValue = $(this).attr('id');
+
+        if (selectedValue === 'stSideBarDark') {
+            localStorage.setItem('sidebarTheme', 'dark');
+            handleSidebarTheme();
+            console.log("change dark theme")
+        } else if (selectedValue === 'stSidebarBrand') {
+            localStorage.setItem('sidebarTheme', 'brand');
+            handleSidebarTheme();
+            console.log("change brand theme")
+        } else if (selectedValue === 'stSideBarLight') {
+            localStorage.removeItem('sidebarTheme');
+            handleSidebarTheme();
+            console.log("change default theme")
+        }
+    }
+});
+
+
+//function kiểm tra localstorageTheme
+function checkTheme() {
+    var navbarTheme = localStorage.getItem('navbarTheme');
+    var sidebarTheme = localStorage.getItem('sidebarTheme');
+    var layoutTheme = localStorage.getItem('layoutTheme');
+
+    if (navbarTheme == 'dark') {
+        $("#stTopbarDark").attr('checked', true);
+    } else if (navbarTheme == 'brand') {
+        $("#stTopbarBrand").attr('checked', true);
+    }
+
+    if (sidebarTheme == 'dark') {
+        $("#stSideBarDark").attr('checked', true);
+    } else if (sidebarTheme == 'brand') {
+        $("#stSidebarBrand").attr('checked', true);
+    }
+
+    if (layoutTheme == 'dark') {
+        $("#stLayoutDark").attr('checked', true);
+
+        $("#darkmode-moon").addClass('hide');
+        $("#darkmode-sun").removeClass('hide');
+    } else if (layoutTheme == 'brand') {
+        $("#stLayoutBrand").attr('checked', true);
+    }
+}
+checkTheme()

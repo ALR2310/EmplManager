@@ -7,9 +7,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="content">
-        <asp:GridView ID="EmailGridView" runat="server" AutoGenerateColumns="true"></asp:GridView>
-
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
     </div>
 
 

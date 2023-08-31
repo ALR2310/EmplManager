@@ -739,7 +739,7 @@ function getDataforClickShow(element) {
                     if (item.property == null || item.property === "") {
                         $(item.label).text("Không có thông tin").css("color", "rgb(118, 118, 118)");
                     } else {
-                        $(item.label).css("color", "black");
+                        /*$(item.label).css("color", "black");*/
                     }
                 });
 
