@@ -313,6 +313,8 @@
     <Content Include="Images\Flags\us.jpg" />
     <Content Include="Images\Flags\vi.png" />
     <Content Include="Images\Icons\archive.svg" />
+    <Content Include="Images\Icons\calen_left_arrow.svg" />
+    <Content Include="Images\Icons\calen_right_arrow.svg" />
     <Content Include="Images\Icons\plus.svg" />
     <Content Include="Images\Icons\right_arrow.svg" />
     <Content Include="Images\Icons\left_arrow.svg" />
@@ -443,6 +445,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Content Include="JS\datepicker.js" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

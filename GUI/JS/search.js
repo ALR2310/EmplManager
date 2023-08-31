@@ -65,11 +65,20 @@ async function renderSearchMessage(id, message) {
         loading_circle.addClass("loader_show");
 
         await requestJsonData(Number(id) + 11, false, "1");
-        console.log(Saved_Messages[id]);
+       
+        focusing_message_id = id;
         let mess_to_scroll_to = Saved_Messages[id].message_element;
         loading_scrolling_bottom_cancel = true;
-        scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 4);
 
+        let i = 1
+        let scrollToFunc = function () {
+            i++
+            if (i > 10) return;
+            scroll.scrollTo(0, mess_to_scroll_to[0].offsetTop - scroll.clientHeight / 4);
+            setTimeout(scrollToFunc, 50);
+        }
+        scrollToFunc();
+         
         mess_to_scroll_to.removeClass("message_highlight");
         setTimeout(function () {
             mess_to_scroll_to.addClass("message_highlight");
@@ -188,6 +197,12 @@ function parseSearchOption() {
     let option = {}
     for (const [key, values] of Object.entries(searching_options)) {
         let temp_val = [];
+        console.log(typeof values);
+        console.log(typeof values != "object");
+        if (typeof values != "object") {
+            option[key] = values;
+            continue;
+        }
         for (const [sub_key, num] of Object.entries(values)) {
             if (num == 0) continue;
             temp_val.push(sub_key);
@@ -377,7 +392,7 @@ $(document).on("click", function (event) {
 
     if (ele.closest("#MediaMenu").length != 0) return;
 
-    console.log(ele.closest(".chat__search-box"))
+
     if (
         ele.attr("id") != "search-box" && ele.closest("#search-box").length == 0 &&
         ele.closest("#chat-search__list").length == 0 && ele.closest(".search_option_menu").length == 0) {
@@ -607,7 +622,8 @@ const text_change_function = {
 const specific_option_menu = {
     "has": $("#has_table"),
     "from": $("#from_table"),
-    "before": $("#before_table")
+    "before": $("#datepick_table"),
+    "after": $("#datepick_table")
 }
 
 const __default_searching_options = {
@@ -620,6 +636,8 @@ const __default_searching_options = {
     from: {
 
     }
+
+
 };
 var searching_options = {
     has: {
@@ -632,43 +650,53 @@ var searching_options = {
 
     }
 };
-
 let editingSpan = null;
+function appendSearchValue(child_ele, value_name) {
+    if (!!!editingSpan) return;
+
+
+
+    editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + (child_ele.attr("display_value") || child_ele.text());
+    console.log(editingSpan);
+
+
+    if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+        console.log("Deleted old Searching option value");
+        const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
+        console.log(old_option);
+        console.log(old_val);
+        searching_options[old_option][old_val] = 0;
+
+    }
+    let search_option_value = value_name + "|||" + child_ele.attr("value");
+    $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
+    editingSpan.setAttribute("sov", search_option_value);
+
+
+    if (!searching_options[value_name]) {
+        console.log(child_ele.attr("value"));
+        searching_options[value_name] = child_ele.attr("value");
+    }
+    else {
+        searching_options[value_name][child_ele.attr("value")] = 1;
+    }
+
+    setTimeout(function () {
+        search_message_list.css("display", "flex");
+    }
+        , 0);
+    $(editingSpan).next().focus();
+    search_box_input();
+}
+
 for (const [value_name, option_menu] of Object.entries(specific_option_menu)) {
     for (let child_ele of option_menu.children("a")) {
 
         child_ele = $(child_ele);
 
         child_ele.on("click", function () {
-            if (!!!editingSpan) return;
-
-
-
-            editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + (child_ele.attr("display_value") || child_ele.text());
-            console.log(editingSpan);
-
             option_menu.css("visibility", "hidden");
-            if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
-                console.log("Deleted old Searching option value");
-                const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
-                console.log(old_option);
-                console.log(old_val);
-                searching_options[old_option][old_val] = 0;
-
-            }
-            let search_option_value = value_name + "|||" + child_ele.attr("value");
-            $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
-            editingSpan.setAttribute("sov", search_option_value);
-
-
-            searching_options[value_name][child_ele.attr("value")] = 1;
-     
-            setTimeout(function () {
-                search_message_list.css("display", "flex");
-            }
-                , 0);
-            $(editingSpan).next().focus();
-            search_box_input();
+            appendSearchValue(child_ele,value_name);
         });
     }
 }
@@ -773,7 +801,7 @@ function applySOV(editingSpan, search_option, new_text, rv) {
 }
 search_option_menu.find("a").on("click", function (event) {
     search_last_span.text("");
-    console.log(event.target);
+
     let click_event = $(event.target);
     const search_option = click_event.attr("search_option");
     if (!search_option) { return; }

@@ -3,14 +3,27 @@
     font-style: italic;
     opacity: .7;
 }
-
-#datepicker {
-    background: #84b4e7;
-    border-radius: 10px;
-    padding: 10px;
-    display: grid;
-    grid-template-rows: 50px .2fr 1fr 10fr;
+#month_changer > div {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 10%;
+    cursor: pointer;
+    justify-content: center;
 }
+#month_changer > div > img{
+    height: 50%;
+    align-self :center;
+
+}
+    #datepicker {
+        background: #84b4e7;
+        border-radius: 10px;
+        padding: 10px;
+        display: grid;
+        grid-template-rows: 50px .2fr 1fr 10fr;
+        user-select: none;
+    }
 #datepicker > grid{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -23,6 +36,38 @@
 .date_title {
     color: gray;
     color: #c9ebff !important;
+}
+#date_select {
+    border-radius: 4px;
+    border: solid 2px #6292cf;
+    overflow: hidden;
+}
+#date_select > .hidden_a_bit {
+    filter: brightness(.85);
+
+    color: rgba(225,225,225,.8);
+}
+    #date_select > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background: #7fb2df;
+        border: solid #6292cf 1px;
+        cursor: pointer;
+    }
+#date_select > span:not(.hidden_a_bit):hover {
+    background: #a4d4ff;
+    color: #f2f6ff;
+}
+#date_select > span > hr {
+    width: 100%;
+    position: absolute;
+    border-style: solid;
+    bottom: 0;
+    height: 10%;
+    background: #a4d4ff;
+    border-color: #a4d4ff;
 }
 #datepicker > hr {
     height: 1px;

@@ -158,7 +158,7 @@ function toggleDropdown(event, str) {
 }
 
 function toggleEmoji(event, str) {
-
+    if (!event.target.parentNode) { return; }
     var emojiShowMenu = event.target.parentNode.querySelector(
         '.chat-ellips__show_emoji');
     var bubble = event.target.parentNode.querySelector('.speech, .bottom');

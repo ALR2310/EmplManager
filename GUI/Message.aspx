@@ -211,11 +211,17 @@
                             <span>Tin nhắn đến từ người dùng: </span>
                             <hr>
                         </div>
-                        <div style="visibility: unset;" id="before_table" class="search_option_menu search_user_table">
+                        <div  id="datepick_table" class="search_option_menu search_user_table">
                             <span>Tin nhắn được gửi trước ngày: </span>
                    
                             <div id="datepicker">
                                 <div id="month_changer">
+                                    <div onclick="navigateDateWOffset(-1)">
+                                        <img  src="Images/Icons/calen_left_arrow.svg"/>
+                                    </div>
+                                    <div  onclick="navigateDateWOffset(1)">
+                                        <img src="Images/Icons/calen_right_arrow.svg"/>
+                                    </div>
                                     <span id="month_year">Tháng 8 Năm 2023</span>
                                 </div>
                                          <hr>
@@ -229,7 +235,9 @@
                                     <span class="date_title">CN</span>
 
                                 </grid>
-                                 
+                                 <grid id="date_select">
+                           
+                                 </grid>
                             </div>
                         </div>
                     </div>
@@ -915,5 +923,6 @@
 
     <script src="JS/signalr_connection.js"></script>
     <script src="JS/client_interact.js"></script>
+    <script src="JS/datepicker.js"></script>
 </asp:Content>
 

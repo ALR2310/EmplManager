@@ -152,7 +152,7 @@ const FormatFuncs = {
     },
     '_deleted_or_content_': async function (message) {
 
-        console.log(message.Content.replaceAll("\n","<br>"));
+    
         var messStatus = message.Status;
         let content =  messStatus == 0 ? "Tin nhắn đã được thu hồi" :
             messStatus == -1 ? "Tin nhắn đã được thu hồi bởi quản trị viên" :
@@ -329,13 +329,15 @@ $(MediaMenuArrows).on("click", function (event) {
     
 
 });
+let focusing_message_id;
+
 function handleMediaResize(file_ele) {
 
     let old_height = file_ele.prop('offsetHeight');
+    const func = function () {
 
-    file_ele.on("resize",function () {
-
-        if (scroll.scrollTop < file_ele[0].closest(".chat-main__item").offsetTop) {
+        if (scroll.scrollTop > file_ele[0].closest(".chat-main__item").offsetTop) {
+            resize(this.offsetHeight/4);
             old_height = this.offsetHeight;
             return;
         }
@@ -345,7 +347,13 @@ function handleMediaResize(file_ele) {
         old_height = this.offsetHeight;
 
 
-    });
+    }
+    if (file_ele.closest(`.chat-main__item[message_id=${focusing_message_id}]`).length != 0) {
+        return;
+    }
+   
+
+    //file_ele.on("load resize",func);
 }
 function loadAttachments(Uploaded_Files, message_ele,ignore_resize) {
     let FilteredFiles = [];
