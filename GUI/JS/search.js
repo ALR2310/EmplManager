@@ -790,14 +790,13 @@ function applySOV(editingSpan, search_option, new_text, rv) {
     
         }
 
-        let search_option_value = typeof searching_options[value_name] == 'object' ?
-            value_name + "|||" + child_ele.attr("value") : value_name;
+        let search_option_value = typeof searching_options[search_option] == 'object' ?
+            search_option + "|||" + real_value : search_option;
 
 
         console.log($(`.search_option_edit[sov='${search_option_value}']`));
         $(`.search_option_edit[sov='${search_option_value}']`).remove();
         editingSpan.setAttribute("sov", search_option_value);
-
         console.log(  searching_options[search_option]);
         console.log(real_value);
         searching_options[search_option][real_value] = 1;

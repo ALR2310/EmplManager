@@ -78,7 +78,11 @@ namespace BUS
         }
         public static string SearchMessage(Dictionary<string, object> option, string search_str, int page)
         {
-            string querystr = $"EXECUTE dbo.search_messages_by_content @search_str = N'{search_str}', @page = {page}";
+            string querystr = $"EXECUTE dbo.search_messages_by_content " +
+                $"{(option.ContainsKey("after") ? $"@start_day = '{option["after"]}'," : "")}" +
+
+                $"{(option.ContainsKey("before") ? $"@end_date = '{option["before"]}'," : "") }" +
+                $"@search_str = N'{search_str}', @page = {page}";
 
 
             Debug.WriteLine(option);
