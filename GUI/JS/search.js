@@ -197,8 +197,7 @@ function parseSearchOption() {
     let option = {}
     for (const [key, values] of Object.entries(searching_options)) {
         let temp_val = [];
-        console.log(typeof values);
-        console.log(typeof values != "object");
+
         if (typeof values != "object") {
             option[key] = values;
             continue;
@@ -657,21 +656,23 @@ function appendSearchValue(child_ele, value_name) {
 
 
     editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + (child_ele.attr("display_value") || child_ele.text());
-    console.log(editingSpan);
 
 
     if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
-        console.log("Deleted old Searching option value");
         const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
-        console.log(old_option);
-        console.log(old_val);
+
         searching_options[old_option][old_val] = 0;
 
     }
-    let search_option_value = value_name + "|||" + child_ele.attr("value");
-    $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
-    editingSpan.setAttribute("sov", search_option_value);
 
+
+    let search_option_value = typeof searching_options[value_name] == 'object' ?
+        value_name + "|||" + child_ele.attr("value") : value_name;
+
+   
+    console.log($(`.search_option_edit[sov='${search_option_value}']`));
+    $(`.search_option_edit[sov='${search_option_value}']`).remove();
+    editingSpan.setAttribute("sov", search_option_value);
 
     if (!searching_options[value_name]) {
         console.log(child_ele.attr("value"));
@@ -789,9 +790,14 @@ function applySOV(editingSpan, search_option, new_text, rv) {
     
         }
 
-        let search_option_value = search_option + "|||" + real_value;
-        $(`.search_option_edit[sov='${search_option_value}']`).parent().remove();
+        let search_option_value = typeof searching_options[value_name] == 'object' ?
+            value_name + "|||" + child_ele.attr("value") : value_name;
+
+
+        console.log($(`.search_option_edit[sov='${search_option_value}']`));
+        $(`.search_option_edit[sov='${search_option_value}']`).remove();
         editingSpan.setAttribute("sov", search_option_value);
+
         console.log(  searching_options[search_option]);
         console.log(real_value);
         searching_options[search_option][real_value] = 1;
@@ -807,7 +813,7 @@ search_option_menu.find("a").on("click", function (event) {
     if (!search_option) { return; }
 
     const display_txt_lower = search_option_text[search_option].toLowerCase() + " ";
-    let str = `<div autocomplete='off' onkeydown="checkCursorPos(event);" tabindex="100"  spellcheck='false' og_txt="${search_option_text[search_option]}" contenteditable="true" autocorrect='off'>${search_option_text[search_option]}&nbsp;</div>`;
+    let str = `<div class="search_option_edit" autocomplete='off' onkeydown="checkCursorPos(event);" tabindex="100"  spellcheck='false' og_txt="${search_option_text[search_option]}" contenteditable="true" autocorrect='off'>${search_option_text[search_option]}&nbsp;</div>`;
     const element = $(str);
 
     search_box.append(element);
