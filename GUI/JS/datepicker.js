@@ -91,6 +91,5 @@ let datepick_observer = new MutationObserver(function (mutations) {
     });
 });
 
-navigateDate(new Date());
 var target = $("#datepick_table")[0];
 datepick_observer.observe(target, { attributes: true, attributeFilter: ['style'] });

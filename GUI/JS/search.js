@@ -24,9 +24,12 @@ async function renderSearchMessage(id, message) {
     const message_ele = $("#chat-template").clone();
     var finalhtml = message_ele.html();
 
+    let formatted_time = FormatFuncs["_timestr_"](message);
+    let formatted_date = FormatFuncs["_datestr_"](message);
 
 
-    finalhtml = finalhtml.replaceAll("_timestr_", "_timestr_, _datestr_");
+    finalhtml = finalhtml.replaceAll("_date_time_str_", `${formatted_date} ${formatted_time}`);
+    console.log(finalhtml);
     for ([replaceTargetstr, formatFunc] of Object.entries(FormatFuncs)) {
         finalhtml = finalhtml.replaceAll(replaceTargetstr, await formatFunc(message, message_ele));
     }
@@ -600,7 +603,7 @@ function display_fetched_users(parentEle,searchingName) {
             editingSpan.textContent = editingSpan.getAttribute("og_txt") + " " + user.DisplayName;
             applySOV(editingSpan,search_option,null,id);
 
-            $(editingSpan).next().focus();
+            search_last_span.focus();
             search_box_input();
         });
   
@@ -662,9 +665,16 @@ function appendSearchValue(child_ele, value_name) {
 
 
     if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
+
         const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
 
-        searching_options[old_option][old_val] = 0;
+        if (typeof searching_options[old_option] == "object") {
+            searching_options[old_option][old_val] = 0;
+        }
+        else {
+            searching_options[old_option] = null;
+        }
+ 
 
     }
 
@@ -674,7 +684,7 @@ function appendSearchValue(child_ele, value_name) {
 
    
     console.log($(`.search_option_edit[sov='${search_option_value}']`));
-    $(`.search_option_edit[sov='${search_option_value}']`).remove();
+    $(`.search_option_edit[sov='${search_option_value}']`).not(editingSpan).remove();
     editingSpan.setAttribute("sov", search_option_value);
 
     if (!searching_options[value_name]) {
@@ -689,7 +699,7 @@ function appendSearchValue(child_ele, value_name) {
         search_message_list.css("display", "flex");
     }
         , 0);
-    $(editingSpan).next().focus();
+    search_last_span.focus();
     search_box_input();
 }
 
