@@ -1,7 +1,7 @@
 ﻿"use strict";
 const date_select = $("#date_select");
 let rendered_last_date;
-    
+let active_date;
 function getFirstDayOfMonth(input_date) {
     let d = input_date || new Date();
     d.setDate(1)
@@ -9,7 +9,7 @@ function getFirstDayOfMonth(input_date) {
     return [d.getDate(), d.getDay() + 1, d];
 }
 
-function navigateDate(input_date) {
+const navigateDate = function(input_date) {
     let today_str = (new Date()).toDateString();
     let month = input_date.getMonth();
     let year = input_date.getFullYear();
@@ -52,10 +52,14 @@ function navigateDate(input_date) {
          
         }
         let today_hr = today_str == copied_Date.toDateString() ? "<hr>" : "";
-
+        
         let day_str_value = copied_Date.toJSON().split("T")[0];
+      
         let display_val = day_str_value.split("-").reverse().join("-");
-        let span = $(`<span display_value='${display_val}' value='${day_str_value}' ${darken ? "class='hidden_a_bit'" : ''}>${day}${today_hr}</span>`);
+
+        let active_class = !!active_date && copied_Date.toDateString() == active_date.toDateString() && "date_select_active" || "";
+        console.log(`<span display_value='${display_val}' value='${day_str_value}' class="${active_class} ${darken ? "hidden_a_bit" : ""}" > ${ day }${ today_hr }</span >`);
+        let span = $(`<span display_value='${display_val}' value='${day_str_value}' class="${active_class} ${darken ? "hidden_a_bit" : ""}">${day}${today_hr}</span>`);
 
         span.on("click", function () {
             $("#datepick_table").css('visibility', "hidden");
@@ -85,11 +89,17 @@ function navigateDateWOffset(offset) {
 
 let datepick_observer = new MutationObserver(function (mutations) {
     console.log("changed date!!");
-    mutations.forEach(function (mutationRecord) {
-        let sov = editingSpan.getAttribute("sov");
-        console.log(editingSpan.getAttribute("sov").split("||")[1]);    
-        navigateDate(!!editingSpan.getAttribute("sov") && new Date());
-    });
+
+    console.log(editingSpan);
+    let sov = editingSpan != null && editingSpan.getAttribute("sov");
+    sov = sov != null && sov.length > 0 && sov.split("|||").length && sov.split("|||")[1];
+    console.log(sov);
+    active_date = null;
+    if (!!sov) {
+        active_date = new Date(sov);
+    }
+    navigateDate(sov && new Date(sov) || new Date());
+  
 });
 
 var target = $("#datepick_table")[0];

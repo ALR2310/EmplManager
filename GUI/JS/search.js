@@ -679,8 +679,8 @@ function appendSearchValue(child_ele, value_name) {
     }
 
 
-    let search_option_value = typeof searching_options[value_name] == 'object' ?
-        value_name + "|||" + child_ele.attr("value") : value_name;
+    let search_option_value =
+        value_name + "|||" + child_ele.attr("value");
 
 
     console.log($(`.search_option_edit[sov='${search_option_value}']`));
@@ -812,18 +812,24 @@ function applySOV(editingSpan, search_option, new_text, rv) {
 
 
     }
+    let isDateOption = isDateValueOption(search_option);
+    if (isDateOption && isValidDateFormat(new_text)) {
 
-    if (isDateValueOption(search_option) && isValidDateFormat(new_text)) {
-   
         real_value = new_text.split("-").reverse().join("-");
+        active_date = new Date(real_value);
+        navigateDate(new Date(real_value));
 
     }
+    else if (isDateOption) {
+        active_date = null
+        navigateDate(new Date(real_value));
 
+    }
     if (real_value != null) {
 
 
-        let search_option_value = typeof searching_options[search_option] == 'object' ?
-            search_option + "|||" + real_value : search_option;
+        let search_option_value =
+            search_option + "|||" + real_value;
 
 
         $(`.search_option_edit[sov='${search_option_value}']`).not(editingSpan).remove();

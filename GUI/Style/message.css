@@ -45,7 +45,7 @@
 #date_select > .hidden_a_bit {
     filter: brightness(.85);
 
-    color: rgba(225,225,225,.8);
+    color: rgba(225,225,225,.8) !important;
 }
     #date_select > span {
         display: flex;
@@ -56,9 +56,9 @@
         border: solid #6292cf 1px;
         cursor: pointer;
     }
-#date_select > span:not(.hidden_a_bit):hover {
-    background: #a4d4ff;
-    color: #f2f6ff;
+#date_select > span:not(.hidden_a_bit):hover, .date_select_active:not(.hidden_a_bit) {
+    background: #a4d4ff !important;
+    color: #f2f6ff !important;
 }
 #date_select > span > hr {
     width: 100%;
