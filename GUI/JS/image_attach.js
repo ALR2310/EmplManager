@@ -133,22 +133,30 @@ let DragDropMenu = $("#DragDropMenu").appendTo("body");
 
 
 let hide_timeout;
+
 $(document).on('dragover', (event) => {
+
     event.preventDefault();
-    console.log("bro is trying to drop lol, lmao");
-    DragDropMenu.css('visibility', 'visible');
+
+    DragDropMenu.addClass('drag_drop_menu_visible');
+    DragDropMenu.removeClass('drag_drop_menu_invisible');
     if (!!hide_timeout) {
         clearTimeout(hide_timeout);
     }
     hide_timeout = setTimeout(function () {
-        DragDropMenu.css('visibility', '');
+        if (!hasClass("drag_drop_menu_visible")) return;
+        DragDropMenu.removeClass('drag_drop_menu_visible');
+        DragDropMenu.addClass('drag_drop_menu_invisible');
+
+
     }, 150);
    
 });
 
 
 $(document).on('drop', (e) => {
-
+    DragDropMenu.removeClass('drag_drop_menu_visible');
+    DragDropMenu.removeClass('drag_drop_menu_invisible');
     fileArray = fileArray.concat(Array.from(e.originalEvent.dataTransfer.files));
     reload_attached_files();
     e.preventDefault();

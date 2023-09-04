@@ -63,6 +63,14 @@
         </div>
     </div>
     <div id="DragDropMenu">
+        <img  src="Images/Icons/code_file.svg" style="transform: translateX(-50%) translateY(-70%) translateX(-35%) rotate(-15deg) scale(.85);
+    filter: brightness(0.6) drop-shadow(-1px 2px 6px black);"/>
+        <div>
+            <img src="Images/Icons/text_file.svg"/>
+            <p>Kéo, thả Tệp, Ảnh hoặc Video tại đây</p>
+        </div>
+
+        <img src="Images/Icons/archive.svg" style="    transform: translateX(-50%) translateY(-70%) translateX(35%) rotate(15deg) scale(.9); filter: brightness(0.8) drop-shadow(1px 2px 3px black);"/>
 
     </div>
     <div id="MediaMenu">
