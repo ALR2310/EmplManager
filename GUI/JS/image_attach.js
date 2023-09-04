@@ -162,3 +162,5 @@ $(document).on('drop', (e) => {
     e.preventDefault();
 });
 
+
+let EditFileMenu = $("#EditFileMenu").appendTo("body");

@@ -62,6 +62,24 @@
             </div>
         </div>
     </div>
+    <div id="EditFileMenu">
+
+        <div>
+            <div class="edit_file_heading_section">
+                 <img src="Images/Icons/text_file.svg"/>
+                <span class="edit_file_og_name">Tên tệp.txt</span>
+            </div>
+           
+            <div class="bar">
+                <span>
+                    Hủy bỏ
+                </span>
+                <span>
+                    Lưu
+                </span>
+            </div>
+        </div>
+    </div>
     <div id="DragDropMenu">
         <img  src="Images/Icons/code_file.svg" style="transform: translateX(-50%) translateY(-70%) translateX(-35%) rotate(-15deg) scale(.85);
     filter: brightness(0.6) drop-shadow(-1px 2px 6px black);"/>

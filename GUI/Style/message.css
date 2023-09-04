@@ -2363,3 +2363,55 @@ div, span {
         opacity: 1;
     }
 }
+
+
+#EditFileMenu{
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,.55);
+    position: absolute;
+    top:0;
+}
+
+    #EditFileMenu > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-70%);
+        background: #cedcff;
+        width: 45vw;
+        height: 35vh;
+        border-radius: 25px 25px 0 0;
+    }
+        #EditFileMenu > div > .bar {
+            z-index: -1;
+            width: 100%;
+            height: 35%;
+            bottom: 10px;
+            position: absolute;
+            transform: translateY(100%);
+            background: #afc2fb;
+            border-radius: 0 0 25px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            padding: 0 5%;
+        }
+
+.edit_file_heading_section {
+    display: flex; 
+    height: 25%;
+
+}
+    .edit_file_heading_section > span {
+        display: flex;
+        align-items: center;
+        color: #6761b3;
+     
+        flex-grow: 1;
+    }
+.edit_file_heading_section > img {
+    height: 200%;
+    transform: translateY(-45%);
+}

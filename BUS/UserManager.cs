@@ -203,6 +203,7 @@ namespace BUS
             var query = new InlineQuery();
             string sqlquery = $"UPDATE dbo.Users SET DisplayName = N'{empolyee.DisplayName}', Email = N'{empolyee.Email}', " +
                 $"AtCreate = '{empolyee.AtCreate.ToString("yyyy-MM-dd HH:mm:ss")}' WHERE Id = {empolyee.Id}";
+            Debug.WriteLine(sqlquery);  
             query.Execute(sqlquery);
 
             sqlquery = $"UPDATE dbo.UserInfor SET PhoneNumber = '{empolyee.PhoneNumber}', Job = N'{empolyee.Job}', " +

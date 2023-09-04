@@ -281,7 +281,7 @@
                 dataType: "json",
                 success: function (response) {
                     var userInfor = JSON.parse(response.d)
-
+                    console.log(response);
                     if (response.d != null) {
                         $("#lblDisplayName").text(userInfor.DisplayName);
                         $("#lblPhoneNumber").text(userInfor.PhoneNumber);
