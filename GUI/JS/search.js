@@ -820,7 +820,7 @@ function applySOV(editingSpan, search_option, new_text, rv) {
         navigateDate(new Date(real_value));
 
     }
-    else if (isDateOption) {
+    else if (isDateOption) {    
         active_date = null
         navigateDate(new Date(real_value));
 

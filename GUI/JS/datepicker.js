@@ -58,7 +58,6 @@ const navigateDate = function(input_date) {
         let display_val = day_str_value.split("-").reverse().join("-");
 
         let active_class = !!active_date && copied_Date.toDateString() == active_date.toDateString() && "date_select_active" || "";
-        console.log(`<span display_value='${display_val}' value='${day_str_value}' class="${active_class} ${darken ? "hidden_a_bit" : ""}" > ${ day }${ today_hr }</span >`);
         let span = $(`<span display_value='${display_val}' value='${day_str_value}' class="${active_class} ${darken ? "hidden_a_bit" : ""}">${day}${today_hr}</span>`);
 
         span.on("click", function () {
