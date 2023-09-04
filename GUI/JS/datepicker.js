@@ -86,8 +86,9 @@ function navigateDateWOffset(offset) {
 let datepick_observer = new MutationObserver(function (mutations) {
     console.log("changed date!!");
     mutations.forEach(function (mutationRecord) {
-    
-        navigateDate(new Date());
+        let sov = editingSpan.getAttribute("sov");
+        console.log(editingSpan.getAttribute("sov").split("||")[1]);    
+        navigateDate(!!editingSpan.getAttribute("sov") && new Date());
     });
 });
 
