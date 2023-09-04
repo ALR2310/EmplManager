@@ -667,8 +667,8 @@
         var delete_cd = {};
         function sendEdit(event) {
             let parent_ele = $(event.target).closest(".chat-main__item.chat_force_highlight.message_editing");
-            let edited_text = parent_ele.find(".mess_content.toRemove").text();
-            let og_text = parent_ele.find(".mess_content:not(.toRemove)").text().trim();
+            let edited_text = parent_ele.find(".mess_content.toRemove").html().replace("<br>","\n");
+            let og_text = parent_ele.find(".mess_content:not(.toRemove)").text();
 
             let toremove = $(".editingBoxes");
 
@@ -703,10 +703,10 @@
             let editing_boxes = mess_edit_template.clone();
             let editing = editing_boxes.find("p");
 
-            editing.on('input', onMessageEdit);
+            //editing.on('input', onMessageEdit);
 
-            const editing_str_content = replaceLastOccurrence(mess_content.text().trim(), "(đã chỉnh sửa)", "");
-            editing.html(editing_str_content);
+            console.log(Saved_Messages[editing_id].Content);
+            editing.html(Saved_Messages[editing_id].Content);
 
             editing.focus();
 

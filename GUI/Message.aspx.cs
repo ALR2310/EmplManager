@@ -194,7 +194,11 @@ namespace GUI
             {
                 InlineQuery query = new InlineQuery();
                 query.Execute($"exec edit_message @content = N'{content.Replace("'", "''")}', @mes_id = {id};");
-                hubContext.Clients.All.MessageEdited($"{{ \"id\": {id}, \"new_content\": \"{content}\"}}");
+                Dictionary<object, object> dict = new Dictionary<object, object>();
+                dict["id"] = id;
+                dict["new_content"] = content;
+                Debug.WriteLine(content);
+                hubContext.Clients.All.MessageEdited(JsonSerializer.Serialize(dict));
 
                 return success_str;
             }
