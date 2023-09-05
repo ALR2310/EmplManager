@@ -31,7 +31,8 @@
     #datepicker > grid > span {
         text-align: center;
         padding: 5px;
-        color:white;
+        color: white;
+        font-size: 1.25em;
     }
 .date_title {
     color: gray;
@@ -2365,25 +2366,28 @@ div, span {
 }
 
 
-#EditFileMenu{
+.EditFileMenu {
     width: 100%;
-    height:100%;
+    height: 100%;
     background: rgba(0,0,0,.55);
     position: absolute;
-    top:0;
+    top: 0;
+    z-index: 2;
 }
 
-    #EditFileMenu > div {
+    .EditFileMenu > div {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-70%);
         background: #cedcff;
         width: 45vw;
-        height: 35vh;
+        height: 30vh;
         border-radius: 25px 25px 0 0;
+        display: flex;
+        flex-direction:  column;
     }
-        #EditFileMenu > div > .bar {
+        .EditFileMenu > div > .bar {
             z-index: -1;
             width: 100%;
             height: 35%;
@@ -2408,10 +2412,53 @@ div, span {
         display: flex;
         align-items: center;
         color: #6761b3;
-     
+        font-size: 1.25em;
         flex-grow: 1;
+        user-select: none;
     }
 .edit_file_heading_section > img {
     height: 200%;
     transform: translateY(-45%);
+}
+
+.EditFileMenu > div > span {
+    user-select: none;
+}
+
+.EditFileMenu > div > *:not(div) {
+    margin: 0 15px;
+    padding: 15px 0 10px 0;
+    color: #4768a7;
+    font-size: 1.15em;
+}
+
+
+.EditFileMenu > div > input {
+    height: 20%;
+    border-radius: 15px;
+    padding: 0 5px;
+    font-size: 1.25em;
+    border-style: none;
+}
+
+.EditFileMenu > div > .bar > * {
+    padding: 15px;
+    color: #4768a7;
+    user-select: none;
+    cursor: pointer;
+}
+
+.file_details_savebutton {
+    background-color: #5a9de5;
+    border-radius: 5px;
+    color: white !important;
+    padding: 15px 25px !important;
+}
+
+[v-cloak]{
+    display: none;
+}
+
+#EditFileMenu{
+    display: none;
 }

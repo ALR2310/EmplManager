@@ -62,19 +62,22 @@
             </div>
         </div>
     </div>
-    <div id="EditFileMenu">
+    <div id="EditFileMenu"  v-cloak>
 
         <div>
             <div class="edit_file_heading_section">
                  <img src="Images/Icons/text_file.svg"/>
-                <span class="edit_file_og_name">Tên tệp.txt</span>
+                <span class="edit_file_og_name" >{{name}}</span>
             </div>
-           
+            <span>
+                Tên File
+            </span>
+            <input v-bind:value="name" v-model="inputval"  autocomplete="off" spellcheck="false"/>
             <div class="bar">
-                <span>
+                <span v-on:click="destroy_app();">
                     Hủy bỏ
                 </span>
-                <span>
+                <span v-on:click="save();" class="file_details_savebutton">
                     Lưu
                 </span>
             </div>
@@ -805,7 +808,7 @@
 
             let node_name = event.target.nodeName;
 
-            if (search_box.is(":focus") || node_name == "DIV" || node_name == "TEXTAREA" || node_name == "P" || node_name == "SPAN") {
+            if (search_box.is(":focus") || node_name == "INPUT" || node_name == "DIV" || node_name == "TEXTAREA" || node_name == "P" || node_name == "SPAN") {
 
                 return
             };
@@ -953,5 +956,6 @@
     <script src="JS/signalr_connection.js"></script>
     <script src="JS/client_interact.js"></script>
     <script src="JS/datepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 </asp:Content>
 

@@ -8,6 +8,48 @@ let upload_preview = $("#uploadPreview");
 let upload_template = $("#uploadPreviewTemplate");
 
 var fileArray = [];
+var file_object;
+
+function renameFile(file, newName) {
+    return new File([file], newName, { type: file.type });
+
+}
+function editFile(insertedTick) {
+ 
+    file_object = fileArray.find(obj => obj.insertedTick === insertedTick);
+    console.log(fileArray);
+    console.log(insertedTick);
+    console.log(file_object);
+    let ele = $("#EditFileMenu").clone();
+    ele.attr("id", "");
+    ele.addClass("EditFileMenu");
+    ele.appendTo("body");
+
+    let app = new Vue({
+        el: ele[0],
+        data: {
+            name: file_object.name,
+            inputval: file_object.name
+        },
+        methods: {
+            destroy_app() {
+
+                $(".EditFileMenu").remove();
+                this.$destroy();
+            },
+            save() {
+                let new_file = renameFile(file_object, this.inputval);
+                new_file.insertedTick = insertedTick;
+                fileArray[fileArray.indexOf(file_object)] = new_file;
+                $(`.filePreview[insertedTick='${insertedTick}']`).find("span").text(this.inputval);
+
+                this.destroy_app();
+            }
+        }
+    });
+
+    
+}
 function excludeFile(insertedTick) {
     // Filter out the file with the given lastModified value
     fileArray = fileArray.filter(file => file.insertedTick != insertedTick);
@@ -60,6 +102,7 @@ var reload_attached_files = function () {
         insertedTick = btoa(insertedTick);
      
         file.insertedTick = insertedTick;
+        upload_ele.find(".edit_button").attr("onclick", `editFile('${insertedTick}')`);
         upload_ele.find(".delete_button").attr("onclick", `excludeFile('${insertedTick}')`);
         upload_ele.attr("insertedTick", insertedTick);
         let extension = file.name.split('.');
