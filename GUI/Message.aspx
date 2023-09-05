@@ -66,7 +66,7 @@
 
         <div>
             <div class="edit_file_heading_section">
-                 <img src="Images/Icons/text_file.svg"/>
+                 <img :src="icon_url"/>
                 <span class="edit_file_og_name" >{{name}}</span>
             </div>
             <span>

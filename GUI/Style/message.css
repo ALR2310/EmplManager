@@ -700,16 +700,16 @@
         }
 
 .button_red_highlight:hover {
-    /* background-color: red !important; */
+    background-color: red !important;
 }
 
     .button_red_highlight:hover > input {
-        /* background-color: red !important; */
+        background-color: red !important;
         color: white !important;
     }
 
     .button_red_highlight:hover > img {
-        /* background-color: red !important; */
+        background-color: red !important;
         filter: none;
     }
 
@@ -1605,16 +1605,16 @@ textarea {
         }
 
 .button_red_highlight:hover {
-    /* background-color: red !important; */
+    background-color: red !important;
 }
 
     .button_red_highlight:hover > input {
-        /* background-color: red !important; */
+        background-color: red !important;
         color: white !important;
     }
 
     .button_red_highlight:hover > img {
-        /* background-color: red !important; */
+        background-color: red !important;
         filter: none;
     }
 
@@ -2399,14 +2399,15 @@ div, span {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 5px;
+            gap: 15px;
             padding: 0 5%;
         }
 
 .edit_file_heading_section {
-    display: flex; 
+    display: flex;
     height: 25%;
-
+    margin: 0 0 2.5% 2.5%;
+    gap: 15px;
 }
     .edit_file_heading_section > span {
         display: flex;
@@ -2419,6 +2420,7 @@ div, span {
 .edit_file_heading_section > img {
     height: 200%;
     transform: translateY(-45%);
+    border-radius: 15px;
 }
 
 .EditFileMenu > div > span {

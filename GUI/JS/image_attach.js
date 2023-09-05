@@ -25,11 +25,13 @@ function editFile(insertedTick) {
     ele.addClass("EditFileMenu");
     ele.appendTo("body");
 
+    let url = $(`.filePreview[insertedTick='${insertedTick}']`).find(".preview_image").attr("src")
     let app = new Vue({
         el: ele[0],
         data: {
             name: file_object.name,
-            inputval: file_object.name
+            inputval: file_object.name,
+            icon_url: url
         },
         methods: {
             destroy_app() {
