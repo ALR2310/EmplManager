@@ -204,7 +204,7 @@ var bound_reaction_lists = {};
 const emoji_speech_limit = 1;
 async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id) {
     bound_reaction_lists[message_id] = list;
-    var scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
+    let scroll_to_bottom_again = emoji_list_element.find(".emoji_display").length == 0 && getScrollPos() == 0;
     const emoji_display = $("#emoji_display_placeholder").clone();
     emoji_display.css("display", "unset");
     emoji_display.attr("id", null);
@@ -265,11 +265,11 @@ async function renderEmojiButton(emoji_list_element, list, emoji_id, message_id)
     emoji_display.find(".emoji_emoji").attr("src", emoji_id_to_emoji_txt[emoji_id - 1]);
 
 
-    var contains_own_reaction = list.indexOf(Users.CLIENT_USER.Id) != -1;
+    let contains_own_reaction = list.indexOf(Users.CLIENT_USER.Id) != -1;
     emoji_display.addClass(contains_own_reaction ? "emoji_display_active" : "");
 
 
-    var revokeCooldown = false;
+    let revokeCooldown = false;
 
     if (RenderedMessageReaction[message_id] == null) RenderedMessageReaction[message_id] = {};
 
@@ -442,7 +442,7 @@ async function renderMessage(message, isNewMessage) {
 
 
     setTimeout(function () {
-        var emoji_list_ele = $(`.chat-main__item[message_id=${message["Id"]}]`).find(".emoji_list");
+        let emoji_list_ele = $(`.chat-main__item[message_id=${message["Id"]}]`).find(".emoji_list");
         if (message.Reactions != null) {
 
 
@@ -708,27 +708,27 @@ function sendMessage() {
 
 
 function AssignNewNum(num, emoji_display_ele, key) {
-    var ncount = emoji_display_ele.find(".ncount");
-    var ogcount = emoji_display_ele.find(".ogcount");
+    let ncount = emoji_display_ele.find(".ncount");
+    let ogcount = emoji_display_ele.find(".ogcount");
 
     let last_num = last_num_list[key];
 
-    var islarger = last_num >= num;
+    let islarger = last_num >= num;
 
 
 
     last_num_list[key] = num;
 
 
-    var og_num_txt = islarger ? last_num : num;
-    var ncount_txt = islarger ? num : last_num;
+    let og_num_txt = islarger ? last_num : num;
+    let ncount_txt = islarger ? num : last_num;
 
 
     ogcount.text(og_num_txt);
     ncount.text(ncount_txt);
 
 
-    var count_wrapper = emoji_display_ele.find(".count");
+    let count_wrapper = emoji_display_ele.find(".count");
     count_wrapper.removeClass('new_count_anim new_count_reverse_anim');
     setTimeout(function () {
         count_wrapper.addClass(islarger ? 'new_count_anim' : 'new_count_reverse_anim');
@@ -742,13 +742,13 @@ function AssignNewNum(num, emoji_display_ele, key) {
 
 const UpdateMessageReaction = function (data) {
 
-    var message_id = data.Message_Id;
-    var emoji_id = data.Emoji_Id;
-    var emoji_list_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".emoji_list");
+    let message_id = data.Message_Id;
+    let emoji_id = data.Emoji_Id;
+    let emoji_list_ele = $(`.chat-main__item[message_id=${message_id}]`).find(".emoji_list");
 
-    var isRendered = !(RenderedMessageReaction[message_id] == null || RenderedMessageReaction[message_id][emoji_id] == null);
+    let isRendered = !(RenderedMessageReaction[message_id] == null || RenderedMessageReaction[message_id][emoji_id] == null);
     if (data.Reaction_Ids == null && isRendered) {
-        var element = RenderedMessageReaction[message_id][emoji_id];
+        let element = RenderedMessageReaction[message_id][emoji_id];
         element.remove();
         element.off("click");
         RenderedMessageReaction[message_id][emoji_id] = null;
@@ -759,9 +759,9 @@ const UpdateMessageReaction = function (data) {
         renderEmojiButton(emoji_list_ele, data.Reaction_Ids, emoji_id, message_id);
         return;
     }
-    var contains_own_reaction = data.Reaction_Ids.indexOf(Users.CLIENT_USER.Id) != -1;
+    let contains_own_reaction = data.Reaction_Ids.indexOf(Users.CLIENT_USER.Id) != -1;
 
-    var emoji_display = emoji_list_ele.find(`.emoji_display[emoji_id=${emoji_id}]`);
+    let emoji_display = emoji_list_ele.find(`.emoji_display[emoji_id=${emoji_id}]`);
     emoji_display.toggleClass("emoji_display_active", contains_own_reaction);
     AssignNewNum(data.Reaction_Ids.length, emoji_display, message_id + '' + emoji_id);
 }

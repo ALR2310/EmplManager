@@ -1,0 +1,4 @@
+﻿.layout-dark #search-box > div:not(#search_last_span) {
+    background-color: #c5c5c56b;
+    color: white;
+}

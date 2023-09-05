@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="Style/modal.css" />
     <link rel="stylesheet" href="Style/emoji_list.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
+    <link rel="stylesheet" href="Style/message_dark_theme.css" />
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>
 </asp:Content>

@@ -361,7 +361,7 @@
     border-radius: 15px;
     background: blue;
     content: "";
-    animation: search-message-highlight 2s;
+    animation: search-message-highlight 1.5s;
     animation-fill-mode: forwards;
 }
 
@@ -1266,25 +1266,25 @@ textarea {
     border-radius: 15px;
     background: blue;
     content: "";
-    animation: search-message-highlight 2s;
+    animation: search-message-highlight 1.5s;
     animation-fill-mode: forwards;
 }
 
 @keyframes search-message-highlight {
     0% {
-        background: rgba(170, 224, 255,0);
+        background: rgba(95, 180, 255,0);
     }
 
-    25% {
-        background: rgba(170, 224, 255,1);
+    45% {
+        background: rgba(95, 180, 255,1);
     }
 
-    75% {
-        background: rgba(170, 224, 255,1);
+    65% {
+        background: rgba(95, 180, 255,1);
     }
 
     100% {
-        background: rgba(170, 224, 255,0);
+        background: rgba(95, 180, 255,0);
     }
 }
 
@@ -1892,13 +1892,13 @@ textarea {
     #search_messages_pages > a, #numberic_buttons > * {
         display: flex;
         align-items: center;
-        color: #5889ce;
+        color: var(--primary-text-color);
         flex-wrap: wrap;
         cursor: pointer;
     }
 
 #numberic_buttons > .highlight {
-    background: #cbe1ff !important;
+    background: #6c7179 !important;
 }
         #search_messages_pages > a:hover, #numberic_buttons > *:hover {
             background: #6f7e912b;
@@ -1910,7 +1910,7 @@ textarea {
 
 #fake_messages > span {
     padding: 5px;
-    color: #5889ce;
+    color: var(--primary-text-color);
 }
 
 .preview_play_button {
@@ -2260,6 +2260,7 @@ div, span {
     max-height: 200px;
 }
 #txt_Message {
+    background-color: #f3f3f3;
     height: 100%;
     padding: 10px;
     display: flex;
@@ -2367,6 +2368,7 @@ div, span {
 
 
 .EditFileMenu {
+    background: rgba(0,0,0,.75);
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,.55);
@@ -2463,4 +2465,8 @@ div, span {
 
 #EditFileMenu{
     display: none;
+}
+
+.layout-dark .filePreview {
+    background: var(--dark0-color);
 }
