@@ -162,7 +162,12 @@ var notificationContainer = document.querySelector('.Notification-container');
 // Thêm sự kiện click vào Notification-icon
 notificationIcon.addEventListener('click', function () {
     notificationContainer.classList.toggle('hide');
-    limitText(document.querySelector('.Noti-desc p'), 60);
+
+    // Lấy tất cả các phần tử p trong .Noti-desc và giới hạn văn bản cho mỗi phần tử p
+    var descParagraphs = document.querySelectorAll('.Noti-desc p');
+    descParagraphs.forEach(function (paragraph) {
+        limitText(paragraph, 60);
+    });
 });
 
 // Thêm sự kiện click chuột ra ngoài phạm vi của Notification
@@ -181,21 +186,24 @@ function toggleDarkmode(action) {
     divDark = document.getElementById("darkmode-moon");
     divLight = document.getElementById("darkmode-sun");
 
-    if (action == "dark") {
-        divDark.classList.add("hide");
-        divLight.classList.remove("hide");
+    action == "dark" ?
+        (divDark.classList.add("hide"),
+            divLight.classList.remove("hide"),
+            localStorage.setItem('navbarTheme', 'dark'),
+            localStorage.setItem('sidebarTheme', 'dark'),
+            localStorage.setItem('layoutTheme', 'dark'),
+            $("#stLayoutDark").prop("checked", true),
+            $("#stTopbarDark").prop("checked", true),
+            $("#stSideBarDark").prop("checked", true)) :
+        (divDark.classList.remove("hide"),
+            divLight.classList.add("hide"),
+            localStorage.removeItem('navbarTheme'),
+            localStorage.removeItem('sidebarTheme'),
+            localStorage.removeItem('layoutTheme'),
+            $("#stLayoutLight").prop("checked", true),
+            $("#stTopbarLight").prop("checked", true),
+            $("#stSideBarLight").prop("checked", true));
 
-        localStorage.setItem('navbarTheme', 'dark');
-        localStorage.setItem('sidebarTheme', 'dark');
-        localStorage.setItem('layoutTheme', 'dark');
-    } else {
-        divDark.classList.remove("hide");
-        divLight.classList.add("hide");
-
-        localStorage.removeItem('navbarTheme');
-        localStorage.removeItem('sidebarTheme');
-        localStorage.removeItem('layoutTheme');
-    }
     handleLayoutTheme();
     handleNavbarTheme();
     handleSidebarTheme();
@@ -208,18 +216,22 @@ function handleLayoutTheme() {
         ".content",
         ".modal-vertical__container",
         ".UIdetail-modal-delete",
-        ".usrdetail-modal-email"
+        ".usrdetail-modal-email",
+        ".nav",
+        ".sidebar",
+        ".chat-ellips__dropdown__menu",
+        ".userInfor-body",
+        ".modalSetting"
     ];
 
     elements.forEach(element => {
         const el = document.querySelector(element);
-        if (theme === 'dark') {
-            el.classList.add("layout-dark");
-        } else {
-            el.classList.remove("layout-dark");
+        if (el) {
+            el.classList.toggle("layout-dark", theme === 'dark');
         }
     });
 }
+
 handleLayoutTheme();
 
 //function thay đổi màu navbar
@@ -256,6 +268,50 @@ handleSidebarTheme();
 
 
 //function cho phần setting:
+$('input[name="stLayout"]').change(function () {
+    var selectedLayoutValue = $('input[name="stLayout"]:checked').attr('id');
+
+    divDark = document.getElementById("darkmode-moon");
+    divLight = document.getElementById("darkmode-sun");
+
+    if (selectedLayoutValue === 'stLayoutDark') {
+        $("#stTopbarDark").prop('checked', true);
+        $("#stSideBarDark").prop('checked', true);
+        divDark.classList.add("hide");
+        divLight.classList.remove("hide");
+    } else if (selectedLayoutValue === 'stLayoutBrand') {
+        $("#stTopbarBrand").prop('checked', true);
+        $("#stSidebarBrand").prop('checked', true);
+    } else {
+        $("#stTopbarLight").prop('checked', true);
+        $("#stSideBarLight").prop('checked', true);
+        divDark.classList.remove("hide");
+        divLight.classList.add("hide");
+    }
+});
+
+$('input[name="stLayout"]').change(function () {
+    if ($(this).is(':checked')) {
+        var selectedValue = $(this).attr('id');
+        var themes = {
+            'stLayoutLight': 'default',
+            'stLayoutDark': 'dark',
+            'stLayoutBrand': 'brand'
+        };
+
+        if (selectedValue in themes) {
+            var theme = themes[selectedValue];
+            localStorage.setItem('layoutTheme', theme);
+            localStorage.setItem('navbarTheme', theme);
+            localStorage.setItem('sidebarTheme', theme);
+            handleLayoutTheme();
+            handleNavbarTheme();
+            handleSidebarTheme();
+            $("#" + selectedValue).attr('checked', true);
+            console.log("change " + theme + " theme");
+        }
+    }
+});
 
 $('input[name="stTopbar"]').change(function () {
     if ($(this).is(':checked')) {

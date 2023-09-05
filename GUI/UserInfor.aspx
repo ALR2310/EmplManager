@@ -151,13 +151,6 @@
     </div>
 
     <script>
-
-
-
-
-
-
-
         //Upload Avatar
         function uploadFile() {
             var fileInput = document.getElementById('file-upload');
@@ -198,18 +191,6 @@
                 reader.readAsDataURL(selectedFile);
             };
         };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Data;
 using DAL;
 using SubSonic;
+using System.IO;
 
 namespace GUI
 {
@@ -29,6 +30,10 @@ namespace GUI
                 lblCurrentId.Text = UserFromCookie.Id.ToString();
             }
 
+            if (Request.Files.Count > 0)
+            {
+                UpLoadImage();
+            }
         }
 
         public void LoadEmpolyee()
@@ -173,6 +178,39 @@ namespace GUI
             return false;
         }
 
+        protected void UpLoadImage()
+        {
+            if (Request.Files.Count > 0)
+            {
+                HttpPostedFile uploadedFile = Request.Files[0];
+                if (uploadedFile != null && uploadedFile.ContentLength > 0)
+                {
+                    string uploadFolderPath = Server.MapPath("~/Images/Avatar/Uploads/");
+                    string fileName = Path.GetFileName(uploadedFile.FileName);
 
+                    // Đổi tên tập tin nếu tên đã tồn tại trong thư mục
+                    int counter = 1;
+                    string newFileName = fileName;
+
+                    while (File.Exists(Path.Combine(uploadFolderPath, newFileName)))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                        string fileExtension = Path.GetExtension(fileName);
+
+                        newFileName = $"{fileNameWithoutExtension}_{counter}{fileExtension}";
+                        counter++;
+                    }
+
+                    string filePath = Path.Combine(uploadFolderPath, newFileName);
+
+                    uploadedFile.SaveAs(filePath);
+
+                    string userId = Request.Form["userId"];
+                    string AvatarPath = "/Images/Avatar/Uploads/" + newFileName;
+
+                    UserManager.UpdateAvatarUrl(AvatarPath, Convert.ToInt32(userId));
+                }
+            }
+        }
     }
 }
