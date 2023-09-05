@@ -345,26 +345,30 @@
     background-color: var(--dark6-color);
 }
 
-    .layout-dark .button_red_highlight:hover,
-    .layout-dark .chat-ellips__dropdown__menu li:hover {
-        background-color: var(--dark0-color);
-    }
+.layout-dark .button_red_highlight:hover,
+.layout-dark .chat-ellips__dropdown__menu li:hover {
+    background-color: var(--dark0-color);
+}
 
-    .layout-dark.chat-ellips__dropdown__menu .edit_button input {
-        color: #ccc;
-    }
+.layout-dark.chat-ellips__dropdown__menu .edit_button input {
+    color: #ccc;
+}
 
-    .layout-dark.chat-ellips__dropdown__menu .delete_button input {
-        color: #dc3545 !important;
-    }
-
-.layout-dark .edit_button img {
+.layout-dark.chat-ellips__dropdown__menu .delete_button:hover > input {
+    color: white !important;
+}
+.layout-dark .button_red_highlight:hover > img{
+    filter: none;
+}
+.chat-ellips__dropdown__menu > .edit_button > img {
     filter: invert(87%) sepia(3%) saturate(13%) hue-rotate(314deg) brightness(95%) contrast(91%);
 }
 
 .layout-dark .delete_button img {
     filter: invert(41%) sepia(79%) saturate(6053%) hue-rotate(338deg) brightness(92%) contrast(87%);
 }
+
+
 
 .layout-dark .button_red_highlight:hover input,
 .layout-dark .button_red_highlight:hover img {
@@ -584,3 +588,7 @@
     .layout-dark .search_user_table > a > div {
         color: #62b0ff;
     }
+
+.layout-dark .filePreviewToolbar > * {
+    background: #3d3d3d;
+}
