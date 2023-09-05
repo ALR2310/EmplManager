@@ -699,16 +699,16 @@
         }
 
 .button_red_highlight:hover {
-    background-color: red !important;
+    /* background-color: red !important; */
 }
 
     .button_red_highlight:hover > input {
-        background-color: red !important;
+        /* background-color: red !important; */
         color: white !important;
     }
 
     .button_red_highlight:hover > img {
-        background-color: red !important;
+        /* background-color: red !important; */
         filter: none;
     }
 
@@ -1604,16 +1604,16 @@ textarea {
         }
 
 .button_red_highlight:hover {
-    background-color: red !important;
+    /* background-color: red !important; */
 }
 
     .button_red_highlight:hover > input {
-        background-color: red !important;
+        /* background-color: red !important; */
         color: white !important;
     }
 
     .button_red_highlight:hover > img {
-        background-color: red !important;
+        /* background-color: red !important; */
         filter: none;
     }
 

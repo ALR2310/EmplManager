@@ -74,6 +74,13 @@
     color: white;
 }
 
+.topbar-dark .search-box__input {
+    background-color: var(--gray-bland-color);
+}
+
+.topbar-dark .search-box__btn {
+    background-color: var(--primary-blue-color);
+}
 
 /*Brand NavBar*/
 .topbar-brand.nav {
@@ -131,7 +138,7 @@
 }
 
 .layout-dark .employee-body-card {
-    background-color: #666666;
+    background-color: #778496;
 }
 
 .layout-dark .employee-card__body-name {
@@ -236,6 +243,7 @@
 .layout-dark .userInfor-Detail__editor input {
     background-color: transparent;
     color: white;
+    color-scheme: dark;
 }
 
 .layout-dark .userInfor-Detail__editor p {
@@ -295,3 +303,211 @@
     .layout-dark #tblEmail_recipients::placeholder {
         color: white;
     }
+
+.layout-dark .btn btn-chat-footer {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .btn-chat-footer {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark #attachMenuButton img {
+    background-color: white;
+    border-radius: 50%
+}
+
+.layout-dark .chat-wrapper span {
+    color: #cccccc;
+}
+
+.layout-dark .time-gap div {
+    color: #cccccc
+}
+
+.layout-dark.sidebar,
+.layout-dark.nav {
+    border-color: #878787;
+}
+
+.layout-dark .chat-header__title p {
+    color: white;
+}
+
+.layout-dark .chat-ellips__emoji__toggle:hover,
+.layout-dark .chat-ellips__dropdown__toggle:hover {
+    background-color: var(--dark4-color);
+}
+
+.layout-dark .chat-ellips__dropdown__menu,
+.layout-dark .chat-ellips__show_emoji {
+    background-color: var(--dark6-color);
+}
+
+    .layout-dark .button_red_highlight:hover,
+    .layout-dark .chat-ellips__dropdown__menu li:hover {
+        background-color: var(--dark0-color);
+    }
+
+    .layout-dark.chat-ellips__dropdown__menu .edit_button input {
+        color: #ccc;
+    }
+
+    .layout-dark.chat-ellips__dropdown__menu .delete_button input {
+        color: #dc3545 !important;
+    }
+
+.layout-dark .edit_button img {
+    filter: invert(87%) sepia(3%) saturate(13%) hue-rotate(314deg) brightness(95%) contrast(91%);
+}
+
+.layout-dark .delete_button img {
+    filter: invert(41%) sepia(79%) saturate(6053%) hue-rotate(338deg) brightness(92%) contrast(87%);
+}
+
+.layout-dark .button_red_highlight:hover input,
+.layout-dark .button_red_highlight:hover img {
+    background: none;
+}
+
+.layout-dark #search_open {
+    color: white;
+}
+
+.layout-dark .chat__search-box__btn {
+    color: white;
+}
+
+.layout-dark .Notification-container {
+    background-color: var(--dark4-color);
+}
+
+.layout-dark .Noti-Item:hover {
+    background-color: var(--dark3-color);
+}
+
+.layout-dark .Notification-header p {
+    color: white;
+}
+
+.layout-dark .Notification-header a {
+    color: #c8c8c8;
+}
+
+.layout-dark .Noti-desc h5 {
+    color: white;
+}
+
+.layout-dark .Noti-desc p {
+    color: #c8c8c8;
+}
+
+.layout-dark .Noti-desc span {
+    color: #c8c8c8;
+}
+
+.layout-dark .Notification-footer a {
+    color: var(--primary-blue-color);
+}
+
+.layout-dark .language_content {
+    background-color: var(--dark4-color);
+    color: white;
+}
+
+    .layout-dark .language_content a {
+        border-radius: 5px;
+    }
+
+        .layout-dark .language_content a:hover {
+            background-color: var(--dark3-color);
+        }
+
+.layout-dark .userInfor-header-desc h4,
+.layout-dark .userInfor-header-desc h5 {
+    color: white;
+}
+
+.layout-dark .userInfor-header-desc p {
+    color: #b4b4b4;
+}
+
+.layout-dark .divInforStatus p {
+    color: #b4b4b4;
+}
+
+.layout-dark .userInfor-body-title {
+    color: white;
+}
+
+.layout-dark .userInfor-body-desc p {
+    color: white;
+}
+
+.layout-dark .userInfor-body-desc select,
+.layout-dark .userInfor-body-desc input,
+.layout-dark .userInfor-body-desc span {
+    color: #b9c7d7;
+    color-scheme: dark;
+}
+
+
+
+.layout-dark .userInfor-body-desc input,
+.layout-dark .userInfor-body-desc select {
+    background-color: var(--dark5-color);
+}
+
+.layout-dark .custom-file-upload {
+    color: white;
+}
+
+.layout-dark.modalSetting .modalSetting_content {
+    background-color: var(--dark4-color);
+}
+
+.layout-dark .modalSetting_content h2 {
+    color: white;
+}
+
+.layout-dark .modalSetting_content_radioGroup h6 {
+    color: white;
+}
+
+.layout-dark .MdradioGroup label {
+    color: white;
+}
+
+.layout-dark #txt_Message {
+    background-color: darkgray;
+}
+
+.layout-dark .chat-ellips__dropdown button i {
+    color: darkgray;
+}
+
+.layout-dark .btnUserType,
+.layout-dark .modal-email-Content-action button:last-child {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .sidebar-item__link.active i {
+    color: var(--primary-blue-color);
+}
+
+.layout-dark .sidebar-item__link.active .speech {
+    background-color: var(--primary-blue-color);
+}
+
+    .layout-dark .sidebar-item__link.active .speech::after {
+        border-right-color: var(--primary-blue-color);
+    }
+
+.layout-dark .btnEdit {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .userInfor__image label {
+    background-color: var(--dark5-color);
+    color: var(--gray-bland-color);
+}

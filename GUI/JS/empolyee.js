@@ -708,23 +708,6 @@ function getDataforClickShow(element) {
                 $("#lblGender").text(empolyeeInfo.Gender);
                 $("#lblAddress").text(empolyeeInfo.Address);
 
-                console.log(empolyeeInfo)
-
-                //if (empolyeeInfo.PhoneNumber == null || "") { $("#lblPhoneNumber").text("Không có thông tin"); $("#lblPhoneNumber").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblPhoneNumber").css("color", "black") };
-                //if (empolyeeInfo.Job == null || "") { $("#lblJob1").text("Không có thông tin"); $("#lblJob1").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblJob1").css("color", "black") };
-                //if (empolyeeInfo.Department == null || "") { $("#lblDepartment").text("Không có thông tin"); $("#lblDepartment").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblDepartment").css("color", "black") };
-                //if (empolyeeInfo.Gender == null || "") { $("#lblGender").text("Không có thông tin"); $("#lblGender").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblGender").css("color", "black") };
-                //if (empolyeeInfo.DateOfBirth == "0001-01-01T00:00:00") { $("#lblDateOfBirth").text("Không có thông tin"); $("#lblDateOfBirth").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblDateOfBirth").css("color", "black") };
-                //if (empolyeeInfo.Address == null || "") { $("#lblAddress").text("Không có thông tin"); $("#lblAddress").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblAddress").css("color", "black") };
-                //if (empolyeeInfo.GoogleId == null || "") { $("#lblGoogleId").text("Không có thông tin"); $("#lblGoogleId").css("color", "rgb(118, 118, 118)") }
-                //else { $("#lblGoogleId").css("color", "black") };
-
                 const propertiesToCheck = [
                     { property: empolyeeInfo.PhoneNumber, label: "#lblPhoneNumber" },
                     { property: empolyeeInfo.Job, label: "#lblJob1" },
@@ -1042,6 +1025,8 @@ function UpdateInforEmpolyee() {
             showErrorToast("Có lỗi xảy ra khi cập nhật dữ liệu, vui lòng kiểm tra lại");
         }
     });
+
+    uploadFile(); //cập nhật hình ảnh
 }
 
 
@@ -1363,3 +1348,69 @@ function checkCurrentUserType() {
     })
 }
 checkCurrentUserType()
+
+
+
+
+
+
+
+
+
+
+//Xem trước hình ảnh
+function previewImageFile(event) {
+    var imgElement = document.getElementById('AvatarImg');
+
+    var selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+        var reader = new FileReader();
+
+        // Đọc tập tin và cập nhật thuộc tính src của thẻ img
+        reader.onload = function (e) {
+            imgElement.src = e.target.result;
+
+            var CardImages = document.querySelectorAll(".employee-card__body-avatar img");
+            const Idinfor = $("#lblUserId").text();
+
+            CardImages.forEach((cardimg) => {
+
+                const Idimage = cardimg.getAttribute("id");
+
+                if (Idimage == Idinfor) {
+                    cardimg.src = e.target.result;
+                }
+            });
+        }
+
+        // Đọc dữ liệu tập tin như URL dạng base64
+        reader.readAsDataURL(selectedFile);
+    };
+};
+
+
+
+//Upload Avatar
+function uploadFile() {
+    var fileInput = document.getElementById('avatar-upload');
+    var file = fileInput.files[0];
+
+    if (file) {
+        var userId = $("#lblUserId").text(); console.log(userId);
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('userId', userId);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'Empolyee.aspx', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Upload avatar success");
+
+
+            }
+        };
+        xhr.send(formData);
+    }
+}

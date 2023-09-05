@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/Style/modal.css" />
     <link rel="stylesheet" href="Style/speech_bubble.css" />
     <link rel="stylesheet" href="Style/layout.css" />
-    <link rel="stylesheet" href="Style/settings.css" />
+    <link rel="stylesheet" href="Style/theme.css" />
     <link rel="icon" href="Images/sweetsoft-logo.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -66,7 +66,7 @@
                         <button type="button" class="btn-menuleft">
                             <i class="fa-solid fa-bars"></i>
                         </button>
-                        <div class="search-box">
+                        <div class="search-box hide">
                             <asp:TextBox runat="server" ID="txtSearch" class="search-box__input" placeholder="Tìm Kiếm" type="text"></asp:TextBox>
                             <button type="button" class="search-box__btn" onclick="handleSearchClick(event)">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -118,22 +118,21 @@
                                 </div>
 
                                 <div class="Notification-content">
-                                    <a href="#" class="Noti-Item">
+                                    <p class="Noti_none">Hooray, bạn hiện không có thông báo nào!</p>
+
+                                    <%--<a href="#" class="Noti-Item">
                                         <div class="Noti-userAvatar">
                                             <img src="Images/avatar-1.jpg" />
                                         </div>
-
                                         <div class="Noti-desc">
                                             <h5>Lê Thanh An</h5>
-                                            <p>
-                                                Nó sẽ có vẻ giống như tiếng Anh đơn giản. Là một người bạn Cambridge hoài nghi của tôi, người phương Tây.
-                                            </p>
+                                            <p>Nó sẽ có vẻ giống như tiếng Anh đơn giản. Là một người bạn Cambridge hoài nghi của tôi, người phương Tây.</p>
                                             <span>
                                                 <i class="fa-regular fa-clock"></i>
                                                 1 giờ trước
                                             </span>
                                         </div>
-                                    </a>
+                                    </a>--%>
                                 </div>
 
                                 <div class="Notification-footer">
@@ -244,11 +243,11 @@
                             <h6>Bố Cục</h6>
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
-                                    <input id="stVertical" type="radio" name="stLayout" checked="checked" />
+                                    <input id="stVertical" type="radio" name="stLayoutt" checked="checked" />
                                     <label for="stVertical">Chiều Dọc</label>
                                 </div>
                                 <div class="MdradioGroup">
-                                    <input id="stHorizontal" type="radio" name="stLayout" />
+                                    <input id="stHorizontal" type="radio" name="stLayoutt" />
                                     <label for="stHorizontal">Chiều Ngang</label>
                                 </div>
                             </div>
@@ -256,15 +255,15 @@
                             <h6 class="mrgn">Chế độ bố cục</h6>
                             <div class="radioGroup_Container">
                                 <div class="MdradioGroup">
-                                    <input id="stLayoutLight" type="radio" name="stLayoutMode" checked="checked" />
+                                    <input id="stLayoutLight" type="radio" name="stLayout" checked="checked" />
                                     <label for="stLayoutLight">Sáng</label>
                                 </div>
                                 <div class="MdradioGroup">
-                                    <input id="stLayoutDark" type="radio" name="stLayoutMode" />
+                                    <input id="stLayoutDark" type="radio" name="stLayout" />
                                     <label for="stLayoutDark">Tối</label>
                                 </div>
                                 <div class="MdradioGroup">
-                                    <input id="stLayoutBrand" type="radio" name="stLayoutMode" />
+                                    <input id="stLayoutBrand" type="radio" name="stLayout" />
                                     <label for="stLayoutBrand">Thương Hiệu</label>
                                 </div>
                             </div>

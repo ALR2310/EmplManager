@@ -120,7 +120,7 @@
                                             <div class="employee-card__body">
                                                 <a class="employee-card__body-avatar" title="Xem Thông Tin Chi Tiết"
                                                     commandargument='<%# Eval("Id") %>' onclick="getDataforClickShow(this)">
-                                                    <img alt="" src="<%# Eval("Avatar") %>" />
+                                                    <img id='<%#Eval("Id") %>' src="<%# Eval("Avatar") %>" />
                                                 </a>
 
                                                 <div class="employee-card__body-name">
@@ -185,6 +185,10 @@
                     <div class="userInfor__image">
                         <img id="AvatarImg" alt="" src="#" />
                         <button id="userIdinfor" type="button" class="employee-card__header-status Active">Active</button>
+
+
+                        <input type="file" id="avatar-upload" name="avatar" onchange="previewImageFile(event)" accept="image/png, image/jpeg" />
+                        <label for="avatar-upload">Tải Lên Avatar</label>
                     </div>
                     <div class="userInfor__desc">
                         <p>
