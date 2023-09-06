@@ -167,7 +167,7 @@ namespace GUI
             User user = new User
             {
                 Id = Convert.ToInt32(Id),
-                UserType = 1,
+                UserType = 2,
             };
             List<User> result = EmpolyeeManager.CheckCurrentUserType(user);
 

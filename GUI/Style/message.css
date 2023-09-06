@@ -2475,7 +2475,8 @@ div, span {
     background: var(--dark0-color);
 }
 
-.attached_file > img, .preview_image, .edit_file_heading_section > img {
-    filter: drop-shadow(3px 5px 5px rgb(0 0 0 / .8));
+.attached_file > img, .preview_image:not(.not_default), .edit_file_heading_section > img {
+    filter: drop-shadow(3px 3px 3px rgb(0 0 0 / .6));
 }
+
 
