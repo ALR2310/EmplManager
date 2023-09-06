@@ -611,3 +611,7 @@
         color: white;
     }
 
+
+    .layout-dark .language_content::before {
+        border-color: transparent transparent var(--dark4-color) transparent;
+    }

@@ -2,3 +2,139 @@
     background-color: #c5c5c56b;
     color: white;
 }
+.layout-dark .chat-item__box {
+    background: #484951;
+}
+
+.layout-dark #txt_Message_wrapper {
+    border: none;
+    background-color: #636771;
+}
+
+.layout-dark #txt_Message {
+    background-color: #636771;
+}
+
+    .layout-dark #txt_Message:empty::before {
+        color: white;
+    }
+
+.layout-dark .chat-ellips__dropdown button i {
+    color: darkgray;
+}
+
+.layout-dark .btnUserType,
+.layout-dark .modal-email-Content-action button:last-child {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .count > span {
+    color: white;
+}
+
+.layout-dark .attached_files > .attached_file {
+    background: #535377;
+    border: #3f474e solid;
+}
+
+.layout-dark .chat-main__item[owner='true'] .chat-item__box {
+    background: var(--dark-owner-mess-color);
+}
+
+.layout-dark .sidebar-item__link.active i {
+    color: var(--primary-blue-color);
+}
+
+.layout-dark .sidebar-item__link.active .speech {
+    background-color: var(--primary-blue-color);
+}
+
+    .layout-dark .sidebar-item__link.active .speech::after {
+        border-right-color: var(--primary-blue-color);
+    }
+
+.layout-dark .btnEdit {
+    background-color: var(--primary-blue-color);
+}
+
+.layout-dark .userInfor__image label {
+    background-color: var(--dark5-color);
+    color: var(--gray-bland-color);
+}
+
+.layout-dark {
+    --primary-color-component: 255, 255, 255;
+    --primary-text-color: white;
+}
+
+    .layout-dark #search_last_span:empty::before {
+        color: white;
+    }
+
+    .layout-dark .innerlist {
+        background: var(--dark5-color)
+    }
+
+    .layout-dark #chat-search__list {
+        background: var(--dark5-color)
+    }
+
+    .layout-dark .fake_chat, .layout-dark .fc_jump_to {
+        background: var(--dark6-color);
+        color: white;
+    }
+
+    .layout-dark .placeholder_chatbox {
+        background-color: var(--dark6-color);
+    }
+
+:root {
+    --primary-text-color: #1f7cc3
+}
+
+.layout-dark {
+    --placeholder-avatar-color: white;
+    --placeholder-box-color: gray;
+    --placeholder-title-box-color: gray;
+    --placeholder-content-boxes-color: rgb(145,145,155);
+}
+
+    .layout-dark .search_option_menu {
+        background: var(--dark6-color);
+    }
+
+        .layout-dark .search_option_menu > a, .layout-dark .search_option_menu > span {
+            color: #62b0ff;
+        }
+
+            .layout-dark .search_option_menu > a > span {
+                color: gray;
+            }
+
+    .layout-dark .search_user_table > a > div {
+        color: #62b0ff;
+    }
+
+    .layout-dark .filePreviewToolbar > * {
+        background: #3d3d3d;
+    }
+
+    .layout-dark .preview_image_wrapper {
+        background: #cddeff26;
+    }
+
+    .layout-dark .EditFileMenu > div {
+        background: #53565f;
+    }
+
+        .layout-dark .EditFileMenu > div > .bar {
+            background: #464653;
+        }
+
+    .layout-dark .EditFileMenu input {
+        color: black;
+    }
+
+    .layout-dark .EditFileMenu span {
+        color: white;
+    }

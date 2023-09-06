@@ -96,7 +96,7 @@ html {
     .language_content::before {
         content: "";
         position: absolute;
-        bottom: 100%;
+        bottom: calc( 100% - 1px);
         right: 7px;
         border: 10px solid;
         border-color: transparent transparent white transparent;
