@@ -315,7 +315,8 @@
 
 .layout-dark #attachMenuButton img {
     background-color: white;
-    border-radius: 50%
+    border-radius: 50%;
+    background: transparent;
 }
 
 .layout-dark .chat-wrapper span {
@@ -487,3 +488,7 @@
     .layout-dark .language_content::before {
         border-color: transparent transparent var(--dark4-color) transparent;
     }
+
+.layout-dark .sidebar-item__link.active i {
+    color: var(--primary-blue-color) !important;
+}
