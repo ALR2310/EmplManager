@@ -343,7 +343,7 @@
 
 .layout-dark .chat-ellips__dropdown__menu,
 .layout-dark .chat-ellips__show_emoji {
-    background-color: var(--dark6-color);
+    background-color: var(--dark5-color);
 }
 
 .layout-dark .button_red_highlight:hover,
