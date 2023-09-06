@@ -135,7 +135,7 @@ var reload_attached_files = function () {
                
                     preview_image.css("display", "unset");
 
-                    preview_image.css("background", "#e4f3fc");
+                    preview_image.css("background", "rgb(228 243 252 / 18%)");
                     preview_image.addClass("not_default");
                     preview_image.on("load resize", function () {
                         if (url == "local_video") {
