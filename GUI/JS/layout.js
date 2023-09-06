@@ -221,7 +221,8 @@ function handleLayoutTheme() {
         ".sidebar",
         ".chat-ellips__dropdown__menu",
         ".userInfor-body",
-        ".modalSetting"
+        ".modalSetting",
+        "body"
     ];
 
     elements.forEach(element => {

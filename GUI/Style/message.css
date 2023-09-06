@@ -903,6 +903,7 @@ textarea {
     border-radius: 5px;
     overflow: hidden;
     z-index: 2;
+    user-select: none;
 }
 
     .filePreviewToolbar > * {
@@ -1777,6 +1778,7 @@ textarea {
     min-width: 150px;
     min-height: 150px;
     padding: 5px;
+    user-select: none;
 }
 
     .filePreview > img {
@@ -2412,12 +2414,13 @@ div, span {
     gap: 15px;
 }
     .edit_file_heading_section > span {
+        user-select: auto;
         display: flex;
         align-items: center;
         color: #6761b3;
         font-size: 1.25em;
         flex-grow: 1;
-        user-select: none;
+    
     }
 .edit_file_heading_section > img {
     height: 200%;
@@ -2438,9 +2441,10 @@ div, span {
 
 
 .EditFileMenu > div > input {
+    padding: 0 2%;
     height: 20%;
     border-radius: 15px;
-    padding: 0 5px;
+
     font-size: 1.25em;
     border-style: none;
 }
@@ -2470,3 +2474,8 @@ div, span {
 .layout-dark .filePreview {
     background: var(--dark0-color);
 }
+
+.attached_file > img, .preview_image, .edit_file_heading_section > img {
+    filter: drop-shadow(3px 5px 5px rgb(0 0 0 / .8));
+}
+

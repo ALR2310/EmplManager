@@ -337,11 +337,18 @@ function handleMediaResize(file_ele) {
     const func = function () {
 
         if (scroll.scrollTop > file_ele[0].closest(".chat-main__item").offsetTop) {
-            resize(this.offsetHeight/4);
+            let o_h = old_height;
+       
+                resize((this.offsetHeight - o_h));
+        
             old_height = this.offsetHeight;
             return;
         }
-        resize(this.offsetHeight - old_height);
+        let o_h = old_height;
+     
+            resize((this.offsetHeight - o_h));
+       
+       
         console.log(`${old_height} -> ${this.offsetHeight}`);
         console.log(`scroll pos: ${scroll.scrollTop} - chat element pos: ${file_ele[0].closest(".chat-main__item").offsetTop}`)
         old_height = this.offsetHeight;
@@ -353,7 +360,7 @@ function handleMediaResize(file_ele) {
     }
    
 
-    //file_ele.on("load resize",func);
+    file_ele.on("load resize",func);
 }
 function loadAttachments(Uploaded_Files, message_ele,ignore_resize) {
     let FilteredFiles = [];
@@ -825,3 +832,4 @@ const forceScrollBottom = async function () {
 
 $("#MediaMenu").appendTo("body");
 
+$(".chat-main, button, .sidebar, .chat__header, img").attr("onmousedown", "event.preventDefault ? event.preventDefault() : event.returnValue = false");

@@ -592,3 +592,22 @@
 .layout-dark .filePreviewToolbar > * {
     background: #3d3d3d;
 }
+
+.layout-dark .preview_image_wrapper {
+    background: #cddeff26;
+}
+
+.layout-dark .EditFileMenu > div {
+    background: #53565f;
+}
+
+.layout-dark .EditFileMenu > div > .bar {
+    background: #464653;
+}
+    .layout-dark .EditFileMenu input {
+        color: black;
+    }
+    .layout-dark .EditFileMenu span {
+        color: white;
+    }
+
