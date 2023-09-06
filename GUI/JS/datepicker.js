@@ -90,12 +90,23 @@ let datepick_observer = new MutationObserver(function (mutations) {
     console.log("changed date!!");
 
     console.log(editingSpan);
+    $(".search_option_menu.search_user_table").children("span");
     let sov = editingSpan != null && editingSpan.getAttribute("sov");
     sov = sov != null && sov.length > 0 && sov.split("|||").length && sov.split("|||")[1];
     console.log(sov);
     active_date = null;
+
+ 
+
     if (!!sov) {
-        active_date = new Date(sov);
+        let sov_date = new Date(sov);
+        if (sov_date.getYear() < 2000) {
+            sov = false;
+        }
+        else {
+            active_date = new Date(sov);
+        }
+      
     }
     navigateDate(sov && new Date(sov) || new Date());
   

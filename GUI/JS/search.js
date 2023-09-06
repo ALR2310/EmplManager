@@ -202,8 +202,9 @@ var current_query;
 function parseSearchOption() {
     let option = {}
     for (const [key, values] of Object.entries(searching_options)) {
+        if (values == null) { continue; }
         let temp_val = [];
-
+    
         if (typeof values != "object") {
             option[key] = values;
             continue;
@@ -807,8 +808,13 @@ function applySOV(editingSpan, search_option, new_text, rv) {
     if (editingSpan.getAttribute("sov") != null && editingSpan.getAttribute("sov") != "") {
         console.log("Deleted old Searching option value");
         const [old_option, old_val] = editingSpan.getAttribute("sov").split("|||");
+        if (searching_options[old_option] == null ||         typeof searching_options[old_option] != "object") {
+            searching_options[old_option] = null;
+        }
+        else {
+            searching_options[old_option][old_val] = 0;
+        }
 
-        searching_options[old_option][old_val] = 0;
 
 
     }
@@ -834,7 +840,9 @@ function applySOV(editingSpan, search_option, new_text, rv) {
 
         $(`.search_option_edit[sov='${search_option_value}']`).not(editingSpan).remove();
         editingSpan.setAttribute("sov", search_option_value);
-        if (typeof searching_options[search_option] != 'object') {
+        console.log(typeof searching_options[search_option]);
+        console.log(searching_options[search_option]);
+        if (searching_options[search_option] == null || typeof searching_options[search_option] != 'object') {
             searching_options[search_option] = real_value;
             return;
         }
