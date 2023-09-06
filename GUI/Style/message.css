@@ -2480,3 +2480,6 @@ div, span {
 }
 
 
+.chat-main__list {
+    overflow-x: hidden;
+}
