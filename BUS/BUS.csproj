@@ -79,6 +79,7 @@
     <Compile Include="EmpolyeeManager.cs" />
     <Compile Include="LikeManager.cs" />
     <Compile Include="MessageManager.cs" />
+    <Compile Include="NotifyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToastManager.cs" />
     <Compile Include="UserManager.cs" />

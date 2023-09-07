@@ -17,6 +17,7 @@ html {
     --primary-color-component: 81, 86, 190;
     --light-hover-color: #f8f9fa;
     --text-gray-color: #74788d;
+    --danger-color: #dc3545;
 }
 
 
@@ -1895,6 +1896,7 @@ drplist_filterEmpolyee option:checked {
     bottom: -12px;
     padding-top: 2px;
     color: white;
+    display: none;
 }
 
 .userInfor-SendMail button {

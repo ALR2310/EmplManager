@@ -188,7 +188,7 @@
 
 
                         <input type="file" id="avatar-upload" name="avatar" onchange="previewImageFile(event)" accept="image/png, image/jpeg" />
-                        <label for="avatar-upload">Tải Lên Avatar</label>
+                        <label id="label-file-upload" for="avatar-upload">Tải Lên Avatar</label>
                     </div>
                     <div class="userInfor__desc">
                         <p>

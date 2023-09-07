@@ -423,10 +423,10 @@
     <Content Include="Style\layout.css" />
     <Content Include="Style\main.css" />
     <Content Include="Style\message.css" />
-    <Content Include="Style\message_dark_theme.css" />
     <Content Include="Style\modal-email.css" />
     <Content Include="Style\modal.css" />
-    <Content Include="Style\settings.css" />
+    <Content Include="Style\notify.css" />
+    <Content Include="Style\theme.css" />
     <Content Include="Style\speech_bubble.css" />
     <Content Include="Style\toast.css" />
     <Content Include="Style\useredit.css" />
@@ -501,7 +501,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BUS\BUS.csproj">
       <Project>{4735c057-a82b-4161-946d-af488c1c39e8}</Project>

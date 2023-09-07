@@ -120,7 +120,7 @@
                                 <div class="Notification-content">
                                     <p class="Noti_none">Hooray, bạn hiện không có thông báo nào!</p>
 
-                                    <%--<a href="#" class="Noti-Item">
+                                    <a href="#" class="Noti-Item">
                                         <div class="Noti-userAvatar">
                                             <img src="Images/avatar-1.jpg" />
                                         </div>
@@ -132,7 +132,7 @@
                                                 1 giờ trước
                                             </span>
                                         </div>
-                                    </a>--%>
+                                    </a>
                                 </div>
 
                                 <div class="Notification-footer">

@@ -1118,6 +1118,9 @@ function handleShowDivEditor(action) {
                 divInforEdit.classList.add("hide");
             }
         });
+
+        $("#avatar-upload").css("display", "block");
+        $("#label-file-upload").css("display", "block");
     } else if (action == "hidden") {
         divEditor.forEach((diveditor) => {
             diveditor.classList.add("hide");
@@ -1129,6 +1132,9 @@ function handleShowDivEditor(action) {
                 divInforEdit.classList.remove("hide");
             }
         });
+
+        $("#avatar-upload").css("display", "none");
+        $("#label-file-upload").css("display", "none");
     }
 }
 
