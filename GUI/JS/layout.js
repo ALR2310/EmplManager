@@ -33,7 +33,6 @@ var page = parts[parts.length - 1];
 var elem = $(`.sidebar-item__link[href='${page}']`);
 elem.addClass("active");
 
-console.log(page == "tin-nhan");
 $("#Message_Notif").css("visibility", "hidden");
 
 
@@ -222,7 +221,8 @@ function handleLayoutTheme() {
         ".chat-ellips__dropdown__menu",
         ".userInfor-body",
         ".modalSetting",
-        "body"
+        "body",
+        ".notify"
     ];
 
     elements.forEach(element => {

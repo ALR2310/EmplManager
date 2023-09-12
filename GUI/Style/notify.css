@@ -37,10 +37,16 @@
             border-radius: 50%;
             background-color: var(--danger-color);
             color: white;
-            width: 17px;
+            width: auto;
             text-align: center;
             margin-left: 6px;
-            font-size: 14px;
+            font-size: 13px;
+            padding: 2px 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            display: none;
         }
 
         .notify-sidebar-header a:hover {
@@ -49,7 +55,7 @@
         }
 
 .notify-sidebar-body {
-    height: 425px;
+    height: 450px;
     border-bottom: 1px solid;
     border-left: 1px solid;
     border-right: 1px solid;
@@ -85,6 +91,12 @@
         cursor: pointer;
     }
 
+    .notify-sidebar-body-item.isRead .nsb-content-title p,
+    .isRead .nsb-content-title span,
+    .isRead .nsb-content-desc {
+        color: var(--text-gray-color);
+    }
+
 .notify-sidebar-body-avatar {
     width: 50px;
     height: 50px;
@@ -113,17 +125,16 @@
         color: var(--primary-color);
     }
 
+    .nsb-content-title p {
+        color: black;
+    }
+
 .nsb-content-desc {
     font-size: 15px;
     font-weight: 400;
 }
 
-    .nsb-content-desc.isRead {
-        color: var(--text-gray-color);
-    }
-
 .notify-action {
-    margin-top: 15px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     background: var(--primary-color);
@@ -138,11 +149,8 @@
     align-items: center;
 }
 
-    .notify-action button {
-        border: none;
-        background: transparent;
-        color: white;
-        font-size: 16px;
+    .notify-action i {
+        padding-right: 5px;
     }
 
 .notify-content {
@@ -177,7 +185,13 @@
 
 .notify-content-desc {
     padding: 20px;
+    overflow-y: scroll;
+    height: 525px;
 }
+
+    .notify-content-desc::-webkit-scrollbar {
+        width: 5px;
+    }
 
 .notify-modal {
     position: fixed;

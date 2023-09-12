@@ -307,9 +307,10 @@
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="Images\arrowDown.svg" />
-    <Content Include="Images\Avatar\Uploads\U_16.png" />
-    <Content Include="Images\Avatar\Uploads\U_18.jpg" />
-    <Content Include="Images\Avatar\Uploads\U_18.png" />
+    <Content Include="Images\Avatar\Uploads\3-1-1626444927.jpg" />
+    <Content Include="Images\Avatar\Uploads\abc.png" />
+    <Content Include="Images\Avatar\Uploads\du-lich.jpg" />
+    <Content Include="Images\Avatar\Uploads\Hinh-anh-avatar-cute %281%29.jpg" />
     <Content Include="Images\Flags\us.jpg" />
     <Content Include="Images\Flags\vi.png" />
     <Content Include="Images\Icons\archive.svg" />
@@ -411,7 +412,6 @@
     </Compile>
     <Compile Include="Hubs\HubAuthorization.cs" />
     <Content Include="JS\search.js" />
-    <Content Include="Images\Avatar\Uploads\U_16" />
     <Content Include="Images\UserUploads\4\944df853-3f0e-46aa-862a-d68833782559.log" />
     <Content Include="Images\UserUploads\4\d564c08a-481a-49c1-954f-ab92cc8b6875.log" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />

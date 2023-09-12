@@ -62,7 +62,6 @@ html {
 
 .language {
     position: relative;
-    padding: 0 10px;
 }
 
 .language_image {
@@ -123,8 +122,10 @@ html {
             margin-left: 5px;
         }
 
+.language,
+.Notification,
 .darkmode {
-    padding: 0 10px;
+    margin: 0 10px;
     cursor: pointer;
 }
 
@@ -134,8 +135,6 @@ html {
     }
 
 .Notification {
-    padding: 0 10px;
-    cursor: pointer;
     position: relative;
 }
 
@@ -147,13 +146,14 @@ html {
         position: absolute;
         background-color: #fd625e;
         border-radius: 45%;
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: auto;
         text-align: center;
         color: white;
-        font-size: 13px;
+        font-size: 11px;
         bottom: 90%;
         left: 70%;
+        padding: 2px;
     }
 
     .Notification-icon i {
@@ -248,10 +248,12 @@ html {
         /* font-family: 'Sedgwick Ave Display', cursive; */
     }
 
-    .Noti-desc p {
+    .Noti-desc h6 {
         color: #74788d;
         font-size: 13px;
-        font-weight: 300
+        font-weight: 300;
+        overflow: hidden;
+        font-weight: 400;
     }
 
     .Noti-desc span {
@@ -316,7 +318,8 @@ html {
 
 .dropdown {
     position: relative;
-    padding: 0 0 0 10px;
+    margin: 0 0 0 10px;
+    cursor: pointer;
 }
 
 .dropbtn {

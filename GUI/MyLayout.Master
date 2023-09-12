@@ -108,31 +108,89 @@
                         <div class="Notification">
                             <div class="Notification-icon">
                                 <i class="fa-regular fa-bell"></i>
-                                <span class="hide">5</span>
+                                <span id="notifyDanger">5</span>
                             </div>
 
                             <div class="Notification-container hide">
                                 <div class="Notification-header">
                                     <p>Thông báo</p>
-                                    <a href="thong-bao">Chưa đọc (3)</a>
+                                    <a href="thong-bao">Chưa đọc (<asp:Label ID="lblNotifyUnRead" runat="server"></asp:Label>)</a>
                                 </div>
 
                                 <div class="Notification-content">
                                     <p class="Noti_none">Hooray, bạn hiện không có thông báo nào!</p>
 
-                                    <a href="#" class="Noti-Item">
-                                        <div class="Noti-userAvatar">
-                                            <img src="Images/avatar-1.jpg" />
-                                        </div>
-                                        <div class="Noti-desc">
-                                            <h5>Lê Thanh An</h5>
-                                            <p>Nó sẽ có vẻ giống như tiếng Anh đơn giản. Là một người bạn Cambridge hoài nghi của tôi, người phương Tây.</p>
-                                            <span>
-                                                <i class="fa-regular fa-clock"></i>
-                                                1 giờ trước
-                                            </span>
-                                        </div>
-                                    </a>
+                                    <asp:Repeater ID="Repeater1" runat="server">
+                                        <ItemTemplate>
+
+                                            <a href="thong-bao" class="Noti-Item" data-id="<%#Eval("Id") %>">
+                                                <div class="Noti-userAvatar">
+                                                    <img src="<%#Eval("Avatar") %>" />
+                                                </div>
+                                                <div class="Noti-desc">
+                                                    <h5><%#Eval("DisplayName") %></h5>
+                                                    <h6 id="notifyContent"><%#Eval("Content") %> </h6>
+                                                    <span>
+                                                        <i class="fa-regular fa-clock"></i>
+                                                        <%#FormatDate(Eval("AtCreate")) %>
+                                                    </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            var notifyItems = document.querySelectorAll(".Noti-Item");
+
+                                            notifyItems.forEach(function (item) {
+                                                item.addEventListener("click", function (event) {
+                                                    // Ngăn chặn hành vi mặc định của liên kết (chặn chuyển hướng trang)
+                                                    event.preventDefault();
+
+                                                    // Trích xuất giá trị Id từ thuộc tính data-id của thẻ a
+                                                    var notifyId = item.getAttribute("data-id");
+
+                                                    // Tạo đường dẫn mới với tham số Id
+                                                    var newURL = "thong-bao?id=" + notifyId;
+
+                                                    // Chuyển hướng đến đường dẫn mới
+                                                    window.location.href = newURL;
+                                                });
+                                            });
+                                        });
+
+
+
+
+                                        function checknotifyunread() {
+                                            if ($("#lblNotifyUnRead").text() != 0) {
+                                                $(".Notification-content .Noti_none").css("display", "none");
+
+                                                $("#notifyDanger").css("display", "block");
+                                                $("#notifyDanger").text($("#lblNotifyUnRead").text());
+                                            } else {
+                                                $(".Notification-content .Noti_none").css("display", "block");
+                                                $("#notifyDanger").css("display", "none");
+                                            }
+                                        }
+                                        checknotifyunread();
+
+                                        function limitText(element, limit) {
+                                            var text = element.innerText;
+                                            if (text.length > limit) {
+                                                element.innerText = text.slice(0, limit) + '...';
+                                            }
+                                        }
+                                        var truncatedText = document.querySelectorAll("#notifyContent");
+                                        truncatedText.forEach((trncatedtexts) => {
+                                            limitText(trncatedtexts, 25);
+                                            console.log("đã áp dụng");
+                                        });
+                                    </script>
+
+
                                 </div>
 
                                 <div class="Notification-footer">
@@ -305,6 +363,10 @@
             </div>
         </main>
     </form>
+
+
+
+
 
     <script src="Scripts/jquery-3.6.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.3.js"></script>

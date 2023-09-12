@@ -11,6 +11,6 @@ namespace DAL.Model
         public int Id { get; set; }
         public int NotifyId { get; set; }
         public int UserId { get; set; }
-        public int IsRead { get; set; }
+        public bool IsRead { get; set; }
     }
 }

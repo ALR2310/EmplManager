@@ -46,10 +46,10 @@
     background-color: var(--dark0-color);
 }
 
-.topbar-dark #lblUserName {
-    color: white;
-}
-
+.topbar-dark .dropdown-content a,
+.topbar-dark .darkmode div,
+.topbar-dark .Notification-icon,
+.topbar-dark #lblUserName,
 .topbar-dark .btn-menuleft {
     color: white;
 }
@@ -58,22 +58,9 @@
     background-color: var(--dark4-color);
 }
 
-    .topbar-dark .dropdown-content a {
-        color: white;
+    .topbar-dark .dropdown-content a:hover {
+        background-color: var(--dark2-color);
     }
-
-        .topbar-dark .dropdown-content a:hover {
-            background-color: var(--dark2-color);
-        }
-
-.topbar-dark .darkmode div {
-    color: white;
-}
-
-
-.topbar-dark .Notification-icon {
-    color: white;
-}
 
 .topbar-dark .search-box__input {
     background-color: var(--gray-bland-color);
@@ -92,19 +79,9 @@
     background-color: var(--brand1-color);
 }
 
-.topbar-brand #lblUserName {
-    color: white;
-}
-
-.topbar-brand .btn-menuleft {
-    color: white;
-}
-
-.topbar-brand .darkmode div {
-    color: white;
-}
-
-
+.topbar-brand #lblUserName,
+.topbar-brand .btn-menuleft,
+.topbar-brand .darkmode div,
 .topbar-brand .Notification-icon {
     color: white;
 }
@@ -134,321 +111,68 @@
 
 
 /*Layout Dark*/
-.layout-dark.content {
-    background-color: var(--dark6-color);
-}
-
-.layout-dark .employee-body-card {
-    background-color: #778496;
-}
-
-.layout-dark .employee-card__body-name {
-    color: white;
-}
-
-    .layout-dark .employee-card__body-name p {
-        color: #aeb7e4;
-    }
-
-.layout-dark .employee-card__header-ellipsis {
-    color: white;
-}
-
-.layout-dark .employee-card__ellipsis,
-.layout-dark .employee-card__subEllipsis {
-    background-color: #e6e6e6;
-}
-
-.layout-dark .employee-header-title {
-    color: white;
-}
-
-    .layout-dark .employee-header-title span {
-        color: var(--primary-blue-color);
-    }
-
-.layout-dark .employee-header__ellipsis {
-    background-color: #1f7cc3;
-}
-
-.layout-dark .employee-header__content p {
-    color: white;
-}
-
-    .layout-dark .employee-header__content p span {
-        color: var(--primary-blue-color);
-    }
-
-.layout-dark .employee-header-search input[type="search"] {
-    background-color: var(--gray-bland-color);
-    color: black;
-}
-
-.layout-dark .employee-header-search a {
-    background-color: var(--primary-blue-color);
-}
-
-.layout-dark #drplist_filterEmpolyee {
-    background-color: var(--gray-bland-color);
-}
-
-.layout-dark * {
-    border-color: #878787;
-}
-
-.layout-dark.modal-vertical__container { /*---------------------*/
-    background-color: var(--dark4-color);
-}
-
-.layout-dark .modal-vertical__container-title {
-    color: white;
-}
-
+.layout-dark .language_content,
+.layout-dark .userInfor-header-desc h4,
+.layout-dark .userInfor-header-desc h5,
+.layout-dark .userInfor-body-title,
+.layout-dark .custom-file-upload,
+.layout-dark .modalSetting_content h2,
+.layout-dark .modalSetting_content_radioGroup h6,
+.layout-dark #search_open,
+.layout-dark .MdradioGroup label,
+.layout-dark .chat__search-box__btn,
+.layout-dark .Noti-desc h5,
+.layout-dark .Notification-header p,
+.layout-dark .userInfor-body-desc p,
+.layout-dark .modal-vertical__container-title,
+.layout-dark .userInfor-Detail__infor span,
+.layout-dark .modal-vertical__close,
+.layout-dark .UIDetail__action p,
+.layout-dark .userInfor-Detail__title,
+.layout-dark .userInfor-Detail__editor select,
+.layout-dark .userInfor-Detail__editor input,
+.layout-dark .userInfor-Detail__editor p,
+.layout-dark #sltGender option,
+.layout-dark #sltUserType option,
+.layout-dark.usrdetail-modal-email h2,
+.layout-dark #sltStatus option,
+.layout-dark #email_action,
+.layout-dark #tblEmail_subject,
+.layout-dark #tblEmail_recipients,
+.layout-dark #tblEmail_content,
+.layout-dark #tblEmail_subject::placeholder,
+.layout-dark #tblEmail_recipients::placeholder,
+.layout-dark.UIdetail-modal-delete h3,
+.layout-dark .chat-header__title p,
+.layout-dark .employee-card__header-ellipsis,
+.layout-dark .employee-card__body-name,
+.layout-dark .employee-header__content p,
+.layout-dark .employee-header-title,
+.layout-dark.chat-ellips__dropdown__menu .delete_button:hover > input,
+.layout-dark .notify-content-header h2,
+.layout-dark .nsb-content-title p,
+.layout-dark .nsb-content-desc,
+.layout-dark .notify-content-desc,
 .layout-dark .userInfor__desc p span {
     color: white;
 }
 
-.layout-dark .userInfor__desc span {
-    color: #e1e1e1;
-}
-
-.layout-dark .userInfor-SendMail button {
-    background-color: var(--primary-blue-color);
-}
-
-.layout-dark .userInfor-Detail__infor p {
-    color: #dcf3ff;
-}
-
-.layout-dark .userInfor-Detail__infor span {
-    color: white;
-}
-
-.layout-dark .modal-vertical__close {
-    color: white;
-}
-
-    .layout-dark .modal-vertical__close:hover {
-        color: black;
-    }
-
-.layout-dark .userInfor-Detail__title {
-    color: white;
-}
-
-.layout-dark .UIDetail__action p {
-    color: white;
-}
-
-.layout-dark .userInfor-Detail__editor select,
-.layout-dark .userInfor-Detail__editor input {
-    background-color: transparent;
-    color: white;
-    color-scheme: dark;
-}
-
-.layout-dark .userInfor-Detail__editor p {
-    background-color: var(--dark4-color);
-    color: white;
-}
-
-.layout-dark #sltGender option,
-.layout-dark #sltUserType option,
-.layout-dark #sltStatus option {
-    color: white;
-    background-color: gray;
-}
-
-    .layout-dark #sltStatus option:hover {
-        background-color: red;
-    }
-
-.layout-dark.UIdetail-modal-delete {
-    background-color: var(--dark5-color);
-}
-
-    .layout-dark.UIdetail-modal-delete h3 {
-        color: white;
-    }
-
-    .layout-dark.UIdetail-modal-delete p {
-        color: var(--gray-bland-color);
-    }
-
-.layout-dark.usrdetail-modal-email {
-    background-color: var(--dark4-color);
-}
-
-    .layout-dark.usrdetail-modal-email h2 {
-        color: white;
-    }
-
-.layout-dark #email_action {
-    background-color: transparent;
-    color: white;
-}
-
+    .layout-dark .employee-header-search input[type="search"],
+    .layout-dark .modal-vertical__close:hover,
     .layout-dark #email_action option {
-        background-color: var(--gray-bland-color);
         color: black;
     }
 
-.layout-dark #tblEmail_subject,
-.layout-dark #tblEmail_recipients {
-    background-color: transparent;
-    color: white;
-}
-
-    .layout-dark #tblEmail_content,
-    .layout-dark #tblEmail_subject::placeholder,
-    .layout-dark #tblEmail_recipients::placeholder {
-        color: white;
+    .layout-dark .employee-header__content p span,
+    .layout-dark .employee-header-search a,
+    .layout-dark .notify-sidebar-header a,
+    .layout-dark .nsb-content-title span,
+    .layout-dark .Notification-footer a,
+    .layout-dark .notify-content-header h2 span,
+    .layout-dark .sidebar-item__link.active i,
+    .layout-dark .employee-header-title span {
+        color: var(--primary-blue-color);
     }
-
-.layout-dark .btn btn-chat-footer {
-    background-color: var(--primary-blue-color);
-}
-
-.layout-dark .btn-chat-footer {
-    background-color: var(--primary-blue-color);
-}
-
-.layout-dark #attachMenuButton img {
-    background-color: white;
-    border-radius: 50%;
-    background: transparent;
-}
-
-.layout-dark .chat-wrapper span {
-    color: #cccccc;
-}
-
-.layout-dark .time-gap div {
-    color: #cccccc
-}
-
-.layout-dark.sidebar,
-.layout-dark.nav {
-    border-color: #878787;
-}
-
-.layout-dark .chat-header__title p {
-    color: white;
-}
-
-.layout-dark .chat-ellips__emoji__toggle:hover,
-.layout-dark .chat-ellips__dropdown__toggle:hover {
-    background-color: var(--dark4-color);
-}
-
-.layout-dark .chat-ellips__dropdown__menu,
-.layout-dark .chat-ellips__show_emoji {
-    background-color: var(--dark5-color);
-}
-
-.layout-dark .button_red_highlight:hover,
-.layout-dark .chat-ellips__dropdown__menu li:hover {
-    background-color: var(--dark0-color);
-}
-
-.layout-dark.chat-ellips__dropdown__menu .edit_button input {
-    color: #ccc;
-}
-
-.layout-dark.chat-ellips__dropdown__menu .delete_button:hover > input {
-    color: white !important;
-}
-.layout-dark .button_red_highlight:hover > img{
-    filter: none;
-}
-.chat-ellips__dropdown__menu > .edit_button > img {
-    filter: invert(87%) sepia(3%) saturate(13%) hue-rotate(314deg) brightness(95%) contrast(91%);
-}
-
-.layout-dark .delete_button img {
-    filter: invert(41%) sepia(79%) saturate(6053%) hue-rotate(338deg) brightness(92%) contrast(87%);
-}
-
-
-
-.layout-dark .button_red_highlight:hover input,
-.layout-dark .button_red_highlight:hover img {
-    background: none;
-}
-
-.layout-dark #search_open {
-    color: white;
-}
-
-.layout-dark .chat__search-box__btn {
-    color: white;
-}
-
-.layout-dark .Notification-container {
-    background-color: var(--dark4-color);
-}
-
-.layout-dark .Noti-Item:hover {
-    background-color: var(--dark3-color);
-}
-
-.layout-dark .Notification-header p {
-    color: white;
-}
-
-.layout-dark .Notification-header a {
-    color: #c8c8c8;
-}
-
-.layout-dark .Noti-desc h5 {
-    color: white;
-}
-
-.layout-dark .Noti-desc p {
-    color: #c8c8c8;
-}
-
-.layout-dark .Noti-desc span {
-    color: #c8c8c8;
-}
-
-.layout-dark .Notification-footer a {
-    color: var(--primary-blue-color);
-}
-
-.layout-dark .language_content {
-    background-color: var(--dark4-color);
-    color: white;
-}
-
-    .layout-dark .language_content a {
-        border-radius: 5px;
-    }
-
-        .layout-dark .language_content a:hover {
-            background-color: var(--dark3-color);
-        }
-
-.layout-dark .userInfor-header-desc h4,
-.layout-dark .userInfor-header-desc h5 {
-    color: white;
-}
-
-.layout-dark .userInfor-header-desc p {
-    color: #b4b4b4;
-}
-
-.layout-dark .divInforStatus p {
-    color: #b4b4b4;
-}
-
-.layout-dark .userInfor-body-title {
-    color: white;
-}
-
-.layout-dark .userInfor-body-desc p {
-    color: white;
-}
 
 .layout-dark .userInfor-body-desc select,
 .layout-dark .userInfor-body-desc input,
@@ -457,38 +181,179 @@
     color-scheme: dark;
 }
 
-
-
-.layout-dark .userInfor-body-desc input,
-.layout-dark .userInfor-body-desc select {
-    background-color: var(--dark5-color);
+.layout-dark .Noti-desc p,
+.layout-dark .Noti-desc span,
+.layout-dark .Notification-header a {
+    color: #c8c8c8;
 }
 
-.layout-dark .custom-file-upload {
-    color: white;
+.layout-dark .divInforStatus p,
+.layout-dark .userInfor-header-desc p {
+    color: #b4b4b4;
 }
 
+.layout-dark .chat-wrapper span,
+.layout-dark .time-gap div {
+    color: #cccccc
+}
+
+.layout-dark .Noti_none,
+.layout-dark .notify-sidebar-body-item.isRead .nsb-content-title p,
+.layout-dark .isRead .nsb-content-title span,
+.layout-dark .isRead .nsb-content-desc {
+    color: #bfbfbf;
+}
+
+.layout-dark .userInfor__desc span {
+    color: #e1e1e1;
+}
+
+.layout-dark.chat-ellips__dropdown__menu .edit_button input {
+    color: #ccc;
+}
+
+.layout-dark .employee-card__body-name p {
+    color: #aeb7e4;
+}
+
+.layout-dark .userInfor-Detail__infor p {
+    color: #dcf3ff;
+}
+
+.layout-dark .button_red_highlight:hover,
+.layout-dark .chat-ellips__dropdown__menu li:hover {
+    background-color: var(--dark0-color);
+}
+
+.layout-dark .language_content a:hover,
+.layout-dark .Noti-Item:hover {
+    background-color: var(--dark3-color);
+}
+
+.layout-dark.modal-vertical__container,
+.layout-dark.usrdetail-modal-email,
+.layout-dark .chat-ellips__emoji__toggle:hover,
+.layout-dark .chat-ellips__dropdown__toggle:hover,
+.layout-dark .Notification-container,
+.layout-dark .userInfor-Detail__editor p,
+.layout-dark .language_content,
+.layout-dark .notify-modal-content,
+.layout-dark .notify-sidebar-body-item:hover,
 .layout-dark.modalSetting .modalSetting_content {
     background-color: var(--dark4-color);
 }
 
-.layout-dark .modalSetting_content h2 {
-    color: white;
+.layout-dark .userInfor-body-desc input,
+.layout-dark .userInfor-body-desc select,
+.layout-dark .chat-ellips__dropdown__menu,
+.layout-dark .chat-ellips__show_emoji,
+.layout-dark.UIdetail-modal-delete {
+    background-color: var(--dark5-color);
 }
 
-.layout-dark .modalSetting_content_radioGroup h6 {
-    color: white;
+.layout-dark.content {
+    background-color: var(--dark6-color);
 }
 
-.layout-dark .MdradioGroup label {
-    color: white;
+.layout-dark .userInfor-SendMail button,
+.layout-dark .btn btn-chat-footer,
+.layout-dark .notify-action,
+.layout-dark .notify-modal-button button:last-child,
+.layout-dark .btn-chat-footer {
+    background-color: var(--primary-blue-color);
 }
 
+.layout-dark .employee-header-search input[type="search"],
+.layout-dark #email_action option,
+.layout-dark.UIdetail-modal-delete p,
+.layout-dark #toolbar-container div,
+.layout-dark #drplist_filterEmpolyee {
+    background-color: var(--gray-bland-color);
+}
 
-    .layout-dark .language_content::before {
-        border-color: transparent transparent var(--dark4-color) transparent;
-    }
+.layout-dark .employee-card__ellipsis,
+.layout-dark .employee-card__subEllipsis {
+    background-color: #e6e6e6;
+}
 
-.layout-dark .sidebar-item__link.active i {
-    color: var(--primary-blue-color) !important;
+.layout-dark .userInfor-Detail__editor select,
+.layout-dark .userInfor-Detail__editor input {
+    background-color: transparent;
+    color-scheme: dark;
+}
+
+.layout-dark #sltGender option,
+.layout-dark #sltUserType option,
+.layout-dark #sltStatus option {
+    background-color: gray;
+}
+
+.layout-dark #tblEmail_subject,
+.layout-dark #tblEmail_recipients {
+    background-color: transparent;
+}
+
+.layout-dark .employee-header__ellipsis {
+    background-color: #1f7cc3;
+}
+
+.layout-dark .employee-body-card {
+    background-color: #778496;
+}
+
+.layout-dark #sltStatus option:hover {
+    background-color: var(--danger-color);
+}
+
+.layout-dark #email_action {
+    background-color: transparent;
+}
+
+.layout-dark .button_red_highlight:hover input,
+.layout-dark .button_red_highlight:hover img {
+    background: none;
+}
+
+.layout-dark *,
+.layout-dark .notify-action,
+.layout-dark .notify-sidebar-body,
+.layout-dark .notify-sidebar-body-item,
+.layout-dark .notify,
+.layout-dark .sidebar-list + .sidebar-list,
+.layout-dark .notify-content,
+.layout-dark .notify-content-header,
+.layout-dark .notify-sidebar-header {
+    border-color: #878787;
+}
+
+.layout-dark.sidebar,
+.layout-dark.nav {
+    border-color: #878787;
+}
+
+.layout-dark .language_content::before {
+    border-color: transparent transparent var(--dark4-color) transparent;
+}
+
+.layout-dark .language_content a {
+    border-radius: 5px;
+}
+
+.layout-dark #attachMenuButton img {
+    background-color: white;
+    border-radius: 50%;
+    background: transparent;
+    filter: invert(36%) sepia(64%) saturate(1260%) hue-rotate(177deg) brightness(95%) contrast(84%);
+}
+
+.layout-dark .button_red_highlight:hover > img {
+    filter: none;
+}
+
+.chat-ellips__dropdown__menu > .edit_button > img {
+    filter: invert(87%) sepia(3%) saturate(13%) hue-rotate(314deg) brightness(95%) contrast(91%);
+}
+
+.layout-dark .delete_button img {
+    filter: invert(41%) sepia(79%) saturate(6053%) hue-rotate(338deg) brightness(92%) contrast(87%);
 }
